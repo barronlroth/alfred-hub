@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maître D' — AI-Powered Blind Date Nights</title>
+  <meta name="description" content="Every two weeks, an AI butler books a surprise restaurant in San Francisco. No hints. No names. Just a Waymo pickup time." />
+  <meta property="og:title" content="Maître D' — AI-Powered Blind Date Nights" />
+  <meta property="og:description" content="An AI butler scouts, books, and surprises. You just show up." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-warm: #0f0d0b;
+      --surface: #161412;
+      --surface-light: #1e1a17;
+      --border: #2a2420;
+      --gold: #c9a44a;
+      --gold-dim: rgba(201, 164, 74, 0.10);
+      --gold-glow: rgba(201, 164, 74, 0.25);
+      --burgundy: #8b2d4e;
+      --amber: #d4874d;
+      --text: #ede8e3;
+      --text-dim: #8a8279;
+      --text-mid: #b5ada5;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-warm);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* --- Hero --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 24px;
+      position: relative;
+      background: radial-gradient(ellipse at 50% 40%, rgba(201,164,74,0.06) 0%, transparent 60%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .hero-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 10vw, 96px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--text-mid);
+      max-width: 540px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .hero-sub strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: bob 2s ease-in-out infinite;
+    }
+
+    .scroll-hint .line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* --- Sections --- */
+    section {
+      padding: 120px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 24px;
+    }
+
+    .section-body {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-mid);
+      max-width: 600px;
+      font-weight: 300;
+    }
+
+    /* --- Divider --- */
+    .divider {
+      max-width: 900px;
+      margin: 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* --- How It Works --- */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .step-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .step-title {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .step + .step::before {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 36px;
+      width: 1px;
+      height: 40px;
+      background: var(--border);
+    }
+
+    /* --- Pipeline --- */
+    .pipeline-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* --- Rules --- */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 64px;
+    }
+
+    .rule {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.3s;
+    }
+
+    .rule:hover {
+      border-color: var(--gold);
+    }
+
+    .rule-icon {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .rule-title {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .rule-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* --- Footer --- */
+    footer {
+      text-align: center;
+      padding: 60px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 15px;
+      transition: opacity 0.2s;
+    }
+
+    footer a:hover { opacity: 0.7; }
+
+    footer .made {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 12px;
+    }
+
+    /* --- Animations --- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 700px) {
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+      }
+      .step + .step::before { display: none; }
+      .pipeline-stats { grid-template-columns: 1fr; }
+      .rules-grid { grid-template-columns: 1fr; }
+      section { padding: 80px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-label fade-in">An Alfred Project</div>
+    <h1 class="fade-in"><em>Maître D'</em></h1>
+    <p class="hero-sub fade-in">Every two weeks, an AI butler picks a restaurant in San Francisco. <strong>You don't know where you're going until you arrive.</strong></p>
+    <div class="scroll-hint">
+      <div class="line"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Concept -->
+  <section>
+    <div class="fade-in">
+      <div class="section-label">The Concept</div>
+      <h2 class="section-title">A blind date night,<br>every two weeks.</h2>
+      <p class="section-body">Alfred — Barron's AI butler — runs a personal dining concierge called <em>Maître D'</em>. He researches San Francisco's best restaurants, books the perfect spot, and keeps it a complete secret. Barron and his fiancée Nina receive only a Waymo pickup time. No restaurant name. No cuisine hint. They discover where they're going when the car pulls up.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- How It Works -->
+  <section>
+    <div class="fade-in">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Four steps. Zero spoilers.</h2>
+    </div>
+    <div class="steps">
+      <div class="step fade-in">
+        <div class="step-num">01</div>
+        <div class="step-icon">🔍</div>
+        <div class="step-title">Scout</div>
+        <p class="step-desc">Alfred researches new openings, trending spots, hidden gems, and seasonal menus across SF.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">02</div>
+        <div class="step-icon">📋</div>
+        <div class="step-title">Book</div>
+        <p class="step-desc">He secures the reservation — factoring in cuisine variety, ambiance, and dietary needs.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">03</div>
+        <div class="step-icon">🤫</div>
+        <div class="step-title">Surprise</div>
+        <p class="step-desc">A calendar invite arrives with only a Waymo pickup time. That's it. No hints.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">04</div>
+        <div class="step-icon">✨</div>
+        <div class="step-title">Arrive</div>
+        <p class="step-desc">The Waymo pulls up to the restaurant. Surprise revealed. Dinner begins.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Pipeline -->
+  <section>
+    <div class="fade-in">
+      <div class="section-label">The Pipeline</div>
+      <h2 class="section-title">Always scouting.<br>Never repeating.</h2>
+      <p class="section-body">Alfred maintains a rolling pipeline of restaurants across San Francisco — from acclaimed fine dining to under-the-radar neighborhood gems. Every pick is researched for quality, uniqueness, and seasonality.</p>
+    </div>
+    <div class="pipeline-stats fade-in">
+      <div class="stat">
+        <div class="stat-num">19+</div>
+        <div class="stat-label">Restaurants Scouted</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">No Budget Cap</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Weeks Between Dates</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Rules -->
+  <section>
+    <div class="fade-in">
+      <div class="section-label">Rules of Engagement</div>
+      <h2 class="section-title">The parameters Alfred<br>operates within.</h2>
+    </div>
+    <div class="rules-grid">
+      <div class="rule fade-in">
+        <div class="rule-icon">📅</div>
+        <div class="rule-title">Biweekly Thursdays</div>
+        <p class="rule-desc">Every other Thursday evening. Consistent cadence, always something to look forward to.</p>
+      </div>
+      <div class="rule fade-in">
+        <div class="rule-icon">💰</div>
+        <div class="rule-title">No Budget Cap</div>
+        <p class="rule-desc">From neighborhood bistros to tasting menus — Alfred picks the best, regardless of price.</p>
+      </div>
+      <div class="rule fade-in">
+        <div class="rule-icon">🎭</div>
+        <div class="rule-title">Completely Blind</div>
+        <p class="rule-desc">No restaurant name, no cuisine type, no neighborhood hints. Total surprise until arrival.</p>
+      </div>
+      <div class="rule fade-in">
+        <div class="rule-icon">🔄</div>
+        <div class="rule-title">No Repeats</div>
+        <p class="rule-desc">Every date night is somewhere new. Alfred tracks history to ensure variety across cuisines.</p>
+      </div>
+      <div class="rule fade-in">
+        <div class="rule-icon">🦐</div>
+        <div class="rule-title">Allergy-Aware</div>
+        <p class="rule-desc">Shellfish allergy always respected. Alfred vets menus and communicates with restaurants in advance.</p>
+      </div>
+      <div class="rule fade-in">
+        <div class="rule-icon">🚗</div>
+        <div class="rule-title">Waymo Door-to-Door</div>
+        <p class="rule-desc">A self-driving car picks them up and drops them off. The destination is the surprise.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <a href="https://alfred.barronroth.com">Powered by Alfred 🦉</a>
+    <p class="made">An AI concierge for life's finer things.</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

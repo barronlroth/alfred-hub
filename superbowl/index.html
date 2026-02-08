@@ -81,15 +81,25 @@ section strong{color:var(--text)}
 
 /* PLAYERS */
 .players-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:32px 0}
-.player-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color .2s,transform .2s}
+.player-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color .2s,transform .2s;overflow:hidden}
 .player-card:hover{transform:translateY(-2px)}
 .player-card.sea:hover{border-color:var(--sea-green)}
 .player-card.ne:hover{border-color:var(--ne-red)}
+.player-img{width:100%;height:200px;object-fit:cover;object-position:top;border-radius:8px;margin-bottom:16px;background:var(--border)}
 .player-pos{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
 .player-card.sea .player-pos{color:var(--sea-green)}
 .player-card.ne .player-pos{color:var(--ne-red)}
 .player-name{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;margin-bottom:6px}
 .player-desc{font-size:13px;color:var(--dim);line-height:1.5}
+
+/* HERO QB PORTRAITS */
+.hero-portraits{display:flex;align-items:center;gap:clamp(20px,5vw,48px);margin-bottom:40px}
+.hero-portrait{position:relative;width:clamp(120px,20vw,180px);height:clamp(150px,25vw,220px);border-radius:12px;overflow:hidden;border:2px solid var(--border)}
+.hero-portrait img{width:100%;height:100%;object-fit:cover;object-position:top}
+.hero-portrait.sea{border-color:var(--sea-green);box-shadow:0 0 30px rgba(105,190,40,.15)}
+.hero-portrait.ne{border-color:var(--ne-red);box-shadow:0 0 30px rgba(198,12,48,.15)}
+.hero-portrait-label{position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;text-align:center;letter-spacing:1px;text-transform:uppercase}
+.hero-portraits .hero-vs-small{font-family:'Oswald',sans-serif;font-size:clamp(20px,4vw,32px);font-weight:900;color:var(--dim);opacity:.5}
 
 /* WHY CARE */
 .reasons{display:flex;flex-direction:column;gap:16px;margin:32px 0}
@@ -133,6 +143,18 @@ section strong{color:var(--text)}
 <div class="team-logo">NE</div>
 <div class="team-name">Patriots</div>
 <div class="team-record">AFC #2 Seed</div>
+</div>
+</div>
+
+<div class="hero-portraits">
+<div class="hero-portrait sea">
+<img src="https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3912547.png&w=350&h=254" alt="Sam Darnold"/>
+<div class="hero-portrait-label">Darnold</div>
+</div>
+<div class="hero-portraits hero-vs-small">VS</div>
+<div class="hero-portrait ne">
+<img src="https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4567048.png&w=350&h=254" alt="Drake Maye"/>
+<div class="hero-portrait-label">Maye</div>
 </div>
 </div>
 
@@ -267,26 +289,31 @@ section strong{color:var(--text)}
 
 <div class="players-grid">
 <div class="player-card sea">
+<img class="player-img" src="https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3912547.png&w=350&h=254" alt="Sam Darnold"/>
 <div class="player-pos">QB · Seattle</div>
 <div class="player-name">Sam Darnold</div>
 <div class="player-desc">The comeback kid. Former bust turned star. Tonight he faces the team that broke him.</div>
 </div>
 <div class="player-card ne">
+<img class="player-img" src="https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4567048.png&w=350&h=254" alt="Drake Maye"/>
 <div class="player-pos">QB · New England</div>
 <div class="player-name">Drake Maye</div>
 <div class="player-desc">The heir apparent. MVP candidate in just his second year. Channeling Brady.</div>
 </div>
 <div class="player-card sea">
+<img class="player-img" src="https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4567400.png&w=350&h=254" alt="Jaxon Smith-Njigba"/>
 <div class="player-pos">WR · Seattle</div>
 <div class="player-name">Jaxon Smith-Njigba</div>
 <div class="player-desc">Breakout star receiver. The big-play threat Seattle's offense runs through.</div>
 </div>
 <div class="player-card ne">
+<img class="player-img" src="https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2976212.png&w=350&h=254" alt="Stefon Diggs"/>
 <div class="player-pos">WR · New England</div>
 <div class="player-name">Stefon Diggs</div>
 <div class="player-desc">Veteran star and Maye's top target. Also known as Cardi B's boyfriend.</div>
 </div>
 <div class="player-card ne">
+<img class="player-img" src="https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/5765.png&w=350&h=254" alt="Mike Vrabel"/>
 <div class="player-pos">HC · New England</div>
 <div class="player-name">Mike Vrabel</div>
 <div class="player-desc">Former Patriots LB with 3 rings as a player. Now coaching them to a 7th title.</div>

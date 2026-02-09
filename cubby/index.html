@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cubby — Know Where Everything Lives</title>
+  <meta name="description" content="Cubby helps you keep track of everything you own — across homes, rooms, closets, and storage spaces. A calm, beautiful home inventory app for iOS." />
+  <meta property="og:title" content="Cubby — Know Where Everything Lives" />
+  <meta property="og:description" content="Keep track of everything you own. Nested storage, smart search, photo organization, iCloud sync." />
+  <meta property="og:image" content="/cubby/app-icon.png" />
+  <link rel="icon" type="image/png" href="app-icon.png" />
+  <style>
+    @font-face {
+      font-family: 'AwesomeSerif';
+      src: url('fonts/AwesomeSerif-ExtraTall.otf') format('opentype');
+      font-weight: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Circular';
+      src: url('fonts/circular-book.otf') format('opentype');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Circular';
+      src: url('fonts/circular-medium.otf') format('opentype');
+      font-weight: 500;
+      font-display: swap;
+    }
+
+    :root {
+      --cream: rgb(250, 249, 246);
+      --sand: rgb(236, 219, 189);
+      --sand-light: rgb(243, 234, 218);
+      --brown: rgb(139, 109, 72);
+      --brown-dark: rgb(82, 62, 38);
+      --brown-deep: rgb(55, 40, 24);
+      --text: rgb(45, 35, 22);
+      --text-dim: rgb(120, 105, 85);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Circular', -apple-system, 'Helvetica Neue', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px 80px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--cream));
+      pointer-events: none;
+    }
+
+    .app-icon {
+      width: 140px;
+      height: 140px;
+      border-radius: 32px;
+      box-shadow: 0 20px 60px rgba(139, 109, 72, 0.2), 0 4px 16px rgba(0,0,0,0.06);
+      margin-bottom: 40px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    h1 {
+      font-family: 'AwesomeSerif', Georgia, serif;
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: normal;
+      letter-spacing: -0.5px;
+      line-height: 1;
+      color: var(--brown-deep);
+      margin-bottom: 20px;
+    }
+
+    .tagline {
+      font-size: clamp(18px, 3vw, 22px);
+      color: var(--text-dim);
+      line-height: 1.5;
+      max-width: 440px;
+      margin-bottom: 36px;
+    }
+
+    .app-store-badge {
+      display: inline-block;
+      transition: transform 0.2s ease, opacity 0.2s;
+    }
+    .app-store-badge:hover {
+      transform: scale(1.05);
+    }
+    .app-store-badge img {
+      height: 54px;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.5;
+      animation: scrollFade 3s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .scroll-hint svg {
+      width: 20px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+
+    @keyframes scrollFade {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Features */
+    .features {
+      padding: 80px 24px 100px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .features h2 {
+      font-family: 'AwesomeSerif', Georgia, serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: normal;
+      color: var(--brown-deep);
+      text-align: center;
+      margin-bottom: 60px;
+      line-height: 1.1;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 20px;
+      padding: 32px 28px;
+      border: 1px solid rgba(236, 219, 189, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(139, 109, 72, 0.1);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--sand-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-family: 'Circular', sans-serif;
+      font-weight: 500;
+      font-size: 18px;
+      color: var(--brown-deep);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    /* How it works */
+    .how {
+      padding: 60px 24px 100px;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .how h2 {
+      font-family: 'AwesomeSerif', Georgia, serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: normal;
+      color: var(--brown-deep);
+      margin-bottom: 48px;
+      line-height: 1.1;
+    }
+
+    .breadcrumb-demo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: clamp(16px, 2.5vw, 20px);
+      font-weight: 500;
+      color: var(--brown);
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb-demo span {
+      background: white;
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--sand);
+      white-space: nowrap;
+    }
+
+    .breadcrumb-demo .arrow {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--sand);
+      font-size: 18px;
+    }
+
+    .how .caption {
+      color: var(--text-dim);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* CTA */
+    .cta {
+      padding: 80px 24px 100px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--sand-light) 100%);
+    }
+
+    .cta h2 {
+      font-family: 'AwesomeSerif', Georgia, serif;
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: normal;
+      color: var(--brown-deep);
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .cta p {
+      font-size: 18px;
+      color: var(--text-dim);
+      margin-bottom: 32px;
+    }
+
+    .cta .app-store-badge img {
+      height: 60px;
+    }
+
+    footer {
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-dim);
+      background: var(--sand-light);
+    }
+
+    footer a {
+      color: var(--brown);
+      text-decoration: none;
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 520px) {
+      .app-icon { width: 110px; height: 110px; border-radius: 26px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .hero { padding: 40px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <img class="app-icon" src="app-icon.png" alt="Cubby app icon" />
+    <h1>Cubby</h1>
+    <p class="tagline">Know where everything lives.</p>
+    <a class="app-store-badge" href="https://apps.apple.com/app/id6751732388" target="_blank" rel="noopener">
+      <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" />
+    </a>
+    <div class="scroll-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2 class="fade-in">Everything in its place</h2>
+    <div class="feature-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📦</div>
+        <h3>Nested Storage</h3>
+        <p>Organize the way your stuff actually lives — homes, rooms, closets, shelves, boxes. As deep as you need.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🔍</div>
+        <h3>Smart Search</h3>
+        <p>Find anything across all your spaces instantly. No more wondering which closet your winter coat is in.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📸</div>
+        <h3>Photo Organization</h3>
+        <p>Snap a photo so you remember exactly what's in that box in the garage. Visual inventory, effortless.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">☁️</div>
+        <h3>iCloud Sync</h3>
+        <p>Your inventory stays in sync across all your devices. Add items on your phone, check from your iPad.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🏠</div>
+        <h3>Multiple Homes</h3>
+        <p>Cabin, apartment, storage unit, parents' garage — track it all in one place, across every location.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">✨</div>
+        <h3>Calm Design</h3>
+        <p>No clutter, no complexity. Just a simple, beautiful interface that stays out of your way.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <h2 class="fade-in">Think in nesting boxes</h2>
+    <div class="breadcrumb-demo fade-in">
+      <span>🏠 Home</span>
+      <span class="arrow">→</span>
+      <span>Bedroom Closet</span>
+      <span class="arrow">→</span>
+      <span>Top Shelf</span>
+      <span class="arrow">→</span>
+      <span>Blue Box</span>
+    </div>
+    <p class="caption fade-in">Cubby mirrors how you actually store things. Drill down to find exactly what you're looking for — or search to jump straight there.</p>
+  </section>
+
+  <section class="cta">
+    <h2 class="fade-in">Stop losing things</h2>
+    <p class="fade-in">Free on the App Store. Your stuff will thank you.</p>
+    <a class="app-store-badge fade-in" href="https://apps.apple.com/app/id6751732388" target="_blank" rel="noopener">
+      <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" />
+    </a>
+  </section>
+
+  <footer>
+    <p>Made with care by <a href="https://barronroth.com">Barron Roth</a></p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

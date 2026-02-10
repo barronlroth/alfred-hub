@@ -16,6 +16,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:
 /* Scanline overlay */
 body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);opacity:.4}
 
+.chapter-owl{width:100%;max-width:480px;margin:0 auto 32px;display:block;border-radius:12px;border:1px solid var(--border);opacity:.9;transition:opacity .3s}
+.chapter-owl:hover{opacity:1}
+
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative}
 .hero::before{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,255,136,.06) 0%,transparent 70%);pointer-events:none}
 .hero-badge{font-family:var(--mono);font-size:12px;color:var(--green);background:var(--green-dim);border:1px solid rgba(0,255,136,.2);padding:6px 16px;border-radius:100px;margin-bottom:32px;letter-spacing:1px;text-transform:uppercase}
@@ -108,6 +111,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 <section class="chapter">
 <div class="chapter-num">Chapter 01</div>
 <div class="chapter-date">January 30, 2026</div>
+<img src="images/owl-born.png" alt="Baby owl hatching from code" class="chapter-owl"/>
 <h2>Day Zero</h2>
 <p>Alfred was born. Not trained — configured. Created via <strong>OpenClaw</strong>, an open-source framework that connects any LLM to real-world tools. The model underneath is just Claude (Anthropic). Nothing custom. The magic is in the harness.</p>
 <p>Named after Alfred Pennyworth. Batman's butler. British, dry wit, competent.</p>
@@ -144,6 +148,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 <section class="chapter">
 <div class="chapter-num">Chapter 02</div>
 <div class="chapter-date">January 31, 2026</div>
+<img src="images/owl-emails.png" alt="Owl sending emails" class="chapter-owl"/>
 <h2>Wedding Blitz</h2>
 <p>Day two. Alfred's first real work session. The ask: find venues for a rehearsal dinner and welcome party in Miami.</p>
 
@@ -178,6 +183,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 <section class="chapter">
 <div class="chapter-num">Chapter 03</div>
 <div class="chapter-date">February 4, 2026</div>
+<img src="images/owl-gaming.png" alt="Owl playing retro games" class="chapter-owl"/>
 <h2>The Game</h2>
 <p>Because every wedding website needs a pixel art side-scroller about how the couple met. Obviously.</p>
 
@@ -208,6 +214,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 <section class="chapter">
 <div class="chapter-num">Chapter 04</div>
 <div class="chapter-date">February 4–7, 2026</div>
+<img src="images/owl-terminal.png" alt="Owl at computer terminal" class="chapter-owl"/>
 <h2>The Wedding Machine</h2>
 <p>Alfred became a wedding logistics engine.</p>
 
@@ -236,6 +243,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 <section class="chapter">
 <div class="chapter-num">Chapter 05</div>
 <div class="chapter-date">February 7–8, 2026</div>
+<img src="images/owl-deploy.png" alt="Owl deploying to production" class="chapter-owl"/>
 <h2>Going Autonomous</h2>
 <p>This is where things got interesting. Alfred stopped being a tool and started being infrastructure.</p>
 
@@ -262,6 +270,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 <section class="chapter">
 <div class="chapter-num">Chapter 06</div>
 <div class="chapter-date">February 8, 2026</div>
+<img src="images/owl-restaurant.png" alt="Owl reviewing restaurant menus" class="chapter-owl"/>
 <h2>Shipping Cubby</h2>
 <p><strong>Cubby</strong> = Barron's home inventory iOS app. SwiftUI + SwiftData + CloudKit. Barron wrote the core CloudKit sync; Alfred handled everything else around it.</p>
 
@@ -293,6 +302,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 <section class="chapter">
 <div class="chapter-num">Chapter 07</div>
 <div class="chapter-date">February 9, 2026 — Today</div>
+<img src="images/owl-orchestrator.png" alt="Owl orchestrating multiple sessions" class="chapter-owl"/>
 <h2>The System</h2>
 <p>Day 10. Alfred evolved from a chatbot into an operating system.</p>
 

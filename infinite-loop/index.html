@@ -186,56 +186,59 @@
     }
 
     /* VERSUS SECTION */
-    .versus-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
+    .versus-container {
       margin-top: 40px;
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border);
     }
-    .versus-col {
-      padding: 32px 28px;
-    }
-    .versus-col-normal {
-      background: linear-gradient(180deg, rgba(244,63,94,0.06) 0%, rgba(244,63,94,0.01) 100%);
-      border-right: 1px solid var(--border);
-    }
-    .versus-col-alfred {
-      background: linear-gradient(180deg, rgba(139,92,246,0.08) 0%, rgba(139,92,246,0.02) 100%);
+    .versus-header-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
     }
     .versus-header {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
       font-size: 18px;
-      margin-bottom: 28px;
-      padding-bottom: 16px;
-      border-bottom: 2px solid;
+      padding: 20px 28px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .versus-col-alfred .versus-header {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-    .versus-col-normal .versus-header {
+    .versus-header-normal {
       color: var(--rose);
-      border-color: var(--rose);
+      background: rgba(244,63,94,0.06);
+      border-right: 1px solid var(--border);
     }
-    .versus-item {
-      margin-bottom: 24px;
+    .versus-header-alfred {
+      color: var(--accent);
+      background: rgba(139,92,246,0.06);
     }
-    .versus-item:last-child { margin-bottom: 0; }
-    .versus-item-title {
+    .versus-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .versus-row:last-child { border-bottom: none; }
+    .versus-cell {
+      padding: 24px 28px;
+    }
+    .versus-cell-normal {
+      background: rgba(244,63,94,0.03);
+      border-right: 1px solid var(--border);
+    }
+    .versus-cell-alfred {
+      background: rgba(139,92,246,0.04);
+    }
+    .versus-cell-title {
       font-weight: 600;
       font-size: 14px;
       margin-bottom: 6px;
     }
-    .versus-col-alfred .versus-item-title { color: var(--accent); }
-    .versus-col-normal .versus-item-title { color: var(--rose); }
-    .versus-item-desc {
+    .versus-cell-normal .versus-cell-title { color: var(--rose); }
+    .versus-cell-alfred .versus-cell-title { color: var(--accent); }
+    .versus-cell-desc {
       font-size: 13px;
       color: var(--text-dim);
       line-height: 1.6;
@@ -246,14 +249,14 @@
       font-size: 10px;
       padding: 2px 8px;
       border-radius: 4px;
-      margin-top: 6px;
+      margin-top: 8px;
       font-weight: 500;
     }
-    .versus-col-alfred .versus-tag {
+    .versus-cell-alfred .versus-tag {
       background: rgba(139,92,246,0.15);
       color: var(--accent);
     }
-    .versus-col-normal .versus-tag {
+    .versus-cell-normal .versus-tag {
       background: rgba(244,63,94,0.12);
       color: var(--rose);
     }
@@ -569,8 +572,8 @@
     /* RESPONSIVE */
     @media (max-width: 700px) {
       section { padding: 80px 20px; }
-      .versus-grid { grid-template-columns: 1fr; }
-      .versus-col-normal { border-right: none; border-bottom: 1px solid var(--border); }
+      .versus-header-row, .versus-row { grid-template-columns: 1fr; }
+      .versus-header-normal, .versus-cell-normal { border-right: none; border-bottom: 1px solid var(--border); }
       .chat-bubble { max-width: 92%; }
       .chat-alfred::before { display: none; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
@@ -632,62 +635,74 @@
       </p>
       <p class="section-text">When he woke up:</p>
 
-      <div class="versus-grid">
-        <div class="versus-col versus-col-normal">
-          <div class="versus-header">🤖 What You Actually Do with ChatGPT</div>
-          <div class="versus-item">
-            <div class="versus-item-title">You: "Find me rehearsal dinner venues in SF"</div>
-            <div class="versus-item-desc">You get a wall of text with 10 suggestions. No ratings. No availability. No pricing. You open 10 tabs, check Yelp yourself, verify they do private events, note which ones respond to inquiries. Then you prompt again: "give me 10 more." Repeat until you've manually compiled 200.</div>
+      <div class="versus-container">
+        <div class="versus-header-row">
+          <div class="versus-header versus-header-normal">🤖 Normal AI (ChatGPT)</div>
+          <div class="versus-header versus-header-alfred">🦉 Alfred</div>
+        </div>
+
+        <div class="versus-row">
+          <div class="versus-cell versus-cell-normal">
+            <div class="versus-cell-title">"Find me rehearsal dinner venues"</div>
+            <div class="versus-cell-desc">You get a wall of text with 10 suggestions. No ratings, no availability, no pricing. You open 10 tabs, check Yelp yourself, verify they do private events. Prompt again: "give me 10 more." Repeat until you've manually compiled 200.</div>
             <div class="versus-tag">YOU ARE THE SEARCH ENGINE</div>
           </div>
-          <div class="versus-item">
-            <div class="versus-item-title">You: "Write an email to The Waterfront asking about availability"</div>
-            <div class="versus-item-desc">You get one email. You copy it. Open Gmail. Paste it. Customize the venue name. Send. Now you go back to ChatGPT: "Now write one for Foreign Cinema." Copy. Paste. Send. "Now Presidio Social Club." Copy. Paste. Send. <strong style="color:var(--rose)">130 times. You are the mail merge.</strong></div>
-            <div class="versus-tag">130× COPY → GMAIL → PASTE → SEND</div>
-          </div>
-          <div class="versus-item">
-            <div class="versus-item-title">You: "How do I avoid the wedding markup?"</div>
-            <div class="versus-item-desc">ChatGPT says "consider being vague about the event type." Cool tip. But it won't invent a fake persona for you. It won't think to say "private dinner" instead of "rehearsal dinner." It won't create "Maggie Levert" and sign emails from her. <strong style="color:var(--rose)">You have to be the strategist.</strong></div>
-            <div class="versus-tag">THE AI DOESN'T SCHEME FOR YOU</div>
-          </div>
-          <div class="versus-item">
-            <div class="versus-item-title">You: "Now personalize each email for each venue"</div>
-            <div class="versus-item-desc">You realize each venue needs a slightly different pitch. "Now rewrite for a restaurant with a garden." "Now one for a rooftop space." "Now mention their Michelin star." Every email is a new prompt. Every personalization is you remembering details and feeding them back in.</div>
-            <div class="versus-tag">YOU ARE THE CONTEXT WINDOW</div>
-          </div>
-          <div class="versus-item">
-            <div class="versus-item-title">You: "Organize all of this into a spreadsheet"</div>
-            <div class="versus-item-desc">ChatGPT gives you a markdown table. You open Google Sheets. Create tabs manually. Copy-paste venue names, pricing, ratings. Format columns. Color-code by status. It's 2am. You started at 10pm. The AI gave you <em>text</em>. <strong style="color:var(--rose)">You did all the work.</strong></div>
-            <div class="versus-tag">OUTPUT: TEXT. EXECUTION: YOU.</div>
+          <div class="versus-cell versus-cell-alfred">
+            <div class="versus-cell-title">200 Venues Researched</div>
+            <div class="versus-cell-desc">Autonomously found 100 welcome party + 100 rehearsal dinner venues. Google and Yelp ratings pulled, scored, and ranked. All while Barron slept.</div>
+            <div class="versus-tag">AUTONOMOUS</div>
           </div>
         </div>
 
-        <div class="versus-col versus-col-alfred">
-          <div class="versus-header">🦉 What Alfred Did</div>
-          <div class="versus-item">
-            <div class="versus-item-title">200 Venues Researched</div>
-            <div class="versus-item-desc">Autonomously found 100 welcome party + 100 rehearsal dinner venues with Google and Yelp ratings, scored and ranked.</div>
-            <div class="versus-tag">AUTONOMOUS</div>
+        <div class="versus-row">
+          <div class="versus-cell versus-cell-normal">
+            <div class="versus-cell-title">"Write an email to The Waterfront"</div>
+            <div class="versus-cell-desc">You get one email. Copy it. Open Gmail. Paste. Send. Go back: "Now Foreign Cinema." Copy. Paste. Send. "Now Presidio Social Club." <strong style="color:var(--rose)">130 times. You are the mail merge.</strong></div>
+            <div class="versus-tag">130× COPY → PASTE → SEND</div>
           </div>
-          <div class="versus-item">
-            <div class="versus-item-title">~130 Emails Sent</div>
-            <div class="versus-item-desc">Personalized outreach from the wedding email account. Pricing requests, availability checks — all while Barron slept.</div>
+          <div class="versus-cell versus-cell-alfred">
+            <div class="versus-cell-title">~130 Personalized Emails Sent</div>
+            <div class="versus-cell-desc">Personalized outreach from the wedding email account. Pricing requests, availability checks, all tailored per venue. Sent overnight.</div>
             <div class="versus-tag">OVERNIGHT</div>
           </div>
-          <div class="versus-item">
-            <div class="versus-item-title">Invented "Maggie Levert"</div>
-            <div class="versus-item-desc">Created a fake persona unprompted to avoid the vendor markup that comes with being identified as a wedding party.</div>
+        </div>
+
+        <div class="versus-row">
+          <div class="versus-cell versus-cell-normal">
+            <div class="versus-cell-title">"How do I avoid the wedding markup?"</div>
+            <div class="versus-cell-desc">ChatGPT says "consider being vague about the event type." Cool tip. But it won't create a fake persona. Won't rewrite your language. <strong style="color:var(--rose)">You have to be the strategist.</strong></div>
+            <div class="versus-tag">THE AI DOESN'T SCHEME FOR YOU</div>
+          </div>
+          <div class="versus-cell versus-cell-alfred">
+            <div class="versus-cell-title">Invented "Maggie Levert" + Strategic Language</div>
+            <div class="versus-cell-desc">Created a fake persona unprompted to dodge wedding markup. Used "private dinner" instead of "rehearsal dinner" — deduced on its own that vendors charge more when they know.</div>
             <div class="versus-tag">STRATEGIC</div>
           </div>
-          <div class="versus-item">
-            <div class="versus-item-title">Strategic Language</div>
-            <div class="versus-item-desc">"Private dinner" instead of "rehearsal dinner" — figured out on its own that vendors charge more when they know it's a wedding.</div>
-            <div class="versus-tag">DEDUCED</div>
+        </div>
+
+        <div class="versus-row">
+          <div class="versus-cell versus-cell-normal">
+            <div class="versus-cell-title">"Organize this into a spreadsheet"</div>
+            <div class="versus-cell-desc">ChatGPT gives you a markdown table. You open Google Sheets. Create tabs. Copy-paste names, pricing, ratings. Format. Color-code. It's 2am. <strong style="color:var(--rose)">The AI gave you text. You did the work.</strong></div>
+            <div class="versus-tag">OUTPUT: TEXT. EXECUTION: YOU.</div>
           </div>
-          <div class="versus-item">
-            <div class="versus-item-title">Organized Google Sheet</div>
-            <div class="versus-item-desc">Tabs per event type, ratings, pricing, status. A complete system ready for decision-making.</div>
+          <div class="versus-cell versus-cell-alfred">
+            <div class="versus-cell-title">Organized Google Sheet</div>
+            <div class="versus-cell-desc">Tabs per event type, ratings, pricing, status columns. A complete decision-ready system. Created and populated autonomously.</div>
             <div class="versus-tag">DELIVERED</div>
+          </div>
+        </div>
+
+        <div class="versus-row">
+          <div class="versus-cell versus-cell-normal">
+            <div class="versus-cell-title">"Did anyone reply to those emails?"</div>
+            <div class="versus-cell-desc">You have to go check your inbox. Manually. Every day. Cross-reference which venues replied, update your spreadsheet, draft follow-ups. <strong style="color:var(--rose)">The AI has no idea what happened after you closed the tab.</strong></div>
+            <div class="versus-tag">YOU ARE THE FOLLOW-UP SYSTEM</div>
+          </div>
+          <div class="versus-cell versus-cell-alfred">
+            <div class="versus-cell-title">Proactive & Always Watching</div>
+            <div class="versus-cell-desc">Scans the wedding inbox every 30 minutes for vendor replies. Auto-updates the Google Sheet with new responses. Vibe-codes the wedding website with the fiancée in her own chat. Never stops working.</div>
+            <div class="versus-tag">PROACTIVE</div>
           </div>
         </div>
       </div>

@@ -198,12 +198,12 @@
     .versus-col {
       padding: 32px 28px;
     }
-    .versus-col-alfred {
-      background: linear-gradient(180deg, rgba(139,92,246,0.08) 0%, rgba(139,92,246,0.02) 100%);
-      border-right: 1px solid var(--border);
-    }
     .versus-col-normal {
       background: linear-gradient(180deg, rgba(244,63,94,0.06) 0%, rgba(244,63,94,0.01) 100%);
+      border-right: 1px solid var(--border);
+    }
+    .versus-col-alfred {
+      background: linear-gradient(180deg, rgba(139,92,246,0.08) 0%, rgba(139,92,246,0.02) 100%);
     }
     .versus-header {
       font-family: 'Syne', sans-serif;
@@ -570,7 +570,7 @@
     @media (max-width: 700px) {
       section { padding: 80px 20px; }
       .versus-grid { grid-template-columns: 1fr; }
-      .versus-col-alfred { border-right: none; border-bottom: 1px solid var(--border); }
+      .versus-col-normal { border-right: none; border-bottom: 1px solid var(--border); }
       .chat-bubble { max-width: 92%; }
       .chat-alfred::before { display: none; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
@@ -633,6 +633,35 @@
       <p class="section-text">When he woke up:</p>
 
       <div class="versus-grid">
+        <div class="versus-col versus-col-normal">
+          <div class="versus-header">🤖 What You Actually Do with ChatGPT</div>
+          <div class="versus-item">
+            <div class="versus-item-title">You: "Find me rehearsal dinner venues in SF"</div>
+            <div class="versus-item-desc">You get a wall of text with 10 suggestions. No ratings. No availability. No pricing. You open 10 tabs, check Yelp yourself, verify they do private events, note which ones respond to inquiries. Then you prompt again: "give me 10 more." Repeat until you've manually compiled 200.</div>
+            <div class="versus-tag">YOU ARE THE SEARCH ENGINE</div>
+          </div>
+          <div class="versus-item">
+            <div class="versus-item-title">You: "Write an email to The Waterfront asking about availability"</div>
+            <div class="versus-item-desc">You get one email. You copy it. Open Gmail. Paste it. Customize the venue name. Send. Now you go back to ChatGPT: "Now write one for Foreign Cinema." Copy. Paste. Send. "Now Presidio Social Club." Copy. Paste. Send. <strong style="color:var(--rose)">130 times. You are the mail merge.</strong></div>
+            <div class="versus-tag">130× COPY → GMAIL → PASTE → SEND</div>
+          </div>
+          <div class="versus-item">
+            <div class="versus-item-title">You: "How do I avoid the wedding markup?"</div>
+            <div class="versus-item-desc">ChatGPT says "consider being vague about the event type." Cool tip. But it won't invent a fake persona for you. It won't think to say "private dinner" instead of "rehearsal dinner." It won't create "Maggie Levert" and sign emails from her. <strong style="color:var(--rose)">You have to be the strategist.</strong></div>
+            <div class="versus-tag">THE AI DOESN'T SCHEME FOR YOU</div>
+          </div>
+          <div class="versus-item">
+            <div class="versus-item-title">You: "Now personalize each email for each venue"</div>
+            <div class="versus-item-desc">You realize each venue needs a slightly different pitch. "Now rewrite for a restaurant with a garden." "Now one for a rooftop space." "Now mention their Michelin star." Every email is a new prompt. Every personalization is you remembering details and feeding them back in.</div>
+            <div class="versus-tag">YOU ARE THE CONTEXT WINDOW</div>
+          </div>
+          <div class="versus-item">
+            <div class="versus-item-title">You: "Organize all of this into a spreadsheet"</div>
+            <div class="versus-item-desc">ChatGPT gives you a markdown table. You open Google Sheets. Create tabs manually. Copy-paste venue names, pricing, ratings. Format columns. Color-code by status. It's 2am. You started at 10pm. The AI gave you <em>text</em>. <strong style="color:var(--rose)">You did all the work.</strong></div>
+            <div class="versus-tag">OUTPUT: TEXT. EXECUTION: YOU.</div>
+          </div>
+        </div>
+
         <div class="versus-col versus-col-alfred">
           <div class="versus-header">🦉 What Alfred Did</div>
           <div class="versus-item">
@@ -659,35 +688,6 @@
             <div class="versus-item-title">Organized Google Sheet</div>
             <div class="versus-item-desc">Tabs per event type, ratings, pricing, status. A complete system ready for decision-making.</div>
             <div class="versus-tag">DELIVERED</div>
-          </div>
-        </div>
-
-        <div class="versus-col versus-col-normal">
-          <div class="versus-header">🤖 What Normal AI Requires</div>
-          <div class="versus-item">
-            <div class="versus-item-title">"Find me venues in SF"</div>
-            <div class="versus-item-desc">Get a list of 10. Copy-paste into a doc. Ask again for 10 more. Repeat 20 times. Manually compile.</div>
-            <div class="versus-tag">MANUAL</div>
-          </div>
-          <div class="versus-item">
-            <div class="versus-item-title">"Draft an email to this venue"</div>
-            <div class="versus-item-desc">Get one email. Copy it. Open Gmail. Paste. Send. Repeat 130 times. You are the integration layer.</div>
-            <div class="versus-tag">130× COPY-PASTE</div>
-          </div>
-          <div class="versus-item">
-            <div class="versus-item-title">"Should I use a fake name?"</div>
-            <div class="versus-item-desc">You have to think of the strategy. The AI doesn't know vendor pricing dynamics. You prompt, it follows.</div>
-            <div class="versus-tag">YOU THINK</div>
-          </div>
-          <div class="versus-item">
-            <div class="versus-item-title">"Reword this to hide it's a wedding"</div>
-            <div class="versus-item-desc">You need to know the trick first. Then ask for rewrites one by one. The insight is yours, not the AI's.</div>
-            <div class="versus-tag">YOU STRATEGIZE</div>
-          </div>
-          <div class="versus-item">
-            <div class="versus-item-title">"Put this in a spreadsheet format"</div>
-            <div class="versus-item-desc">Get markdown table. Manually create Google Sheet. Copy data in. Format columns. Build tabs yourself.</div>
-            <div class="versus-tag">ASSEMBLY REQUIRED</div>
           </div>
         </div>
       </div>
@@ -808,66 +808,60 @@
   <section>
     <div class="reveal">
       <div class="section-label">05 — What Made It Work</div>
-      <div class="section-title">7 Insights</div>
+      <div class="section-title">6 Insights</div>
 
       <div class="insights-container">
         <!-- Row 1: hero insight, full width -->
         <div class="insight-row insight-row-1">
           <div class="insight-card insight-1">
-            <div class="insight-icon">⚡</div>
+            <div class="insight-icon">🧩</div>
             <div class="insight-num">01</div>
-            <div class="insight-title">Skills Are All You Need</div>
-            <div class="insight-desc">Combined with CLIs, skills give models superpowers. No complex frameworks, no MCP servers — just markdown instructions and command-line tools. The model reads a skill file and executes. That's it.</div>
-            <div class="insight-pullquote">"The skill file is the API. The terminal is the runtime."</div>
+            <div class="insight-title">"This Is Just Glue"</div>
+            <div class="insight-desc">This is not a new model. Not a research breakthrough. It's a thin layer of connectors on top of state-of-the-art models — including Gemini. An open-source harness someone built in a few hours. No fine-tuning, no custom training. The magic isn't in the model.</div>
+            <div class="insight-pullquote">"That broke my entire frame."</div>
           </div>
         </div>
 
         <!-- Row 2: two cards -->
         <div class="insight-row insight-row-2">
           <div class="insight-card insight-2">
-            <div class="insight-icon">🌐</div>
+            <div class="insight-icon">⚡</div>
             <div class="insight-num">02</div>
-            <div class="insight-title">Ambient Access</div>
-            <div class="insight-desc">Not "call this API when asked." Always-on access to tools. The agent checks email because it can, not because you told it to.</div>
+            <div class="insight-title">"Skills + CLI Are All They Need"</div>
+            <div class="insight-desc">No complex frameworks. No MCP servers. Just markdown instruction files (skills) and command-line tools. The model reads a skill file, runs CLI commands, and executes. Give a model a terminal and clear instructions, and it becomes unreasonably capable.</div>
           </div>
           <div class="insight-card insight-3">
             <div class="insight-icon">💓</div>
             <div class="insight-num">03</div>
-            <div class="insight-title">Proactive Scheduling</div>
-            <div class="insight-desc">A heartbeat that says "wake up and see if anything needs doing." The model doesn't need to be prompted by a human.</div>
+            <div class="insight-title">"The Harness Matters"</div>
+            <div class="insight-desc">The harness doesn't just enable the model — it pushes it. Heartbeats wake it up every 30 minutes to check if anything needs doing. Memory files force it to maintain continuity. The architecture encourages the model to never stop, to go above and beyond, to be proactive rather than reactive.</div>
           </div>
         </div>
 
-        <!-- Row 3: three cards -->
-        <div class="insight-row insight-row-3">
+        <!-- Row 3: two cards -->
+        <div class="insight-row insight-row-2">
           <div class="insight-card insight-4">
             <div class="insight-icon">📝</div>
             <div class="insight-num">04</div>
-            <div class="insight-title">Memory as Files</div>
-            <div class="insight-desc">No vector database. No RAG. A markdown file it reads and writes to. "You wake up fresh each session. These files are your continuity."</div>
+            <div class="insight-title">"Personalization & Memory Are Just Markdown"</div>
+            <div class="insight-desc">No vector database. No RAG pipeline. No embeddings. MEMORY.md for long-term knowledge. Daily markdown files for context. SOUL.md for personality. The model reads and writes plain text files. That's the entire memory system.</div>
           </div>
           <div class="insight-card insight-5">
-            <div class="insight-icon">👻</div>
-            <div class="insight-num">05</div>
-            <div class="insight-title">Personality as Prompt</div>
-            <div class="insight-desc">20 lines of SOUL.md turned a tool into a collaborator. Non-technical users engaged immediately.</div>
-          </div>
-          <div class="insight-card insight-6">
             <div class="insight-icon">💬</div>
-            <div class="insight-num">06</div>
-            <div class="insight-title">Setup Through Dialogue</div>
-            <div class="insight-desc">No config files, no YAML. "Your name is Alfred. You're British. Here's my wedding. Go."</div>
+            <div class="insight-num">05</div>
+            <div class="insight-title">"Setup Through Dialogue"</div>
+            <div class="insight-desc">No config files, no YAML, no deployment scripts. "Your name is Alfred. You're British. Here's my wedding. Go." The entire agent was prompted to life through conversation. Personality, capabilities, and context — all established by just talking to it.</div>
           </div>
         </div>
 
-        <!-- Row 4: full width closer -->
+        <!-- Row 4: featured insight, full width, special treatment -->
         <div class="insight-row insight-row-1">
-          <div class="insight-card insight-7">
-            <div class="insight-icon">🧩</div>
-            <div class="insight-num">07</div>
-            <div class="insight-title">This Is Just Glue</div>
-            <div class="insight-desc">Off-the-shelf models. An open-source harness built in hours. No fine-tuning, no custom training, no proprietary anything. The magic isn't in the model — it's in giving it the right tools and getting out of the way.</div>
-            <div class="insight-pullquote">"That broke my entire frame."</div>
+          <div class="insight-card insight-6" style="background: linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(244,63,94,0.08) 50%, rgba(139,92,246,0.06) 100%); --card-gradient: linear-gradient(135deg, #f59e0b, #f43f5e, #8b5cf6); padding: 40px 36px;">
+            <div class="insight-icon" style="font-size: 40px;">🧬</div>
+            <div class="insight-num">06</div>
+            <div class="insight-title" style="font-size: 24px; color: #fbbf24;">"Self-Learning, Self-Correcting"</div>
+            <div class="insight-desc" style="font-size: 15px; max-width: 700px;">Barron sent a voice note. Alfred didn't know how to handle audio. So it found the OpenAI API key on the machine, sent the audio to Whisper via curl, transcribed it — and then wrote a skill file so it would know how to do it forever. No human taught it. It encountered a gap, solved it, and documented the solution.</div>
+            <div class="insight-pullquote" style="font-size: 18px; color: #fbbf24; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(245,158,11,0.25);">"It encountered a gap, solved it, and documented the solution."</div>
           </div>
         </div>
       </div>

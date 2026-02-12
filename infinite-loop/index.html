@@ -10,20 +10,21 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #06060b;
-      --bg-light: #0c0c14;
-      --bg-card: #111119;
-      --border: #1e1e30;
-      --text: #e8e8f0;
-      --text-dim: #8888a0;
-      --text-dimmer: #555566;
-      --accent: #8b5cf6;
-      --accent2: #06b6d4;
-      --accent-dim: rgba(139,92,246,0.12);
-      --gold: #f59e0b;
-      --rose: #f43f5e;
-      --emerald: #10b981;
-      --blue: #3b82f6;
+      --bg: #f5f0e8;
+      --bg-light: #ebe5d9;
+      --bg-card: #ffffff;
+      --border: #d4cbbа;
+      --border: #d4cbb8;
+      --text: #1a1a1a;
+      --text-dim: #5a5549;
+      --text-dimmer: #8a8478;
+      --accent: #6d28d9;
+      --accent2: #0891b2;
+      --accent-dim: rgba(109,40,217,0.08);
+      --gold: #b45309;
+      --rose: #be123c;
+      --emerald: #059669;
+      --blue: #1d4ed8;
     }
 
     html { scroll-behavior: smooth; }
@@ -65,7 +66,7 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(ellipse at 30% 50%, rgba(139,92,246,0.08) 0%, transparent 50%),
+      background: radial-gradient(ellipse at 30% 50%, rgba(109,40,217,0.06) 0%, transparent 50%),
                   radial-gradient(ellipse at 70% 50%, rgba(6,182,212,0.06) 0%, transparent 50%);
       pointer-events: none;
     }
@@ -208,12 +209,12 @@
     }
     .versus-header-normal {
       color: var(--rose);
-      background: rgba(244,63,94,0.06);
+      background: rgba(190,18,60,0.06);
       border-right: 1px solid var(--border);
     }
     .versus-header-alfred {
       color: var(--accent);
-      background: rgba(139,92,246,0.06);
+      background: rgba(109,40,217,0.04);
     }
     .versus-row {
       display: grid;
@@ -225,11 +226,11 @@
       padding: 24px 28px;
     }
     .versus-cell-normal {
-      background: rgba(244,63,94,0.03);
+      background: rgba(190,18,60,0.04);
       border-right: 1px solid var(--border);
     }
     .versus-cell-alfred {
-      background: rgba(139,92,246,0.04);
+      background: rgba(109,40,217,0.04);
     }
     .versus-cell-title {
       font-weight: 600;
@@ -253,17 +254,17 @@
       font-weight: 500;
     }
     .versus-cell-alfred .versus-tag {
-      background: rgba(139,92,246,0.15);
+      background: rgba(109,40,217,0.12);
       color: var(--accent);
     }
     .versus-cell-normal .versus-tag {
-      background: rgba(244,63,94,0.12);
+      background: rgba(190,18,60,0.10);
       color: var(--rose);
     }
     .fun-note {
       margin-top: 40px;
       padding: 20px 24px;
-      background: rgba(245,158,11,0.08);
+      background: rgba(180,83,9,0.08);
       border: 1px solid rgba(245,158,11,0.2);
       border-radius: 12px;
       font-size: 14px;
@@ -432,10 +433,10 @@
     .insight-1 .insight-title { color: #a78bfa; }
 
     .insight-2 {
-      background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(244,63,94,0.05) 100%);
+      background: linear-gradient(135deg, rgba(180,83,9,0.08) 0%, rgba(244,63,94,0.05) 100%);
       --card-gradient: linear-gradient(135deg, #f59e0b, #f43f5e);
     }
-    .insight-2 .insight-title { color: #fbbf24; }
+    .insight-2 .insight-title { color: #b45309; }
 
     .insight-3 {
       background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(59,130,246,0.05) 100%);
@@ -444,7 +445,7 @@
     .insight-3 .insight-title { color: #34d399; }
 
     .insight-4 {
-      background: linear-gradient(135deg, rgba(244,63,94,0.08) 0%, rgba(245,158,11,0.05) 100%);
+      background: linear-gradient(135deg, rgba(190,18,60,0.06) 0%, rgba(245,158,11,0.05) 100%);
       --card-gradient: linear-gradient(135deg, #f43f5e, #f59e0b);
     }
     .insight-4 .insight-title { color: #fb7185; }
@@ -528,12 +529,12 @@
 
     /* UNCOMFORTABLE */
     .uncomfortable {
-      background: linear-gradient(180deg, var(--bg) 0%, #08080d 100%);
+      background: linear-gradient(180deg, var(--bg) 0%, #ede5d8 100%);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
     .uncomfortable .section-title {
-      color: #ff6b6b;
+      color: var(--rose);
     }
     .uncomfortable-text {
       font-size: 19px;
@@ -882,12 +883,12 @@
 
         <!-- Row 5: featured insight, full width, special treatment -->
         <div class="insight-row insight-row-1">
-          <div class="insight-card insight-7" style="background: linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(244,63,94,0.08) 50%, rgba(139,92,246,0.06) 100%); --card-gradient: linear-gradient(135deg, #f59e0b, #f43f5e, #8b5cf6); padding: 40px 36px;">
+          <div class="insight-card insight-7" style="background: linear-gradient(135deg, rgba(180,83,9,0.10) 0%, rgba(190,18,60,0.06) 50%, rgba(109,40,217,0.04) 100%); --card-gradient: linear-gradient(135deg, #f59e0b, #f43f5e, #8b5cf6); padding: 40px 36px;">
             <div class="insight-icon" style="font-size: 40px;">🧬</div>
             <div class="insight-num">07</div>
-            <div class="insight-title" style="font-size: 24px; color: #fbbf24;">"Self-Learning, Self-Correcting"</div>
+            <div class="insight-title" style="font-size: 24px; color: #b45309;">"Self-Learning, Self-Correcting"</div>
             <div class="insight-desc" style="font-size: 15px; max-width: 700px;">Barron sent a voice note. Alfred didn't know how to handle audio. So it found the OpenAI API key on the machine, sent the audio to Whisper via curl, transcribed it — and then wrote a skill file so it would know how to do it forever. No human taught it. It encountered a gap, solved it, and documented the solution.</div>
-            <div class="insight-pullquote" style="font-size: 18px; color: #fbbf24; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(245,158,11,0.25);">"It encountered a gap, solved it, and documented the solution."</div>
+            <div class="insight-pullquote" style="font-size: 18px; color: #b45309; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(180,83,9,0.20);">"It encountered a gap, solved it, and documented the solution."</div>
           </div>
         </div>
       </div>

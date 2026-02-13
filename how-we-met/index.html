@@ -75,6 +75,26 @@
         <p class="touch-hint">On mobile: tap left/right to move, swipe up to jump</p>
       </section>
 
+      <!-- Score Submit Overlay -->
+      <div id="score-overlay" class="score-overlay hidden">
+        <div class="score-modal">
+          <p class="score-final-label">Your Score</p>
+          <p class="score-final-number" id="score-final">0</p>
+          <div class="score-input-row">
+            <input type="text" id="score-name" class="score-name-input" maxlength="12" placeholder="Your name" />
+            <button id="score-submit-btn" class="score-submit-btn">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leaderboard -->
+      <section class="leaderboard">
+        <h2 class="leaderboard-title">♛ Leaderboard</h2>
+        <div class="leaderboard-table" id="leaderboard-body">
+          <p class="leaderboard-empty">No scores yet. Be the first!</p>
+        </div>
+      </section>
+
       <footer class="footer">
         <p>Built with 🦉 by Alfred · A Barron &amp; Nina story</p>
       </footer>
@@ -82,5 +102,60 @@
 
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
     <script src="game.js"></script>
+    <script>
+      // Leaderboard logic (localStorage)
+      const LB_KEY = 'howwemet_leaderboard';
+
+      function getScores() {
+        try { return JSON.parse(localStorage.getItem(LB_KEY)) || []; }
+        catch { return []; }
+      }
+
+      function saveScore(name, score) {
+        const scores = getScores();
+        scores.push({ name: name, score: score, date: new Date().toISOString() });
+        scores.sort((a, b) => b.score - a.score);
+        localStorage.setItem(LB_KEY, JSON.stringify(scores.slice(0, 10)));
+        renderLeaderboard();
+      }
+
+      function renderLeaderboard() {
+        const scores = getScores();
+        const el = document.getElementById('leaderboard-body');
+        if (scores.length === 0) {
+          el.innerHTML = '<p class="leaderboard-empty">No scores yet. Be the first!</p>';
+          return;
+        }
+        el.innerHTML = scores.map(function(s, i) {
+          const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i + 1) + '.';
+          return '<div class="lb-row' + (i < 3 ? ' lb-top' : '') + '">' +
+            '<span class="lb-rank">' + medal + '</span>' +
+            '<span class="lb-name">' + s.name + '</span>' +
+            '<span class="lb-score">' + s.score + '</span>' +
+          '</div>';
+        }).join('');
+      }
+
+      // Called from game.js when game ends
+      window.showScoreSubmit = function(score) {
+        document.getElementById('score-final').textContent = score;
+        document.getElementById('score-overlay').classList.remove('hidden');
+        document.getElementById('score-name').value = '';
+        document.getElementById('score-name').focus();
+      };
+
+      document.getElementById('score-submit-btn').addEventListener('click', function() {
+        const name = document.getElementById('score-name').value.trim() || 'Anonymous';
+        const score = parseInt(document.getElementById('score-final').textContent) || 0;
+        saveScore(name, score);
+        document.getElementById('score-overlay').classList.add('hidden');
+      });
+
+      document.getElementById('score-name').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') document.getElementById('score-submit-btn').click();
+      });
+
+      renderLeaderboard();
+    </script>
   </body>
 </html>

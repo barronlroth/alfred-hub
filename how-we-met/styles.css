@@ -330,3 +330,145 @@ kbd:hover {
     gap: 16px;
   }
 }
+
+/* Score overlay */
+.score-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 10, 20, 0.92);
+  display: grid;
+  place-items: center;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+}
+.score-overlay.hidden { display: none; }
+
+.score-modal {
+  background: var(--panel);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  padding: 40px 48px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(232, 101, 122, 0.2);
+}
+
+.score-final-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.score-final-number {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 48px;
+  color: var(--accent);
+  margin: 0 0 24px;
+  text-shadow: 0 0 20px rgba(232, 101, 122, 0.4);
+}
+
+.score-input-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.score-name-input {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  padding: 10px 14px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  width: 160px;
+  outline: none;
+}
+.score-name-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(232, 101, 122, 0.3);
+}
+.score-name-input::placeholder {
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+.score-submit-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: var(--bg-deep);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.score-submit-btn:hover {
+  background: var(--accent-light);
+  transform: translateY(-1px);
+}
+
+/* Leaderboard */
+.leaderboard {
+  width: min(100%, 600px);
+  margin-top: 12px;
+}
+
+.leaderboard-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  color: var(--accent);
+  text-align: center;
+  margin: 0 0 16px;
+}
+
+.leaderboard-table {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  overflow: hidden;
+}
+
+.leaderboard-empty {
+  font-family: 'Quicksand', sans-serif;
+  color: var(--muted);
+  text-align: center;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.lb-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 12px;
+}
+.lb-row:last-child { border-bottom: none; }
+.lb-top { background: rgba(232, 101, 122, 0.06); }
+
+.lb-rank {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  width: 36px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.lb-name {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  flex: 1;
+}
+
+.lb-score {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  color: #ffe9a8;
+  flex-shrink: 0;
+}

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charter x Google — Team Structure</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', 'Google Sans', sans-serif;
+    background: #fff;
+    color: #202124;
+    padding: 40px 20px 60px;
+    min-width: 1200px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #202124;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .header h1 .charter { color: #202124; }
+  .header h1 .x { color: #9aa0a6; font-weight: 400; }
+  .header h1 .google-g { display: inline-flex; }
+  .header h1 .google-text {
+    background: linear-gradient(90deg, #4285F4 0%, #4285F4 25%, #EA4335 25%, #EA4335 50%, #FBBC04 50%, #FBBC04 75%, #34A853 75%, #34A853 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header .subtitle {
+    font-size: 14px;
+    color: #5f6368;
+    margin-top: 4px;
+  }
+
+  /* Section Labels */
+  .section-label {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #5f6368;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* Card Grid */
+  .row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* Person Card */
+  .card {
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    padding: 16px 12px 12px;
+    text-align: center;
+    background: #fff;
+    min-width: 155px;
+    max-width: 175px;
+    position: relative;
+  }
+  .card.highlighted {
+    border-color: #34A853;
+    border-width: 2px;
+  }
+  .card .initials {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .card .initials.blue { background: #4285F4; }
+  .card .initials.red { background: #EA4335; }
+  .card .initials.green { background: #34A853; }
+  .card .initials.yellow { background: #FBBC04; color: #202124; }
+  .card .initials.purple { background: #A142F4; }
+  .card .initials.teal { background: #24C1E0; }
+  .card .initials.grey { background: #9aa0a6; }
+
+  .card .you-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #34A853;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .card .name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #202124;
+    line-height: 1.3;
+  }
+  .card .title {
+    font-size: 11px;
+    color: #5f6368;
+    line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px dashed #dadce0;
+    margin: 28px 0;
+  }
+
+  /* Department Section */
+  .departments {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .dept-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dept-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #5f6368;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .dept-card {
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    padding: 14px 12px;
+    text-align: center;
+    background: #fff;
+    min-width: 150px;
+    max-width: 170px;
+  }
+  .dept-card .dept-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #202124;
+    margin-bottom: 4px;
+  }
+  .dept-card .dept-person {
+    font-size: 11px;
+    color: #5f6368;
+    line-height: 1.5;
+  }
+
+  /* Sub-cards under Agent Building */
+  .sub-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .sub-card {
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    padding: 10px 10px;
+    text-align: center;
+    background: #fff;
+    min-width: 140px;
+    max-width: 165px;
+  }
+  .sub-card .dept-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #202124;
+    margin-bottom: 2px;
+  }
+  .sub-card .dept-person {
+    font-size: 11px;
+    color: #5f6368;
+    line-height: 1.5;
+  }
+
+  /* Connector lines (visual only) */
+  .connector {
+    width: 1px;
+    height: 16px;
+    background: #dadce0;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>
+    <span class="charter">Charter</span>
+    <span class="x">×</span>
+    <span class="google-text">Google</span>
+  </h1>
+  <div class="subtitle">Team Structure</div>
+</div>
+
+<!-- Leadership Team -->
+<div class="section-label">Leadership Team</div>
+
+<div class="row">
+  <div class="card">
+    <div class="initials blue">SV</div>
+    <div class="name">Shiv Venkataraman</div>
+    <div class="title">GM Applied AI</div>
+  </div>
+  <div class="card">
+    <div class="initials red">HH</div>
+    <div class="name">Hamoon Hedayat</div>
+    <div class="title">Director of Sales,<br>Telco and Cable</div>
+  </div>
+  <div class="card">
+    <div class="initials yellow">DK</div>
+    <div class="name">Darshan Kantak</div>
+    <div class="title">VP for Product</div>
+  </div>
+  <div class="card highlighted">
+    <span class="you-badge">YOU</span>
+    <div class="initials green">BR</div>
+    <div class="name">Barron Roth</div>
+    <div class="title">Dir / Product Manager<br>CoS for Product</div>
+  </div>
+  <div class="card">
+    <div class="initials teal">MG</div>
+    <div class="name">Manish Gupta</div>
+    <div class="title">Head of Customer Eng.</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <div class="initials purple">NG</div>
+    <div class="name">Nima George</div>
+    <div class="title">FDE Sr. Director</div>
+  </div>
+  <div class="card">
+    <div class="initials red">ER</div>
+    <div class="name">Eileen Ryan</div>
+    <div class="title">Key Account Director</div>
+  </div>
+  <div class="card">
+    <div class="initials blue">SS</div>
+    <div class="name">Shalini Sinha</div>
+    <div class="title">Chief of Staff</div>
+  </div>
+  <div class="card">
+    <div class="initials yellow">SM</div>
+    <div class="name">Sitanshu Mehta</div>
+    <div class="title">Consulting Account Lead</div>
+  </div>
+  <div class="card">
+    <div class="initials teal">JR</div>
+    <div class="name">Jordan Richman</div>
+    <div class="title">Technical Account Manager</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- Departments -->
+<div class="departments">
+
+  <!-- Agent Building -->
+  <div class="dept-col">
+    <div class="dept-label">Agent Building</div>
+    <div class="dept-card">
+      <div class="initials grey" style="width:36px;height:36px;font-size:12px;margin:0 auto 6px;">🤖</div>
+      <div class="dept-title">Pak Ming Wan &amp; Vipul Raja</div>
+      <div class="dept-person">Agent Building Leads</div>
+    </div>
+    <div class="sub-row">
+      <div class="sub-card">
+        <div class="dept-title">Steering</div>
+        <div class="dept-person">Hansenclever Bassani</div>
+      </div>
+      <div class="sub-card">
+        <div class="dept-title">Appointment</div>
+        <div class="dept-person">Hansenclever Bassani</div>
+      </div>
+      <div class="sub-card">
+        <div class="dept-title">Troubleshooting</div>
+        <div class="dept-person">Anulya Polisetti<br>Justin Randall<br><em>Technical Solutions Engineer</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IVA / Chat -->
+  <div class="dept-col">
+    <div class="dept-label">IVA / Chat</div>
+    <div class="dept-card">
+      <div class="dept-title">Andrew Huot</div>
+      <div class="dept-person">Product Manager</div>
+    </div>
+  </div>
+
+  <!-- Tech Arch -->
+  <div class="dept-col">
+    <div class="dept-label">Tech Arch</div>
+    <div class="dept-card">
+      <div class="dept-title">Technical Architecture</div>
+      <div class="dept-person">
+        Nisa Tadayon<br><em>Sales Conversational AI Spec.</em><br>
+        Rob Horner<br><em>Principal Architect</em><br>
+        Vivian Neilley<br><em>Product Manager</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- Commercials -->
+  <div class="dept-col">
+    <div class="dept-label">Commercials</div>
+    <div class="dept-card">
+      <div class="dept-title">Commercials</div>
+      <div class="dept-person">Hamoon Hedayat<br>Eileen Ryan</div>
+    </div>
+  </div>
+
+  <!-- Insights -->
+  <div class="dept-col">
+    <div class="dept-label">Insights</div>
+    <div class="dept-card">
+      <div class="dept-title">Insights &amp; Quality</div>
+      <div class="dept-person">
+        Sweta Kala<br><em>Product Manager</em><br>
+        Katherine Zhao<br><em>Engineering Manager</em><br>
+        Thiago da Silva<br><em>Engineer</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ops Readiness -->
+  <div class="dept-col">
+    <div class="dept-label">Ops Readiness</div>
+    <div class="dept-card">
+      <div class="dept-title">Pak Ming Wan</div>
+      <div class="dept-person">&nbsp;</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

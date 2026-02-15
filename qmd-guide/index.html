@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QMD — Local-First Memory Search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --surface: #111116;
+    --surface-2: #1a1a22;
+    --border: #2a2a35;
+    --text: #e8e6e3;
+    --text-dim: #8a8890;
+    --accent: #c4f04d;
+    --accent-dim: #8aad2a;
+    --og-color: #f06449;
+    --qmd-color: #c4f04d;
+    --glow: rgba(196, 240, 77, 0.08);
+    --og-glow: rgba(240, 100, 73, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    z-index: 9999;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 6rem 0 4rem;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(ellipse, var(--glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    background: var(--surface);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .hero-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    max-width: 540px;
+    line-height: 1.7;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+    margin: 3rem 0;
+  }
+
+  /* Section headers */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* Comparison grid */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0 3rem;
+  }
+
+  .compare-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .compare-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+
+  .compare-card.og::before {
+    background: linear-gradient(90deg, var(--og-color), transparent);
+  }
+
+  .compare-card.qmd::before {
+    background: linear-gradient(90deg, var(--qmd-color), transparent);
+  }
+
+  .compare-card.og:hover { border-color: rgba(240, 100, 73, 0.3); }
+  .compare-card.qmd:hover { border-color: rgba(196, 240, 77, 0.3); }
+
+  .compare-card .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    display: inline-block;
+    margin-bottom: 1.25rem;
+  }
+
+  .compare-card.og .tag {
+    background: rgba(240, 100, 73, 0.12);
+    color: var(--og-color);
+  }
+
+  .compare-card.qmd .tag {
+    background: rgba(196, 240, 77, 0.12);
+    color: var(--qmd-color);
+  }
+
+  .compare-card h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+
+  .compare-card ul {
+    list-style: none;
+  }
+
+  .compare-card li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 0.92rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .compare-card li:last-child { border-bottom: none; }
+
+  .compare-card li .icon {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+  }
+
+  .compare-card.og li .icon { color: var(--og-color); }
+  .compare-card.qmd li .icon { color: var(--qmd-color); }
+
+  /* Pipeline section */
+  .pipeline {
+    margin: 3rem 0;
+  }
+
+  .pipeline-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  .pipeline-step {
+    flex: 1;
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .pipeline-step:first-child {
+    border-radius: 12px 0 0 12px;
+  }
+
+  .pipeline-step:last-child {
+    border-radius: 0 12px 12px 0;
+  }
+
+  .pipeline-step:hover {
+    background: var(--surface-2);
+    border-color: rgba(196, 240, 77, 0.2);
+    z-index: 1;
+  }
+
+  .pipeline-step .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .pipeline-step h4 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .pipeline-step p {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .pipeline-arrow {
+    position: absolute;
+    top: 50%;
+    right: -1px;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 1rem;
+    z-index: 2;
+    background: var(--surface);
+    padding: 0.25rem 0;
+  }
+
+  /* Specs grid */
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 2rem 0 3rem;
+  }
+
+  .spec {
+    background: var(--surface);
+    padding: 2rem;
+    transition: background 0.3s;
+  }
+
+  .spec:hover { background: var(--surface-2); }
+
+  .spec-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+
+  .spec-label {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+  }
+
+  /* Data flow diagram */
+  .data-flow {
+    margin: 3rem 0;
+  }
+
+  .flow-diagram {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .flow-box {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    background: var(--surface);
+    text-align: center;
+  }
+
+  .flow-box h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  .flow-box.og h4 { color: var(--og-color); }
+  .flow-box.qmd h4 { color: var(--qmd-color); }
+
+  .flow-path {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .flow-path .highlight {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .flow-path .warn {
+    color: var(--og-color);
+    font-weight: 500;
+  }
+
+  .flow-path .safe {
+    color: var(--qmd-color);
+    font-weight: 500;
+  }
+
+  .flow-vs {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--text-dim);
+  }
+
+  /* Config block */
+  .config-section {
+    margin: 3rem 0;
+  }
+
+  pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    overflow-x: auto;
+    color: var(--text-dim);
+    position: relative;
+  }
+
+  pre .comment { color: #555; }
+  pre .key { color: var(--accent); }
+  pre .string { color: #e89b6a; }
+  pre .bool { color: #7ec8e3; }
+
+  .config-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    background: var(--surface);
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    position: relative;
+    top: 0.75rem;
+    left: 1.5rem;
+    display: inline-block;
+    z-index: 1;
+  }
+
+  /* Bottom section */
+  .bottom {
+    padding: 4rem 0 6rem;
+    text-align: center;
+  }
+
+  .bottom h2 {
+    margin-bottom: 0.75rem;
+  }
+
+  .bottom p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .bottom .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 2rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .comparison { grid-template-columns: 1fr; }
+    .pipeline-flow { flex-direction: column; }
+    .pipeline-step { border-radius: 0 !important; }
+    .pipeline-step:first-child { border-radius: 12px 12px 0 0 !important; }
+    .pipeline-step:last-child { border-radius: 0 0 12px 12px !important; }
+    .pipeline-arrow { display: none; }
+    .specs { grid-template-columns: 1fr; }
+    .flow-diagram { grid-template-columns: 1fr; }
+    .flow-vs { transform: rotate(90deg); }
+    .container { padding: 0 1.25rem; }
+    .hero { padding: 4rem 0 3rem; }
+  }
+
+  /* Animations */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up:nth-child(2) { animation-delay: 0.1s; }
+  .fade-up:nth-child(3) { animation-delay: 0.2s; }
+  .fade-up:nth-child(4) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <section class="hero">
+    <div class="hero-badge fade-up">
+      <span class="dot"></span>
+      OpenClaw Memory
+    </div>
+    <h1 class="fade-up">Your memory,<br><em>on your machine.</em></h1>
+    <p class="hero-sub fade-up">
+      QMD replaces cloud-dependent vector search with a fully local pipeline — 
+      query expansion, hybrid retrieval, and neural reranking. 
+      No API calls. No data leaving your device.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Comparison -->
+  <section>
+    <p class="section-label">Side by side</p>
+    <h2>Two approaches to the same files</h2>
+    <p style="color: var(--text-dim); margin-bottom: 0.5rem; font-size: 0.95rem;">
+      Both systems search the same Markdown files — <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: var(--surface-2); padding: 0.15rem 0.4rem; border-radius: 4px;">MEMORY.md</code> and <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: var(--surface-2); padding: 0.15rem 0.4rem; border-radius: 4px;">memory/*.md</code>. The difference is how they find what's relevant.
+    </p>
+
+    <div class="comparison">
+      <div class="compare-card og">
+        <span class="tag">Default · Built-in</span>
+        <h3>Original Memory</h3>
+        <ul>
+          <li>
+            <span class="icon">→</span>
+            <span>Sends each query to <strong style="color: var(--text);">OpenAI's API</strong> for embedding (text-embedding-3-small by default)</span>
+          </li>
+          <li>
+            <span class="icon">→</span>
+            <span>Single-vector cosine similarity matching against pre-embedded chunks</span>
+          </li>
+          <li>
+            <span class="icon">→</span>
+            <span>Optional BM25 hybrid search for keyword matching</span>
+          </li>
+          <li>
+            <span class="icon">→</span>
+            <span>Requires an API key (OpenAI, Gemini, or Voyage)</span>
+          </li>
+          <li>
+            <span class="icon">→</span>
+            <span>Memory content sent to external servers for embedding</span>
+          </li>
+          <li>
+            <span class="icon">→</span>
+            <span>Fast, cheap, works everywhere — but cloud-dependent</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="compare-card qmd">
+        <span class="tag">Experimental · Local-first</span>
+        <h3>QMD Memory</h3>
+        <ul>
+          <li>
+            <span class="icon">→</span>
+            <span>Runs a local <strong style="color: var(--text);">1.7B LLM</strong> to expand your query into multiple search angles</span>
+          </li>
+          <li>
+            <span class="icon">→</span>
+            <span>Hybrid retrieval: BM25 keywords + vector similarity combined</span>
+          </li>
+          <li>
+            <span class="icon">→</span>
+            <span>Neural reranking via a local <strong style="color: var(--text);">0.6B model</strong> (Qwen3 Reranker)</span>
+          </li>
+          <li>
+            <span class="icon">→</span>
+            <span>No API key needed for memory search — zero cloud dependency</span>
+          </li>
+          <li>
+            <span class="icon">→</span>
+            <span>All data stays on-device — nothing leaves your machine</span>
+          </li>
+          <li>
+            <span class="icon">→</span>
+            <span>~2GB disk for models, cached after first run</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Pipeline -->
+  <section class="pipeline">
+    <p class="section-label">How QMD searches</p>
+    <h2>Three-stage local pipeline</h2>
+
+    <div class="pipeline-flow">
+      <div class="pipeline-step">
+        <div class="step-num">Stage 01</div>
+        <h4>Query Expansion</h4>
+        <p>A local 1.7B LLM takes your query and generates multiple search variants — lexical, vector, and hypothetical document embeddings. One question becomes five angles of attack.</p>
+        <span class="pipeline-arrow">›</span>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">Stage 02</div>
+        <h4>Hybrid Retrieval</h4>
+        <p>Each expanded query runs against both BM25 (keyword) and vector (semantic) indexes simultaneously. Candidates are pooled and deduplicated by chunk ID.</p>
+        <span class="pipeline-arrow">›</span>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">Stage 03</div>
+        <h4>Neural Reranking</h4>
+        <p>A local 0.6B Qwen3 reranker scores every candidate for true relevance. The top results surface with confidence scores — no cloud round-trip needed.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Specs -->
+  <section>
+    <p class="section-label">By the numbers</p>
+    <h2>What QMD costs you</h2>
+    <div class="specs">
+      <div class="spec">
+        <div class="spec-value">~1.9GB</div>
+        <div class="spec-label">Total model size (downloaded once, cached forever)</div>
+      </div>
+      <div class="spec">
+        <div class="spec-value">$0.00</div>
+        <div class="spec-label">Per-search API cost (it's all local)</div>
+      </div>
+      <div class="spec">
+        <div class="spec-value">0</div>
+        <div class="spec-label">Bytes of memory data sent to the cloud</div>
+      </div>
+      <div class="spec">
+        <div class="spec-value">1.7B</div>
+        <div class="spec-label">Query expansion model parameters</div>
+      </div>
+      <div class="spec">
+        <div class="spec-value">0.6B</div>
+        <div class="spec-label">Reranker model parameters (Qwen3)</div>
+      </div>
+      <div class="spec">
+        <div class="spec-value">5m</div>
+        <div class="spec-label">Default index refresh interval</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Data flow -->
+  <section class="data-flow">
+    <p class="section-label">Where your data goes</p>
+    <h2>The privacy difference</h2>
+
+    <div class="flow-diagram">
+      <div class="flow-box og">
+        <h4>Original</h4>
+        <div class="flow-path">
+          Your query<br>
+          <span class="highlight">↓</span><br>
+          <span class="warn">→ OpenAI API</span><br>
+          <span class="highlight">↓</span><br>
+          Embedding returned<br>
+          <span class="highlight">↓</span><br>
+          Cosine match locally<br>
+          <span class="highlight">↓</span><br>
+          Results
+        </div>
+      </div>
+
+      <div class="flow-vs">vs</div>
+
+      <div class="flow-box qmd">
+        <h4>QMD</h4>
+        <div class="flow-path">
+          Your query<br>
+          <span class="highlight">↓</span><br>
+          <span class="safe">→ Local LLM (expand)</span><br>
+          <span class="highlight">↓</span><br>
+          <span class="safe">→ Local index (search)</span><br>
+          <span class="highlight">↓</span><br>
+          <span class="safe">→ Local LLM (rerank)</span><br>
+          <span class="highlight">↓</span><br>
+          Results
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Config -->
+  <section class="config-section">
+    <p class="section-label">Setup</p>
+    <h2>Three commands, one config line</h2>
+
+    <pre style="margin-bottom: 1.5rem;">
+<span class="comment"># Install dependencies</span>
+brew install oven-sh/bun/bun sqlite
+bun install -g https://github.com/tobi/qmd</pre>
+
+    <span class="config-label">openclaw.json</span>
+    <pre>
+{
+  <span class="key">"memory"</span>: {
+    <span class="key">"backend"</span>: <span class="string">"qmd"</span>,
+    <span class="key">"qmd"</span>: {
+      <span class="key">"command"</span>: <span class="string">"/Users/you/.bun/bin/qmd"</span>,  <span class="comment">// if not on system PATH</span>
+      <span class="key">"sessions"</span>: {
+        <span class="key">"enabled"</span>: <span class="bool">true</span>  <span class="comment">// optional: index chat history too</span>
+      }
+    }
+  }
+}</pre>
+
+    <p style="color: var(--text-dim); font-size: 0.88rem; margin-top: 1rem; line-height: 1.7;">
+      First search downloads two GGUF models (~1.9GB total). After that, everything runs from cache.
+      If QMD ever fails, OpenClaw automatically falls back to the built-in vector search — no downtime.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Bottom -->
+  <section class="bottom">
+    <h2>Same files. Smarter search.<br><em style="font-family: 'Instrument Serif', serif; color: var(--accent);">Fully yours.</em></h2>
+    <p>
+      Your memory stays in Markdown. QMD just changes how it's searched — 
+      from a cloud API call to a three-stage local pipeline 
+      running entirely on your hardware.
+    </p>
+    <div class="mono">memory.backend = "qmd"</div>
+  </section>
+
+</div>
+
+</body>
+</html>

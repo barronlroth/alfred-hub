@@ -546,9 +546,9 @@
     </div>
     <h1 class="fade-up">Your memory,<br><em>on your machine.</em></h1>
     <p class="hero-sub fade-up">
-      QMD replaces cloud-dependent vector search with a fully local pipeline — 
-      query expansion, hybrid retrieval, and neural reranking. 
-      No API calls. No data leaving your device.
+      OpenClaw's default memory search sends your queries to OpenAI for embedding.
+      QMD does the same job locally, using two small models on your own hardware. 
+      Nothing gets sent anywhere.
     </p>
     <img src="images/hero-owl.png" alt="Wise owl on a circuit board" class="section-illustration hero-img fade-up">
   </section>
@@ -559,9 +559,9 @@
   <section>
     <img src="images/comparison-owl.png" alt="Two owls — cloud vs local" class="section-illustration wide">
     <p class="section-label">Side by side</p>
-    <h2>Two approaches to the same files</h2>
+    <h2>Two ways to search the same files</h2>
     <p style="color: var(--text-dim); margin-bottom: 0.5rem; font-size: 0.95rem;">
-      Both systems search the same Markdown files — <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: var(--surface-2); padding: 0.15rem 0.4rem; border-radius: 4px;">MEMORY.md</code> and <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: var(--surface-2); padding: 0.15rem 0.4rem; border-radius: 4px;">memory/*.md</code>. The difference is how they find what's relevant.
+      Both read from <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: var(--surface-2); padding: 0.15rem 0.4rem; border-radius: 4px;">MEMORY.md</code> and <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: var(--surface-2); padding: 0.15rem 0.4rem; border-radius: 4px;">memory/*.md</code>. The difference is where the search happens.
     </p>
 
     <div class="comparison">
@@ -575,7 +575,7 @@
           </li>
           <li>
             <span class="icon">→</span>
-            <span>Single-vector cosine similarity matching against pre-embedded chunks</span>
+            <span>Matches against pre-embedded chunks using cosine similarity</span>
           </li>
           <li>
             <span class="icon">→</span>
@@ -583,15 +583,15 @@
           </li>
           <li>
             <span class="icon">→</span>
-            <span>Requires an API key (OpenAI, Gemini, or Voyage)</span>
+            <span>Needs an API key (OpenAI, Gemini, or Voyage)</span>
           </li>
           <li>
             <span class="icon">→</span>
-            <span>Memory content sent to external servers for embedding</span>
+            <span>Your memory content goes to external servers for embedding</span>
           </li>
           <li>
             <span class="icon">→</span>
-            <span>Fast, cheap, works everywhere — but cloud-dependent</span>
+            <span>Fast, cheap, works everywhere. But cloud-dependent.</span>
           </li>
         </ul>
       </div>
@@ -602,27 +602,27 @@
         <ul>
           <li>
             <span class="icon">→</span>
-            <span>Runs a local <strong style="color: var(--text);">1.7B LLM</strong> to expand your query into multiple search angles</span>
+            <span>A local <strong style="color: var(--text);">1.7B LLM</strong> rewrites your query into multiple search variants before searching</span>
           </li>
           <li>
             <span class="icon">→</span>
-            <span>Hybrid retrieval: BM25 keywords + vector similarity combined</span>
+            <span>Searches both keywords (BM25) and vectors at the same time</span>
           </li>
           <li>
             <span class="icon">→</span>
-            <span>Neural reranking via a local <strong style="color: var(--text);">0.6B model</strong> (Qwen3 Reranker)</span>
+            <span>A second local model (<strong style="color: var(--text);">0.6B Qwen3</strong>) re-scores results for relevance</span>
           </li>
           <li>
             <span class="icon">→</span>
-            <span>No API key needed for memory search — zero cloud dependency</span>
+            <span>No API key needed. No cloud calls at all.</span>
           </li>
           <li>
             <span class="icon">→</span>
-            <span>All data stays on-device — nothing leaves your machine</span>
+            <span>Your data never leaves the machine</span>
           </li>
           <li>
             <span class="icon">→</span>
-            <span>~2GB disk for models, cached after first run</span>
+            <span>~2GB of disk for the two models, downloaded once</span>
           </li>
         </ul>
       </div>
@@ -635,25 +635,25 @@
   <section class="pipeline">
     <img src="images/pipeline-owl.png" alt="Owl librarian pulling books" class="section-illustration">
     <p class="section-label">How QMD searches</p>
-    <h2>Three-stage local pipeline</h2>
+    <h2>What happens when you search</h2>
 
     <div class="pipeline-flow">
       <div class="pipeline-step">
         <div class="step-num">Stage 01</div>
-        <h4>Query Expansion</h4>
-        <p>A local 1.7B LLM takes your query and generates multiple search variants — lexical, vector, and hypothetical document embeddings. One question becomes five angles of attack.</p>
+        <h4>Query expansion</h4>
+        <p>A local 1.7B LLM takes your query and rewrites it several ways: keyword variants, semantic rephrases, and a hypothetical document that would answer your question. One search becomes five.</p>
         <span class="pipeline-arrow">›</span>
       </div>
       <div class="pipeline-step">
         <div class="step-num">Stage 02</div>
-        <h4>Hybrid Retrieval</h4>
-        <p>Each expanded query runs against both BM25 (keyword) and vector (semantic) indexes simultaneously. Candidates are pooled and deduplicated by chunk ID.</p>
+        <h4>Hybrid retrieval</h4>
+        <p>Each variant runs against both a keyword index (BM25) and a vector index at the same time. Results are pooled and deduplicated.</p>
         <span class="pipeline-arrow">›</span>
       </div>
       <div class="pipeline-step">
         <div class="step-num">Stage 03</div>
-        <h4>Neural Reranking</h4>
-        <p>A local 0.6B Qwen3 reranker scores every candidate for true relevance. The top results surface with confidence scores — no cloud round-trip needed.</p>
+        <h4>Reranking</h4>
+        <p>A 0.6B Qwen3 model reads every candidate and scores it for actual relevance. The top results come back with confidence scores.</p>
       </div>
     </div>
   </section>
@@ -664,31 +664,31 @@
   <section>
     <img src="images/specs-owl.png" alt="Smug owl on zero coins" class="section-illustration">
     <p class="section-label">By the numbers</p>
-    <h2>What QMD costs you</h2>
+    <h2>What it costs</h2>
     <div class="specs">
       <div class="spec">
         <div class="spec-value">~1.9GB</div>
-        <div class="spec-label">Total model size (downloaded once, cached forever)</div>
+        <div class="spec-label">Disk space for both models (downloaded once)</div>
       </div>
       <div class="spec">
         <div class="spec-value">$0.00</div>
-        <div class="spec-label">Per-search API cost (it's all local)</div>
+        <div class="spec-label">Per search. It's all local.</div>
       </div>
       <div class="spec">
         <div class="spec-value">0</div>
-        <div class="spec-label">Bytes of memory data sent to the cloud</div>
+        <div class="spec-label">Bytes sent to the cloud</div>
       </div>
       <div class="spec">
         <div class="spec-value">1.7B</div>
-        <div class="spec-label">Query expansion model parameters</div>
+        <div class="spec-label">Parameters in the query expansion model</div>
       </div>
       <div class="spec">
         <div class="spec-value">0.6B</div>
-        <div class="spec-label">Reranker model parameters (Qwen3)</div>
+        <div class="spec-label">Parameters in the reranker (Qwen3)</div>
       </div>
       <div class="spec">
         <div class="spec-value">5m</div>
-        <div class="spec-label">Default index refresh interval</div>
+        <div class="spec-label">How often the index refreshes</div>
       </div>
     </div>
   </section>
@@ -699,7 +699,7 @@
   <section class="data-flow">
     <img src="images/privacy-owl.png" alt="Owl protecting data in nest" class="section-illustration">
     <p class="section-label">Where your data goes</p>
-    <h2>The privacy difference</h2>
+    <h2>Where your data actually goes</h2>
 
     <div class="flow-diagram">
       <div class="flow-box og">
@@ -764,8 +764,8 @@ bun install -g https://github.com/tobi/qmd</pre>
 }</pre>
 
     <p style="color: var(--text-dim); font-size: 0.88rem; margin-top: 1rem; line-height: 1.7;">
-      First search downloads two GGUF models (~1.9GB total). After that, everything runs from cache.
-      If QMD ever fails, OpenClaw automatically falls back to the built-in vector search — no downtime.
+      The first search is slow because it downloads two GGUF models (~1.9GB). After that, everything runs from cache.
+      If QMD fails for any reason, OpenClaw falls back to the built-in vector search automatically.
     </p>
   </section>
 
@@ -773,11 +773,10 @@ bun install -g https://github.com/tobi/qmd</pre>
 
   <!-- Bottom -->
   <section class="bottom">
-    <h2>Same files. Smarter search.<br><em style="font-family: 'Instrument Serif', serif; color: var(--accent);">Fully yours.</em></h2>
+    <h2>Same Markdown. Better search.<br><em style="font-family: 'Instrument Serif', serif; color: var(--accent);">Your hardware.</em></h2>
     <p>
-      Your memory stays in Markdown. QMD just changes how it's searched — 
-      from a cloud API call to a three-stage local pipeline 
-      running entirely on your hardware.
+      Memory files don't change. QMD just replaces the cloud embedding call 
+      with two small models running on your own machine.
     </p>
     <div class="mono">memory.backend = "qmd"</div>
   </section>

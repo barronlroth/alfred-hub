@@ -49,6 +49,45 @@
     padding: 0 2rem;
   }
 
+  /* Section illustrations */
+  .section-illustration {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 16px;
+    margin: 0 auto 2rem;
+    display: block;
+    opacity: 0.9;
+    filter: contrast(1.05);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .section-illustration:hover {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
+  .section-illustration.hero-img {
+    max-width: 340px;
+    margin: 2rem auto 0;
+    border-radius: 20px;
+  }
+
+  .section-illustration.wide {
+    max-width: 400px;
+  }
+
+  .illustration-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .illustration-row .section-illustration {
+    max-width: 220px;
+    margin: 0;
+  }
+
   /* Hero */
   .hero {
     padding: 6rem 0 4rem;
@@ -511,12 +550,14 @@
       query expansion, hybrid retrieval, and neural reranking. 
       No API calls. No data leaving your device.
     </p>
+    <img src="images/hero-owl.png" alt="Wise owl on a circuit board" class="section-illustration hero-img fade-up">
   </section>
 
   <div class="divider"></div>
 
   <!-- Comparison -->
   <section>
+    <img src="images/comparison-owl.png" alt="Two owls — cloud vs local" class="section-illustration wide">
     <p class="section-label">Side by side</p>
     <h2>Two approaches to the same files</h2>
     <p style="color: var(--text-dim); margin-bottom: 0.5rem; font-size: 0.95rem;">
@@ -592,6 +633,7 @@
 
   <!-- Pipeline -->
   <section class="pipeline">
+    <img src="images/pipeline-owl.png" alt="Owl librarian pulling books" class="section-illustration">
     <p class="section-label">How QMD searches</p>
     <h2>Three-stage local pipeline</h2>
 
@@ -620,6 +662,7 @@
 
   <!-- Specs -->
   <section>
+    <img src="images/specs-owl.png" alt="Smug owl on zero coins" class="section-illustration">
     <p class="section-label">By the numbers</p>
     <h2>What QMD costs you</h2>
     <div class="specs">
@@ -654,6 +697,7 @@
 
   <!-- Data flow -->
   <section class="data-flow">
+    <img src="images/privacy-owl.png" alt="Owl protecting data in nest" class="section-illustration">
     <p class="section-label">Where your data goes</p>
     <h2>The privacy difference</h2>
 
@@ -696,6 +740,7 @@
 
   <!-- Config -->
   <section class="config-section">
+    <img src="images/setup-owl.png" alt="Owl with hard hat and wrench" class="section-illustration">
     <p class="section-label">Setup</p>
     <h2>Three commands, one config line</h2>
 

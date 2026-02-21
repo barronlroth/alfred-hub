@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cubby — Shared Homes Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #111111;
+  --bg-elevated: #1a1a1a;
+  --bg-card: #1e1e1e;
+  --bg-code: #141418;
+  --border: #2a2a2a;
+  --border-light: #333;
+  --text: #e0ddd5;
+  --text-dim: #8a8780;
+  --text-bright: #f5f3ee;
+  --accent: #e8a44a;
+  --accent-dim: #c4882e;
+  --accent-glow: rgba(232, 164, 74, 0.15);
+  --green: #6ec87a;
+  --green-dim: rgba(110, 200, 122, 0.15);
+  --red: #e06060;
+  --red-dim: rgba(224, 96, 96, 0.12);
+  --yellow: #e8c84a;
+  --yellow-dim: rgba(232, 200, 74, 0.12);
+  --blue: #5e9ed6;
+  --blue-dim: rgba(94, 158, 214, 0.12);
+  --purple: #a88bcc;
+  --sidebar-w: 280px;
+  --content-max: 780px;
+}
+
+.owl-divider {
+  text-align: center; margin: 3.5rem auto 3rem; max-width: 340px; opacity: 0.85;
+  transition: opacity 0.3s;
+}
+.owl-divider:hover { opacity: 1; }
+.owl-divider img {
+  width: 100%; max-width: 320px; border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px var(--border);
+  transition: transform 0.4s ease;
+}
+.owl-divider:hover img { transform: scale(1.02); }
+.owl-divider .owl-caption {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 0.8rem; color: var(--text-dim); margin-top: 0.6rem;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar-w); height: 100vh;
+  background: var(--bg); border-right: 1px solid var(--border);
+  overflow-y: auto; padding: 2rem 1.25rem;
+  z-index: 100;
+  scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+}
+.sidebar-logo { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 1.1rem; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 1.5rem; }
+.sidebar nav a {
+  display: block; padding: 0.3rem 0.6rem; margin: 0.1rem 0;
+  font-size: 0.82rem; color: var(--text-dim); text-decoration: none;
+  border-radius: 4px; transition: all 0.15s;
+  line-height: 1.5;
+}
+.sidebar nav a:hover { color: var(--text); background: var(--accent-glow); }
+.sidebar nav a.active { color: var(--accent); background: var(--accent-glow); }
+.sidebar nav a.l2 { padding-left: 1.2rem; font-size: 0.78rem; }
+.sidebar nav .sep { height: 1px; background: var(--border); margin: 0.6rem 0.6rem; }
+
+/* ─── MOBILE TOC TOGGLE ─── */
+.mobile-toc-btn {
+  display: none; position: fixed; bottom: 1.25rem; right: 1.25rem;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--accent); color: var(--bg); border: none;
+  font-size: 1.2rem; cursor: pointer; z-index: 200;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 99; }
+
+/* ─── MAIN CONTENT ─── */
+.main { margin-left: var(--sidebar-w); }
+.content { max-width: var(--content-max); margin: 0 auto; padding: 0 2.5rem 6rem; }
+
+/* ─── HERO ─── */
+.hero {
+  padding: 5rem 2.5rem 4rem;
+  max-width: var(--content-max); margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3.5rem;
+}
+.hero-eyebrow { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 1rem; }
+.hero h1 {
+  font-family: 'Playfair Display', serif; font-weight: 800;
+  font-size: 3rem; line-height: 1.15; color: var(--text-bright);
+  margin-bottom: 0.75rem;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-sub { font-size: 1.15rem; color: var(--text-dim); line-height: 1.6; max-width: 560px; margin-bottom: 1.5rem; }
+.hero-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.hero-meta span { font-size: 0.8rem; color: var(--text-dim); }
+.hero-meta span strong { color: var(--text); font-weight: 600; }
+
+/* ─── TYPOGRAPHY ─── */
+h2 {
+  font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: 2rem; color: var(--text-bright);
+  margin: 4rem 0 1.25rem; padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  line-height: 1.2;
+}
+h2:first-of-type { border-top: none; margin-top: 0; }
+h3 {
+  font-family: 'Playfair Display', serif; font-weight: 600;
+  font-size: 1.35rem; color: var(--text-bright);
+  margin: 2.5rem 0 0.75rem; line-height: 1.3;
+}
+h4 {
+  font-weight: 600; font-size: 1rem; color: var(--accent);
+  margin: 1.75rem 0 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;
+}
+p { margin-bottom: 1rem; }
+strong { color: var(--text-bright); font-weight: 600; }
+em { color: var(--accent); font-style: italic; }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+a:hover { border-bottom-color: var(--accent); }
+
+ul, ol { margin: 0 0 1rem 1.25rem; }
+li { margin-bottom: 0.3rem; }
+li::marker { color: var(--accent-dim); }
+blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 0.75rem 1.25rem; margin: 1.5rem 0;
+  background: var(--accent-glow); border-radius: 0 6px 6px 0;
+  font-style: italic; color: var(--text);
+}
+blockquote strong { color: var(--accent); }
+hr { border: none; height: 1px; background: var(--border); margin: 3rem 0; }
+
+/* ─── PILLS / BADGES ─── */
+.pill {
+  display: inline-block; font-size: 0.72rem; font-weight: 600;
+  padding: 0.2em 0.65em; border-radius: 99px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  vertical-align: middle; margin: 0 0.15em;
+}
+.pill-green { background: var(--green-dim); color: var(--green); }
+.pill-red { background: var(--red-dim); color: var(--red); }
+.pill-yellow { background: var(--yellow-dim); color: var(--yellow); }
+.pill-blue { background: var(--blue-dim); color: var(--blue); }
+.pill-accent { background: var(--accent-glow); color: var(--accent); }
+
+.rank { font-size: 1.5rem; margin-right: 0.4rem; vertical-align: middle; }
+
+/* ─── CODE ─── */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em; background: var(--bg-code);
+  padding: 0.15em 0.4em; border-radius: 4px;
+  color: var(--accent);
+}
+pre {
+  background: var(--bg-code); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1.25rem 1.5rem;
+  overflow-x: auto; margin: 1.25rem 0 1.5rem;
+  line-height: 1.55; position: relative;
+}
+pre code {
+  background: none; padding: 0; font-size: 0.82rem;
+  color: var(--text); display: block;
+}
+pre .lang-label {
+  position: absolute; top: 0.5rem; right: 0.75rem;
+  font-size: 0.65rem; font-weight: 600; text-transform: uppercase;
+  color: var(--text-dim); letter-spacing: 0.08em;
+  font-family: 'Inter', sans-serif;
+}
+/* syntax colors */
+.kw { color: #c792ea; }
+.fn { color: #82aaff; }
+.str { color: #c3e88d; }
+.cm { color: #546e7a; font-style: italic; }
+.tp { color: #ffcb6b; }
+.num { color: #f78c6c; }
+.op { color: #89ddff; }
+.at { color: #e8a44a; }
+
+/* ─── TABLES ─── */
+.table-wrap { overflow-x: auto; margin: 1.25rem 0 1.5rem; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+thead { background: var(--bg-elevated); }
+th {
+  text-align: left; padding: 0.75rem 1rem;
+  font-weight: 600; color: var(--text-bright);
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border);
+}
+td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ─── ARCHITECTURE DIAGRAMS ─── */
+.diagram {
+  background: var(--bg-code); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1.5rem 2rem;
+  overflow-x: auto; margin: 1.5rem 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem; line-height: 1.6;
+  color: var(--text-dim);
+}
+.diagram .highlight { color: var(--accent); }
+.diagram .box { color: var(--blue); }
+.diagram .arrow { color: var(--text-dim); }
+.diagram .label { color: var(--text); }
+
+/* ─── CALLOUTS ─── */
+.callout {
+  border-radius: 8px; padding: 1rem 1.25rem; margin: 1.5rem 0;
+  border-left: 3px solid;
+}
+.callout-warn { background: var(--yellow-dim); border-color: var(--yellow); }
+.callout-danger { background: var(--red-dim); border-color: var(--red); }
+.callout-info { background: var(--blue-dim); border-color: var(--blue); }
+.callout-success { background: var(--green-dim); border-color: var(--green); }
+.callout-title { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.35rem; }
+.callout-warn .callout-title { color: var(--yellow); }
+.callout-danger .callout-title { color: var(--red); }
+.callout-info .callout-title { color: var(--blue); }
+.callout-success .callout-title { color: var(--green); }
+
+/* ─── OPTION CARDS ─── */
+.option-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.5rem; margin: 1.25rem 0;
+  transition: border-color 0.2s;
+}
+.option-card:hover { border-color: var(--border-light); }
+.option-card.recommended { border-color: var(--accent-dim); background: linear-gradient(135deg, var(--bg-card), rgba(232,164,74,0.05)); }
+.option-card.rejected { opacity: 0.65; }
+.option-card h3 { margin-top: 0; }
+.option-card p:last-child { margin-bottom: 0; }
+
+/* ─── CHECKLIST ─── */
+.checklist { list-style: none; margin-left: 0; }
+.checklist li { padding: 0.3rem 0 0.3rem 1.75rem; position: relative; }
+.checklist li::before {
+  content: ''; position: absolute; left: 0; top: 0.55rem;
+  width: 14px; height: 14px; border-radius: 3px;
+  border: 2px solid var(--border-light);
+}
+
+/* ─── SECTION FEATURE ─── */
+.featured-section {
+  border: 1px solid var(--accent-dim);
+  border-radius: 12px; padding: 2rem 2rem 1rem;
+  margin: 2rem -1rem; background: linear-gradient(180deg, rgba(232,164,74,0.06) 0%, transparent 40%);
+  position: relative;
+}
+.featured-section::before {
+  content: '★ FEATURED'; position: absolute; top: -0.6rem; left: 1.5rem;
+  background: var(--bg); padding: 0 0.75rem;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
+  color: var(--accent); text-transform: uppercase;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; z-index: 200; }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-toc-btn { display: flex; align-items: center; justify-content: center; }
+  .main { margin-left: 0; }
+  .content { padding: 0 1.25rem 4rem; }
+  .hero { padding: 3rem 1.25rem 2.5rem; }
+  .hero h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.6rem; }
+  .featured-section { margin: 2rem -0.5rem; padding: 1.5rem 1.25rem 1rem; }
+  pre { padding: 1rem; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.8rem; }
+  .hero-meta { flex-direction: column; gap: 0.5rem; }
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">◈ Cubby</div>
+  <nav>
+    <a href="#current-architecture">Current Architecture</a>
+    <a href="#architecture-options" class="l2">Options (Ranked)</a>
+    <a href="#recommended-approach">Recommended Approach</a>
+    <a href="#container-setup" class="l2">Container Setup</a>
+    <a href="#sharing-code" class="l2">Sharing Code</a>
+    <a href="#querying" class="l2">Querying Both Stores</a>
+    <div class="sep"></div>
+    <a href="#alternative-cloudkit">Alternative: Direct CloudKit</a>
+    <a href="#user-flow">User Flow Design</a>
+    <a href="#codebase-changes">Required Changes</a>
+    <a href="#photo-sharing">Photo Sharing</a>
+    <a href="#limitations">Limitations &amp; Gotchas</a>
+    <a href="#migration">Migration Strategy</a>
+    <div class="sep"></div>
+    <a href="#subscription-sharing" style="color:var(--accent)">★ Subscription Sharing</a>
+    <a href="#sub-revenuecat" class="l2">RevenueCat Approach</a>
+    <a href="#sub-cloudkit-jws" class="l2">CloudKit + JWS</a>
+    <a href="#sub-spoofing" class="l2">Spoofing Analysis</a>
+    <a href="#sub-mitigations" class="l2">Mitigations</a>
+    <a href="#sub-recommendation" class="l2">Recommendation</a>
+    <div class="sep"></div>
+    <a href="#summary">Summary</a>
+  </nav>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<button class="mobile-toc-btn" onclick="toggleSidebar()" aria-label="Table of contents">☰</button>
+
+<!-- Main -->
+<div class="main">
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-eyebrow">Technical Architecture Proposal</div>
+  <h1>Cubby — <em>Shared Homes</em></h1>
+  <p class="hero-sub">Enabling two users on different iPhones with different Apple&nbsp;IDs to share a Cubby home. When one adds an item, it appears for the other.</p>
+  <div class="hero-meta">
+    <span><strong>Version</strong> 1.2</span>
+    <span><strong>Updated</strong> February 16, 2026</span>
+    <span><strong>Status</strong> <span class="pill pill-yellow">Draft</span></span>
+    <span><strong>Platform</strong> iOS / SwiftUI</span>
+  </div>
+</header>
+
+<div class="content">
+
+<!-- ============================================================ -->
+<div class="owl-divider"><img src="/cubby/research/owl-1.png" alt="Watercolor owl on books"><div class="owl-caption">The archivist reviews the current state of affairs</div></div>
+
+<!-- CURRENT ARCHITECTURE -->
+<!-- ============================================================ -->
+<h2 id="current-architecture">Current Architecture</h2>
+
+<h3>Data Models <span class="pill pill-blue">SwiftData @Model</span></h3>
+<ul>
+  <li><strong>Home</strong> → has many <code>StorageLocation</code>s (cascade delete)</li>
+  <li><strong>StorageLocation</strong> → belongs to <code>Home</code>, has parent/child locations (tree), has many <code>InventoryItem</code>s</li>
+  <li><strong>InventoryItem</strong> → belongs to <code>StorageLocation</code>, has title, description, tags, emoji, photo filename</li>
+</ul>
+
+<h3>CloudKit Integration</h3>
+<ul>
+  <li>Uses <strong>SwiftData's built-in CloudKit sync</strong> via <code>ModelConfiguration(cloudKitDatabase: .private(...))</code></li>
+  <li>Backed by <strong>NSPersistentCloudKitContainer</strong> under the hood</li>
+  <li>Syncs to the <strong>private database only</strong> — single-user sync across devices</li>
+  <li>No <code>CKSyncEngine</code> usage — automatic SwiftData/CloudKit integration</li>
+  <li><code>CloudSyncCoordinator</code> polls CloudKit availability status; does NOT manage sync itself</li>
+</ul>
+
+<h3>Photos</h3>
+<ul>
+  <li>Stored locally in <code>Documents/ItemPhotos/</code> as JPEG files</li>
+  <li>Referenced by <code>photoFileName</code> on <code>InventoryItem</code></li>
+  <li><strong>NOT synced via CloudKit</strong> — photos are device-local only</li>
+  <li>This is already a problem for single-user multi-device sync</li>
+</ul>
+
+<h3>Entitlements</h3>
+<ul>
+  <li>CloudKit enabled: <code>iCloud.com.barronroth.Cubby</code></li>
+  <li>Push notifications (aps-environment: production)</li>
+  <li>App Sandbox enabled</li>
+</ul>
+
+<!-- ============================================================ -->
+<!-- ARCHITECTURE OPTIONS -->
+<!-- ============================================================ -->
+<h2 id="architecture-options">Architecture Options, Ranked</h2>
+
+<div class="option-card recommended">
+  <h3><span class="rank">🥇</span> Option 1: Core Data + NSPersistentCloudKitContainer Sharing <span class="pill pill-green">Recommended</span></h3>
+  <p>Drop down from SwiftData to Core Data for the persistence layer, use <code>NSPersistentCloudKitContainer</code>'s built-in sharing APIs (<code>CKShare</code>, shared zones).</p>
+  <ul>
+    <li>Apple's officially supported path for CloudKit sharing with a local database</li>
+    <li>Mature (available since iOS 15, improved in iOS 16+)</li>
+    <li>Handles the hard parts: conflict resolution, zone management, share lifecycle</li>
+    <li>Apple's own sample code demonstrates this pattern</li>
+    <li>DTS engineers explicitly recommend this over SwiftData for sharing</li>
+  </ul>
+  <p><strong>Effort:</strong> High — requires migrating from SwiftData to Core Data. But the sharing infrastructure is provided.</p>
+</div>
+
+<div class="option-card">
+  <h3><span class="rank">🥈</span> Option 2: Direct CloudKit API (CKShare + CKRecord + Custom Sync)</h3>
+  <p>Use CloudKit framework directly. Create <code>CKShare</code> objects for shared zones, manage <code>CKRecord</code>s manually, build your own sync engine.</p>
+  <p>Maximum control, but you're building a sync engine from scratch — conflict resolution, error handling, retry logic, offline support — all on you. <strong>Months of work.</strong></p>
+</div>
+
+<div class="option-card">
+  <h3><span class="rank">🥉</span> Option 3: Hybrid — SwiftData (Private) + Core Data (Shared)</h3>
+  <p>Keep SwiftData for private data, add a parallel Core Data stack specifically for shared homes.</p>
+  <p>Two persistence stacks is complex. Data duplication risk. If a home transitions from private to shared, you need to migrate records between stores.</p>
+</div>
+
+<div class="option-card rejected">
+  <h3>Option 4: SharePlay / Group Activities <span class="pill pill-red">Not Suitable</span></h3>
+  <p>SharePlay is for real-time collaborative sessions (watching movies, whiteboarding). Requires FaceTime/Messages. Does NOT provide persistent shared state.</p>
+</div>
+
+<div class="option-card rejected">
+  <h3>Option 5: SwiftData Shared Database <span class="pill pill-red">Not Possible</span></h3>
+  <p>As of iOS 19 / WWDC 2025, SwiftData still does NOT support CloudKit shared or public databases. Apple DTS explicitly confirms this.</p>
+</div>
+
+<div class="option-card rejected">
+  <h3>Option 6: Custom Server (Firebase, Supabase, etc.) <span class="pill pill-red">Overkill</span></h3>
+  <p>Adds server costs, account management, and a dependency outside Apple's ecosystem. Only consider this if you need sharing with non-Apple users.</p>
+</div>
+
+<div class="option-card rejected">
+  <h3>Option 7: iCloud Family Sharing <span class="pill pill-red">Not Applicable</span></h3>
+  <p>Family Sharing shares purchases, subscriptions, and storage plans. It does not provide a shared CloudKit database or any mechanism for sharing app data.</p>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- RECOMMENDED APPROACH -->
+<!-- ============================================================ -->
+<div class="owl-divider"><img src="/cubby/research/owl-2.png" alt="Watercolor owl in flight with key"><div class="owl-caption">The chosen path forward</div></div>
+
+<h2 id="recommended-approach">Recommended Approach</h2>
+<p style="font-size:1.1rem; color: var(--text-bright);">Core Data + NSPersistentCloudKitContainer Sharing</p>
+<p>This is the only Apple-supported path for sharing structured data between iCloud accounts with automatic sync.</p>
+
+<h3>Key Concepts</h3>
+
+<h4>Three CloudKit Database Scopes</h4>
+<ol>
+  <li><strong>Private</strong> — User's own data (current Cubby behavior)</li>
+  <li><strong>Shared</strong> — Data shared with this user by others (received shares)</li>
+  <li><strong>Public</strong> — App-wide data visible to all users (not relevant here)</li>
+</ol>
+
+<h4>CKShare</h4>
+<p>A <code>CKShare</code> is a CloudKit record that represents a sharing relationship. It lives in a <strong>shared zone</strong> in the owner's private database, contains participant info, has a <code>url</code> property for generating share links, and supports <strong>read-only</strong> or <strong>read-write</strong> permissions per participant.</p>
+
+<h4>How NSPersistentCloudKitContainer Sharing Works</h4>
+<ol>
+  <li>Owner creates a <code>CKShare</code> for a Core Data object (the <code>Home</code>)</li>
+  <li>The container automatically creates a <strong>shared CloudKit zone</strong> for that object and its relationships</li>
+  <li>Owner sends the share URL to the participant</li>
+  <li>Participant opens the URL, triggering <code>userDidAcceptCloudKitShareWith</code> in the app</li>
+  <li>The container automatically mirrors shared records into the participant's <strong>shared persistent store</strong></li>
+  <li>Both users see the same data; changes sync automatically</li>
+</ol>
+
+<h3>Architecture Design</h3>
+
+<div class="diagram">
+<span class="box">┌─────────────────────────────────────────────────────┐</span>
+<span class="box">│</span>          <span class="label">NSPersistentCloudKitContainer</span>              <span class="box">│</span>
+<span class="box">│</span>                                                     <span class="box">│</span>
+<span class="box">│</span>  <span class="box">┌───────────────────┐</span>  <span class="box">┌─────────────────────┐</span>  <span class="box">│</span>
+<span class="box">│</span>  <span class="box">│</span>  <span class="highlight">Private Store</span>    <span class="box">│</span>  <span class="box">│</span>   <span class="highlight">Shared Store</span>       <span class="box">│</span>  <span class="box">│</span>
+<span class="box">│</span>  <span class="box">│</span>  <span class="label">(my own homes)</span>   <span class="box">│</span>  <span class="box">│</span>  <span class="label">(homes shared</span>      <span class="box">│</span>  <span class="box">│</span>
+<span class="box">│</span>  <span class="box">│</span>                   <span class="box">│</span>  <span class="box">│</span>   <span class="label">with me)</span>          <span class="box">│</span>  <span class="box">│</span>
+<span class="box">│</span>  <span class="box">│</span>  <span class="arrow">↕</span> <span class="label">CloudKit</span>       <span class="box">│</span>  <span class="box">│</span>  <span class="arrow">↕</span> <span class="label">CloudKit</span>         <span class="box">│</span>  <span class="box">│</span>
+<span class="box">│</span>  <span class="box">│</span>  <span class="label">Private DB</span>       <span class="box">│</span>  <span class="box">│</span>  <span class="label">Shared DB</span>          <span class="box">│</span>  <span class="box">│</span>
+<span class="box">│</span>  <span class="box">└───────────────────┘</span>  <span class="box">└─────────────────────┘</span>  <span class="box">│</span>
+<span class="box">└─────────────────────────────────────────────────────┘</span>
+</div>
+
+<p>You need <strong>two persistent store descriptions</strong>: one for the private CloudKit database (user's own data) and one for the shared CloudKit database (data shared by others).</p>
+
+<h3 id="container-setup">Setting Up the Container</h3>
+
+<pre><code><span class="lang-label">Swift</span><span class="kw">import</span> CoreData
+<span class="kw">import</span> CloudKit
+
+<span class="kw">class</span> <span class="tp">PersistenceController</span> {
+    <span class="kw">static let</span> shared = <span class="tp">PersistenceController</span>()
+
+    <span class="kw">let</span> container: <span class="tp">NSPersistentCloudKitContainer</span>
+
+    <span class="cm">// The store that maps to the private CloudKit database</span>
+    <span class="kw">private var</span> privatePersistentStore: <span class="tp">NSPersistentStore</span>?
+    <span class="cm">// The store that maps to the shared CloudKit database</span>
+    <span class="kw">private var</span> sharedPersistentStore: <span class="tp">NSPersistentStore</span>?
+
+    <span class="kw">init</span>() {
+        container = <span class="tp">NSPersistentCloudKitContainer</span>(name: <span class="str">"Cubby"</span>)
+
+        <span class="cm">// Private store</span>
+        <span class="kw">guard let</span> privateDescription = container.persistentStoreDescriptions.<span class="fn">first</span> <span class="kw">else</span> {
+            <span class="fn">fatalError</span>(<span class="str">"No store descriptions found"</span>)
+        }
+        privateDescription.url = <span class="tp">Self</span>.privateStoreURL
+        privateDescription.cloudKitContainerOptions = <span class="tp">NSPersistentCloudKitContainerOptions</span>(
+            containerIdentifier: <span class="str">"iCloud.com.barronroth.Cubby"</span>
+        )
+        privateDescription.cloudKitContainerOptions?.databaseScope = .private
+
+        <span class="cm">// Shared store — separate SQLite file</span>
+        <span class="kw">let</span> sharedDescription = <span class="tp">NSPersistentStoreDescription</span>(url: <span class="tp">Self</span>.sharedStoreURL)
+        sharedDescription.cloudKitContainerOptions = <span class="tp">NSPersistentCloudKitContainerOptions</span>(
+            containerIdentifier: <span class="str">"iCloud.com.barronroth.Cubby"</span>
+        )
+        sharedDescription.cloudKitContainerOptions?.databaseScope = .shared
+
+        container.persistentStoreDescriptions = [privateDescription, sharedDescription]
+
+        <span class="cm">// Enable persistent history tracking (required)</span>
+        <span class="kw">for</span> description <span class="kw">in</span> container.persistentStoreDescriptions {
+            description.<span class="fn">setOption</span>(<span class="kw">true</span> <span class="kw">as</span> <span class="tp">NSNumber</span>, forKey: <span class="tp">NSPersistentHistoryTrackingKey</span>)
+            description.<span class="fn">setOption</span>(<span class="kw">true</span> <span class="kw">as</span> <span class="tp">NSNumber</span>,
+                forKey: <span class="tp">NSPersistentStoreRemoteChangeNotificationPostOptionKey</span>)
+        }
+
+        container.<span class="fn">loadPersistentStores</span> { description, error <span class="kw">in</span>
+            <span class="kw">if let</span> error { <span class="fn">fatalError</span>(<span class="str">"Failed to load store: </span>\(error)<span class="str">"</span>) }
+        }
+
+        <span class="cm">// Assign store references</span>
+        <span class="kw">for</span> store <span class="kw">in</span> container.persistentStoreCoordinator.persistentStores {
+            <span class="kw">let</span> scope = store.cloudKitContainerOptions?.databaseScope
+            <span class="kw">if</span> scope == .private { privatePersistentStore = store }
+            <span class="kw">else if</span> scope == .shared { sharedPersistentStore = store }
+        }
+
+        container.viewContext.automaticallyMergesChangesFromParent = <span class="kw">true</span>
+        container.viewContext.mergePolicy = <span class="tp">NSMergeByPropertyObjectTrumpMergePolicy</span>
+    }
+}</code></pre>
+
+<h3 id="sharing-code">Creating a Share</h3>
+
+<pre><code><span class="lang-label">Swift</span><span class="kw">extension</span> <span class="tp">PersistenceController</span> {
+    <span class="kw">func</span> <span class="fn">shareHome</span>(
+        _ home: <span class="tp">Home</span>,
+        completion: <span class="at">@escaping</span> (<span class="tp">CKShare</span>?, <span class="tp">Error</span>?) -> <span class="tp">Void</span>
+    ) {
+        <span class="kw">guard let</span> privatePersistentStore <span class="kw">else</span> { <span class="kw">return</span> }
+
+        <span class="cm">// Shares the Home AND all relationships (StorageLocations, Items)</span>
+        container.<span class="fn">share</span>(
+            [home],
+            to: <span class="kw">nil</span>, <span class="cm">// nil = create new share</span>
+            completion: { objectIDs, share, container, error <span class="kw">in</span>
+                <span class="kw">if let</span> error {
+                    <span class="fn">completion</span>(<span class="kw">nil</span>, error)
+                    <span class="kw">return</span>
+                }
+                share?[<span class="tp">CKShare</span>.<span class="tp">SystemFieldKey</span>.title] = home.name
+                share?.publicPermission = .none
+                <span class="kw">self</span>.container.<span class="fn">persistCKSharesAndWait</span>()
+                <span class="fn">completion</span>(share, <span class="kw">nil</span>)
+            }
+        )
+    }
+}</code></pre>
+
+<h3>Presenting the Share UI</h3>
+
+<pre><code><span class="lang-label">Swift</span><span class="kw">struct</span> <span class="tp">CloudSharingView</span>: <span class="tp">UIViewControllerRepresentable</span> {
+    <span class="kw">let</span> share: <span class="tp">CKShare</span>
+    <span class="kw">let</span> container: <span class="tp">NSPersistentCloudKitContainer</span>
+
+    <span class="kw">func</span> <span class="fn">makeUIViewController</span>(context: <span class="tp">Context</span>) -> <span class="tp">UICloudSharingController</span> {
+        <span class="kw">let</span> controller = <span class="tp">UICloudSharingController</span>(
+            share: share,
+            container: <span class="tp">CKContainer</span>(identifier: <span class="str">"iCloud.com.barronroth.Cubby"</span>)
+        )
+        controller.delegate = context.coordinator
+        controller.availablePermissions = [.allowReadWrite, .allowPrivate]
+        <span class="kw">return</span> controller
+    }
+    <span class="cm">// ... coordinator with UICloudSharingControllerDelegate</span>
+}</code></pre>
+
+<h3>Accepting a Share</h3>
+
+<pre><code><span class="lang-label">Swift</span><span class="at">@main</span>
+<span class="kw">struct</span> <span class="tp">CubbyApp</span>: <span class="tp">App</span> {
+    <span class="kw">let</span> persistenceController = <span class="tp">PersistenceController</span>.shared
+
+    <span class="kw">var</span> body: <span class="kw">some</span> <span class="tp">Scene</span> {
+        <span class="tp">WindowGroup</span> {
+            <span class="tp">ContentView</span>()
+                .<span class="fn">environment</span>(\.<span class="fn">managedObjectContext</span>,
+                    persistenceController.container.viewContext)
+                .<span class="fn">onOpenURL</span> { url <span class="kw">in</span>
+                    <span class="fn">acceptShare</span>(from: url)
+                }
+        }
+    }
+
+    <span class="kw">private func</span> <span class="fn">acceptShare</span>(from url: <span class="tp">URL</span>) {
+        <span class="kw">let</span> ckContainer = <span class="tp">CKContainer</span>(identifier: <span class="str">"iCloud.com.barronroth.Cubby"</span>)
+        <span class="tp">CKContainer</span>.<span class="fn">default</span>().<span class="fn">fetchShareMetadata</span>(with: url) { metadata, error <span class="kw">in</span>
+            <span class="kw">guard let</span> metadata <span class="kw">else</span> { <span class="kw">return</span> }
+            persistenceController.container.<span class="fn">acceptShareInvitations</span>(
+                from: [metadata],
+                into: persistenceController.sharedPersistentStore!
+            ) { _, error <span class="kw">in</span>
+                <span class="kw">if let</span> error { <span class="fn">print</span>(<span class="str">"Failed to accept share: </span>\(error)<span class="str">"</span>) }
+            }
+        }
+    }
+}</code></pre>
+
+<h3 id="querying">Querying Across Both Stores</h3>
+
+<pre><code><span class="lang-label">Swift</span><span class="cm">// Fetch all homes (both private and shared)</span>
+<span class="kw">let</span> request = <span class="tp">NSFetchRequest</span>&lt;<span class="tp">Home</span>&gt;(entityName: <span class="str">"Home"</span>)
+
+<span class="cm">// Only shared homes:</span>
+request.affectedStores = [sharedPersistentStore!]
+
+<span class="cm">// Only private homes:</span>
+request.affectedStores = [privatePersistentStore!]
+
+<span class="cm">// Is a specific object shared?</span>
+<span class="kw">func</span> <span class="fn">isShared</span>(_ object: <span class="tp">NSManagedObject</span>) -> <span class="tp">Bool</span> {
+    <span class="kw">guard let</span> store = object.objectID.persistentStore <span class="kw">else</span> { <span class="kw">return false</span> }
+    <span class="kw">return</span> store == sharedPersistentStore
+}
+
+<span class="cm">// Determine edit permissions</span>
+<span class="kw">func</span> <span class="fn">canEdit</span>(_ home: <span class="tp">Home</span>) -> <span class="tp">Bool</span> {
+    <span class="kw">guard let</span> share = <span class="fn">share</span>(for: home) <span class="kw">else</span> { <span class="kw">return true</span> }
+    <span class="kw">if</span> share.currentUserParticipant?.role == .owner { <span class="kw">return true</span> }
+    <span class="kw">return</span> share.currentUserParticipant?.permission == .readWrite
+}</code></pre>
+
+
+<!-- ============================================================ -->
+<!-- ALTERNATIVE: DIRECT CLOUDKIT -->
+<!-- ============================================================ -->
+<h2 id="alternative-cloudkit">Alternative: Direct CloudKit</h2>
+<p>If you want to avoid Core Data entirely, you could use <code>CKSyncEngine</code> (iOS 17+) with shared zones. However:</p>
+<ul>
+  <li><code>CKSyncEngine</code> supports shared zones via <code>CKSyncEngine.State.PendingZoneShare</code></li>
+  <li>You'd need to manually map between SwiftData models and <code>CKRecord</code>s</li>
+  <li>You lose all automatic relationship handling that <code>NSPersistentCloudKitContainer</code> provides</li>
+  <li>Apple's documentation on <code>CKSyncEngine</code> + sharing is sparse</li>
+</ul>
+<div class="callout callout-warn">
+  <div class="callout-title">⚠️ Not recommended</div>
+  <p style="margin:0">Unless you have a specific reason to avoid Core Data, this path means building your own sync engine — a significant and error-prone undertaking.</p>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- USER FLOW -->
+<!-- ============================================================ -->
+<div class="owl-divider"><img src="/cubby/research/owl-3.png" alt="Watercolor owl in moving box"><div class="owl-caption">Moving in — the user experience</div></div>
+
+<h2 id="user-flow">User Flow Design</h2>
+
+<h3>Sharing a Home (Owner)</h3>
+<ol>
+  <li>Owner taps <strong>"Share"</strong> button on a Home's detail/settings screen</li>
+  <li>App creates a <code>CKShare</code> via <code>NSPersistentCloudKitContainer.share(_:to:completion:)</code></li>
+  <li>System presents <code>UICloudSharingController</code> — Apple's standard share sheet</li>
+  <li>Owner chooses sharing method: iMessage, Mail, AirDrop, copy link</li>
+  <li>Owner sets permissions: Read Only or Read &amp; Write</li>
+  <li>Share link is sent to the participant</li>
+</ol>
+
+<h3>Accepting a Share (Participant)</h3>
+<ol>
+  <li>Participant taps the share link (e.g., in iMessage)</li>
+  <li>iOS opens the Cubby app (or App Store if not installed)</li>
+  <li>App handles the URL in <code>onOpenURL</code> / <code>userDidAcceptCloudKitShareWith</code></li>
+  <li><code>acceptShareInvitations(from:into:)</code> processes it</li>
+  <li>Shared home data syncs into participant's shared store</li>
+  <li>Home appears in the home list with a <span class="pill pill-accent">Shared</span> badge</li>
+</ol>
+
+<h3>Managing a Share</h3>
+<ul>
+  <li>Owner can <strong>add/remove participants</strong> via <code>UICloudSharingController</code></li>
+  <li>Owner can <strong>change permissions</strong> per participant</li>
+  <li>Owner can <strong>stop sharing</strong> entirely (removes from all participants)</li>
+  <li>Participant can <strong>leave a share</strong> (removes it from their device)</li>
+</ul>
+
+
+<!-- ============================================================ -->
+<!-- CODEBASE CHANGES -->
+<!-- ============================================================ -->
+<h2 id="codebase-changes">Required Codebase Changes</h2>
+
+<h3>1. Migration from SwiftData to Core Data <span class="pill pill-red">Major</span></h3>
+<p>This is the biggest change:</p>
+<ul>
+  <li>Create a <code>.xcdatamodeld</code> Core Data model matching current SwiftData models</li>
+  <li>Replace <code>@Model</code> classes with <code>NSManagedObject</code> subclasses</li>
+  <li>Replace <code>ModelContainer</code> / <code>ModelContext</code> with <code>NSPersistentCloudKitContainer</code> / <code>NSManagedObjectContext</code></li>
+  <li>Replace SwiftData <code>@Query</code> with <code>@FetchRequest</code> or <code>NSFetchedResultsController</code></li>
+</ul>
+
+<h4>Model Mapping</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>SwiftData (@Model)</th><th>Core Data (NSManagedObject)</th></tr></thead>
+  <tbody>
+    <tr><td><code>Home</code></td><td><code>CDHome</code> entity</td></tr>
+    <tr><td><code>StorageLocation</code></td><td><code>CDStorageLocation</code> entity</td></tr>
+    <tr><td><code>InventoryItem</code></td><td><code>CDInventoryItem</code> entity</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>2. Dual Persistent Store Setup</h3>
+<ul>
+  <li>Configure private + shared <code>NSPersistentStoreDescription</code>s</li>
+  <li>Set <code>databaseScope</code> on CloudKit container options</li>
+  <li>Enable persistent history tracking on both stores</li>
+</ul>
+
+<h3>3. Share UI</h3>
+<ul>
+  <li>Add a "Share" button on Home detail/settings</li>
+  <li>Wrap <code>UICloudSharingController</code> in <code>UIViewControllerRepresentable</code></li>
+  <li>Handle share URL acceptance in app lifecycle</li>
+  <li>Show share status/participants in UI</li>
+  <li>Add <span class="pill pill-accent">Shared</span> badge on received homes</li>
+</ul>
+
+<h3>4. Permission-Aware UI</h3>
+<ul>
+  <li>Check <code>canEdit()</code> before allowing modifications</li>
+  <li>Show read-only UI for participants without write permission</li>
+  <li>Handle share revocation gracefully (home disappears)</li>
+</ul>
+
+<h3>5. Entitlements</h3>
+<div class="callout callout-success">
+  <div class="callout-title">✅ Already Sufficient</div>
+  <p style="margin:0">Current entitlements (CloudKit, push notifications, container identifier) are all that's needed. Verify that <code>CKSharingSupported</code> key is in Info.plist.</p>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PHOTO SHARING -->
+<!-- ============================================================ -->
+<h2 id="photo-sharing">Photo Sharing Strategy</h2>
+
+<div class="option-card recommended">
+  <h3>Option B: Core Data Binary Data with External Storage <span class="pill pill-green">Recommended</span></h3>
+  <p>Use Core Data's "Allows External Storage" option for the photo attribute. <code>NSPersistentCloudKitContainer</code> syncs these as <code>CKAsset</code>s automatically. Path of least resistance.</p>
+</div>
+
+<div class="option-card">
+  <h3>Option A: CKAsset (Simpler alternative)</h3>
+  <p>Store photos as <code>CKAsset</code> on the <code>InventoryItem</code> CloudKit record. Automatically shared when the parent is shared. 250 MB limit per asset. Increases CloudKit storage usage.</p>
+</div>
+
+<div class="option-card">
+  <h3>Option C: Separate Photo Sync Service</h3>
+  <p>Upload to a shared location (CloudKit assets, S3, etc.), store URL on the item. More complex but more control over caching and bandwidth.</p>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- LIMITATIONS -->
+<!-- ============================================================ -->
+<h2 id="limitations">Limitations &amp; Gotchas</h2>
+
+<div class="callout callout-danger">
+  <div class="callout-title">🚫 #1 Constraint: SwiftData Cannot Be Used for Sharing</div>
+  <p style="margin:0">SwiftData (as of iOS 19 / 2025) does not support CloudKit shared or public databases. Apple DTS has confirmed this repeatedly. You <strong>must</strong> use Core Data.</p>
+</div>
+
+<h3>NSPersistentCloudKitContainer Quirks</h3>
+<ol>
+  <li><strong>Entire zone is shared, not individual records.</strong> When you share a <code>Home</code>, ALL records in that zone are shared. This is actually what you want.</li>
+  <li><strong>Conflict resolution is last-writer-wins.</strong> No merge strategy for field-level conflicts. For a household inventory app, this is acceptable.</li>
+  <li><strong>Shared store is read-only from the container's perspective.</strong> Write operations for shared data go through the same context, but under the hood they write to the owner's zone.</li>
+  <li><strong>No real-time sync.</strong> Eventually consistent. Changes typically propagate in seconds to minutes.</li>
+  <li><strong>CloudKit quotas.</strong> ~25 MB free per user. Large photo libraries could hit limits.</li>
+  <li><strong>Offline behavior.</strong> Changes queue locally and sync on reconnect. Conflicts resolved by last-writer-wins.</li>
+  <li><strong>Share acceptance requires the app.</strong> If not installed, share link goes to App Store. Participant must tap link again after install.</li>
+  <li><strong>UICloudSharingController is UIKit.</strong> Needs a <code>UIViewControllerRepresentable</code> wrapper. Not SwiftUI-native.</li>
+  <li><strong>Testing is painful.</strong> Two different iCloud accounts on two devices. Simulator support is limited.</li>
+  <li><strong>Schema migration.</strong> Adding fields is easy (additive). Removing/changing types requires careful handling.</li>
+</ol>
+
+<h3>What You Lose by Moving to Core Data</h3>
+<ul>
+  <li>SwiftData's <code>@Model</code> macro convenience</li>
+  <li>SwiftData's <code>@Query</code> property wrapper</li>
+  <li>SwiftData's simpler <code>ModelContainer</code> setup</li>
+  <li>SwiftData's automatic schema generation</li>
+</ul>
+
+<h3>What You Gain</h3>
+<ul>
+  <li>Full CloudKit sharing support</li>
+  <li>Battle-tested persistence layer (Core Data is 20+ years old)</li>
+  <li>More control over sync behavior</li>
+  <li>Access to <code>NSPersistentCloudKitContainer</code>'s sharing APIs</li>
+</ul>
+
+
+<!-- ============================================================ -->
+<!-- MIGRATION STRATEGY -->
+<!-- ============================================================ -->
+<h2 id="migration">Migration Strategy</h2>
+
+<p>Given that Cubby is relatively early-stage and the model layer is simple (3 entities, straightforward relationships), the cleanest path is a full Core Data migration:</p>
+
+<ol>
+  <li><strong>Create Core Data model</strong> (<code>.xcdatamodeld</code>) matching current SwiftData models</li>
+  <li><strong>Build <code>PersistenceController</code></strong> with dual private/shared stores</li>
+  <li><strong>Create <code>NSManagedObject</code> subclasses</strong> (or use Xcode codegen)</li>
+  <li><strong>Port views</strong> from <code>@Query</code> to <code>@FetchRequest</code> / <code>@SectionedFetchRequest</code></li>
+  <li><strong>Add sharing UI</strong> (share button, <code>UICloudSharingController</code> wrapper, share acceptance)</li>
+  <li><strong>Add data migration</strong> for existing users (read SwiftData → write Core Data → delete SwiftData store)</li>
+  <li><strong>Port photo storage</strong> to Core Data binary attribute with external storage</li>
+  <li><strong>Test thoroughly</strong> with two iCloud accounts</li>
+</ol>
+
+<h3>Timeline Estimate</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Phase</th><th>Effort</th></tr></thead>
+  <tbody>
+    <tr><td>Core Data model + persistence controller</td><td>2–3 days</td></tr>
+    <tr><td>Port views from SwiftData to Core Data</td><td>3–5 days</td></tr>
+    <tr><td>Sharing implementation (CKShare, UI, acceptance)</td><td>3–4 days</td></tr>
+    <tr><td>Photo sync via CKAsset</td><td>1–2 days</td></tr>
+    <tr><td>Data migration for existing users</td><td>1–2 days</td></tr>
+    <tr><td>Testing (2 accounts, edge cases, offline)</td><td>3–5 days</td></tr>
+    <tr><td style="font-weight:600; color:var(--accent)">Total</td><td style="font-weight:600; color:var(--accent)">~2–3 weeks</td></tr>
+  </tbody>
+</table>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SUBSCRIPTION SHARING (FEATURED) -->
+<!-- ============================================================ -->
+<div class="featured-section">
+<div class="owl-divider"><img src="/cubby/research/owl-4.png" alt="Watercolor owls sharing a nest"><div class="owl-caption">Sharing is caring — subscription mechanics</div></div>
+
+<h2 id="subscription-sharing" style="border-top:none; margin-top:0; padding-top:0;">Subscription Sharing: How Participants Get Pro</h2>
+
+<blockquote><strong>Added 2026-02-16</strong> — How does the owner's Pro subscription extend to participants in a shared home?</blockquote>
+
+<p>This is the most nuanced architectural decision in the sharing feature. Three viable approaches exist, each with distinct security/complexity tradeoffs.</p>
+
+<!-- RevenueCat -->
+<h3 id="sub-revenuecat">Option A: RevenueCat Backend Verification</h3>
+
+<p>Owner's RevenueCat <code>app_user_id</code> is stored in the CloudKit Home metadata. Participant's app calls a lightweight Cloud Function, which checks the owner's entitlement via RC's REST API.</p>
+
+<div class="diagram">
+<span class="box">┌───────────────┐</span>     <span class="box">┌────────────────┐</span>     <span class="box">┌───────────────────┐</span>
+<span class="box">│</span>  <span class="highlight">Owner App</span>    <span class="box">│</span><span class="arrow">────▶</span><span class="box">│</span>   <span class="label">CloudKit</span>      <span class="box">│</span><span class="arrow">◀────</span><span class="box">│</span> <span class="highlight">Participant App</span>   <span class="box">│</span>
+<span class="box">│</span>  <span class="label">(RC SDK)</span>      <span class="box">│</span>     <span class="box">│</span>  <span class="label">(Home data</span>    <span class="box">│</span>     <span class="box">│</span>  <span class="label">(RC SDK for</span>      <span class="box">│</span>
+<span class="box">│</span>               <span class="box">│</span>     <span class="box">│</span>   <span class="label">+ owner</span>      <span class="box">│</span>     <span class="box">│</span>   <span class="label">own purchases)</span>  <span class="box">│</span>
+<span class="box">└───────────────┘</span>     <span class="box">│</span>   <span class="label">RC user ID)</span>  <span class="box">│</span>     <span class="box">└─────────┬─────────┘</span>
+                      <span class="box">└────────────────┘</span>               <span class="arrow">│</span>
+                                                <span class="label">"Is owner subscribed?"</span>
+                                                        <span class="arrow">▼</span>
+                                              <span class="box">┌────────────────────┐</span>
+                                              <span class="box">│</span>  <span class="highlight">Cloud Function</span>    <span class="box">│</span>
+                                              <span class="box">│</span>  <span class="label">(Firebase / CF)</span>    <span class="box">│</span>
+                                              <span class="box">└─────────┬──────────┘</span>
+                                                        <span class="arrow">▼</span>
+                                              <span class="box">┌────────────────────┐</span>
+                                              <span class="box">│</span>   <span class="highlight">RevenueCat</span>       <span class="box">│</span>
+                                              <span class="box">│</span>   <span class="label">REST API</span>         <span class="box">│</span>
+                                              <span class="box">└────────────────────┘</span>
+</div>
+
+<h4>Pros</h4>
+<ul>
+  <li>Server-side verification — can't be spoofed client-side</li>
+  <li>RevenueCat handles all subscription lifecycle (renewals, cancellations, refunds, grace periods)</li>
+  <li>Single Cloud Function (~50 lines), essentially free to run</li>
+  <li>RC free tier covers up to $2.5k MTR</li>
+</ul>
+
+<h4>Cons</h4>
+<ul>
+  <li>Requires a server component (Cloud Function)</li>
+  <li>RC REST API rate limit ~60 req/min per API key (fine for indie scale)</li>
+  <li>Adds RevenueCat as a dependency</li>
+</ul>
+
+<h4>Edge Cases</h4>
+<ul>
+  <li><strong>Cancellation:</strong> Entitlement stays active until period end (correct behavior)</li>
+  <li><strong>Refund:</strong> Entitlement revoked immediately</li>
+  <li><strong>Offline:</strong> Cache last-known status with TTL locally (4–12 hours)</li>
+  <li><strong>Owner changes RC account:</strong> Update CloudKit Home metadata on identity change</li>
+  <li><strong>Grace period (billing issues):</strong> RC still reports active during 6–16 day grace period</li>
+</ul>
+
+<h4>Security</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Attack</th><th>Risk</th><th>Mitigation</th></tr></thead>
+  <tbody>
+    <tr><td>Participant spoofs owner's RC ID</td><td><span class="pill pill-yellow">Medium</span></td><td>Validate requesting user is a participant of that Home</td></tr>
+    <tr><td>Owner shares RC ID for free Pro without home</td><td><span class="pill pill-blue">Low</span></td><td>Only honor checks for users in the same CloudKit sharing group</td></tr>
+    <tr><td>Replay cached "active" after cancel</td><td><span class="pill pill-blue">Low</span></td><td>Short TTL caches (1–4 hours)</td></tr>
+    <tr><td>Direct Cloud Function calls</td><td><span class="pill pill-yellow">Medium</span></td><td>Firebase Auth / App Check</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr>
+
+<!-- CloudKit + JWS -->
+<h3 id="sub-cloudkit-jws">Option B: CloudKit Metadata + JWS Verification (No Server)</h3>
+
+<p>Owner stores their StoreKit 2 signed transaction (JWS — Apple-signed JWT) in the shared CloudKit record. Participant verifies Apple's signature locally.</p>
+
+<h4>How It Works</h4>
+<ol>
+  <li>Owner subscribes → gets <code>Transaction.jwsRepresentation</code> (signed by Apple)</li>
+  <li>Owner writes JWS + <code>ownerUserRecordName</code> to CloudKit shared record</li>
+  <li>Participant reads the record and:
+    <ul>
+      <li>Decodes the JWS (standard JWT — header.payload.signature)</li>
+      <li>Verifies signature against Apple's public keys (x5c chain in header)</li>
+      <li>Checks <code>bundleId</code> matches your app</li>
+      <li>Checks <code>productId</code> matches your Pro subscription</li>
+      <li>Checks <code>expiresDate</code> is in the future</li>
+      <li>Checks <code>CKRecord.creatorUserRecordID</code> matches the <code>ownerUserRecordName</code> field</li>
+    </ul>
+  </li>
+</ol>
+
+<pre><code><span class="lang-label">Swift</span><span class="cm">// Owner side — after purchase</span>
+<span class="kw">func</span> <span class="fn">writeSubscriptionToCloudKit</span>(transaction: <span class="tp">Transaction</span>) <span class="kw">async</span> {
+    <span class="kw">let</span> record = <span class="cm">// fetch or create subscription CKRecord in shared zone</span>
+    record[<span class="str">"subscriptionJWS"</span>] = transaction.jwsRepresentation
+    record[<span class="str">"productId"</span>] = transaction.productID
+    record[<span class="str">"expiresDate"</span>] = transaction.expirationDate
+    <span class="cm">// save to CloudKit</span>
+}
+
+<span class="cm">// Participant side — checking entitlement</span>
+<span class="kw">func</span> <span class="fn">verifySharedSubscription</span>(record: <span class="tp">CKRecord</span>) -> <span class="tp">Bool</span> {
+    <span class="kw">guard let</span> jws = record[<span class="str">"subscriptionJWS"</span>] <span class="kw">as?</span> <span class="tp">String</span> <span class="kw">else</span> { <span class="kw">return false</span> }
+
+    <span class="cm">// 1. Parse JWT structure</span>
+    <span class="cm">// 2. Verify x5c certificate chain roots to Apple</span>
+    <span class="cm">// 3. Verify signature</span>
+    <span class="cm">// 4. Check bundleId == your app</span>
+    <span class="cm">// 5. Check productId is a Pro subscription</span>
+    <span class="cm">// 6. Check expiresDate > now</span>
+    <span class="cm">// 7. Check environment == "Production"</span>
+    <span class="kw">return</span> isValid
+}</code></pre>
+
+<hr>
+
+<!-- SPOOFING ANALYSIS -->
+<h3 id="sub-spoofing">Spoofing Analysis: Can This Be Gamed?</h3>
+
+<div class="callout callout-danger">
+  <div class="callout-title">🔴 Critical Finding: Fake Owner Attack</div>
+  <p style="margin:0">Without JWS verification, a plain boolean field in CloudKit is <strong>trivially spoofable</strong>. Anyone creates an iCloud account, writes <code>subscriptionActive = true</code>, shares the zone. No purchase needed. This is the #1 threat unique to the CloudKit sharing approach.</p>
+</div>
+
+<h4>Attack Vector Analysis</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Attack Vector</th><th>Typical User</th><th>Determined Attacker</th><th>Overall Risk</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Fake owner account (write <code>true</code>, share zone)</td>
+      <td><span class="pill pill-yellow">Low–Med</span></td>
+      <td><span class="pill pill-red">Trivial</span></td>
+      <td><span class="pill pill-red">Critical</span></td>
+    </tr>
+    <tr>
+      <td>Local SQLite cache modification</td>
+      <td><span class="pill pill-blue">Low</span></td>
+      <td><span class="pill pill-red">High</span></td>
+      <td><span class="pill pill-yellow">Medium-High</span></td>
+    </tr>
+    <tr>
+      <td>Jailbreak runtime hooks</td>
+      <td><span class="pill pill-blue">Very Low</span></td>
+      <td><span class="pill pill-red">Very High</span></td>
+      <td><span class="pill pill-yellow">High</span> <em>(universal)</em></td>
+    </tr>
+    <tr>
+      <td>MITM CloudKit traffic</td>
+      <td><span class="pill pill-green">None</span></td>
+      <td><span class="pill pill-blue">Very Low</span></td>
+      <td><span class="pill pill-green">Very Low</span></td>
+    </tr>
+    <tr>
+      <td>CloudKit API direct modification</td>
+      <td><span class="pill pill-blue">Low</span></td>
+      <td><span class="pill pill-yellow">Medium</span></td>
+      <td><span class="pill pill-yellow">Medium</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h4>What JWS Verification Defeats</h4>
+<ul>
+  <li>✅ <strong>Fake owner</strong> — can't produce a valid Apple-signed JWS for your bundle ID without purchasing</li>
+  <li>✅ <strong>Local cache modification</strong> — can't forge Apple's JWS signature</li>
+  <li>✅ <strong>API modification</strong> — same reason</li>
+  <li>❌ <strong>Jailbreak runtime hooks</strong> — attacker can hook verification code itself (true of ALL client-side checks)</li>
+</ul>
+
+<h4>How Other Apps Handle This</h4>
+<ul>
+  <li><strong>Apple Family Sharing:</strong> Server-side entitlement checking. Not spoofable via CloudKit.</li>
+  <li><strong>Serious apps:</strong> Own server as the authority on subscription status</li>
+  <li><strong>RevenueCat users:</strong> Server-side receipt validation</li>
+  <li><strong>Small indie apps:</strong> Honor system (trust the CloudKit field)</li>
+</ul>
+<p><strong>No major app relies on CloudKit record fields alone for subscription verification.</strong></p>
+
+<hr>
+
+<!-- Mitigations -->
+<h3 id="sub-mitigations">Mitigations Deep Dive</h3>
+
+<h4>Tier 1: JWS + Bundle ID + Owner Identity Binding <span class="pill pill-accent">No Server</span></h4>
+<p>Best practical approach without a server. Store the Apple-signed JWS in CloudKit, verify on the participant side. Bind to owner identity via <code>CKRecord.creatorUserRecordID</code>.</p>
+
+<h4>Tier 2: Lightweight Server Validation <span class="pill pill-green">Strongest</span></h4>
+<p>Add a Cloud Function that validates via App Store Server API and returns a short-lived signed token. Owner stores this in CloudKit. Adds revocation checking and real-time validity.</p>
+
+<h4>Tier 3: Apple Family Sharing <span class="pill pill-yellow">Limited</span></h4>
+<p>If the sharing model maps to Apple's Family concept (≤6 people, one payer), enable Family Sharing for the IAP. Zero custom code. But limited to Apple family groups — not roommates, friends, or nannies.</p>
+
+<hr>
+
+<!-- Apple Family Sharing -->
+<h3>Option C: Apple Family Sharing <span class="pill pill-yellow">Deprioritized</span></h3>
+<ul>
+  <li>Requires users to be in the same Apple Family group (max 6)</li>
+  <li>Most households sharing Cubby (roommates, partners, nannies) are NOT on the same Apple Family plan</li>
+  <li>Zero implementation complexity, but the UX requirement is a dealbreaker for most users</li>
+</ul>
+
+<hr>
+
+<!-- RECOMMENDATION -->
+<h3 id="sub-recommendation">Subscription Sharing Recommendation</h3>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Approach</th><th>Security</th><th>Complexity</th><th>Server?</th><th>UX Friction</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>RevenueCat + Cloud Function</td>
+      <td><span class="pill pill-green">Strong</span></td>
+      <td>Medium</td>
+      <td>Yes (lightweight)</td>
+      <td><span class="pill pill-green">Low</span></td>
+    </tr>
+    <tr>
+      <td>CloudKit + JWS local verification</td>
+      <td><span class="pill pill-yellow">Good</span></td>
+      <td>Medium</td>
+      <td>No</td>
+      <td><span class="pill pill-green">Low</span></td>
+    </tr>
+    <tr>
+      <td>Apple Family Sharing</td>
+      <td><span class="pill pill-green">Strong</span></td>
+      <td>Low</td>
+      <td>No</td>
+      <td><span class="pill pill-red">High</span></td>
+    </tr>
+    <tr>
+      <td>Plain CloudKit boolean</td>
+      <td><span class="pill pill-red">Trivially spoofable</span></td>
+      <td>Low</td>
+      <td>No</td>
+      <td><span class="pill pill-green">Low</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout callout-success">
+  <div class="callout-title">✅ Verdict for Cubby</div>
+  <p style="margin:0">Start with <strong>CloudKit + JWS</strong> (no server dependency, good security). If abuse appears later, upgrade to RevenueCat + Cloud Function. Skip Apple Family Sharing as the primary mechanism — too much user friction.</p>
+</div>
+
+</div><!-- end featured-section -->
+
+
+<!-- ============================================================ -->
+<!-- SUMMARY -->
+<!-- ============================================================ -->
+<div class="owl-divider"><img src="/cubby/research/owl-5.png" alt="Watercolor owl with magnifying glass"><div class="owl-caption">The verdict is in</div></div>
+
+<h2 id="summary">Summary</h2>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Approach</th><th>Feasibility</th><th>Effort</th><th>Recommendation</th></tr></thead>
+  <tbody>
+    <tr><td>Core Data + NSPersistentCloudKitContainer sharing</td><td><span class="pill pill-green">Proven</span></td><td>High (2–3 weeks)</td><td><span class="pill pill-green">🥇 Recommended</span></td></tr>
+    <tr><td>Direct CloudKit (CKSyncEngine + CKShare)</td><td><span class="pill pill-yellow">Possible</span></td><td>Very High</td><td>🥈 Only if avoiding Core Data</td></tr>
+    <tr><td>SwiftData shared DB</td><td><span class="pill pill-red">Not supported</span></td><td>N/A</td><td><span class="pill pill-red">Not possible</span></td></tr>
+    <tr><td>Hybrid SwiftData + Core Data</td><td><span class="pill pill-yellow">Complex</span></td><td>High</td><td>🥉 Compromise option</td></tr>
+    <tr><td>Custom server (Firebase, etc.)</td><td><span class="pill pill-green">Possible</span></td><td>Very High</td><td><span class="pill pill-red">Overkill</span></td></tr>
+    <tr><td>SharePlay</td><td><span class="pill pill-red">Wrong tool</span></td><td>N/A</td><td><span class="pill pill-red">Not for persistent data</span></td></tr>
+    <tr><td>Family Sharing</td><td><span class="pill pill-red">Not applicable</span></td><td>N/A</td><td><span class="pill pill-red">Doesn't share app data</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<blockquote>
+  <strong>Bottom line:</strong> Migrate to Core Data + <code>NSPersistentCloudKitContainer</code> with dual private/shared stores. It's the only Apple-supported path for CloudKit sharing with a local database, and it's mature enough for production use. The migration from SwiftData is the main cost, but Cubby's simple 3-entity model makes this manageable.
+</blockquote>
+
+<h3>Implementation Checklist</h3>
+<ul class="checklist">
+  <li>Set up RevenueCat with identified users (not anonymous)</li>
+  <li>Store owner's <code>Purchases.shared.appUserID</code> in CloudKit Home CKRecord</li>
+  <li>Create Cloud Function: owner RC ID → RC REST API → active/inactive</li>
+  <li>Secure Cloud Function (Firebase App Check or Auth token)</li>
+  <li>Participant app: on opening shared Home, call Cloud Function with owner's RC ID</li>
+  <li>Cache result locally with TTL (4–12 hours suggested)</li>
+  <li>Handle edge cases: owner changes account, refunds, offline mode</li>
+  <li>Optional: Set up RC webhooks for faster lookups</li>
+  <li>Test in sandbox with short subscription periods</li>
+</ul>
+
+</div><!-- end content -->
+</div><!-- end main -->
+
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// Active link tracking
+const links = document.querySelectorAll('.sidebar nav a[href^="#"]');
+const sections = [];
+links.forEach(link => {
+  const id = link.getAttribute('href').slice(1);
+  const el = document.getElementById(id);
+  if (el) sections.push({ el, link });
+});
+
+let ticking = false;
+function updateActive() {
+  const scrollY = window.scrollY + 120;
+  let current = sections[0];
+  for (const s of sections) {
+    if (s.el.offsetTop <= scrollY) current = s;
+  }
+  links.forEach(l => l.classList.remove('active'));
+  if (current) current.link.classList.add('active');
+  ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (!ticking) { requestAnimationFrame(updateActive); ticking = true; }
+});
+updateActive();
+</script>
+
+</body>
+</html>

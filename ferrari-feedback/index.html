@@ -304,6 +304,101 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:
 
 </div>
 
+<div style="max-width:800px;margin:4rem auto;padding:0 1.5rem">
+  <div style="border-top:1px solid #e0ddd8;padding-top:3rem;margin-top:2rem">
+    <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:.5rem">Appendix: CXAS MCP Skill Reference</h2>
+    <p style="color:#6b6560;margin-bottom:2rem;font-size:.95rem">This skill was written by a coding agent (Alfred) during the Ferrari demo build. It documents the patterns, workflows, and gotchas learned from building an entire multi-agent system via the MCP server.</p>
+
+    <div style="background:#f5f4f0;border:1px solid #e0ddd8;border-radius:8px;padding:2rem;font-size:.875rem;line-height:1.7;overflow-x:auto">
+      <h3 style="font-size:1.1rem;margin:0 0 1rem">Authentication</h3>
+      <p>Get a fresh access token before every batch of calls. Tokens expire after ~1 hour.</p>
+      <pre style="background:#1a1a1a;color:#e0e0e0;padding:1rem;border-radius:6px;margin:1rem 0;overflow-x:auto"><code>TOKEN=$(gcloud auth application-default print-access-token)</code></pre>
+
+      <h3 style="font-size:1.1rem;margin:2rem 0 1rem">Making MCP Calls</h3>
+      <p>All calls are JSON-RPC 2.0 POSTs to the MCP endpoint:</p>
+      <pre style="background:#1a1a1a;color:#e0e0e0;padding:1rem;border-radius:6px;margin:1rem 0;overflow-x:auto"><code>curl -s -X POST "https://ces.us.rep.googleapis.com/mcp" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "x-goog-user-project: PROJECT_ID" \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"TOOL","arguments":{}},"id":1}'</code></pre>
+      <p>Results come in <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">result.content[0].text</code> as a JSON string. Errors come as plain text starting with an exception class name.</p>
+
+      <h3 style="font-size:1.1rem;margin:2rem 0 1rem">Resource Hierarchy</h3>
+      <pre style="background:#1a1a1a;color:#e0e0e0;padding:1rem;border-radius:6px;margin:1rem 0;overflow-x:auto;font-size:.8rem"><code>Project
+└── Location (always "us")
+    └── App
+        ├── Agents (root + sub-agents tree)
+        │   ├── instruction (&lt;role&gt;, &lt;persona&gt;, &lt;taskflow&gt;)
+        │   ├── tools (references)
+        │   ├── childAgents (references)
+        │   └── callbacks
+        ├── Tools (Python, OpenAPI, MCP, data stores, widgets)
+        ├── Toolsets (groups of tools)
+        ├── Guardrails
+        ├── Deployments (web widget, telephony, API)
+        ├── Evaluations &amp; Datasets
+        └── Versions (immutable snapshots)</code></pre>
+
+      <h3 style="font-size:1.1rem;margin:2rem 0 1rem">Common Workflows</h3>
+
+      <h4 style="font-size:.95rem;margin:1.5rem 0 .5rem;color:#6b6560">Create an App</h4>
+      <pre style="background:#1a1a1a;color:#e0e0e0;padding:1rem;border-radius:6px;margin:1rem 0;overflow-x:auto"><code>{"name":"create_app","arguments":{
+  "parent":"projects/PROJECT/locations/us",
+  "app":{"displayName":"My Agent","description":"..."}
+}}</code></pre>
+
+      <h4 style="font-size:.95rem;margin:1.5rem 0 .5rem;color:#6b6560">Create an Agent</h4>
+      <pre style="background:#1a1a1a;color:#e0e0e0;padding:1rem;border-radius:6px;margin:1rem 0;overflow-x:auto"><code>{"name":"create_agent","arguments":{
+  "parent":"projects/.../apps/APP_ID",
+  "agentId":"my-agent-id",
+  "agent":{
+    "displayName":"Agent Name",
+    "instruction":"&lt;role&gt;...&lt;/role&gt;\n&lt;taskflow&gt;...&lt;/taskflow&gt;",
+    "tools":["projects/.../tools/TOOL_ID"],
+    "childAgents":["projects/.../agents/CHILD_ID"]
+  }
+}}</code></pre>
+      <p><strong>Agent ID:</strong> Must match <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">[a-zA-Z0-9][a-zA-Z0-9-_]{4,35}</code> (5-36 chars).</p>
+      <p><strong>Instructions:</strong> Use <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">{@AGENT: Display Name}</code> and <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">{@TOOL: function_name}</code> references.</p>
+
+      <h4 style="font-size:.95rem;margin:1.5rem 0 .5rem;color:#6b6560">Create a Python Tool</h4>
+      <pre style="background:#1a1a1a;color:#e0e0e0;padding:1rem;border-radius:6px;margin:1rem 0;overflow-x:auto"><code>{"name":"create_tool","arguments":{
+  "parent":"projects/.../apps/APP_ID",
+  "tool":{
+    "pythonFunction":{
+      "name":"function_name",
+      "pythonCode":"def function_name(p: str) -> dict:\n    return {'result': p}"
+    }
+  }
+}}</code></pre>
+      <p><strong>Constraints:</strong> stdlib only (no <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">requests</code>). <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">displayName</code> is read-only. Function name must match the def.</p>
+
+      <h4 style="font-size:.95rem;margin:1.5rem 0 .5rem;color:#6b6560">Deploy a Web Widget</h4>
+      <pre style="background:#1a1a1a;color:#e0e0e0;padding:1rem;border-radius:6px;margin:1rem 0;overflow-x:auto"><code>{"name":"create_deployment","arguments":{
+  "parent":"projects/.../apps/APP_ID",
+  "deployment":{
+    "displayName":"Web Widget",
+    "appVersion":"projects/.../versions/VERSION_ID",
+    "channelProfile":{"channelType":"WEB_UI"}
+  }
+}}</code></pre>
+      <p><strong>Channel types:</strong> WEB_UI, API, TWILIO, GOOGLE_TELEPHONY_PLATFORM, CONTACT_CENTER_AS_A_SERVICE, FIVE9</p>
+
+      <h3 style="font-size:1.1rem;margin:2rem 0 1rem">Gotchas</h3>
+      <ol style="padding-left:1.25rem">
+        <li><strong>Async operations.</strong> <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">create_app</code> returns <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">{"done":false}</code>. Poll <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">list_apps</code> to confirm.</li>
+        <li><strong>No <code>requests</code> module.</strong> Use <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">urllib.request</code> for HTTP in Python tools.</li>
+        <li><strong>Tool displayName is read-only.</strong> Auto-derived from tool type.</li>
+        <li><strong>Agent ID format.</strong> 5-36 chars, alphanumeric start. "root" is too short.</li>
+        <li><strong>US region only.</strong> Location is always "us".</li>
+        <li><strong>Token refresh.</strong> ADC tokens expire after ~1h.</li>
+        <li><strong>etag for updates.</strong> Include etag from GET in concurrent update scenarios.</li>
+        <li><strong>60+ MCP tools available.</strong> Run <code style="background:#e8e6e1;padding:.15rem .4rem;border-radius:3px">tools/list</code> to discover them all.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
 <footer class="footer">
   <p>Feedback compiled by Barron Roth, Senior PM — Applied AI, while building a multi-agent Ferrari customer support demo entirely via the CXAS MCP server. February 2026.</p>
   <p style="margin-top:.5rem"><a href="/ferrari">View the Ferrari demo →</a></p>

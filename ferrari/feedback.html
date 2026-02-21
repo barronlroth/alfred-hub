@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CXAS MCP Feedback — Ferrari Demo Build Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--surface:#151515;--surface-hover:#1a1a1a;--border:#222;
+  --text:#e0e0e0;--text-muted:#888;--text-dim:#555;
+  --critical:#e5484d;--critical-bg:rgba(229,72,77,.08);--critical-border:rgba(229,72,77,.25);
+  --high:#f76b15;--high-bg:rgba(247,107,21,.08);--high-border:rgba(247,107,21,.25);
+  --medium:#f5d90a;--medium-bg:rgba(245,217,10,.06);--medium-border:rgba(245,217,10,.2);
+  --accent:#dc2626;--mono:'JetBrains Mono',monospace;--sans:'Source Sans 3',system-ui,sans-serif;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* Header */
+.header{border-bottom:1px solid var(--border);padding:2rem 1.5rem}
+.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.header h1{font-size:1.4rem;font-weight:700;letter-spacing:-.02em}
+.header h1 span{color:var(--accent)}
+.back-link{font-family:var(--mono);font-size:.8rem;color:var(--text-muted);text-decoration:none;border:1px solid var(--border);padding:.4rem .8rem;border-radius:4px;transition:all .15s}
+.back-link:hover{color:var(--text);border-color:#444}
+
+/* Summary bar */
+.summary{max-width:960px;margin:2rem auto 0;padding:0 1.5rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.stat{font-family:var(--mono);font-size:.85rem}
+.stat strong{font-size:1.3rem;display:block;margin-bottom:.15rem}
+.stat.critical strong{color:var(--critical)}
+.stat.high strong{color:var(--high)}
+.stat.medium strong{color:var(--medium)}
+
+/* Intro */
+.intro{max-width:960px;margin:1.5rem auto 0;padding:0 1.5rem}
+.intro p{color:var(--text-muted);font-size:.95rem;max-width:680px;line-height:1.7}
+
+/* Cards */
+.cards{max-width:960px;margin:2.5rem auto;padding:0 1.5rem;display:flex;flex-direction:column;gap:1rem}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.5rem;transition:border-color .15s}
+.card:hover{border-color:#333}
+.card.severity-critical{border-left:3px solid var(--critical)}
+.card.severity-high{border-left:3px solid var(--high)}
+.card.severity-medium{border-left:3px solid var(--medium)}
+
+.card-header{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1rem}
+.card-number{font-family:var(--mono);font-size:.75rem;color:var(--text-dim);min-width:1.8rem;padding-top:.15rem}
+.card-title{font-size:1.05rem;font-weight:600;flex:1}
+.badge{font-family:var(--mono);font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:.25rem .55rem;border-radius:3px;white-space:nowrap}
+.badge-critical{color:var(--critical);background:var(--critical-bg);border:1px solid var(--critical-border)}
+.badge-high{color:var(--high);background:var(--high-bg);border:1px solid var(--high-border)}
+.badge-medium{color:var(--medium);background:var(--medium-bg);border:1px solid var(--medium-border)}
+
+.card-body{margin-left:2.55rem}
+.card-body h4{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim);margin:1rem 0 .35rem}
+.card-body h4:first-child{margin-top:0}
+.card-body p{font-size:.9rem;color:var(--text-muted);line-height:1.65}
+.card-body code{font-family:var(--mono);font-size:.8rem;background:#1e1e1e;padding:.15rem .4rem;border-radius:3px;color:#ccc}
+.card-body .code-block{display:block;background:#111;border:1px solid var(--border);border-radius:4px;padding:.75rem 1rem;margin:.5rem 0;font-family:var(--mono);font-size:.78rem;color:#aaa;white-space:pre-wrap;overflow-x:auto}
+
+/* Footer */
+.footer{max-width:960px;margin:3rem auto;padding:2rem 1.5rem;border-top:1px solid var(--border)}
+.footer p{font-size:.85rem;color:var(--text-dim);line-height:1.7}
+.footer a{color:var(--text-muted);text-decoration:underline;text-underline-offset:2px}
+.footer a:hover{color:var(--text)}
+
+@media(max-width:640px){
+  .header-inner{flex-direction:column;align-items:flex-start}
+  .summary{flex-direction:column;gap:.75rem}
+  .card-header{flex-wrap:wrap}
+  .card-body{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <h1><span>CXAS MCP</span> · Field Feedback Report</h1>
+    <a href="/ferrari" class="back-link">← Ferrari Demo</a>
+  </div>
+</header>
+
+<div class="summary">
+  <div class="stat critical"><strong>2</strong>Critical</div>
+  <div class="stat high"><strong>5</strong>High</div>
+  <div class="stat medium"><strong>5</strong>Medium</div>
+</div>
+
+<div class="intro">
+  <p>Issues encountered while building a multi-agent Ferrari customer support system entirely through the CXAS MCP server. Every agent, tool, toolset, and app was created programmatically — no console clicks. These are the rough edges.</p>
+</div>
+
+<div class="cards">
+
+  <!-- Issue 1 -->
+  <div class="card severity-critical">
+    <div class="card-header">
+      <span class="card-number">#1</span>
+      <span class="card-title">Python tool sandbox blocks all outbound HTTP</span>
+      <span class="badge badge-critical">Critical</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>Created a Python tool using <code>urllib.request</code> to call the OpenF1 API (<code>api.openf1.org</code>). The tool was created successfully but fails silently at runtime — no error message, just empty/timeout response.</p>
+      <h4>Expected</h4>
+      <p>Python tools should be able to make outbound HTTP requests, or the documentation should clearly state this restriction and recommend OpenAPI tools instead.</p>
+      <h4>Impact</h4>
+      <p>Forces developers to use OpenAPI toolsets for any external API integration, but that path has its own issues (see #2).</p>
+    </div>
+  </div>
+
+  <!-- Issue 2 -->
+  <div class="card severity-critical">
+    <div class="card-header">
+      <span class="card-number">#2</span>
+      <span class="card-title">OpenAPI Toolsets don't resolve through runSession API</span>
+      <span class="badge badge-critical">Critical</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>Created an OpenAPI toolset with 5 OpenF1 endpoints. Agent references it correctly. But calling <code>runSession</code> returns:</p>
+      <span class="code-block">Function 'openf1:get_sessions' is not declared in the tools.</span>
+      <h4>Expected</h4>
+      <p>Toolset tools should be available to agents through all runtime paths, not just the simulator.</p>
+      <h4>Impact</h4>
+      <p>Completely blocks programmatic testing. Can't build CI/CD pipelines or automated testing for agents that use OpenAPI toolsets.</p>
+    </div>
+  </div>
+
+  <!-- Issue 3 -->
+  <div class="card severity-high">
+    <div class="card-header">
+      <span class="card-number">#3</span>
+      <span class="card-title">create_tool rejects OpenAPI tools without helpful guidance</span>
+      <span class="badge badge-high">High</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>Called <code>create_tool</code> with an <code>openApiTool</code> field. Got:</p>
+      <span class="code-block">"Creating tools of type OpenApiTool is not supported. Please use OpenApi Toolsets instead."</span>
+      <h4>Expected</h4>
+      <p>Error should link to toolset documentation or provide a code example. Better: <code>create_tool</code> should accept OpenAPI tools directly.</p>
+      <h4>Impact</h4>
+      <p>Confusing DX. Developer has to discover toolsets exist through trial and error.</p>
+    </div>
+  </div>
+
+  <!-- Issue 4 -->
+  <div class="card severity-high">
+    <div class="card-header">
+      <span class="card-number">#4</span>
+      <span class="card-title">No execute_tool capability in MCP</span>
+      <span class="badge badge-high">High</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>After creating a Python tool, wanted to test it in isolation before wiring it to an agent. No <code>execute_tool</code> method exists in the MCP server.</p>
+      <h4>Expected</h4>
+      <p>MCP should expose tool execution for testing/debugging without requiring a full agent conversation.</p>
+      <h4>Impact</h4>
+      <p>Slows development loop. Every tool test requires creating an agent, starting a session, and crafting a prompt that triggers the tool.</p>
+    </div>
+  </div>
+
+  <!-- Issue 5 -->
+  <div class="card severity-medium">
+    <div class="card-header">
+      <span class="card-number">#5</span>
+      <span class="card-title">Tool displayName is silently read-only</span>
+      <span class="badge badge-medium">Medium</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>Set <code>displayName</code> when creating a Python tool. No error returned, but the value was ignored — displayName is auto-derived from the tool type.</p>
+      <h4>Expected</h4>
+      <p>Either accept and use the provided displayName, or return a validation error explaining it's read-only.</p>
+      <h4>Impact</h4>
+      <p>Minor confusion, but violates principle of least surprise.</p>
+    </div>
+  </div>
+
+  <!-- Issue 6 -->
+  <div class="card severity-medium">
+    <div class="card-header">
+      <span class="card-number">#6</span>
+      <span class="card-title">Agent ID minimum length not documented</span>
+      <span class="badge badge-medium">Medium</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>Tried to create an agent with ID <code>"root"</code>. Got validation error about minimum length (5 chars). The constraint isn't in the MCP tool schema description:</p>
+      <span class="code-block">[a-zA-Z0-9][a-zA-Z0-9-_]{4,35}</span>
+      <h4>Expected</h4>
+      <p>Schema description should include ID format constraints, or accept shorter IDs.</p>
+      <h4>Impact</h4>
+      <p>Trial and error to discover valid ID format.</p>
+    </div>
+  </div>
+
+  <!-- Issue 7 -->
+  <div class="card severity-medium">
+    <div class="card-header">
+      <span class="card-number">#7</span>
+      <span class="card-title">create_app returns async operation with no tracking</span>
+      <span class="badge badge-medium">Medium</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p><code>create_app</code> returns <code>{"done": false}</code> with no operation ID or completion callback. Had to poll <code>list_apps</code> to confirm creation.</p>
+      <h4>Expected</h4>
+      <p>Return an operation ID that can be polled, or complete synchronously for simple creates.</p>
+      <h4>Impact</h4>
+      <p>Race conditions possible in automated pipelines.</p>
+    </div>
+  </div>
+
+  <!-- Issue 8 -->
+  <div class="card severity-high">
+    <div class="card-header">
+      <span class="card-number">#8</span>
+      <span class="card-title">No conversation capability in MCP server</span>
+      <span class="badge badge-high">High</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>Built an entire agent via MCP, then realized there's no way to chat with it through MCP. Had to discover the separate <code>ces.googleapis.com</code> REST API with <code>runSession</code>.</p>
+      <h4>Expected</h4>
+      <p>MCP server should include a <code>run_session</code> or <code>send_message</code> tool for testing agents inline with the build workflow.</p>
+      <h4>Impact</h4>
+      <p>Breaks the build-test loop. Coding agents (Codex, Claude Code) can build agents via MCP but can't test them without switching to a completely different API.</p>
+    </div>
+  </div>
+
+  <!-- Issue 9 -->
+  <div class="card severity-high">
+    <div class="card-header">
+      <span class="card-number">#9</span>
+      <span class="card-title">Web widget JS/CSS versioning mismatch</span>
+      <span class="badge badge-high">High</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>Documentation references <code>v1/</code> paths for chat-messenger JS and CSS. The console's embed code generator produces <code>v1.12/</code> paths. Using the docs version = widget doesn't render, no error in console.</p>
+      <h4>Expected</h4>
+      <p>Docs should always reference the latest versioned path, or <code>v1/</code> should be an alias for latest.</p>
+      <h4>Impact</h4>
+      <p>Silent failure. Developer deploys widget, nothing appears, no way to diagnose without comparing against console output.</p>
+    </div>
+  </div>
+
+  <!-- Issue 10 -->
+  <div class="card severity-high">
+    <div class="card-header">
+      <span class="card-number">#10</span>
+      <span class="card-title">chat-messenger-layout.css breaks host page scroll</span>
+      <span class="badge badge-high">High</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>Included <code>chat-messenger-layout.css</code> as recommended in the embed code. It sets <code>overflow: hidden</code> on the body element, completely breaking scroll on mobile.</p>
+      <h4>Expected</h4>
+      <p>Widget CSS should be scoped to the widget element, not modify global body styles. At minimum, the docs should warn about this more prominently.</p>
+      <h4>Impact</h4>
+      <p>Breaks the host website. Required debugging to identify the cause.</p>
+    </div>
+  </div>
+
+  <!-- Issue 11 -->
+  <div class="card severity-medium">
+    <div class="card-header">
+      <span class="card-number">#11</span>
+      <span class="card-title">No requests module in Python sandbox</span>
+      <span class="badge badge-medium">Medium</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>Wrote a Python tool using <code>import requests</code> (the most common Python HTTP library). Failed at runtime with import error.</p>
+      <h4>Expected</h4>
+      <p>Either include <code>requests</code> in the sandbox, or prominently document the available modules in the Python tool creation flow (not buried in a reference page).</p>
+      <h4>Impact</h4>
+      <p>Every Python developer's first instinct is <code>import requests</code>. Failing here wastes time.</p>
+    </div>
+  </div>
+
+  <!-- Issue 12 -->
+  <div class="card severity-medium">
+    <div class="card-header">
+      <span class="card-number">#12</span>
+      <span class="card-title">Toolset tool names are prefixed at runtime</span>
+      <span class="badge badge-medium">Medium</span>
+    </div>
+    <div class="card-body">
+      <h4>What happened</h4>
+      <p>Created a toolset with operationId <code>get_sessions</code>. At runtime, the agent tries to call <code>openf1:get_sessions</code> (prefixed with toolset name). Instructions referencing the operationId directly don't work.</p>
+      <h4>Expected</h4>
+      <p>Document the naming convention for toolset tools, or allow unprefixed references.</p>
+      <h4>Impact</h4>
+      <p>Instructions that reference tools by operationId fail. No documentation explains the prefixing behavior.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p>Feedback compiled by Barron Roth, Senior PM — Applied AI, while building a multi-agent Ferrari customer support demo entirely via the CXAS MCP server. February 2026.</p>
+  <p style="margin-top:.5rem"><a href="https://alfred.barronroth.com/ferrari">alfred.barronroth.com/ferrari</a></p>
+</footer>
+
+</body>
+</html>

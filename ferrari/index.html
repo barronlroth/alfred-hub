@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferrari Customer Support — CXAS Demo</title>
+    <script defer src="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1/chat-messenger.js"></script>
+    <link rel="stylesheet" href="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1/themes/chat-messenger-default.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(220, 30, 30, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(220, 30, 30, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(220, 30, 30, 0.1);
+            border: 1px solid rgba(220, 30, 30, 0.25);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #dc1e1e;
+            margin-bottom: 2rem;
+        }
+
+        .badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #dc1e1e;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .shield {
+            width: 80px;
+            height: 100px;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .shield svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 1rem;
+        }
+
+        h1 span {
+            background: linear-gradient(135deg, #dc1e1e, #ff4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: #888;
+            max-width: 540px;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 900px;
+            width: 100%;
+            margin-bottom: 3rem;
+        }
+
+        .feature {
+            padding: 1.25rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            text-align: left;
+            transition: border-color 0.2s;
+        }
+
+        .feature:hover {
+            border-color: rgba(220, 30, 30, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #ddd;
+        }
+
+        .feature p {
+            font-size: 0.75rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            background: #dc1e1e;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .cta:hover {
+            background: #ff2222;
+            transform: translateY(-1px);
+        }
+
+        .tech-note {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            font-size: 0.7rem;
+            color: #444;
+            line-height: 1.5;
+        }
+
+        .tech-note a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .tech-note a:hover {
+            color: #dc1e1e;
+        }
+
+        chat-messenger {
+            z-index: 999;
+            position: fixed;
+        }
+
+        /* Ferrari red theme overrides */
+        chat-messenger {
+            --chat-messenger-color--primary: #dc1e1e;
+            --chat-messenger-color--primary-container: #1a0808;
+            --chat-messenger-color--secondary: #3a1010;
+            --chat-messenger-color--surface: #111111;
+            --chat-messenger-color--surface-container: #1a1a1a;
+            --chat-messenger-color--surface-container-high: #222222;
+            --chat-messenger-color--on-surface: #e8e8e8;
+            --chat-messenger-color--on-surface-variant: #999;
+            --chat-messenger-color--on-primary: #ffffff;
+            --chat-messenger-color--on-primary-container: #e8e8e8;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="badge">CX Agent Studio Demo</div>
+
+        <div class="shield">
+            <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40 5 L75 20 V55 C75 75 60 90 40 97 C20 90 5 75 5 55 V20 L40 5Z" fill="#dc1e1e" stroke="#ff4444" stroke-width="1"/>
+                <text x="40" y="60" text-anchor="middle" fill="white" font-size="28" font-weight="bold" font-family="serif">F</text>
+            </svg>
+        </div>
+
+        <h1>Ferrari <span>Concierge</span></h1>
+        <p class="subtitle">
+            A multi-agent customer support system built on Google Cloud CX Agent Studio.
+            4 specialized sub-agents, 10 tools, live F1 data. Built entirely via MCP.
+        </p>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🏁</div>
+                <h3>F1 Specialist</h3>
+                <p>Live race data from the OpenF1 API. Lap times, standings, telemetry.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔧</div>
+                <h3>Service Advisor</h3>
+                <p>VIN lookup, recall checks, service appointment scheduling.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🏎️</div>
+                <h3>Sales Consultant</h3>
+                <p>Full model specs, dealer inventory, test drive booking.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎖️</div>
+                <h3>Ownership Experience</h3>
+                <p>Warranty status, events, accessories, Corso Pilota.</p>
+            </div>
+        </div>
+
+        <button class="cta" onclick="document.querySelector('chat-messenger-chat-bubble').click()">
+            Chat with the Concierge →
+        </button>
+    </div>
+
+    <div class="tech-note">
+        Built with <a href="https://docs.cloud.google.com/customer-engagement-ai/conversational-agents/ps" target="_blank">CX Agent Studio</a> ·
+        <a href="https://openf1.org" target="_blank">OpenF1 API</a> ·
+        Deployed via MCP<br>
+        <a href="https://alfred.barronroth.com" target="_blank">alfred.barronroth.com</a>
+    </div>
+
+    <script>
+        window.addEventListener("chat-messenger-loaded", () => {
+            chatSdk.registerContext(
+                chatSdk.prebuilts.ces.createContext({
+                    deploymentName: "projects/gen-lang-client-0380732956/locations/us/apps/99d5fa35-aa58-4f65-ae6c-f56afd087780/deployments/c4902a2d-1106-434b-b2fa-5165b234ace2",
+                    tokenBroker: {
+                        enableTokenBroker: true,
+                    },
+                }),
+            );
+        });
+    </script>
+
+    <chat-messenger language-code="en" max-query-length="-1">
+        <chat-messenger-chat-bubble chat-title="Ferrari Concierge">
+        </chat-messenger-chat-bubble>
+    </chat-messenger>
+</body>
+</html>

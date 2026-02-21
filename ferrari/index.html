@@ -508,7 +508,7 @@
                 Four specialized sub-agents, ten integrated tools, and live Formula 1 data — crafted entirely via MCP.
             </p>
 
-            <button class="cta" onclick="document.querySelector('chat-messenger-container').click()">
+            <button class="cta" id="cta-btn">
                 <span>Begin Your Experience</span>
                 <span class="cta-arrow">→</span>
             </button>
@@ -570,12 +570,21 @@
         });
     </script>
 
-    <chat-messenger url-allowlist="*" color-scheme="dark">
+    <!-- Bubble mode (default, bottom-right) -->
+    <chat-messenger url-allowlist="*" color-scheme="dark" id="chat-bubble-mode" render-mode="slide-over">
         <chat-messenger-chat-bubble
             chat-title="Ferrari Concierge"
             enable-file-upload
         >
         </chat-messenger-chat-bubble>
     </chat-messenger>
+
+    <script>
+        // CTA clicks the chat bubble to open it
+        document.getElementById('cta-btn').addEventListener('click', function() {
+            const bubble = document.querySelector('chat-messenger-chat-bubble');
+            if (bubble) bubble.click();
+        });
+    </script>
 </body>
 </html>

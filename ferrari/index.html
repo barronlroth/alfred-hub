@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferrari Concierge — Your Personal Ferrari Experience</title>
-    <script defer src="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1/chat-messenger.js"></script>
-    <link rel="stylesheet" href="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1/themes/chat-messenger-default.css">
+    <script defer src="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1.12/chat-messenger.js"></script>
+    <link rel="stylesheet" href="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1.12/themes/chat-messenger-default.css">
+    <link rel="stylesheet" href="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1.10/themes/chat-messenger-layout.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Manrope:wght@300;400;500;600&display=swap');
 
@@ -507,7 +508,7 @@
                 Four specialized sub-agents, ten integrated tools, and live Formula 1 data — crafted entirely via MCP.
             </p>
 
-            <button class="cta" onclick="document.querySelector('chat-messenger-chat-bubble').click()">
+            <button class="cta" onclick="document.querySelector('chat-messenger-container').click()">
                 <span>Begin Your Experience</span>
                 <span class="cta-arrow">→</span>
             </button>
@@ -562,15 +563,20 @@
                     deploymentName: "projects/gen-lang-client-0380732956/locations/us/apps/99d5fa35-aa58-4f65-ae6c-f56afd087780/deployments/c4902a2d-1106-434b-b2fa-5165b234ace2",
                     tokenBroker: {
                         enableTokenBroker: true,
+                        enableRecaptcha: false,
                     },
                 }),
             );
         });
     </script>
 
-    <chat-messenger language-code="en" max-query-length="-1">
-        <chat-messenger-chat-bubble chat-title="Ferrari Concierge">
-        </chat-messenger-chat-bubble>
+    <chat-messenger url-allowlist="*" color-scheme="dark">
+        <chat-messenger-container
+            chat-title="Ferrari Concierge"
+            enable-file-upload
+        >
+            <chat-reset-session-button slot="titlebar-actions" title-text="Start new chat"></chat-reset-session-button>
+        </chat-messenger-container>
     </chat-messenger>
 </body>
 </html>

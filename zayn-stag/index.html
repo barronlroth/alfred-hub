@@ -892,6 +892,196 @@
             transform: rotate(3deg);
         }
 
+        /* Mezcal Counter Section */
+        .mezcal-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: 
+                radial-gradient(ellipse at 50% 30%, rgba(220,20,60,0.2) 0%, transparent 50%),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 30px,
+                    rgba(255,215,0,0.03) 30px,
+                    rgba(255,215,0,0.03) 31px
+                ),
+                var(--black);
+        }
+
+        .mezcal-counter-card {
+            background: linear-gradient(180deg, rgba(50,20,10,0.95) 0%, rgba(20,5,0,0.98) 100%);
+            border: 4px solid var(--gold);
+            padding: 3rem 2rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 
+                inset 0 0 60px rgba(255,215,0,0.1),
+                0 0 40px rgba(220,20,60,0.3),
+                10px 10px 0 var(--black);
+        }
+
+        .mezcal-title {
+            font-family: 'Passion One', sans-serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            text-shadow: 2px 2px 0 var(--red);
+            margin-bottom: 0.3rem;
+        }
+
+        .mezcal-subtitle {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            color: var(--electric-green);
+            letter-spacing: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .mezcal-count-display {
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .mezcal-count {
+            font-family: 'Passion One', sans-serif;
+            font-size: 8rem;
+            color: var(--gold);
+            text-shadow: 
+                4px 4px 0 var(--red),
+                8px 8px 0 rgba(0,0,0,0.5);
+            line-height: 1;
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .mezcal-count.bump {
+            transform: scale(1.15);
+        }
+
+        .mezcal-milestone {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            color: var(--hot-pink);
+            letter-spacing: 3px;
+            margin: 1rem 0;
+            min-height: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .mezcal-milestone.new {
+            animation: milestone-flash 0.6s ease;
+        }
+
+        @keyframes milestone-flash {
+            0%, 100% { color: var(--hot-pink); transform: scale(1); }
+            50% { color: var(--electric-green); transform: scale(1.1); }
+        }
+
+        .mezcal-btn {
+            font-family: 'Passion One', sans-serif;
+            font-size: 4rem;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, var(--red) 0%, #6B0000 100%);
+            color: var(--gold);
+            border: 4px solid var(--gold);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 
+                0 6px 0 #4a0000,
+                0 8px 20px rgba(0,0,0,0.5);
+            line-height: 1;
+            margin-top: 1rem;
+        }
+
+        .mezcal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 0 #4a0000,
+                0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .mezcal-btn:active {
+            transform: translateY(4px);
+            box-shadow: 
+                0 2px 0 #4a0000,
+                0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .mezcal-reset {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.8rem;
+            background: transparent;
+            color: rgba(245,230,211,0.3);
+            border: 1px solid rgba(245,230,211,0.2);
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            margin-top: 2rem;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .mezcal-reset.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mezcal-reset:hover {
+            color: var(--red);
+            border-color: var(--red);
+        }
+
+        /* Worm animation */
+        .mezcal-worm {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            transition: all 0.5s ease;
+        }
+
+        .mezcal-worm.level-1 { animation: worm-wiggle 2s ease-in-out infinite; }
+        .mezcal-worm.level-2 { animation: worm-wiggle 1s ease-in-out infinite; font-size: 2.5rem; }
+        .mezcal-worm.level-3 { animation: worm-crazy 0.5s ease-in-out infinite; font-size: 3rem; }
+        .mezcal-worm.level-4 { animation: worm-insane 0.3s ease-in-out infinite; font-size: 3.5rem; }
+        .mezcal-worm.level-5 { animation: worm-legendary 0.2s ease-in-out infinite; font-size: 4rem; }
+
+        @keyframes worm-wiggle {
+            0%, 100% { transform: translateX(-50%) rotate(-5deg); }
+            50% { transform: translateX(-50%) rotate(5deg); }
+        }
+
+        @keyframes worm-crazy {
+            0%, 100% { transform: translateX(-50%) rotate(-15deg) scale(1); }
+            25% { transform: translateX(-40%) rotate(10deg) scale(1.1); }
+            50% { transform: translateX(-60%) rotate(-10deg) scale(0.9); }
+            75% { transform: translateX(-50%) rotate(15deg) scale(1.1); }
+        }
+
+        @keyframes worm-insane {
+            0% { transform: translateX(-50%) rotate(0deg) scale(1); }
+            25% { transform: translateX(-30%) rotate(20deg) scale(1.2); }
+            50% { transform: translateX(-70%) rotate(-20deg) scale(0.8); }
+            75% { transform: translateX(-40%) rotate(15deg) scale(1.3); }
+            100% { transform: translateX(-50%) rotate(0deg) scale(1); }
+        }
+
+        @keyframes worm-legendary {
+            0% { transform: translateX(-50%) rotate(0deg) scale(1) translateY(0); filter: hue-rotate(0deg); }
+            25% { transform: translateX(-20%) rotate(30deg) scale(1.3) translateY(-10px); filter: hue-rotate(90deg); }
+            50% { transform: translateX(-80%) rotate(-30deg) scale(0.7) translateY(5px); filter: hue-rotate(180deg); }
+            75% { transform: translateX(-30%) rotate(25deg) scale(1.4) translateY(-15px); filter: hue-rotate(270deg); }
+            100% { transform: translateX(-50%) rotate(0deg) scale(1) translateY(0); filter: hue-rotate(360deg); }
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             nav ul {
@@ -935,6 +1125,7 @@
             <li><a href="#sunday">DOMINGO</a></li>
             <li><a href="#lucha-name">TU NOMBRE</a></li>
             <li><a href="#spanish-moves">MOVIMIENTOS</a></li>
+            <li><a href="#mezcal">MEZCAL</a></li>
             <li><a href="#homebase">LA CASA</a></li>
         </ul>
     </nav>
@@ -1347,6 +1538,25 @@
         </div>
     </section>
 
+    <!-- Mezcal Counter -->
+    <section class="mezcal-section" id="mezcal">
+        <div class="mezcal-counter-card">
+            <h2 class="mezcal-title">MEZCAL TRACKER</h2>
+            <p class="mezcal-subtitle">GROUP CONSUMPTION COUNTER</p>
+            
+            <div class="mezcal-count-display">
+                <div class="mezcal-count" id="mezcalCount">0</div>
+                <div class="mezcal-worm" id="mezcalWorm">🪱</div>
+            </div>
+            
+            <div class="mezcal-milestone" id="mezcalMilestone">TAP TO BEGIN</div>
+            
+            <button class="mezcal-btn" id="mezcalBtn">+</button>
+            
+            <button class="mezcal-reset" id="mezcalReset">RESET COUNTER</button>
+        </div>
+    </section>
+
     <!-- Home Base -->
     <section class="home-base" id="homebase">
         <h2>★ LA CASA ★</h2>
@@ -1462,6 +1672,105 @@
                 luchaNameEl.classList.add('revealed', 'shake');
                 firstClick = false;
             }, firstClick ? 100 : 200);
+        });
+
+        // Mezcal Counter
+        const mezcalMilestones = {
+            0: 'TAP TO BEGIN',
+            1: 'FIRST BLOOD',
+            5: '🔥 WARMING UP',
+            10: '😤 FEELING IT',
+            15: '🎭 LUCHA MODE ACTIVATED',
+            20: '👹 EL DIABLO',
+            25: '⚡ LEGENDARY',
+            30: '🏆 HALL OF FAME',
+            40: '💀 IMMORTAL',
+            50: '🌟 DIVINE'
+        };
+
+        const mezcalCountEl = document.getElementById('mezcalCount');
+        const mezcalMilestoneEl = document.getElementById('mezcalMilestone');
+        const mezcalBtn = document.getElementById('mezcalBtn');
+        const mezcalReset = document.getElementById('mezcalReset');
+        const mezcalWorm = document.getElementById('mezcalWorm');
+
+        let mezcalCount = parseInt(localStorage.getItem('mezcalCount') || '0');
+        let resetTapCount = 0;
+        let resetTapTimeout;
+
+        function updateMezcalDisplay() {
+            mezcalCountEl.textContent = mezcalCount;
+            localStorage.setItem('mezcalCount', mezcalCount.toString());
+            
+            // Find the appropriate milestone
+            let milestone = mezcalMilestones[0];
+            let milestoneKeys = Object.keys(mezcalMilestones).map(Number).sort((a, b) => b - a);
+            for (let key of milestoneKeys) {
+                if (mezcalCount >= key) {
+                    milestone = mezcalMilestones[key];
+                    break;
+                }
+            }
+            
+            // Check if milestone changed
+            if (mezcalMilestoneEl.textContent !== milestone) {
+                mezcalMilestoneEl.classList.remove('new');
+                void mezcalMilestoneEl.offsetWidth;
+                mezcalMilestoneEl.classList.add('new');
+            }
+            mezcalMilestoneEl.textContent = milestone;
+            
+            // Update worm animation level
+            mezcalWorm.className = 'mezcal-worm';
+            if (mezcalCount >= 30) mezcalWorm.classList.add('level-5');
+            else if (mezcalCount >= 20) mezcalWorm.classList.add('level-4');
+            else if (mezcalCount >= 15) mezcalWorm.classList.add('level-3');
+            else if (mezcalCount >= 10) mezcalWorm.classList.add('level-2');
+            else if (mezcalCount >= 5) mezcalWorm.classList.add('level-1');
+        }
+
+        // Initialize display
+        updateMezcalDisplay();
+
+        mezcalBtn.addEventListener('click', () => {
+            mezcalCount++;
+            
+            // Bump animation
+            mezcalCountEl.classList.remove('bump');
+            void mezcalCountEl.offsetWidth;
+            mezcalCountEl.classList.add('bump');
+            
+            setTimeout(() => mezcalCountEl.classList.remove('bump'), 150);
+            
+            updateMezcalDisplay();
+        });
+
+        // Double-tap to reveal reset
+        mezcalReset.parentElement.addEventListener('click', (e) => {
+            if (e.target === mezcalReset.parentElement || e.target === mezcalReset) return;
+        });
+
+        // Track taps on the card area for double-tap reset reveal
+        document.querySelector('.mezcal-counter-card').addEventListener('click', (e) => {
+            if (e.target === mezcalBtn || e.target === mezcalReset) return;
+            
+            resetTapCount++;
+            clearTimeout(resetTapTimeout);
+            
+            if (resetTapCount >= 2) {
+                mezcalReset.classList.toggle('visible');
+                resetTapCount = 0;
+            } else {
+                resetTapTimeout = setTimeout(() => resetTapCount = 0, 400);
+            }
+        });
+
+        mezcalReset.addEventListener('click', () => {
+            if (confirm('Reset the mezcal counter to 0?')) {
+                mezcalCount = 0;
+                updateMezcalDisplay();
+                mezcalReset.classList.remove('visible');
+            }
         });
     </script>
 </body>

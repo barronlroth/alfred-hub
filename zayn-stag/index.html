@@ -766,6 +766,132 @@
         .corner-star.bottom-left { bottom: -20px; left: -20px; }
         .corner-star.bottom-right { bottom: -20px; right: -20px; }
 
+        /* Spanish Phrases Section */
+        .spanish-moves-section {
+            padding: 4rem 2rem;
+            background: 
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 15px,
+                    rgba(0,104,71,0.15) 15px,
+                    rgba(0,104,71,0.15) 30px
+                ),
+                linear-gradient(180deg, #0a0a0a 0%, #0a1a0f 50%, #0a0a0a 100%);
+        }
+
+        .moves-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .moves-header h2 {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: var(--gold);
+            text-shadow: 
+                3px 3px 0 var(--red),
+                6px 6px 0 var(--black);
+        }
+
+        .moves-header p {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            color: var(--electric-green);
+            letter-spacing: 4px;
+            margin-top: 0.5rem;
+        }
+
+        .moves-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .move-card {
+            background: linear-gradient(145deg, rgba(0,0,0,0.9) 0%, rgba(30,10,10,0.9) 100%);
+            border: 3px solid var(--green);
+            padding: 1.5rem;
+            position: relative;
+            transform: rotate(-1deg);
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 0 rgba(0,104,71,0.5);
+        }
+
+        .move-card:nth-child(even) {
+            transform: rotate(1deg);
+        }
+
+        .move-card:hover {
+            transform: rotate(0deg) scale(1.03);
+            border-color: var(--gold);
+            z-index: 10;
+        }
+
+        .move-name {
+            font-family: 'Passion One', sans-serif;
+            font-size: 1.5rem;
+            color: var(--red);
+            text-shadow: 1px 1px 0 var(--black);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px dashed var(--gold);
+        }
+
+        .move-spanish {
+            font-family: 'Passion One', sans-serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .move-english {
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 1rem;
+            color: var(--cream);
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .move-difficulty {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .move-difficulty span {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.85rem;
+            color: var(--electric-green);
+            letter-spacing: 2px;
+            margin-right: 0.5rem;
+        }
+
+        .star-rating {
+            color: var(--gold);
+            font-size: 1rem;
+        }
+
+        .star-empty {
+            color: rgba(255,215,0,0.3);
+        }
+
+        .move-badge {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: var(--red);
+            color: var(--cream);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            letter-spacing: 1px;
+            transform: rotate(3deg);
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             nav ul {
@@ -808,6 +934,7 @@
             <li><a href="#saturday">SÁBADO</a></li>
             <li><a href="#sunday">DOMINGO</a></li>
             <li><a href="#lucha-name">TU NOMBRE</a></li>
+            <li><a href="#spanish-moves">MOVIMIENTOS</a></li>
             <li><a href="#homebase">LA CASA</a></li>
         </ul>
     </nav>
@@ -1079,6 +1206,144 @@
             </div>
             
             <button class="generate-btn" id="generateBtn">¡LUCHA!</button>
+        </div>
+    </section>
+
+    <!-- Spanish Phrases as Wrestling Moves -->
+    <section class="spanish-moves-section" id="spanish-moves">
+        <div class="moves-header">
+            <h2>MOVIMIENTOS ESENCIALES</h2>
+            <p>MASTER THESE MOVES TO SURVIVE THE RING</p>
+        </div>
+        
+        <div class="moves-grid">
+            <div class="move-card">
+                <div class="move-badge">ESSENTIAL</div>
+                <div class="move-name">THE ESCAPE</div>
+                <div class="move-spanish">¿Dónde está el baño?</div>
+                <div class="move-english">Where is the bathroom?</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★★<span class="star-empty">★★★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-badge">CRITICAL</div>
+                <div class="move-name">THE REFRESHER</div>
+                <div class="move-spanish">Una cerveza, por favor</div>
+                <div class="move-english">A beer, please</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★<span class="star-empty">★★★★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-name">THE SURRENDER</div>
+                <div class="move-spanish">La cuenta, por favor</div>
+                <div class="move-english">The check, please</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★★<span class="star-empty">★★★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-name">THE NEGOTIATOR</div>
+                <div class="move-spanish">¿Cuánto cuesta?</div>
+                <div class="move-english">How much does it cost?</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★★<span class="star-empty">★★★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-name">THE SCOUT</div>
+                <div class="move-spanish">¿Dónde está...?</div>
+                <div class="move-english">Where is...?</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★<span class="star-empty">★★★★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-badge">SURVIVAL</div>
+                <div class="move-name">THE GRINGO SHIELD</div>
+                <div class="move-spanish">No picante, por favor</div>
+                <div class="move-english">Not spicy, please</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★★★<span class="star-empty">★★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-badge">POWER MOVE</div>
+                <div class="move-name">THE DOUBLE DOWN</div>
+                <div class="move-spanish">¡Otra más!</div>
+                <div class="move-english">One more!</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★<span class="star-empty">★★★★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-badge">EMERGENCY</div>
+                <div class="move-name">THE MAYDAY</div>
+                <div class="move-spanish">¡Ayuda!</div>
+                <div class="move-english">Help!</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★<span class="star-empty">★★★★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-name">THE RETREAT</div>
+                <div class="move-spanish">Necesito un taxi</div>
+                <div class="move-english">I need a taxi</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★★<span class="star-empty">★★★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-badge">CLASSIC</div>
+                <div class="move-name">THE HUMBLE CARD</div>
+                <div class="move-spanish">No hablo español</div>
+                <div class="move-english">I don't speak Spanish</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★★★<span class="star-empty">★★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-badge">LEGENDARY</div>
+                <div class="move-name">THE ROUND ROBIN</div>
+                <div class="move-spanish">¡Otra ronda para todos!</div>
+                <div class="move-english">Another round for everyone!</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★★★★<span class="star-empty">★</span></span>
+                </div>
+            </div>
+            
+            <div class="move-card">
+                <div class="move-badge">FINISHER</div>
+                <div class="move-name">THE PARTY FINDER</div>
+                <div class="move-spanish">¿Dónde está la fiesta?</div>
+                <div class="move-english">Where's the party?</div>
+                <div class="move-difficulty">
+                    <span>DIFFICULTY:</span>
+                    <span class="star-rating">★★★<span class="star-empty">★★</span></span>
+                </div>
+            </div>
         </div>
     </section>
 

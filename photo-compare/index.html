@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Eye Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --border: #1f1f1f;
+    --text: #e8e4df;
+    --text-dim: #6b6560;
+    --text-muted: #3a3632;
+    --gold: #c9a96e;
+    --gold-dim: rgba(201,169,110,0.15);
+    --blue: #7ba7c9;
+    --blue-dim: rgba(123,167,201,0.15);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+    z-index: 9999;
+  }
+
+  /* ─── Start Screen ─── */
+  #start-screen {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+    animation: fadeUp 1s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+
+  #start-screen h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--text) 0%, var(--text-dim) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  #start-screen .desc {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 360px;
+    margin-bottom: 48px;
+  }
+
+  #name-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-style: italic;
+    padding: 12px 0;
+    width: 240px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s;
+    margin-bottom: 48px;
+  }
+  #name-input:focus { border-color: var(--text-dim); }
+  #name-input::placeholder { color: var(--text-muted); font-style: italic; }
+
+  .btn {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 16px 56px;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--text);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+  }
+  .btn:hover { color: var(--bg); border-color: var(--text); }
+  .btn:hover::before { transform: scaleX(1); }
+
+  /* ─── Game ─── */
+  #game {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+    padding: 0;
+    animation: fadeUp 0.6s ease;
+  }
+
+  #game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+  }
+
+  #round-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  #progress-wrap {
+    flex: 1;
+    max-width: 200px;
+    margin: 0 24px;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+  }
+  #progress-fill {
+    height: 100%;
+    background: var(--text-dim);
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 0;
+  }
+
+  #score-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+  }
+
+  /* Photos */
+  #photos {
+    flex: 1;
+    display: flex;
+    gap: 3px;
+    padding: 0 3px 3px;
+    min-height: 0;
+    max-height: calc(100vh - 80px);
+  }
+
+  #tap-hint {
+    text-align: center;
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 12px 0 0;
+    transition: opacity 1s;
+  }
+
+  .photo-card {
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .photo-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .photo-card:hover::after { border-color: rgba(255,255,255,0.1); }
+
+  .photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.5s ease, transform 6s ease;
+    opacity: 0;
+    min-height: 40vh;
+    max-height: calc(100vh - 90px);
+  }
+  .photo-card img.loaded { opacity: 1; }
+  .photo-card:hover img { transform: scale(1.02); }
+
+  .photo-card .spinner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    z-index: 1;
+    transition: opacity 0.4s;
+  }
+  .photo-card .spinner.hidden { opacity: 0; pointer-events: none; }
+  .photo-card .spinner::after {
+    content: '';
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--border);
+    border-top-color: var(--text-dim);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Selection states */
+  .photo-card.chosen::after { border-color: var(--text) !important; }
+  .photo-card.not-chosen { opacity: 0.2; transform: scale(0.98); }
+  .photo-card.not-chosen img { filter: grayscale(0.5); }
+
+  /* Side labels on hover */
+  .photo-card .side-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    background: rgba(0,0,0,0.6);
+    padding: 6px 16px;
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .photo-card:hover .side-hint { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ─── Results ─── */
+  #results {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 24px 60px;
+    animation: fadeUp 0.8s ease;
+  }
+
+  #results .eyebrow { margin-bottom: 16px; }
+
+  #results h2 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 300;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+
+  #results-name {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 60px;
+  }
+
+  /* Result bars */
+  .result-section { width: 100%; max-width: 520px; margin-bottom: 48px; }
+
+  .result-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .result-label {
+    width: 110px;
+    text-align: right;
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--text-dim);
+  }
+
+  .result-bar {
+    flex: 1;
+    height: 36px;
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-bar .fill {
+    height: 100%;
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 0;
+  }
+  .fill-a { background: linear-gradient(90deg, var(--gold-dim), var(--gold)); }
+  .fill-b { background: linear-gradient(90deg, var(--blue-dim), var(--blue)); }
+
+  .result-pct {
+    width: 70px;
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  /* Reveal */
+  .reveal-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px 40px;
+    margin-bottom: 32px;
+    text-align: center;
+    max-width: 420px;
+  }
+
+  .reveal-card h3 {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .reveal-card p {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    margin: 8px 0;
+    font-style: italic;
+  }
+
+  .reveal-card .name-a { color: var(--gold); }
+  .reveal-card .name-b { color: var(--blue); }
+  .reveal-card .eq { color: var(--text-muted); margin: 0 4px; }
+
+  .winner-msg {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-style: italic;
+    margin: 20px 0 48px;
+    color: var(--text);
+  }
+
+  /* Picked grid */
+  #picked-heading {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  #picked-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 3px;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 48px;
+  }
+
+  #picked-grid .pick {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+  }
+
+  #picked-grid .pick img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #picked-grid .pick .tag {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .tag-a { background: rgba(201,169,110,0.85); color: var(--bg); }
+  .tag-b { background: rgba(123,167,201,0.85); color: var(--bg); }
+
+  /* Past results */
+  #past-results {
+    width: 100%;
+    max-width: 520px;
+    margin-top: 32px;
+    margin-bottom: 48px;
+  }
+
+  #past-results h3 {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .past-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    #photos { flex-direction: column; gap: 2px; padding: 0 2px 2px; }
+    .photo-card img { min-height: 35vh; max-height: 42vh; }
+    #game-header { padding: 16px 20px; }
+    .reveal-card { padding: 24px 20px; }
+    #picked-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<div id="start-screen">
+  <div class="eyebrow">A blind comparison</div>
+  <h1>The Eye Test</h1>
+  <p>Two photographers. Twenty-five rounds. You pick what moves you. Names revealed at the end.</p>
+  <input type="text" id="name-input" placeholder="Your name" autofocus>
+  <button class="btn" onclick="startGame()">Begin</button>
+</div>
+
+<div id="game">
+  <div id="game-header">
+    <div id="round-label"></div>
+    <div id="progress-wrap"><div id="progress-fill"></div></div>
+    <div id="score-label"></div>
+  </div>
+  <div id="tap-hint">Tap the photo you prefer</div>
+  <div id="photos">
+    <div class="photo-card" id="card-left" onclick="pick('left')">
+      <div class="spinner" id="spin-left"></div>
+      <img id="img-left" src="" alt="">
+      <div class="side-hint">Choose</div>
+    </div>
+    <div class="photo-card" id="card-right" onclick="pick('right')">
+      <div class="spinner" id="spin-right"></div>
+      <img id="img-right" src="" alt="">
+      <div class="side-hint">Choose</div>
+    </div>
+  </div>
+</div>
+
+<div id="results">
+  <div class="eyebrow">Your picks are in</div>
+  <h2 id="results-heading">The Verdict</h2>
+  <div id="results-name"></div>
+  <div class="result-section">
+    <div class="result-row">
+      <div class="result-label">One</div>
+      <div class="result-bar"><div class="fill fill-a" id="bar-a"></div></div>
+      <div class="result-pct" id="pct-a"></div>
+    </div>
+    <div class="result-row">
+      <div class="result-label">Two</div>
+      <div class="result-bar"><div class="fill fill-b" id="bar-b"></div></div>
+      <div class="result-pct" id="pct-b"></div>
+    </div>
+  </div>
+  <div class="reveal-card">
+    <h3>The Reveal</h3>
+    <p><span class="name-a">Photographer One</span><span class="eq">=</span> Aileen Ayala</p>
+    <p><span class="name-b">Photographer Two</span><span class="eq">=</span> Gillian Verni</p>
+  </div>
+  <div class="winner-msg" id="winner-msg"></div>
+  <div id="picked-heading">Your choices</div>
+  <div id="picked-grid"></div>
+  <div id="past-results"></div>
+  <button class="btn" onclick="reset()">Play Again</button>
+  <br><br>
+</div>
+
+<script>
+// Aileen Ayala — 25 images from 10 different shoots (max 3 per wedding)
+const A=[
+"https://static.showit.co/1200/8T7mpeY5HXz9EYuY5uqfYg/182058/bali_wedding_documentary_editorial_photographer-39.jpg",
+"https://static.showit.co/1200/dKOnngDXBYyJVnjIotBI4g/182058/san_miguel_de_allende_mexico_wedding_photographer_aileen_ayala-85.jpg",
+"https://static.showit.co/1200/YBaDvYaxIYQ8ybU7J1w9ig/182058/coral_gables_congregational_ucc_wedding_ceremony_photography-129.jpg",
+"https://static.showit.co/1200/-I4-xRcSG1aMTwgTACqECQ/182058/miami_and_nyc_wedding_photographer-212.jpg",
+"https://static.showit.co/1200/sQFdCkzO479ZorUrCthDUA/182058/bride_getting_ready_editorial_luxury_wedding_hacienda_de_las_palmas_palm_beach_florida-95.jpg",
+"https://static.showit.co/1200/HN6vkA9AjUsBYtfJ1tRE3A/182058/bride_groom_first_look_the_biltmore_coral_gables_miami_wedding_photography-35.jpg",
+"https://static.showit.co/1200/XWKno33f2yBo4wbLEZfYpQ/182058/the_vanderbilt_mansion_fisher_island_engagement_party_miami_editorial_documentary_wedding_photographer-122.jpg",
+"https://static.showit.co/1200/lHn-A5caJJRw-U0JEmrOGQ/182058/villa_woodbine_wedding_reception-78.jpg",
+"https://static.showit.co/1200/HVObhRan4GeXt6GFHcQf_Q/182058/vizcaya_muesum_and_garden_luxury_wedding_documentary_wedding_photography-7.jpg",
+"https://static.showit.co/1200/NYCcTfNim0e8lZnOXE1g4A/182058/san_miguel_de_allende_mexico_wedding_photographer_aileen_ayala-172.jpg",
+"https://static.showit.co/1200/E4r5TmJOBLNiUFIR9RMAvQ/182058/villa_woodbine_oak_tree_wedding_ceremony_details.jpg",
+"https://static.showit.co/1200/3VcyJonDY3oumCQXTUtCWw/182058/vizcaya_muesum_and_garden_luxury_wedding_documentary_wedding_photography-57.jpg",
+"https://static.showit.co/1200/elzip2nENhnsxjj6vKBgfA/182058/miami_and_nyc_wedding_photographer-66.jpg",
+"https://static.showit.co/1200/pjS63XwV5RqDrGu56C_6Wg/182058/coral_gables_congregational_ucc_wedding_ceremony_photography-163.jpg",
+"https://static.showit.co/1200/a_lQaRz0tnXdRn6NVzSm8g/182058/bridal_portraits_lili_hod_wedding_dress_hacienda_de_las_palmas_palm_beach_florida_luxury_wedding-85.jpg",
+"https://static.showit.co/1200/U1yFPcpo767G60LbQfMvQg/182058/wedding_ceremony_details_hacienda_de_las_palmas_palm_beach_florida_luxury_wedding-27_websize.jpg",
+"https://static.showit.co/1200/1nAd6DY1R2mv18EU6JVTbg/182058/rsp_6852-min.jpg",
+"https://static.showit.co/1200/EPhsNdRpIxqask6xWNznTA/182058/couple_engagement_portraits_the_vanderbilt_mansion_fisher_island_engagement_miami_editorial_documentary_wedding_photographer-48.jpg",
+"https://static.showit.co/1200/rFb9MLFK0dOYUBlKnRjc-g/182058/new_york_long_island_wedding_photography_documentary_wedding_essex_club_wedding_venue-17.jpg",
+"https://static.showit.co/1200/igfTrFipImDWUZsLb88nBA/182058/vignette_gardens_wedding_documentary_editorial_miami_wedding_photographer-121.jpg",
+"https://static.showit.co/1200/4VavV1MNjChkN4sEe40RWA/182058/bali_wedding_documentary_editorial_photographer-16.jpg",
+"https://static.showit.co/1200/p9iYqGfYwLVACDw6nFivRw/182058/vizcaya_muesum_and_garden_luxury_wedding_documentary_wedding_photography-36.jpg",
+"https://static.showit.co/1200/exYt3HGv23V38pz6WVhjfQ/182058/the_vanderbilt_mansion_fisher_island_engagement_party_miami_editorial_documentary_wedding_photographer.jpg",
+"https://static.showit.co/1200/fFwdqUy9Qelw5tIMZKa1xA/182058/bali_wedding_documentary_editorial_photographer-2.jpg",
+"https://static.showit.co/1200/-6Gl4_DGbbjRBYgpN_Yalg/182058/san_miguel_de_allende_mexico_wedding_photographer_aileen_ayala-159.jpg"
+];
+// Gillian Verni — 30 images from 8 categories (weddings, film, events, portraits)
+const B=[
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/0660cf3d-9c77-4c7c-9143-63fe2df71458/IMG_1897.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/9950214e-a82a-4c04-966d-05d37c8736e0/000041710027.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/7c62631c-0ff6-4115-8fde-083299910391/000041710028.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/acbf1c00-82dc-425a-94b2-f54a2dc5c37b/IMG_9989.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/3b797aa4-de07-4ee5-8017-9bb22bd1ff08/1W1A0027.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/8ad74d44-12a8-47cb-93a5-2bfbb5a616f8/IMG_1896.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/8df781c9-080a-4548-864a-990138047976/1W1A6544.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/8e48d2b2-16ea-4454-a8a2-cbc4a0af1046/IMG_9546.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/0fdffad5-8d36-44ad-9338-547f1be91ee6/DSC_3708.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/dc38265f-e824-41b4-8e09-0a38e592eef8/IMG_1879.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/86513785-77ba-43de-9c29-57abd4709b71/DSC_3650.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/581e6f7b-d73d-4cb9-9a88-5f7580f7c838/IMG_9543.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/a939004b-f541-4dee-b4fe-0f7b48143d22/IMG_9992.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/cf55e7b8-6857-4fb1-9c05-8ce815976a16/IMG_0548.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/06784222-ee29-4817-98c8-9c4035272099/000041710035.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/0c6590e5-cd98-41a5-93a0-034de5761a14/DSC_3398.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/bf16ed60-1dec-446c-abc1-aa168f4529f1/IMG_5267.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/7e0c1498-ff8d-4b05-b069-8d35c779a413/IMG_5284.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/3ea14b1c-43b0-4191-9c9d-7d90540f65a2/DSC_8708.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/7f4ab03b-84ba-4b13-8a33-094af9fac555/1W1A9996-2.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/bebb6826-ada5-4a11-9a1f-e06d7cfa0cd4/IMG_1884.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/c2575cec-4d11-442e-8c21-7e52f2b97e87/1W1A0190.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/2322352a-492b-4415-81bd-10c52677ac0c/DSC_2697.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/c3e67e45-95fa-4e30-95e8-f7d89088b61b/IMG_0544.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/a0fc3d64-8c27-4682-bad3-7e94c3894138/1W1A6690.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/d645f47a-6973-4aec-bcbb-9f4726e9bdc2/IMG_0546.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/2887dc9a-1c09-424c-9142-3b7a3ae9111c/IMG_1084.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/a04bf9b4-2e12-41c6-86a5-14bd0e2722d1/IMG_1882.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/9a549936-4d15-41b8-aa83-e422179624dc/IMG_0007.jpg?format=1000w",
+"https://images.squarespace-cdn.com/content/v1/64efdad8b756b4655fbd7ffa/c5e676cb-a7b3-4066-937e-ecc77daf11b7/IMG_0535.jpg?format=1000w"
+];
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+let rounds=[],current=0,votes={a:0,b:0},choices=[],playerName='',locked=false;
+
+function buildRounds(){
+  const count=Math.min(A.length,B.length,30);
+  const sa=shuffle([...A]).slice(0,count), sb=shuffle([...B]).slice(0,count);
+  rounds=[];
+  for(let i=0;i<count;i++){
+    const aLeft=Math.random()<0.5;
+    rounds.push({
+      left:{url:aLeft?sa[i]:sb[i],who:aLeft?'a':'b'},
+      right:{url:aLeft?sb[i]:sa[i],who:aLeft?'b':'a'}
+    });
+  }
+  shuffle(rounds);
+}
+
+function startGame(){
+  playerName=document.getElementById('name-input').value.trim()||'Anonymous';
+  buildRounds(); current=0; votes={a:0,b:0}; choices=[];
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('results').style.display='none';
+  const g=document.getElementById('game');
+  g.style.display='flex';
+  showRound();
+}
+
+function showRound(){
+  locked=false;
+  const r=rounds[current];
+  document.getElementById('progress-fill').style.width=((current)/rounds.length*100)+'%';
+  document.getElementById('round-label').textContent='Round '+(current+1)+' / '+rounds.length;
+  document.getElementById('score-label').textContent='';
+
+  const imgL=document.getElementById('img-left'), imgR=document.getElementById('img-right');
+  const spinL=document.getElementById('spin-left'), spinR=document.getElementById('spin-right');
+  const cardL=document.getElementById('card-left'), cardR=document.getElementById('card-right');
+
+  cardL.className='photo-card'; cardR.className='photo-card';
+  spinL.className='spinner'; spinR.className='spinner';
+  imgL.className=''; imgR.className='';
+
+  imgL.onload=()=>{spinL.classList.add('hidden');imgL.classList.add('loaded')};
+  imgR.onload=()=>{spinR.classList.add('hidden');imgR.classList.add('loaded')};
+  imgL.src=r.left.url;
+  imgR.src=r.right.url;
+
+  // Preload next
+  if(current+1<rounds.length){
+    new Image().src=rounds[current+1].left.url;
+    new Image().src=rounds[current+1].right.url;
+  }
+}
+
+function pick(side){
+  if(locked)return;
+  locked=true;
+  const r=rounds[current];
+  const chosen=side==='left'?r.left:r.right;
+  votes[chosen.who]++;
+  choices.push({url:chosen.url,who:chosen.who});
+
+  const cardL=document.getElementById('card-left'), cardR=document.getElementById('card-right');
+  const hint=document.getElementById('tap-hint');if(hint)hint.style.opacity='0';
+  if(side==='left'){cardL.classList.add('chosen');cardR.classList.add('not-chosen')}
+  else{cardR.classList.add('chosen');cardL.classList.add('not-chosen')}
+
+  setTimeout(()=>{current++;current>=rounds.length?showResults():showRound()},700);
+}
+
+function showResults(){
+  document.getElementById('game').style.display='none';
+  const r=document.getElementById('results');
+  r.style.display='flex';
+  document.getElementById('results-name').textContent=playerName;
+
+  const total=votes.a+votes.b;
+  const pA=Math.round((votes.a/total)*100), pB=100-pA;
+
+  setTimeout(()=>{
+    document.getElementById('bar-a').style.width=pA+'%';
+    document.getElementById('bar-b').style.width=pB+'%';
+  },200);
+  document.getElementById('pct-a').textContent=votes.a+' ('+pA+'%)';
+  document.getElementById('pct-b').textContent=votes.b+' ('+pB+'%)';
+
+  const msg=document.getElementById('winner-msg');
+  if(pA>=75) msg.textContent='Clear preference for Aileen Ayala';
+  else if(pB>=75) msg.textContent='Clear preference for Gillian Verni';
+  else msg.textContent='No clear winner — too close to call';
+
+  const grid=document.getElementById('picked-grid');
+  grid.innerHTML='';
+  choices.forEach(c=>{
+    const d=document.createElement('div');d.className='pick';
+    d.innerHTML='<img src="'+c.url+'" alt=""><div class="tag '+(c.who==='a'?'tag-a':'tag-b')+'">'+(c.who==='a'?'Aileen Ayala':'Gillian Verni')+'</div>';
+    grid.appendChild(d);
+  });
+
+  const entry={name:playerName,date:new Date().toISOString(),votesA:votes.a,votesB:votes.b,pctA:pA,pctB:pB};
+  const history=JSON.parse(localStorage.getItem('photo-compare-results')||'[]');
+  history.push(entry);
+  localStorage.setItem('photo-compare-results',JSON.stringify(history));
+
+  const pastDiv=document.getElementById('past-results');
+  pastDiv.innerHTML='';
+  if(history.length>1){
+    pastDiv.innerHTML='<h3>Previous Sessions</h3>';
+    history.slice().reverse().forEach(h=>{
+      const d=new Date(h.date).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+      pastDiv.innerHTML+='<div class="past-entry"><span>'+h.name+' — '+d+'</span><span style="color:var(--gold)">'+h.pctA+'%</span> / <span style="color:var(--blue)">'+h.pctB+'%</span></div>';
+    });
+  }
+}
+
+function reset(){
+  document.getElementById('results').style.display='none';
+  const s=document.getElementById('start-screen');
+  s.style.display='flex';
+  document.getElementById('name-input').value='';
+  document.getElementById('name-input').focus();
+}
+
+document.getElementById('start-screen').style.display='flex';
+document.getElementById('name-input').addEventListener('keydown',e=>{if(e.key==='Enter')startGame()});
+</script>
+</body>
+</html>

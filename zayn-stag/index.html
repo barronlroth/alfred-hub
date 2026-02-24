@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZAYN'S STAG — CDMX 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Passion+One:wght@400;700;900&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --red: #DC143C;
+            --green: #006847;
+            --black: #0a0a0a;
+            --cream: #F5E6D3;
+            --electric-green: #39FF14;
+            --hot-pink: #FF1493;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto Condensed', sans-serif;
+            background: var(--black);
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* Halftone overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 4px 4px;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+            padding: 1rem 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 0 var(--red);
+        }
+
+        nav a:hover {
+            color: var(--electric-green);
+            transform: scale(1.1);
+            text-shadow: 2px 2px 0 var(--hot-pink);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(220,20,60,0.1) 10px,
+                    rgba(220,20,60,0.1) 20px
+                ),
+                linear-gradient(180deg, var(--black) 0%, #1a0a0a 50%, var(--black) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Lucha Mask SVG */
+        .mask-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .lucha-mask {
+            width: 200px;
+            height: 200px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--gold)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 40px var(--red)); }
+        }
+
+        .hero h1 {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(4rem, 15vw, 10rem);
+            font-weight: 900;
+            color: var(--gold);
+            text-shadow: 
+                4px 4px 0 var(--red),
+                8px 8px 0 var(--black),
+                -2px -2px 0 var(--black);
+            line-height: 0.9;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero h1 .stag {
+            color: var(--red);
+            text-shadow: 
+                4px 4px 0 var(--gold),
+                8px 8px 0 var(--black),
+                -2px -2px 0 var(--black);
+        }
+
+        .hero h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            color: var(--electric-green);
+            letter-spacing: 10px;
+            margin-top: 1rem;
+            text-shadow: 2px 2px 0 var(--black);
+        }
+
+        .dates {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--cream);
+            margin-top: 1rem;
+            padding: 0.5rem 2rem;
+            border: 3px solid var(--gold);
+            background: rgba(0,0,0,0.5);
+        }
+
+        /* Countdown */
+        .countdown {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .countdown-item {
+            background: linear-gradient(135deg, var(--red) 0%, #8B0000 100%);
+            padding: 1rem 1.5rem;
+            border: 3px solid var(--gold);
+            text-align: center;
+            min-width: 80px;
+            transform: skewX(-5deg);
+            box-shadow: 5px 5px 0 var(--black);
+        }
+
+        .countdown-item span {
+            display: block;
+            transform: skewX(5deg);
+        }
+
+        .countdown-number {
+            font-family: 'Passion One', sans-serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+        }
+
+        .countdown-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.9rem;
+            color: var(--cream);
+            letter-spacing: 2px;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 30px;
+            height: 50px;
+            border: 3px solid var(--gold);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 3px;
+            animation: scroll-dot 2s infinite;
+        }
+
+        @keyframes scroll-dot {
+            0% { opacity: 1; top: 8px; }
+            100% { opacity: 0; top: 25px; }
+        }
+
+        /* Day Cards */
+        .day-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .day-section:nth-child(odd) {
+            background: 
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 15px,
+                    rgba(0,104,71,0.1) 15px,
+                    rgba(0,104,71,0.1) 30px
+                ),
+                linear-gradient(180deg, #0a0a0a 0%, #0f1a0f 50%, #0a0a0a 100%);
+        }
+
+        .day-section:nth-child(even) {
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 15px,
+                    rgba(220,20,60,0.1) 15px,
+                    rgba(220,20,60,0.1) 30px
+                ),
+                linear-gradient(180deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+        }
+
+        .day-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .day-number {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--electric-green);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        .day-title {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 900;
+            color: var(--gold);
+            text-shadow: 
+                3px 3px 0 var(--red),
+                6px 6px 0 var(--black);
+            line-height: 1;
+        }
+
+        .day-date {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--cream);
+            letter-spacing: 3px;
+            margin-top: 0.5rem;
+        }
+
+        .day-tagline {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: var(--red);
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            border: 2px solid var(--red);
+            display: inline-block;
+            transform: rotate(-2deg);
+        }
+
+        /* Event Cards */
+        .events {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
+            border: 3px solid var(--gold);
+            padding: 2rem;
+            position: relative;
+            transform: skewX(-2deg);
+            transition: all 0.3s ease;
+            box-shadow: 8px 8px 0 rgba(220,20,60,0.5);
+        }
+
+        .event-card:hover {
+            transform: skewX(-2deg) translateY(-5px);
+            box-shadow: 12px 12px 0 rgba(220,20,60,0.7);
+            border-color: var(--electric-green);
+        }
+
+        .event-card > * {
+            transform: skewX(2deg);
+        }
+
+        .event-time {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            color: var(--electric-green);
+            letter-spacing: 3px;
+        }
+
+        .event-name {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--gold);
+            margin: 0.5rem 0;
+            text-shadow: 2px 2px 0 var(--red);
+        }
+
+        .event-description {
+            font-size: 1.1rem;
+            color: var(--cream);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .event-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .event-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            color: rgba(245,230,211,0.8);
+        }
+
+        .event-detail svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--gold);
+        }
+
+        .event-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--red);
+            color: var(--gold);
+            font-family: 'Bebas Neue', sans-serif;
+            padding: 0.3rem 1rem;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transform: rotate(3deg) skewX(2deg);
+            border: 2px solid var(--gold);
+        }
+
+        /* Venue Card Special */
+        .venue-highlight {
+            border-color: var(--red);
+            background: linear-gradient(135deg, rgba(220,20,60,0.2) 0%, rgba(0,0,0,0.9) 100%);
+        }
+
+        .venue-highlight .event-name {
+            color: var(--red);
+            text-shadow: 2px 2px 0 var(--gold);
+        }
+
+        /* Flight Info */
+        .flight-section {
+            background: 
+                linear-gradient(135deg, rgba(0,104,71,0.3) 0%, rgba(0,0,0,0.9) 100%),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(255,215,0,0.05) 20px,
+                    rgba(255,215,0,0.05) 40px
+                );
+            padding: 4rem 2rem;
+        }
+
+        .flight-cards {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .flight-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .flight-card {
+            background: rgba(0,0,0,0.7);
+            border: 2px solid var(--green);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .flight-card::before {
+            content: '✈';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 2rem;
+            background: var(--black);
+            padding: 0 0.5rem;
+        }
+
+        .flight-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            color: var(--green);
+            letter-spacing: 3px;
+        }
+
+        .flight-route {
+            font-family: 'Passion One', sans-serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin: 0.5rem 0;
+        }
+
+        .flight-info {
+            color: var(--cream);
+            line-height: 1.8;
+        }
+
+        .flight-code {
+            font-family: monospace;
+            background: rgba(255,215,0,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+        }
+
+        /* Home Base */
+        .home-base {
+            background: 
+                linear-gradient(180deg, rgba(255,215,0,0.1) 0%, transparent 50%),
+                var(--black);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .home-base h2 {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: var(--gold);
+            text-shadow: 3px 3px 0 var(--red);
+            margin-bottom: 2rem;
+        }
+
+        .airbnb-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.8);
+            border: 3px solid var(--gold);
+            padding: 2rem;
+            text-align: left;
+        }
+
+        .airbnb-title {
+            font-family: 'Passion One', sans-serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .airbnb-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .feature {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid var(--gold);
+            padding: 0.5rem 1rem;
+            font-size: 0.95rem;
+        }
+
+        .airbnb-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            background: var(--red);
+            color: var(--gold);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            letter-spacing: 2px;
+            border: 2px solid var(--gold);
+            transition: all 0.3s ease;
+        }
+
+        .airbnb-link:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 3px solid var(--gold);
+        }
+
+        .footer-mask {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            opacity: 0.5;
+        }
+
+        footer p {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--gold);
+            letter-spacing: 3px;
+            font-size: 1rem;
+        }
+
+        /* Decorative elements */
+        .star {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--gold);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            opacity: 0.3;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        /* Lightning bolts */
+        .lightning {
+            position: absolute;
+            font-size: 4rem;
+            color: var(--gold);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        /* Lucha Name Generator */
+        .lucha-name-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(255,215,0,0.05) 20px,
+                    rgba(255,215,0,0.05) 40px
+                ),
+                radial-gradient(ellipse at center, #1a0a0a 0%, var(--black) 70%);
+        }
+
+        .name-generator-card {
+            background: linear-gradient(135deg, rgba(220,20,60,0.3) 0%, rgba(0,0,0,0.9) 100%);
+            border: 5px solid var(--gold);
+            padding: 3rem 2rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 
+                0 0 0 3px var(--red),
+                0 0 0 6px var(--gold),
+                15px 15px 0 rgba(0,0,0,0.5);
+        }
+
+        .name-generator-card::before {
+            content: '★ LUCHA LIBRE ★';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--red);
+            color: var(--gold);
+            font-family: 'Bebas Neue', sans-serif;
+            padding: 0.5rem 2rem;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            border: 2px solid var(--gold);
+        }
+
+        .generator-title {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .generator-subtitle {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            color: var(--electric-green);
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+        }
+
+        .lucha-name-display {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid var(--gold);
+            position: relative;
+        }
+
+        .lucha-name-text {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            color: var(--gold);
+            text-shadow: 
+                3px 3px 0 var(--red),
+                6px 6px 0 var(--black);
+            line-height: 1.1;
+            opacity: 0;
+            transform: scale(0.5) rotate(-10deg);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .lucha-name-text.revealed {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .lucha-name-text.shake {
+            animation: lucha-shake 0.6s ease-in-out;
+        }
+
+        @keyframes lucha-shake {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            10% { transform: scale(1.1) rotate(-3deg); }
+            20% { transform: scale(1.1) rotate(3deg); }
+            30% { transform: scale(1.1) rotate(-3deg); }
+            40% { transform: scale(1.1) rotate(3deg); }
+            50% { transform: scale(1.1) rotate(-3deg); }
+            60% { transform: scale(1.05) rotate(2deg); }
+            70% { transform: scale(1.05) rotate(-2deg); }
+            80% { transform: scale(1.02) rotate(1deg); }
+            90% { transform: scale(1.01) rotate(-1deg); }
+        }
+
+        .generate-btn {
+            font-family: 'Passion One', sans-serif;
+            font-size: 1.8rem;
+            padding: 1rem 3rem;
+            background: linear-gradient(180deg, var(--red) 0%, #8B0000 100%);
+            color: var(--gold);
+            border: 3px solid var(--gold);
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 0 var(--black);
+            text-transform: uppercase;
+        }
+
+        .generate-btn:hover {
+            background: linear-gradient(180deg, var(--gold) 0%, #B8860B 100%);
+            color: var(--black);
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0 var(--black);
+        }
+
+        .generate-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 3px 3px 0 var(--black);
+        }
+
+        .corner-star {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        .corner-star.top-left { top: -20px; left: -20px; }
+        .corner-star.top-right { top: -20px; right: -20px; }
+        .corner-star.bottom-left { bottom: -20px; left: -20px; }
+        .corner-star.bottom-right { bottom: -20px; right: -20px; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            nav ul {
+                gap: 1rem;
+            }
+            
+            nav a {
+                font-size: 1rem;
+            }
+            
+            .countdown-item {
+                min-width: 65px;
+                padding: 0.8rem 1rem;
+            }
+            
+            .countdown-number {
+                font-size: 2rem;
+            }
+            
+            .event-card {
+                transform: none;
+                padding: 1.5rem;
+            }
+            
+            .event-card > * {
+                transform: none;
+            }
+            
+            .event-card:hover {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#thursday">JUEVES</a></li>
+            <li><a href="#friday">VIERNES</a></li>
+            <li><a href="#saturday">SÁBADO</a></li>
+            <li><a href="#sunday">DOMINGO</a></li>
+            <li><a href="#lucha-name">TU NOMBRE</a></li>
+            <li><a href="#homebase">LA CASA</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="lightning" style="top: 10%; left: 5%;">⚡</div>
+        <div class="lightning" style="top: 20%; right: 8%;">⚡</div>
+        <div class="star" style="top: 15%; left: 15%;"></div>
+        <div class="star" style="top: 25%; right: 20%;"></div>
+        <div class="star" style="bottom: 30%; left: 10%;"></div>
+        
+        <div class="mask-container">
+            <svg class="lucha-mask" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="maskGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FFD700"/>
+                        <stop offset="50%" style="stop-color:#DC143C"/>
+                        <stop offset="100%" style="stop-color:#006847"/>
+                    </linearGradient>
+                </defs>
+                <ellipse cx="50" cy="55" rx="40" ry="45" fill="url(#maskGradient)" stroke="#FFD700" stroke-width="3"/>
+                <ellipse cx="35" cy="45" rx="12" ry="10" fill="#0a0a0a"/>
+                <ellipse cx="65" cy="45" rx="12" ry="10" fill="#0a0a0a"/>
+                <path d="M 35 70 Q 50 80 65 70" stroke="#0a0a0a" stroke-width="4" fill="none"/>
+                <path d="M 50 10 L 45 25 L 55 25 Z" fill="#FFD700"/>
+                <circle cx="25" cy="35" r="5" fill="#39FF14" opacity="0.7"/>
+                <circle cx="75" cy="35" r="5" fill="#39FF14" opacity="0.7"/>
+            </svg>
+        </div>
+        
+        <h1>
+            <span>ZAYN'S</span>
+            <span class="stag">STAG</span>
+        </h1>
+        <h2>CIUDAD DE MÉXICO</h2>
+        <div class="dates">FEB 26 – MAR 1, 2026</div>
+        
+        <div class="countdown" id="countdown">
+            <div class="countdown-item">
+                <span class="countdown-number" id="days">--</span>
+                <span class="countdown-label">DÍAS</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="hours">--</span>
+                <span class="countdown-label">HORAS</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="minutes">--</span>
+                <span class="countdown-label">MINUTOS</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">--</span>
+                <span class="countdown-label">SEGUNDOS</span>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- Thursday -->
+    <section class="day-section" id="thursday">
+        <div class="day-header">
+            <div class="day-number">DÍA UNO</div>
+            <h2 class="day-title">JUEVES</h2>
+            <div class="day-date">FEBRERO 26, 2026</div>
+            <div class="day-tagline">★ LA LLEGADA ★</div>
+        </div>
+        
+        <div class="events">
+            <div class="event-card">
+                <div class="event-badge">ARRIVAL</div>
+                <div class="event-time">AFTERNOON</div>
+                <h3 class="event-name">TOUCH DOWN IN CDMX</h3>
+                <p class="event-description">The crew descends on Mexico City. Make your way to Roma Norte — one of CDMX's coolest neighborhoods.</p>
+            </div>
+            
+            <div class="event-card">
+                <div class="event-time">EVENING</div>
+                <h3 class="event-name">SETTLE IN AT THE HOUSE</h3>
+                <p class="event-description">7-bedroom luxury casa with rooftop jacuzzi. Unpack, crack open some cervezas, hit the roof.</p>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Roma Norte, CDMX
+                    </div>
+                </div>
+            </div>
+            
+            <div class="event-card">
+                <div class="event-time">NIGHT</div>
+                <h3 class="event-name">LOCAL TAQUERÍAS</h3>
+                <p class="event-description">No fancy dinner tonight — we're eating street tacos like gods. Al pastor, suadero, lengua... whatever the neighborhood offers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Friday -->
+    <section class="day-section" id="friday">
+        <div class="day-header">
+            <div class="day-number">DÍA DOS</div>
+            <h2 class="day-title">VIERNES</h2>
+            <div class="day-date">FEBRERO 27, 2026</div>
+            <div class="day-tagline">⚡ LUCHA NIGHT ⚡</div>
+        </div>
+        
+        <div class="events">
+            <div class="event-card">
+                <div class="event-time">DAYTIME</div>
+                <h3 class="event-name">EXPLORE THE CITY</h3>
+                <p class="event-description">Roam different neighborhoods. Condesa, Coyoacán, Polanco — vibes for days. Mezcal tastings, markets, street art.</p>
+            </div>
+            
+            <div class="event-card venue-highlight">
+                <div class="event-badge">DINNER</div>
+                <div class="event-time">6:30 PM</div>
+                <h3 class="event-name">ALTANERA ROOFTOP</h3>
+                <p class="event-description">Pre-lucha feast at one of Roma's hottest rooftops. Innovative Mexican cuisine with panoramic city views. Weekend vibes with live music.</p>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Colima 161, Piso 8 y 9, Roma Norte
+                    </div>
+                    <div class="event-detail">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                        Reservation: 6:30 PM
+                    </div>
+                </div>
+            </div>
+            
+            <div class="event-card venue-highlight">
+                <div class="event-badge">★ MAIN EVENT ★</div>
+                <div class="event-time">8:30 PM</div>
+                <h3 class="event-name">LUCHA LIBRE</h3>
+                <p class="event-description">VIERNES ESPECTACULAR at Arena México — the Cathedral of Lucha Libre. CMLL's flagship Friday night show. Máscaras, flying moves, chaos. This is why we're here.</p>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Arena México, Dr. Lavista 189, Col. Doctores
+                    </div>
+                    <div class="event-detail">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                        Tickets on Ticketmaster
+                    </div>
+                </div>
+            </div>
+            
+            <div class="event-card">
+                <div class="event-time">LATE NIGHT</div>
+                <h3 class="event-name">TBD</h3>
+                <p class="event-description">Post-lucha madness. Mezcal bars? Clubs? We'll figure it out when we're properly amped up from the wrestling.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Saturday -->
+    <section class="day-section" id="saturday">
+        <div class="day-header">
+            <div class="day-number">DÍA TRES</div>
+            <h2 class="day-title">SÁBADO</h2>
+            <div class="day-date">FEBRERO 28, 2026</div>
+            <div class="day-tagline">★ THE BIG ONE ★</div>
+        </div>
+        
+        <div class="events">
+            <div class="event-card">
+                <div class="event-time">MORNING / AFTERNOON</div>
+                <h3 class="event-name">PLAY BY EAR</h3>
+                <p class="event-description">Recovery mode or rally? Hit Centro Histórico for culture (Palacio de Bellas Artes, Zócalo) or start day drinking. Dealer's choice.</p>
+            </div>
+            
+            <div class="event-card venue-highlight">
+                <div class="event-badge">DRINKS</div>
+                <div class="event-time">7:00 PM</div>
+                <h3 class="event-name">TOLEDO ROOFTOP</h3>
+                <p class="event-description">Sunset cocktails with views. Stylish rooftop vibes, curated music, great drinks to get the night started right.</p>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Juárez, CDMX
+                    </div>
+                    <div class="event-detail">
+                        <svg viewBox="0 0 24 24"><path d="M3 14c0 1.3.84 2.4 2 2.82V20H3v2h6v-2H7v-3.18C8.16 16.4 9 15.3 9 14V6H3v8zm2-6h2v3H5V8zm15.64 1L19 4h-5v2h3.36l1.64 5H14v2h1.5c0 1.61.75 3.04 1.92 3.98L15.5 22h2.04l1.57-4.15c.11.01.22.04.34.04.21 0 .41-.03.61-.07L21.62 22h2.04l-1.92-4.98c1.08-.94 1.76-2.3 1.76-3.82v-1.2h-3.86zM19.5 17c-1.38 0-2.5-1.12-2.5-2.5V13h5v1.5c0 1.38-1.12 2.5-2.5 2.5z"/></svg>
+                        Cocktails & Vibe
+                    </div>
+                </div>
+            </div>
+            
+            <div class="event-card venue-highlight">
+                <div class="event-badge">★ DINNER ★</div>
+                <div class="event-time">9:30 PM</div>
+                <h3 class="event-name">ROSETTA</h3>
+                <p class="event-description">World's 50 Best #46. Chef Elena Reygadas' legendary Roma restaurant in a stunning Porfirian mansion. Innovative Mexican cuisine that'll blow your mind.</p>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Colima 166, Roma Norte
+                    </div>
+                    <div class="event-detail">
+                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        World's 50 Best
+                    </div>
+                </div>
+            </div>
+            
+            <div class="event-card">
+                <div class="event-time">LATE NIGHT</div>
+                <h3 class="event-name">TBD</h3>
+                <p class="event-description">Last night in Mexico. Make it count.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sunday -->
+    <section class="day-section" id="sunday">
+        <div class="day-header">
+            <div class="day-number">DÍA CUATRO</div>
+            <h2 class="day-title">DOMINGO</h2>
+            <div class="day-date">MARZO 1, 2026</div>
+            <div class="day-tagline">★ HASTA LUEGO ★</div>
+        </div>
+        
+        <div class="events">
+            <div class="event-card">
+                <div class="event-time">DAY</div>
+                <h3 class="event-name">DEPARTURE</h3>
+                <p class="event-description">Pack up, grab one last taco, hug it out. We'll always have CDMX.</p>
+            </div>
+        </div>
+        
+        <div class="flight-section" style="margin-top: 3rem; padding: 2rem; background: rgba(0,0,0,0.5); border-radius: 0;">
+            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--gold); text-align: center; margin-bottom: 2rem; letter-spacing: 3px;">BARRON'S FLIGHTS</h3>
+            <div class="flight-cards">
+                <div class="flight-card">
+                    <div class="flight-label">OUTBOUND — THU FEB 26</div>
+                    <div class="flight-route">SFO → MEX</div>
+                    <div class="flight-info">
+                        <span class="flight-code">DL 7965 / AM 669</span><br>
+                        Depart: 1:36 PM → Arrive: 8:00 PM
+                    </div>
+                </div>
+                <div class="flight-card">
+                    <div class="flight-label">RETURN — SUN MAR 1</div>
+                    <div class="flight-route">MEX → SFO</div>
+                    <div class="flight-info">
+                        <span class="flight-code">DL 8008</span><br>
+                        Depart: 4:55 PM → Arrive: 7:59 PM
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lucha Name Generator -->
+    <section class="lucha-name-section" id="lucha-name">
+        <div class="name-generator-card">
+            <div class="corner-star top-left"></div>
+            <div class="corner-star top-right"></div>
+            <div class="corner-star bottom-left"></div>
+            <div class="corner-star bottom-right"></div>
+            
+            <h2 class="generator-title">DESCUBRE TU IDENTIDAD</h2>
+            <p class="generator-subtitle">EVERY LUCHADOR NEEDS A NAME</p>
+            
+            <div class="lucha-name-display">
+                <div class="lucha-name-text" id="luchaName">TAP TO REVEAL</div>
+            </div>
+            
+            <button class="generate-btn" id="generateBtn">¡LUCHA!</button>
+        </div>
+    </section>
+
+    <!-- Home Base -->
+    <section class="home-base" id="homebase">
+        <h2>★ LA CASA ★</h2>
+        <div class="airbnb-card">
+            <h3 class="airbnb-title">Roma Norte Luxury 7 Bedroom</h3>
+            <p style="color: var(--cream); line-height: 1.6;">Our headquarters for the weekend. Massive house in the heart of Roma Norte with everything we need.</p>
+            <div class="airbnb-features">
+                <div class="feature">🛏️ 7 Bedrooms</div>
+                <div class="feature">❄️ AC</div>
+                <div class="feature">🌊 Rooftop Jacuzzi</div>
+                <div class="feature">🏠 Private Roof</div>
+                <div class="feature">📍 Roma Norte</div>
+            </div>
+            <a href="https://www.airbnb.com/rooms/1451588169094619559" target="_blank" class="airbnb-link">VIEW ON AIRBNB →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <svg class="footer-mask" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="55" rx="40" ry="45" fill="none" stroke="#FFD700" stroke-width="2"/>
+            <ellipse cx="35" cy="45" rx="12" ry="10" fill="#FFD700" opacity="0.3"/>
+            <ellipse cx="65" cy="45" rx="12" ry="10" fill="#FFD700" opacity="0.3"/>
+            <path d="M 35 70 Q 50 80 65 70" stroke="#FFD700" stroke-width="3" fill="none" opacity="0.5"/>
+        </svg>
+        <p>ZAYN'S STAG — CDMX 2026</p>
+        <p style="margin-top: 0.5rem; opacity: 0.5; font-size: 0.8rem;">VIVA MÉXICO 🇲🇽</p>
+    </footer>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const tripDate = new Date('2026-02-26T13:36:00-08:00'); // SFO departure time
+            const now = new Date();
+            const diff = tripDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = '<div class="countdown-item"><span class="countdown-number" style="font-size: 1.5rem;">¡VAMOS!</span></div>';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Smooth scroll for nav
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Parallax stars
+        document.addEventListener('mousemove', (e) => {
+            const stars = document.querySelectorAll('.star');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            stars.forEach((star, i) => {
+                const speed = (i + 1) * 10;
+                star.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+
+        // Lucha Name Generator
+        const luchaNameGenerator = {
+            prefixes: ['El', 'La', 'Los', 'El Gran', 'El Magnífico', 'El Terrible', 'La Sombra', 'El Santo', 'El Hijo de', 'El Increíble', 'El Místico', 'El Último', 'El Furioso'],
+            
+            // Mix of stag crew names and classic lucha terms
+            names: ['Zayn', 'Barron', 'Jaguar', 'Águila', 'Pantera', 'Tigre', 'Dragón', 'Fantasma', 'Máscara', 'Toro', 'León', 'Serpiente', 'Cóndor', 'Murciélago', 'Lobo', 'Oso', 'Demonio', 'Ángel', 'Guerrero', 'Rey'],
+            
+            suffixes: ['Destructor', 'de la Muerte', 'del Fuego', 'Dorado', 'Supremo', 'de las Tinieblas', 'Salvaje', 'Invencible', 'Negro', 'Rojo', 'Azteca', 'del Infierno', 'Plateado', 'de Oro', 'Vengador', 'Sin Miedo'],
+            
+            generate() {
+                const usePrefix = Math.random() > 0.1; // 90% chance of prefix
+                const useSuffix = Math.random() > 0.3; // 70% chance of suffix
+                
+                const prefix = usePrefix ? this.prefixes[Math.floor(Math.random() * this.prefixes.length)] : '';
+                const name = this.names[Math.floor(Math.random() * this.names.length)];
+                const suffix = useSuffix ? this.suffixes[Math.floor(Math.random() * this.suffixes.length)] : '';
+                
+                let fullName = prefix ? `${prefix} ${name}` : name;
+                if (suffix) fullName += ` ${suffix}`;
+                
+                return fullName.toUpperCase();
+            }
+        };
+
+        const luchaNameEl = document.getElementById('luchaName');
+        const generateBtn = document.getElementById('generateBtn');
+        let firstClick = true;
+
+        generateBtn.addEventListener('click', () => {
+            luchaNameEl.classList.remove('revealed', 'shake');
+            
+            // Force reflow for animation restart
+            void luchaNameEl.offsetWidth;
+            
+            setTimeout(() => {
+                luchaNameEl.textContent = luchaNameGenerator.generate();
+                luchaNameEl.classList.add('revealed', 'shake');
+                firstClick = false;
+            }, firstClick ? 100 : 200);
+        });
+    </script>
+</body>
+</html>

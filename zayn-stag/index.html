@@ -1224,6 +1224,222 @@
             color: var(--gold);
         }
 
+        /* Final Boss Section */
+        .final-boss-card {
+            background: 
+                radial-gradient(ellipse at center, rgba(220,20,60,0.4) 0%, transparent 60%),
+                linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(30,0,0,0.98) 100%);
+            border: 4px solid var(--gold);
+            padding: 0;
+            position: relative;
+            transform: none;
+            box-shadow: 
+                0 0 40px rgba(220,20,60,0.5),
+                0 0 80px rgba(255,215,0,0.2),
+                inset 0 0 60px rgba(220,20,60,0.1);
+            overflow: hidden;
+        }
+
+        .final-boss-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--gold) 0px,
+                var(--gold) 10px,
+                var(--red) 10px,
+                var(--red) 20px
+            );
+        }
+
+        .final-boss-banner {
+            background: var(--red);
+            padding: 0.8rem;
+            text-align: center;
+            border-bottom: 3px solid var(--gold);
+            position: relative;
+        }
+
+        .final-boss-banner::before,
+        .final-boss-banner::after {
+            content: '🏆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+        }
+
+        .final-boss-banner::before { left: 1rem; }
+        .final-boss-banner::after { right: 1rem; }
+
+        .final-boss-banner h4 {
+            font-family: 'Passion One', sans-serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            letter-spacing: 4px;
+            text-shadow: 2px 2px 0 var(--black);
+            margin: 0;
+        }
+
+        .final-boss-content {
+            padding: 2rem;
+        }
+
+        .boss-vs-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .boss-challenger {
+            text-align: center;
+            flex: 1;
+        }
+
+        .boss-challenger-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.9rem;
+            color: var(--electric-green);
+            letter-spacing: 3px;
+            margin-bottom: 0.3rem;
+        }
+
+        .boss-challenger-name {
+            font-family: 'Passion One', sans-serif;
+            font-size: 1.4rem;
+            color: var(--cream);
+        }
+
+        .boss-vs {
+            font-family: 'Passion One', sans-serif;
+            font-size: 2.5rem;
+            color: var(--red);
+            text-shadow: 2px 2px 0 var(--gold);
+        }
+
+        .boss-opponent {
+            text-align: center;
+            flex: 1;
+        }
+
+        .boss-opponent-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.9rem;
+            color: var(--hot-pink);
+            letter-spacing: 3px;
+            margin-bottom: 0.3rem;
+        }
+
+        .boss-opponent-name {
+            font-family: 'Passion One', sans-serif;
+            font-size: 2rem;
+            color: var(--gold);
+            text-shadow: 2px 2px 0 var(--red);
+        }
+
+        .boss-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .boss-stat {
+            text-align: center;
+            padding: 0.5rem 1rem;
+            background: rgba(255,215,0,0.1);
+            border: 1px solid var(--gold);
+        }
+
+        .boss-stat-value {
+            font-family: 'Passion One', sans-serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+
+        .boss-stat-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.7rem;
+            color: var(--cream);
+            letter-spacing: 2px;
+        }
+
+        .boss-description {
+            font-size: 1.1rem;
+            color: var(--cream);
+            line-height: 1.6;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .championship-belt {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        .belt {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(180deg, #B8860B 0%, #8B6914 50%, #B8860B 100%);
+            padding: 0.5rem;
+            border-radius: 4px;
+            box-shadow: 
+                0 4px 0 #654321,
+                0 6px 10px rgba(0,0,0,0.5);
+        }
+
+        .belt-side {
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(180deg, #FFD700 0%, #B8860B 100%);
+            border: 2px solid #654321;
+        }
+
+        .belt-center {
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(180deg, #FFD700 0%, #FFC700 50%, #FFD700 100%);
+            border: 3px solid #654321;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Passion One', sans-serif;
+            font-size: 0.8rem;
+            color: #654321;
+            text-align: center;
+            line-height: 1.1;
+            border-radius: 4px;
+        }
+
+        .boss-time {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            color: var(--electric-green);
+            text-align: center;
+            letter-spacing: 3px;
+        }
+
+        .boss-location {
+            text-align: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .boss-location span {
+            font-family: 'Roboto Condensed', sans-serif;
+            color: rgba(245,230,211,0.8);
+            font-size: 0.95rem;
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             nav ul {
@@ -1459,19 +1675,52 @@
                 </div>
             </div>
             
-            <div class="event-card venue-highlight">
-                <div class="event-badge">★ DINNER ★</div>
-                <div class="event-time">9:30 PM</div>
-                <h3 class="event-name">ROSETTA</h3>
-                <p class="event-description">World's 50 Best #46. Chef Elena Reygadas' legendary Roma restaurant in a stunning Porfirian mansion. Innovative Mexican cuisine that'll blow your mind.</p>
-                <div class="event-details">
-                    <div class="event-detail">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                        Colima 166, Roma Norte
+            <div class="event-card final-boss-card">
+                <div class="final-boss-banner">
+                    <h4>CAMPEONATO MUNDIAL</h4>
+                </div>
+                <div class="final-boss-content">
+                    <div class="boss-vs-container">
+                        <div class="boss-challenger">
+                            <div class="boss-challenger-label">CHALLENGERS</div>
+                            <div class="boss-challenger-name">THE STAG CREW</div>
+                        </div>
+                        <div class="boss-vs">VS</div>
+                        <div class="boss-opponent">
+                            <div class="boss-opponent-label">FINAL BOSS</div>
+                            <div class="boss-opponent-name">ROSETTA</div>
+                        </div>
                     </div>
-                    <div class="event-detail">
-                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        World's 50 Best
+                    
+                    <div class="boss-stats">
+                        <div class="boss-stat">
+                            <div class="boss-stat-value">#46</div>
+                            <div class="boss-stat-label">WORLD RANK</div>
+                        </div>
+                        <div class="boss-stat">
+                            <div class="boss-stat-value">⭐⭐⭐</div>
+                            <div class="boss-stat-label">DIFFICULTY</div>
+                        </div>
+                        <div class="boss-stat">
+                            <div class="boss-stat-value">ELENA</div>
+                            <div class="boss-stat-label">CHEF BOSS</div>
+                        </div>
+                    </div>
+                    
+                    <div class="championship-belt">
+                        <div class="belt">
+                            <div class="belt-side"></div>
+                            <div class="belt-center">WORLD'S 50 BEST</div>
+                            <div class="belt-side"></div>
+                        </div>
+                    </div>
+                    
+                    <p class="boss-description">Chef Elena Reygadas' legendary Roma restaurant in a stunning Porfirian mansion. Innovative Mexican cuisine that'll blow your mind. This is the championship match.</p>
+                    
+                    <div class="boss-time">⏰ MAIN EVENT: 9:30 PM</div>
+                    
+                    <div class="boss-location">
+                        <span>📍 Colima 166, Roma Norte</span>
                     </div>
                 </div>
             </div>

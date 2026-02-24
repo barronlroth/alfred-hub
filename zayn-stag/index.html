@@ -1082,6 +1082,148 @@
             100% { transform: translateX(-50%) rotate(0deg) scale(1) translateY(0); filter: hue-rotate(360deg); }
         }
 
+        /* Rules of the Stag Section */
+        .rules-section {
+            padding: 4rem 2rem;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    #0a0a0a 0px,
+                    #0a0a0a 30px,
+                    #1a1a1a 30px,
+                    #1a1a1a 60px
+                );
+        }
+
+        .rules-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .rules-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .rules-header h2 {
+            font-family: 'Passion One', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            color: var(--gold);
+            text-shadow: 
+                3px 3px 0 var(--black),
+                -1px -1px 0 var(--black);
+        }
+
+        .rules-header p {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            color: var(--cream);
+            letter-spacing: 4px;
+            opacity: 0.8;
+        }
+
+        .rules-card {
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    #000 0px,
+                    #000 15px,
+                    #fff 15px,
+                    #fff 30px
+                );
+            padding: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .rules-card-inner {
+            background: linear-gradient(180deg, rgba(20,20,20,0.98) 0%, rgba(10,10,10,0.98) 100%);
+            padding: 2rem;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .rule-item:last-child {
+            border-bottom: none;
+        }
+
+        .rule-number {
+            font-family: 'Passion One', sans-serif;
+            font-size: 2rem;
+            color: var(--red);
+            text-shadow: 1px 1px 0 var(--black);
+            min-width: 50px;
+        }
+
+        .rule-content {
+            flex: 1;
+        }
+
+        .rule-text {
+            font-family: 'Passion One', sans-serif;
+            font-size: 1.4rem;
+            color: var(--gold);
+            line-height: 1.3;
+            margin-bottom: 0.3rem;
+        }
+
+        .rule-penalty {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.85rem;
+            color: var(--hot-pink);
+            letter-spacing: 2px;
+        }
+
+        .rules-seal {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .seal {
+            width: 120px;
+            height: 120px;
+            border: 4px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(220,20,60,0.3) 0%, rgba(0,0,0,0.9) 70%);
+            position: relative;
+            box-shadow: 
+                inset 0 0 20px rgba(255,215,0,0.2),
+                0 0 15px rgba(220,20,60,0.3);
+        }
+
+        .seal::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        .seal-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.7rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .seal-year {
+            font-family: 'Passion One', sans-serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             nav ul {
@@ -1126,6 +1268,7 @@
             <li><a href="#lucha-name">TU NOMBRE</a></li>
             <li><a href="#spanish-moves">MOVIMIENTOS</a></li>
             <li><a href="#mezcal">MEZCAL</a></li>
+            <li><a href="#rules">REGLAS</a></li>
             <li><a href="#homebase">LA CASA</a></li>
         </ul>
     </nav>
@@ -1533,6 +1676,86 @@
                 <div class="move-difficulty">
                     <span>DIFFICULTY:</span>
                     <span class="star-rating">★★★<span class="star-empty">★★</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules of the Stag -->
+    <section class="rules-section" id="rules">
+        <div class="rules-container">
+            <div class="rules-header">
+                <h2>REGLAMENTO OFICIAL</h2>
+                <p>OFFICIAL MATCH REGULATIONS</p>
+            </div>
+            
+            <div class="rules-card">
+                <div class="rules-card-inner">
+                    <div class="rule-item">
+                        <div class="rule-number">I</div>
+                        <div class="rule-content">
+                            <div class="rule-text">WHAT HAPPENS IN CDMX STAYS IN CDMX</div>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-number">II</div>
+                        <div class="rule-content">
+                            <div class="rule-text">NO PHONES AT DINNER</div>
+                            <div class="rule-penalty">PENALTY: BUY A ROUND</div>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-number">III</div>
+                        <div class="rule-content">
+                            <div class="rule-text">THE GROOM'S WORD IS LAW</div>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-number">IV</div>
+                        <div class="rule-content">
+                            <div class="rule-text">JACUZZI HOURS ARE 24/7</div>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-number">V</div>
+                        <div class="rule-content">
+                            <div class="rule-text">IF YOU TAP OUT BEFORE MIDNIGHT, YOU OWE THE GROUP BREAKFAST</div>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-number">VI</div>
+                        <div class="rule-content">
+                            <div class="rule-text">ALL MEZCAL SHOTS MUST BE TAKEN WITH SAL DE GUSANO</div>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-number">VII</div>
+                        <div class="rule-content">
+                            <div class="rule-text">LAST MAN STANDING GETS ETERNAL GLORY</div>
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-number">VIII</div>
+                        <div class="rule-content">
+                            <div class="rule-text">NO TALKING ABOUT WORK</div>
+                            <div class="rule-penalty">PENALTY: FINISH YOUR DRINK</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="rules-seal">
+                <div class="seal">
+                    <div class="seal-text">OFFICIAL</div>
+                    <div class="seal-year">2026</div>
+                    <div class="seal-text">CDMX</div>
                 </div>
             </div>
         </div>

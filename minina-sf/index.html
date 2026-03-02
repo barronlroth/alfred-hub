@@ -21,7 +21,7 @@
   --charcoal: #2C2C2C;
   --warm-gray: #6B6360;
   --fog: #E8E2DA;
-  --selected-glow: rgba(122, 158, 126, 0.3);
+  --selected-glow: rgba(122, 158, 126, 0.35);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +34,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Decorative background */
 body::before {
   content: '';
   position: fixed;
@@ -62,7 +61,7 @@ body::after {
 }
 
 .container {
-  max-width: 840px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem;
   position: relative;
@@ -140,9 +139,7 @@ body::after {
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
-.info-pill .icon {
-  font-size: 1rem;
-}
+.info-pill .icon { font-size: 1rem; }
 
 /* Sections */
 .section {
@@ -158,7 +155,7 @@ body::after {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   padding-bottom: 0.75rem;
   border-bottom: 2px solid var(--fog);
 }
@@ -190,20 +187,20 @@ body::after {
   font-weight: 300;
 }
 
-/* Cards */
+/* Image Cards */
 .cards {
   display: grid;
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
 }
 
 .card {
   background: white;
   border-radius: 16px;
-  padding: 1.25rem;
   cursor: pointer;
-  transition: all 0.25s ease;
-  border: 2px solid transparent;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   position: relative;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
@@ -211,14 +208,13 @@ body::after {
 }
 
 .card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  transform: translateY(-3px);
 }
 
 .card.selected {
   border-color: var(--sage);
-  background: linear-gradient(135deg, rgba(122, 158, 126, 0.04) 0%, rgba(184, 212, 187, 0.08) 100%);
-  box-shadow: 0 2px 12px var(--selected-glow);
+  box-shadow: 0 4px 20px var(--selected-glow);
 }
 
 .card.selected .check {
@@ -226,66 +222,116 @@ body::after {
   transform: scale(1);
 }
 
+.card.selected .card-img::after {
+  opacity: 1;
+}
+
 .check {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 28px;
-  height: 28px;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--sage);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 700;
   opacity: 0;
   transform: scale(0.5);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-.card-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  margin-bottom: 0.5rem;
+.card-img {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  position: relative;
 }
 
-.card-emoji {
-  font-size: 1.75rem;
-  line-height: 1;
-  flex-shrink: 0;
-  margin-top: 0.1rem;
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-.card-content { flex: 1; padding-right: 2rem; }
+.card:hover .card-img img {
+  transform: scale(1.05);
+}
+
+.card-img::after {
+  content: '✓ Added';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(122, 158, 126, 0.85));
+  color: white;
+  padding: 2rem 1rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.star-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: var(--terracotta);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border-radius: 1rem;
+  z-index: 3;
+  letter-spacing: 0.03em;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.card-body {
+  padding: 1rem 1.1rem 1.1rem;
+}
 
 .card-name {
   font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.35rem;
+  line-height: 1.3;
 }
 
 .card-desc {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--warm-gray);
-  line-height: 1.5;
+  line-height: 1.55;
   font-weight: 300;
+  margin-bottom: 0.65rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card-meta {
   display: flex;
-  gap: 0.75rem;
-  margin-top: 0.75rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
 .tag {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.65rem;
-  border-radius: 1rem;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.01em;
 }
@@ -295,7 +341,6 @@ body::after {
 .tag.walk { background: rgba(122, 158, 126, 0.1); color: var(--sage); }
 .tag.cost { background: rgba(212, 168, 67, 0.1); color: #B08A20; }
 .tag.tip { background: rgba(107, 99, 96, 0.08); color: var(--warm-gray); }
-.tag.star { background: rgba(196, 89, 60, 0.1); color: var(--terracotta); }
 
 /* Summary bar */
 .summary-bar {
@@ -346,16 +391,9 @@ body::after {
   letter-spacing: 0.02em;
 }
 
-.share-btn:hover {
-  background: #6A8E6E;
-  transform: scale(1.03);
-}
+.share-btn:hover { background: #6A8E6E; transform: scale(1.03); }
+.share-btn:active { transform: scale(0.98); }
 
-.share-btn:active {
-  transform: scale(0.98);
-}
-
-/* Sent confirmation */
 .sent-msg {
   display: none;
   align-items: center;
@@ -397,10 +435,13 @@ body::after {
 @media (max-width: 600px) {
   .container { padding: 1.25rem 1rem 4rem; }
   .hero { padding: 2rem 0 1.5rem; }
-  .card { padding: 1rem; }
-  .card-emoji { font-size: 1.5rem; }
-  .info-bar { gap: 0.5rem; }
+  .cards { grid-template-columns: 1fr; }
+  .card-img { height: 200px; }
   .summary-bar { padding: 0.75rem 1rem; }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -433,123 +474,107 @@ body::after {
 
       <div class="card" data-id="muir-woods" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🌲</div>
-          <div class="card-content">
-            <div class="card-name">Muir Woods — Giant Redwoods</div>
-            <div class="card-desc">Walk among ancient coastal redwoods towering 250+ feet. The cathedral grove is breathtaking. Shady, cool, and magical — exactly the giant trees you want to see.</div>
+        <span class="star-badge">⭐ Your #1 Pick</span>
+        <div class="card-img"><img src="/minina-sf/images/muir-woods.png" alt="Muir Woods" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Muir Woods — Giant Redwoods</div>
+          <div class="card-desc">Walk among ancient coastal redwoods towering 250+ feet. The cathedral grove is breathtaking. Shady, cool, and magical — exactly the giant trees you want to see.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Half day</span>
+            <span class="tag drive">🚗 30 min</span>
+            <span class="tag cost">💰 $15</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ Half day</span>
-          <span class="tag drive">🚗 30 min from SF</span>
-          <span class="tag cost">💰 $15 parking reservation</span>
-          <span class="tag star">⭐ Your #1 pick!</span>
         </div>
       </div>
 
       <div class="card" data-id="sausalito" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">⛵</div>
-          <div class="card-content">
-            <div class="card-name">Sausalito by Ferry</div>
-            <div class="card-desc">Take the ferry across the bay to this charming waterfront town. Browse art galleries, eat seafood on the dock, enjoy stunning views of the city skyline. Pairs perfectly with a Muir Woods morning.</div>
+        <div class="card-img"><img src="/minina-sf/images/sausalito.png" alt="Sausalito" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Sausalito by Ferry</div>
+          <div class="card-desc">Take the ferry across the bay to this charming waterfront town. Browse art galleries, eat seafood on the dock, enjoy stunning views of the city skyline. Pairs perfectly with Muir Woods.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Half day</span>
+            <span class="tag walk">🚶 Ferry</span>
+            <span class="tag cost">💰 ~$15</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ Half day</span>
-          <span class="tag walk">🚶 Ferry from downtown</span>
-          <span class="tag cost">💰 ~$15 ferry</span>
-          <span class="tag tip">💡 Combine with Muir Woods</span>
         </div>
       </div>
 
       <div class="card" data-id="napa" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🍷</div>
-          <div class="card-content">
-            <div class="card-name">Napa Valley Wine Country</div>
-            <div class="card-desc">Rolling vineyards, wine tastings, and long lunches in the California sunshine. Visit 2–3 wineries at a relaxed pace. Beautiful drives through the valley.</div>
+        <div class="card-img"><img src="/minina-sf/images/napa.png" alt="Napa Valley" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Napa Valley Wine Country</div>
+          <div class="card-desc">Rolling vineyards, wine tastings, and long lunches in the California sunshine. Visit 2–3 wineries at a relaxed pace. Beautiful drives through the valley.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Full day</span>
+            <span class="tag drive">🚗 1 hr</span>
+            <span class="tag cost">💰 $30–50/tasting</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ Full day</span>
-          <span class="tag drive">🚗 1 hr from SF</span>
-          <span class="tag cost">💰 $30–50/tasting</span>
         </div>
       </div>
 
       <div class="card" data-id="half-moon-bay" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🌊</div>
-          <div class="card-content">
-            <div class="card-name">Half Moon Bay — Coastal Drive</div>
-            <div class="card-desc">Dramatic Pacific coastline, tide pools, beach walks, and fresh seafood. Stop at Ritz-Carlton for a coffee with ocean views or Sam's Chowder House for clam chowder.</div>
+        <div class="card-img"><img src="/minina-sf/images/half-moon-bay.png" alt="Half Moon Bay" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Half Moon Bay — Coastal Drive</div>
+          <div class="card-desc">Dramatic Pacific coastline, tide pools, beach walks, and fresh seafood. Stop for coffee with ocean views or clam chowder at Sam's Chowder House.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Half day</span>
+            <span class="tag drive">🚗 40 min</span>
+            <span class="tag cost">💰 Free</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ Half day</span>
-          <span class="tag drive">🚗 40 min from SF</span>
-          <span class="tag cost">💰 Free (food extra)</span>
         </div>
       </div>
 
       <div class="card" data-id="alcatraz" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🏝</div>
-          <div class="card-content">
-            <div class="card-name">Alcatraz Island</div>
-            <div class="card-desc">The famous former prison in the middle of the bay. The audio tour is genuinely fascinating — narrated by former inmates and guards. Book early, this one sells out fast.</div>
+        <div class="card-img"><img src="/minina-sf/images/alcatraz.png" alt="Alcatraz" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Alcatraz Island</div>
+          <div class="card-desc">The famous former prison in the middle of the bay. The audio tour is genuinely fascinating — narrated by former inmates and guards. Books up fast!</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 3–4 hrs</span>
+            <span class="tag walk">🚶 Ferry from Pier 33</span>
+            <span class="tag cost">💰 $42</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 3–4 hours</span>
-          <span class="tag walk">🚶 Ferry from Pier 33</span>
-          <span class="tag cost">💰 $42/person</span>
-          <span class="tag tip">💡 Book ASAP — sells out weeks ahead</span>
         </div>
       </div>
 
       <div class="card" data-id="monterey" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🦦</div>
-          <div class="card-content">
-            <div class="card-name">Monterey & Carmel</div>
-            <div class="card-desc">World-class aquarium, adorable Carmel-by-the-Sea village, 17-Mile Drive along dramatic cliffs. Sea otters, cypress trees, and the most charming main street in California.</div>
+        <div class="card-img"><img src="/minina-sf/images/monterey.png" alt="Monterey" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Monterey & Carmel</div>
+          <div class="card-desc">World-class aquarium, adorable Carmel-by-the-Sea village, 17-Mile Drive along dramatic cliffs. Sea otters, cypress trees, and the most charming main street in California.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Full day</span>
+            <span class="tag drive">🚗 2 hrs</span>
+            <span class="tag cost">💰 $60 aquarium</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ Full day</span>
-          <span class="tag drive">🚗 2 hrs from SF</span>
-          <span class="tag cost">💰 $60 aquarium + $12 scenic drive</span>
         </div>
       </div>
 
       <div class="card" data-id="bike-ggb" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🚲</div>
-          <div class="card-content">
-            <div class="card-name">Bike Across the Golden Gate Bridge</div>
-            <div class="card-desc">Rent bikes, ride across the iconic bridge, coast downhill into Sausalito, and ferry back. It's one of those bucket-list SF experiences. E-bikes available if you want it easy.</div>
+        <div class="card-img"><img src="/minina-sf/images/bike-ggb.png" alt="Bike Golden Gate" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Bike the Golden Gate Bridge</div>
+          <div class="card-desc">Rent bikes, ride across the iconic bridge, coast downhill into Sausalito, and ferry back. Bucket-list SF experience. E-bikes available if you want it easy.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 3–4 hrs</span>
+            <span class="tag walk">🚲 Fisherman's Wharf</span>
+            <span class="tag cost">💰 ~$40</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 3–4 hours</span>
-          <span class="tag walk">🚲 Starts at Fisherman's Wharf</span>
-          <span class="tag cost">💰 ~$40 bike rental</span>
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- WEEKDAY ADVENTURES -->
+  <!-- WEEKDAY EXPLORATIONS -->
   <div class="section">
     <div class="section-header">
       <div class="section-icon weekday">🚶</div>
@@ -562,171 +587,148 @@ body::after {
 
       <div class="card" data-id="golden-gate-park" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🌺</div>
-          <div class="card-content">
-            <div class="card-name">Golden Gate Park</div>
-            <div class="card-desc">Bigger than Central Park! Visit the stunning Botanical Garden (70+ acres of plants from around the world), the Japanese Tea Garden, or the de Young art museum. Could spend a whole day or just a peaceful morning.</div>
+        <div class="card-img"><img src="/minina-sf/images/golden-gate-park.png" alt="Golden Gate Park" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Golden Gate Park</div>
+          <div class="card-desc">Bigger than Central Park! Stunning Botanical Garden, Japanese Tea Garden, and the de Young art museum. A whole day or just a peaceful morning.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 2–5 hrs</span>
+            <span class="tag walk">🚶 Bus from Mission</span>
+            <span class="tag cost">💰 $5–15</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 2–5 hours</span>
-          <span class="tag walk">🚶 Bus from Mission</span>
-          <span class="tag cost">💰 $5–15 per attraction</span>
         </div>
       </div>
 
       <div class="card" data-id="ferry-building" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🧀</div>
-          <div class="card-content">
-            <div class="card-name">Ferry Building & Embarcadero</div>
-            <div class="card-desc">SF's foodie paradise. Browse artisan cheese, fresh oysters, local olive oil, incredible bakeries. Saturday morning farmers market is legendary. Walk the waterfront with bay views.</div>
+        <div class="card-img"><img src="/minina-sf/images/ferry-building.png" alt="Ferry Building" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Ferry Building & Embarcadero</div>
+          <div class="card-desc">SF's foodie paradise. Artisan cheese, fresh oysters, local olive oil, incredible bakeries. Saturday farmers market is legendary. Walk the waterfront with bay views.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 2–3 hrs</span>
+            <span class="tag walk">🚶 BART + walk</span>
+            <span class="tag cost">💰 Free entry</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 2–3 hours</span>
-          <span class="tag walk">🚶 BART + walk</span>
-          <span class="tag cost">💰 Free entry (food $$$)</span>
-          <span class="tag tip">💡 Saturday farmers market is the best</span>
         </div>
       </div>
 
       <div class="card" data-id="chinatown" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🏮</div>
-          <div class="card-content">
-            <div class="card-name">Chinatown</div>
-            <div class="card-desc">The oldest Chinatown in North America. Wander through Dragon's Gate, browse herbal shops, eat the best dim sum outside of Hong Kong. It's vibrant, colorful, and totally walkable.</div>
+        <div class="card-img"><img src="/minina-sf/images/chinatown.png" alt="Chinatown" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Chinatown</div>
+          <div class="card-desc">The oldest Chinatown in North America. Dragon's Gate, herbal shops, and the best dim sum outside of Hong Kong. Vibrant, colorful, and totally walkable.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 2–3 hrs</span>
+            <span class="tag walk">🚶 Easy transit</span>
+            <span class="tag cost">💰 Free</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 2–3 hours</span>
-          <span class="tag walk">🚶 Easy transit</span>
-          <span class="tag cost">💰 Free (food extra)</span>
         </div>
       </div>
 
       <div class="card" data-id="cable-car" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🚋</div>
-          <div class="card-content">
-            <div class="card-name">Cable Car Ride & Union Square</div>
-            <div class="card-desc">Ride the world-famous cable cars up and down SF's steep hills — it's a must-do at least once. End at Union Square for shopping, or ride to Fisherman's Wharf for waterfront fun.</div>
+        <div class="card-img"><img src="/minina-sf/images/cable-car.png" alt="Cable Car" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Cable Car & Union Square</div>
+          <div class="card-desc">Ride the world-famous cable cars up SF's steep hills — a must-do. End at Union Square for shopping, or ride to Fisherman's Wharf for waterfront fun.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 2–4 hrs</span>
+            <span class="tag walk">🚶 Downtown</span>
+            <span class="tag cost">💰 $8/ride</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 2–4 hours</span>
-          <span class="tag walk">🚶 Downtown</span>
-          <span class="tag cost">💰 $8 per ride</span>
-          <span class="tag tip">💡 Board at Powell St for the classic route</span>
         </div>
       </div>
 
       <div class="card" data-id="dolores-mission" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🎨</div>
-          <div class="card-content">
-            <div class="card-name">Mission District & Dolores Park</div>
-            <div class="card-desc">Your backyard! Walk the famous Balmy Alley murals, grab a legendary Mission burrito, sunbathe in Dolores Park with views of downtown. The sunniest neighborhood in SF.</div>
+        <div class="card-img"><img src="/minina-sf/images/dolores-mission.png" alt="Mission District" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Mission District & Dolores Park</div>
+          <div class="card-desc">Your backyard! Balmy Alley murals, legendary Mission burritos, sunbathing in Dolores Park with downtown views. The sunniest neighborhood in SF.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 2–3 hrs</span>
+            <span class="tag walk">🚶 Walk from home!</span>
+            <span class="tag cost">💰 Free</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 2–3 hours</span>
-          <span class="tag walk">🚶 Walk from home!</span>
-          <span class="tag cost">💰 Free</span>
         </div>
       </div>
 
       <div class="card" data-id="sfmoma" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🖼</div>
-          <div class="card-content">
-            <div class="card-name">SF Museum of Modern Art (SFMOMA)</div>
-            <div class="card-desc">Seven floors of incredible modern and contemporary art — Warhol, Kahlo, Matisse, and more. The building itself is a work of art. Great rainy day option too.</div>
+        <div class="card-img"><img src="/minina-sf/images/sfmoma.png" alt="SFMOMA" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">SF Museum of Modern Art</div>
+          <div class="card-desc">Seven floors of incredible art — Warhol, Kahlo, Matisse, and more. The building itself is a work of art. Great rainy day option too.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 2–4 hrs</span>
+            <span class="tag walk">🚶 BART downtown</span>
+            <span class="tag cost">💰 $25</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 2–4 hours</span>
-          <span class="tag walk">🚶 BART to downtown</span>
-          <span class="tag cost">💰 $25 admission</span>
         </div>
       </div>
 
       <div class="card" data-id="fishermans-wharf" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🦁</div>
-          <div class="card-content">
-            <div class="card-name">Fisherman's Wharf & Pier 39</div>
-            <div class="card-desc">Yes, it's touristy — and that's the point! Watch the sea lions at Pier 39, eat clam chowder in a bread bowl, browse Ghirardelli Square for chocolate. Classic SF.</div>
+        <div class="card-img"><img src="/minina-sf/images/fishermans-wharf.png" alt="Fisherman's Wharf" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Fisherman's Wharf & Pier 39</div>
+          <div class="card-desc">Yes, it's touristy — and that's the point! Sea lions at Pier 39, clam chowder in a bread bowl, Ghirardelli chocolate. Classic SF.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 2–3 hrs</span>
+            <span class="tag walk">🚶 Bus or cable car</span>
+            <span class="tag cost">💰 Free</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 2–3 hours</span>
-          <span class="tag walk">🚶 Bus or cable car</span>
-          <span class="tag cost">💰 Free (food/shops extra)</span>
         </div>
       </div>
 
       <div class="card" data-id="lands-end" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🌅</div>
-          <div class="card-content">
-            <div class="card-name">Lands End Trail & Sutro Baths</div>
-            <div class="card-desc">Gorgeous coastal trail with views of the Golden Gate Bridge, rugged cliffs, and the eerie ruins of Sutro Baths. Easy-moderate walk, stunning at any time of day.</div>
+        <div class="card-img"><img src="/minina-sf/images/lands-end.png" alt="Lands End" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Lands End & Sutro Baths</div>
+          <div class="card-desc">Gorgeous coastal trail with Golden Gate views, rugged cliffs, and the eerie ruins of Sutro Baths. Easy-moderate walk, stunning at any time of day.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 1.5–2 hrs</span>
+            <span class="tag walk">🚶 Bus to trailhead</span>
+            <span class="tag cost">💰 Free</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 1.5–2 hours</span>
-          <span class="tag walk">🚶 Bus to trailhead</span>
-          <span class="tag cost">💰 Free</span>
         </div>
       </div>
 
-      <div class="card" data-id="filbert-steps" onclick="toggle(this)">
+      <div class="card" data-id="coit-tower" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🦜</div>
-          <div class="card-content">
-            <div class="card-name">Coit Tower & the Wild Parrots</div>
-            <div class="card-desc">Climb Telegraph Hill to Coit Tower for 360° city views. On the way, listen for the famous flock of wild parrots in the trees. The Filbert Steps are lush, garden-lined, and beautiful.</div>
+        <div class="card-img"><img src="/minina-sf/images/coit-tower.png" alt="Coit Tower" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Coit Tower & Wild Parrots</div>
+          <div class="card-desc">Climb Telegraph Hill for 360° city views. Listen for the famous flock of wild parrots in the trees. The Filbert Steps are lush and garden-lined.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 1.5–2 hrs</span>
+            <span class="tag walk">🚶 Bus + steps</span>
+            <span class="tag cost">💰 $10</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 1.5–2 hours</span>
-          <span class="tag walk">🚶 Bus + steps</span>
-          <span class="tag cost">💰 $10 tower entry</span>
-          <span class="tag tip">💡 Steep stairs — good shoes!</span>
         </div>
       </div>
 
       <div class="card" data-id="palace-fine-arts" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🏛</div>
-          <div class="card-content">
-            <div class="card-name">Palace of Fine Arts</div>
-            <div class="card-desc">A stunning Roman-style rotunda and lagoon in the Marina district. Gorgeous for photos, completely free, and pairs well with a Chestnut Street stroll for coffee and boutique shopping.</div>
+        <div class="card-img"><img src="/minina-sf/images/palace-fine-arts.png" alt="Palace of Fine Arts" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Palace of Fine Arts</div>
+          <div class="card-desc">A stunning Roman-style rotunda and lagoon. Gorgeous for photos, completely free, pairs well with a Chestnut Street stroll for coffee and boutique shopping.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 1 hr</span>
+            <span class="tag walk">🚶 Bus to Marina</span>
+            <span class="tag cost">💰 Free</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ 1 hour</span>
-          <span class="tag walk">🚶 Bus to Marina</span>
-          <span class="tag cost">💰 Free</span>
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- EVENING -->
+  <!-- EVENING EXPERIENCES -->
   <div class="section">
     <div class="section-header">
       <div class="section-icon evening">🌙</div>
@@ -739,65 +741,57 @@ body::after {
 
       <div class="card" data-id="north-beach-dinner" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🍝</div>
-          <div class="card-content">
-            <div class="card-name">North Beach Italian Dinner</div>
-            <div class="card-desc">SF's Little Italy. Cozy trattorias, fresh pasta, and red wine on a foggy evening. Try Tosca Cafe for old-school vibes or Tony's Pizza for the best Neapolitan slice on the West Coast.</div>
+        <div class="card-img"><img src="/minina-sf/images/north-beach.png" alt="North Beach" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">North Beach Italian Dinner</div>
+          <div class="card-desc">SF's Little Italy. Cozy trattorias, fresh pasta, and red wine on a foggy evening. Tosca Cafe for old-school vibes or Tony's Pizza for the best Neapolitan slice.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Evening</span>
+            <span class="tag walk">🚶 Easy transit</span>
+            <span class="tag cost">💰 $$–$$$</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ Evening</span>
-          <span class="tag walk">🚶 Easy transit</span>
-          <span class="tag cost">💰 $$–$$$</span>
         </div>
       </div>
 
       <div class="card" data-id="sunset-dinner" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🌇</div>
-          <div class="card-content">
-            <div class="card-name">Sunset Dinner with a View</div>
-            <div class="card-desc">Watch the sun set over the Pacific while dining. Cliff House (Sutro's) or Waterbar on the Embarcadero with bay views. There's something about SF sunsets that just hits different.</div>
+        <div class="card-img"><img src="/minina-sf/images/sunset-dinner.png" alt="Sunset Dinner" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Sunset Dinner with a View</div>
+          <div class="card-desc">Watch the sun set over the Pacific while dining. Waterbar on the Embarcadero or a cliffside spot. SF sunsets just hit different.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Evening</span>
+            <span class="tag drive">🚗 Varies</span>
+            <span class="tag cost">💰 $$$</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ Evening</span>
-          <span class="tag drive">🚗 Depends on spot</span>
-          <span class="tag cost">💰 $$$</span>
         </div>
       </div>
 
       <div class="card" data-id="mission-food-crawl" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🌮</div>
-          <div class="card-content">
-            <div class="card-name">Mission District Food Crawl</div>
-            <div class="card-desc">Walk from home through the best food street in SF. Taquerias, Salvadoran pupusas, craft cocktails at ABV, and ice cream at Bi-Rite. No car needed, just an appetite.</div>
+        <div class="card-img"><img src="/minina-sf/images/mission-food.png" alt="Mission Food Crawl" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Mission District Food Crawl</div>
+          <div class="card-desc">Walk from home through the best food street in SF. Taquerias, pupusas, craft cocktails, and ice cream at Bi-Rite. No car needed, just an appetite.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Evening</span>
+            <span class="tag walk">🚶 Walk from home!</span>
+            <span class="tag cost">💰 $–$$</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ Evening</span>
-          <span class="tag walk">🚶 Walk from home!</span>
-          <span class="tag cost">💰 $–$$</span>
         </div>
       </div>
 
-      <div class="card" data-id="japanese-tea-garden" onclick="toggle(this)">
+      <div class="card" data-id="japantown" onclick="toggle(this)">
         <div class="check">✓</div>
-        <div class="card-top">
-          <div class="card-emoji">🍵</div>
-          <div class="card-content">
-            <div class="card-name">Japantown & Tea</div>
-            <div class="card-desc">Explore the Japan Center, browse unique shops, have matcha and mochi, or try an authentic ramen spot. A pocket of Tokyo in the middle of San Francisco.</div>
+        <div class="card-img"><img src="/minina-sf/images/japantown.png" alt="Japantown" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Japantown & Tea</div>
+          <div class="card-desc">Explore the Japan Center, browse unique shops, have matcha and mochi, or try authentic ramen. A pocket of Tokyo in the middle of San Francisco.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Afternoon / Evening</span>
+            <span class="tag walk">🚶 Bus from Mission</span>
+            <span class="tag cost">💰 $–$$</span>
           </div>
-        </div>
-        <div class="card-meta">
-          <span class="tag time">⏱ Afternoon / Evening</span>
-          <span class="tag walk">🚶 Bus from Mission</span>
-          <span class="tag cost">💰 $–$$</span>
         </div>
       </div>
 
@@ -821,13 +815,11 @@ body::after {
 const selected = new Set();
 const STORAGE_KEY = 'minina-sf-picks';
 
-// Load saved picks
 try {
   const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
   saved.forEach(id => selected.add(id));
 } catch(e) {}
 
-// Apply saved state on load
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.card').forEach(card => {
     if (selected.has(card.dataset.id)) {
@@ -862,20 +854,12 @@ function sendPicks() {
   document.querySelectorAll('.card.selected').forEach(card => {
     picks.push(card.querySelector('.card-name').textContent);
   });
-  
+  const text = "Minina's SF picks:\n" + picks.map(p => "• " + p).join("\n");
   const btn = document.getElementById('shareBtn');
   const msg = document.getElementById('sentMsg');
-  
-  // Copy to clipboard as fallback
-  const text = "Minina's SF picks:\n" + picks.map(p => "• " + p).join("\n");
-  
+
   if (navigator.share) {
-    navigator.share({
-      title: "Minina's SF Adventure Picks",
-      text: text
-    }).catch(() => {
-      fallbackCopy(text, btn, msg);
-    });
+    navigator.share({ title: "Minina's SF Adventure Picks", text: text }).catch(() => fallbackCopy(text, btn, msg));
   } else {
     fallbackCopy(text, btn, msg);
   }
@@ -885,13 +869,8 @@ function fallbackCopy(text, btn, msg) {
   navigator.clipboard.writeText(text).then(() => {
     btn.style.display = 'none';
     msg.classList.add('show');
-    setTimeout(() => {
-      btn.style.display = '';
-      msg.classList.remove('show');
-    }, 3000);
-  }).catch(() => {
-    alert("Your picks:\n\n" + text);
-  });
+    setTimeout(() => { btn.style.display = ''; msg.classList.remove('show'); }, 3000);
+  }).catch(() => alert("Your picks:\n\n" + text));
 }
 </script>
 

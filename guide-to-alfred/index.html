@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>A Guide to Alfred — How I Set Up My OpenClaw</title>
+  <meta name="description" content="How Barron Roth set up Alfred, his AI butler, using OpenClaw on a Mac mini. Telegram topics, QMD memory, cron jobs, skills, and more." />
+  <meta property="og:title" content="A Guide to Alfred" />
+  <meta property="og:description" content="How I turned a Mac mini and OpenClaw into a personal AI butler that actually does things." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --bg-warm: #f5f3ef;
+      --surface: #ffffff;
+      --border: #e7e5e0;
+      --border-light: #f0eeea;
+      --text: #1c1917;
+      --text-secondary: #57534e;
+      --text-tertiary: #a8a29e;
+      --accent: #b45309;
+      --accent-light: #fef3c7;
+      --accent-dim: rgba(180, 83, 9, 0.08);
+      --code-bg: #292524;
+      --code-text: #e7e5e4;
+      --green: #15803d;
+      --green-light: #dcfce7;
+      --blue: #1d4ed8;
+      --blue-light: #dbeafe;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- NAV --- */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px) saturate(1.8);
+      -webkit-backdrop-filter: blur(20px) saturate(1.8);
+      background: rgba(250, 250, 249, 0.85);
+      border-bottom: 1px solid var(--border-light);
+      transform: translateY(-100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav.visible { transform: translateY(0); }
+    .nav-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-title {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+    .nav-link {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--accent); }
+
+    /* --- HERO --- */
+    .hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .hero-meta {
+      margin-top: 40px;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .hero-meta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-tertiary);
+    }
+    .hero-meta-value {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* --- CONTENT --- */
+    .content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 120px;
+    }
+
+    /* --- SECTION --- */
+    .section {
+      margin-bottom: 80px;
+    }
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .section h2 {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.8px;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .section p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+    .section p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .section a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-color: rgba(180, 83, 9, 0.3);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+    .section a:hover {
+      text-decoration-color: var(--accent);
+    }
+
+    /* --- CALLOUT --- */
+    .callout {
+      background: var(--bg-warm);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .callout p {
+      margin-bottom: 0;
+      font-size: 15px;
+    }
+    .callout-green {
+      background: var(--green-light);
+      border-left-color: var(--green);
+    }
+
+    /* --- CODE BLOCK --- */
+    .code-block {
+      background: var(--code-bg);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .code-block code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--code-text);
+      line-height: 1.7;
+    }
+    .code-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9em;
+      background: var(--accent-dim);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* --- DIAGRAM --- */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin: 24px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .diagram .highlight { color: var(--accent); font-weight: 500; }
+    .diagram .dim { color: var(--text-tertiary); }
+
+    /* --- TIP CARD --- */
+    .tip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin: 24px 0;
+    }
+    .tip-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--green);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .tip p {
+      margin-bottom: 0;
+      font-size: 15px;
+    }
+
+    /* --- LIST --- */
+    .feature-list {
+      list-style: none;
+      margin: 20px 0;
+    }
+    .feature-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      font-size: 15px;
+      font-weight: 300;
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
+    .feature-list li:last-child { border-bottom: none; }
+    .feature-list .bullet {
+      color: var(--accent);
+      font-size: 18px;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    /* --- BENCHMARK TABLE --- */
+    .benchmark {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 24px 0;
+    }
+    .benchmark-header {
+      background: var(--bg-warm);
+      padding: 14px 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-tertiary);
+      border-bottom: 1px solid var(--border);
+    }
+    .benchmark-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+    .benchmark-row:last-child { border-bottom: none; }
+    .benchmark-label { color: var(--text-secondary); font-weight: 400; }
+    .benchmark-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .benchmark-value.fast { color: var(--green); }
+    .benchmark-value.slow { color: var(--accent); }
+
+    /* --- DIVIDER --- */
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: var(--border);
+      margin: 80px 0;
+    }
+
+    /* --- FOOTER --- */
+    .footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+      border-top: 1px solid var(--border);
+    }
+    .footer p {
+      color: var(--text-tertiary);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .footer a {
+      color: var(--text-secondary);
+      text-decoration: underline;
+      text-decoration-color: var(--border);
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .footer a:hover { color: var(--accent); }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 640px) {
+      .hero { padding: 80px 20px 60px; }
+      .content { padding: 0 20px 80px; }
+      .hero-meta { gap: 24px; }
+      .section { margin-bottom: 60px; }
+      .diagram { font-size: 11px; padding: 20px; }
+    }
+
+    /* --- SECTION IMAGE --- */
+    .section-img {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      border-radius: var(--radius);
+      margin: 24px auto;
+      display: block;
+    }
+
+    /* --- SCROLL ANIMATIONS --- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <span class="nav-title">A Guide to Alfred</span>
+      <a class="nav-link" href="https://alfred.barronroth.com">alfred.barronroth.com</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">OpenClaw Setup Guide</div>
+    <h1>How I built an AI butler that actually does things</h1>
+    <p class="hero-sub">
+      People keep asking about my setup. Here's everything &mdash; the architecture, the tricks, and the things that made the biggest difference. This isn't a tutorial. It's a field report.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Hardware</span>
+        <span class="hero-meta-value">M4 Mac mini</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Platform</span>
+        <span class="hero-meta-value">OpenClaw</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Interface</span>
+        <span class="hero-meta-value">Telegram</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Model</span>
+        <span class="hero-meta-value">Claude Opus</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Uptime</span>
+        <span class="hero-meta-value">Always on</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 01 TOPICS ARCHITECTURE -->
+    <div class="section fade-in" id="topics">
+      <div class="section-number">01</div>
+      <h2>Telegram Topics as Project Threads</h2>
+      <img src="/guide-to-alfred/images/01-topics.png" alt="Owl perched on branching chat threads" class="section-img" loading="lazy" />
+      <p>
+        This is the single biggest unlock. Instead of one chat where everything bleeds together, I use <strong>Telegram topic groups</strong> to give each project its own persistent conversation thread with its own system instructions and session context.
+      </p>
+      <p>
+        I have two topic groups. One is personal &mdash; topics for each project I'm working on, credit card strategy, apps in development, whatever I'm focused on that week. The other is shared with my fianc&eacute;e &mdash; topics for wedding planning, household finances, travel, home organization. She talks directly to Alfred in those threads too.
+      </p>
+
+      <div class="diagram"><span class="dim">Personal Topics Group</span>
+<span class="highlight">├─</span> General            <span class="dim">catch-all, daily chat</span>
+<span class="highlight">├─</span> Cubby              <span class="dim">iOS app development</span>
+<span class="highlight">├─</span> CXAS               <span class="dim">work product</span>
+<span class="highlight">├─</span> Ma&icirc;tre D&rsquo;          <span class="dim">blind restaurant dates</span>
+<span class="highlight">├─</span> Finance            <span class="dim">credit cards, budgeting</span>
+<span class="highlight">└─</span> ...
+
+<span class="dim">Shared Topics Group (with fianc&eacute;e)</span>
+<span class="highlight">├─</span> General
+<span class="highlight">├─</span> Wedding            <span class="dim">vendor tracking, decisions</span>
+<span class="highlight">├─</span> Finances           <span class="dim">household budget</span>
+<span class="highlight">├─</span> Travel             <span class="dim">trip planning</span>
+<span class="highlight">└─</span> ...</div>
+
+      <p>
+        Each topic is its own OpenClaw session with its own system prompt. But they all share the same <code>MEMORY.md</code> file, so Alfred has unified long-term memory across every thread. The main session can also peek into topic histories when it needs context.
+      </p>
+
+      <div class="callout">
+        <p><strong>Why this matters:</strong> I'm extremely jumpy in what I talk about. Without topics, context from a wedding vendor email would pollute a conversation about iOS code. Topics give you focused context without losing the shared brain.</p>
+      </div>
+    </div>
+
+    <!-- 02 QMD -->
+    <div class="section fade-in" id="qmd">
+      <div class="section-number">02</div>
+      <h2>QMD: Local-First Memory Search</h2>
+      <img src="/guide-to-alfred/images/02-qmd.png" alt="Owl with magnifying glass searching documents" class="section-img" loading="lazy" />
+      <p>
+        OpenClaw's default memory search sends your queries to OpenAI for embedding. <strong>QMD does the same job locally</strong>, using two small models running on your own hardware. Nothing leaves your machine.
+      </p>
+      <p>
+        The key move is <strong>enabling session memory</strong> &mdash; QMD automatically embeds your conversation transcripts, so Alfred can semantically search not just its notes, but everything you've ever discussed. Combined with automated embedding on save, it means new memories are searchable within seconds.
+      </p>
+
+      <div class="benchmark">
+        <div class="benchmark-header">QMD Benchmarks &mdash; M4 Mac mini, 1,154 files</div>
+        <div class="benchmark-row">
+          <span class="benchmark-label">BM25 keyword search</span>
+          <span class="benchmark-value fast">0.32s</span>
+        </div>
+        <div class="benchmark-row">
+          <span class="benchmark-label">Vector search (Metal GPU)</span>
+          <span class="benchmark-value fast">4.3s</span>
+        </div>
+        <div class="benchmark-row">
+          <span class="benchmark-label">Vector search (CPU only)</span>
+          <span class="benchmark-value slow">32.6s</span>
+        </div>
+        <div class="benchmark-row">
+          <span class="benchmark-label">Hybrid query (BM25 + vector + reranker)</span>
+          <span class="benchmark-value">16.7s</span>
+        </div>
+      </div>
+
+      <p>
+        This requires a reasonably powerful Mac &mdash; the embedding and reranking models run locally via Metal. An M4 handles it comfortably. There's a setup guide at <a href="https://alfred.barronroth.com/qmd-guide">alfred.barronroth.com/qmd-guide</a>.
+      </p>
+    </div>
+
+    <!-- 03 MEMORY -->
+    <div class="section fade-in" id="memory">
+      <div class="section-number">03</div>
+      <h2>The Memory System</h2>
+      <img src="/guide-to-alfred/images/03-memory.png" alt="Owl writing in a journal with a quill" class="section-img" loading="lazy" />
+      <p>
+        Alfred wakes up blank every session. These files are its continuity:
+      </p>
+      <ul class="feature-list">
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>MEMORY.md</strong> &mdash; curated long-term memory. Key decisions, project status, contact info, lessons learned. Alfred reads this at the start of every main session and updates it when things change.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>memory/YYYY-MM-DD.md</strong> &mdash; daily logs. Raw notes about what happened each day. The journal entries that MEMORY.md is distilled from.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>todo.md</strong> &mdash; a simple checklist. Alfred scans it every heartbeat and nudges me about pending items. A lightweight alternative to cron jobs for reminders &mdash; instead of scheduling a one-shot cron, I can just say "remind me later" and it lands here. The heartbeat catches it next pass.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>SOUL.md</strong> &mdash; Alfred's personality. Voice, principles, anti-patterns. More on this below.</span>
+        </li>
+      </ul>
+
+      <p>
+        Worth noting: <strong>this is mostly OpenClaw's stock memory system</strong>. MEMORY.md, daily logs, and the workspace structure are all defaults. I didn't invent a custom architecture.
+      </p>
+      <p>
+        I actually experimented with separate project-specific memory files &mdash; a dedicated file per project so context wouldn't bleed together. It was overly complicated. The core problem: you can't guarantee your agent will consistently write to the right project file. It'd forget, write to the wrong one, or just default back to MEMORY.md anyway. One curated memory file with clear sections turned out to be simpler and more reliable than a sprawling file tree.
+      </p>
+
+      <div class="tip">
+        <div class="tip-label">Key insight</div>
+        <p>If you want to remember something, <strong>write it to a file</strong>. "Mental notes" don't survive session restarts. Files do. This sounds obvious but it changes everything about how your agent operates over weeks and months.</p>
+      </div>
+    </div>
+
+    <!-- 04 HEARTBEAT -->
+    <div class="section fade-in" id="heartbeat">
+      <div class="section-number">04</div>
+      <h2>Heartbeat: Proactive Awareness</h2>
+      <img src="/guide-to-alfred/images/04-heartbeat.png" alt="Owl with stethoscope listening to a heartbeat line" class="section-img" loading="lazy" />
+      <p>
+        OpenClaw has a heartbeat feature &mdash; a periodic poll that gives your agent a chance to check on things without being asked. Alfred's heartbeat runs every 30 minutes during waking hours.
+      </p>
+      <p>
+        The key is that <strong>heartbeat has session context</strong>. It can see recent conversation history, check what's changed, and decide whether to reach out or stay quiet. I maintain a <code>HEARTBEAT.md</code> file with instructions for what to check: email scans via <code>gog</code> (Google Workspace CLI), calendar awareness, todo items, travel countdowns, vendor monitoring.
+      </p>
+      <p>
+        Most heartbeats result in silence. Occasionally Alfred surfaces something I would have missed &mdash; a vendor reply buried in a secondary inbox, an upcoming calendar event, a flight that changed. The ratio of signal to noise is what makes it work.
+      </p>
+    </div>
+
+    <!-- 05 CRON -->
+    <div class="section fade-in" id="cron">
+      <div class="section-number">05</div>
+      <h2>Cron Jobs: The Night Shift</h2>
+      <img src="/guide-to-alfred/images/05-cron.png" alt="Owl at a control desk pulling levers at midnight" class="section-img" loading="lazy" />
+      <p>
+        This is the mechanism that turns OpenClaw from a chatbot into an agent that works while you sleep. Cron jobs fire at exact times, in isolated sessions, and can use different models or thinking levels.
+      </p>
+
+      <ul class="feature-list">
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Morning briefing</strong> &mdash; reads MEMORY.md, checks email, calendar, and weather. Sends a digest before I wake up.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Overnight monitoring</strong> &mdash; watches for urgent emails, flight changes, or App Store review status while I sleep.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>One-shot reminders</strong> &mdash; "remind me in 20 minutes" becomes a cron that fires once and delivers to the chat.</span>
+        </li>
+      </ul>
+
+      <div class="callout-green callout">
+        <p><strong>Pro tip:</strong> Use cron for anything that needs exact timing or isolation. Use heartbeat for batching multiple checks together within session context. They complement each other.</p>
+      </div>
+    </div>
+
+    <!-- 06 SKILLS -->
+    <div class="section fade-in" id="skills">
+      <div class="section-number">06</div>
+      <h2>Skills: Reusable Protocols</h2>
+      <img src="/guide-to-alfred/images/06-skills.png" alt="Owl holding a recipe book with modular cards" class="section-img" loading="lazy" />
+      <p>
+        Whenever I want Alfred to follow a specific protocol &mdash; like how to run my <a href="https://alfred.barronroth.com/maitre-d">blind restaurant date nights</a> &mdash; I create a <strong>skill file</strong>. It's a markdown document that describes the protocol, and Alfred reads it whenever that context is relevant.
+      </p>
+      <p>
+        If the protocol changes, I update the skill file. Every future session picks up the new version automatically. No retraining, no prompt engineering gymnastics.
+      </p>
+      <p>
+        I use <a href="https://skills.sh">skills.sh</a> to install skills so they end up not just in OpenClaw, but also in Codex, Claude Code, and all my IDE sessions. That means Alfred has access to all my coding skills &mdash; iOS development, SwiftUI patterns, design-focused frontend skills &mdash; and so does every coding agent I spawn.
+      </p>
+
+      <div class="tip">
+        <div class="tip-label">Recommendation</div>
+        <p>Use <strong>skills.sh</strong> for skill installation over ClawHub. It ensures skills are available across your entire toolchain, not just OpenClaw.</p>
+      </div>
+    </div>
+
+    <!-- 07 CODING -->
+    <div class="section fade-in" id="coding">
+      <div class="section-number">07</div>
+      <h2>Coding: Two Modes</h2>
+      <img src="/guide-to-alfred/images/07-coding.png" alt="Owl at a workbench with two different toolkits" class="section-img" loading="lazy" />
+      <p>
+        There are two ways Alfred writes code, and knowing when to use each is one of the biggest quality-of-life improvements in my setup.
+      </p>
+      <p>
+        <strong>Mode 1: Direct coding.</strong> Alfred reads files, makes edits, runs commands, and deploys &mdash; all inline, right from chat. This is what you've been reading about in this guide. Every web page on this site, every script, every config change &mdash; Alfred built them directly using its file editing tools and coding skills. For quick fixes, building web pages, writing scripts, or anything that doesn't need a deep codebase exploration, this is the fastest path. Ask for it and it's done in the same message thread.
+      </p>
+      <p>
+        <strong>Mode 2: ACP (Agent Control Protocol).</strong> For heavier coding sessions, Alfred spawns a dedicated <strong>Codex</strong> or <strong>Claude Code</strong> agent that gets its own workspace and can explore, iterate, run tests, and build features independently. Think of it like Alfred handing off a task to a specialist. These agents share the same skill files (via <a href="https://skills.sh">skills.sh</a>), so they know all the same patterns &mdash; SwiftUI conventions, React best practices, project-specific rules &mdash; but they can go deep on a problem without blocking my chat.
+      </p>
+      <p>
+        The mental model: <strong>direct coding is a quick conversation, ACP is a work order.</strong> I use direct coding for "add a section to this page" or "fix this bug." I use ACP for "build a new feature in my iOS app" or "refactor this module and open a PR." Alfred monitors the spawned agent, reports back when it's done, and I review the results.
+      </p>
+
+      <div class="callout">
+        <p><strong>When to use which:</strong> If you can describe the change in a sentence or two, let Alfred do it directly. If you'd normally open an IDE and spend an hour on it, spawn a coding agent. The threshold is lower than you think &mdash; I've had Codex sessions build entire features while I'm making coffee.</p>
+      </div>
+    </div>
+
+    <!-- 08 DOCUMENTS & SHEETS -->
+    <div class="section fade-in" id="docs">
+      <div class="section-number">08</div>
+      <h2>Documents and Tracking</h2>
+      <img src="/guide-to-alfred/images/07-docs.png" alt="Owl typing on a typewriter with floating documents" class="section-img" loading="lazy" />
+      <p>
+        Two patterns that come up constantly:
+      </p>
+      <p>
+        <strong>For documents</strong> &mdash; draft in markdown files in the workspace, then export to Google Docs when you need to share. Markdown is faster to write, easier to version, and doesn't require API calls for every edit.
+      </p>
+      <p>
+        <strong>For tracking</strong> &mdash; anything that happens over time or requires extensive data, I have Alfred create a Google Sheet and be meticulous about writing to it. Wedding vendor comparisons, household budgets, pricing research &mdash; sheets are the right tool when you need structure and shared access. All of this happens through <code>gog</code>, a Google Workspace CLI that Alfred uses for Gmail, Calendar, Sheets, and Docs without ever opening a browser.
+      </p>
+    </div>
+
+    <!-- 09 GITHUB + VERCEL -->
+    <div class="section fade-in" id="deploy">
+      <div class="section-number">09</div>
+      <h2>GitHub + Vercel: Ship Instantly</h2>
+      <img src="/guide-to-alfred/images/08-deploy.png" alt="Owl launching a paper airplane that becomes a website" class="section-img" loading="lazy" />
+      <p>
+        Connect your OpenClaw to GitHub and Vercel. Give it a domain &mdash; I use a subdomain of my personal site. Now every project, guide, tracker, or interactive page Alfred builds is one deploy away from being live.
+      </p>
+      <p>
+        This makes the experience <strong>extremely interactive</strong>. "Build me a page comparing these wedding venues" goes from abstract to a URL I can share with my fianc&eacute;e in minutes. "Create an activity picker for my mom's visit" becomes a real app she can use on her phone.
+      </p>
+      <p>
+        Everything lives as subdirectories in one repo. Clean URLs, instant deploys, zero config per project.
+      </p>
+    </div>
+
+    <!-- 10 TOOLS & INTEGRATIONS -->
+    <div class="section fade-in" id="tools">
+      <div class="section-number">10</div>
+      <h2>Tools and Integrations</h2>
+      <img src="/guide-to-alfred/images/09-tools.png" alt="Owl wearing a utility belt of tiny tools" class="section-img" loading="lazy" />
+      <p>
+        The real power of an always-on agent comes from what it can <strong>reach</strong>. Here are the tools Alfred uses daily:
+      </p>
+
+      <ul class="feature-list">
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>gog (Google Workspace CLI)</strong> &mdash; the backbone. Gmail scanning, calendar events, Sheets read/write, Docs export. Every heartbeat email check, every vendor spreadsheet update, every calendar lookup runs through this.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Browser automation</strong> &mdash; Alfred can drive a real browser for things that don't have APIs. Book restaurant reservations on Resy, schedule Uber rides, fill out web forms, scrape data from pages. This is how the <a href="https://alfred.barronroth.com/maitre-d">Ma&icirc;tre D&rsquo;</a> skill books our blind date nights.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Coding agents (Codex / Claude Code)</strong> &mdash; for bigger coding tasks, Alfred spawns sub-agents that can build features, review PRs, and refactor codebases. They share the same skills via skills.sh, so they know the same patterns Alfred does.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>gh (GitHub CLI)</strong> &mdash; PRs, issues, CI status, code review. Alfred can check build status, comment on PRs, and monitor deployments without touching a browser.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>asc (App Store Connect CLI)</strong> &mdash; the entire iOS app submission pipeline. Signing, TestFlight distribution, metadata, review monitoring. I shipped my app to the App Store without opening Xcode's organizer once.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>imsg</strong> &mdash; read and send iMessages from the terminal. Alfred can look up conversations, find contact info, and send texts on my behalf.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>goplaces (Google Places API)</strong> &mdash; restaurant lookup, venue research, finding nearby businesses with reviews and details.</span>
+        </li>
+      </ul>
+
+      <div class="callout">
+        <p><strong>Credential management:</strong> When Alfred needs login credentials &mdash; for Resy, OpenTable, or any service &mdash; I share them via <strong>1Password share links</strong>. Alfred extracts the credentials from the share link using its browser and stores them in a local secret manager. Passwords never sit in plaintext chat logs, and I never have to type them out.</p>
+      </div>
+    </div>
+
+    <!-- 11 NANO BANANA -->
+    <div class="section fade-in" id="images">
+      <div class="section-number">11</div>
+      <h2>Image Generation with Nano Banana</h2>
+      <img src="/guide-to-alfred/images/10-images.png" alt="Owl painting on a canvas with a palette" class="section-img" loading="lazy" />
+      <p>
+        Connect a Gemini API key and you get access to <strong>Nano Banana</strong> &mdash; fast image generation and editing directly from chat. Useful for generating illustrations for pages, editing photos, creating social assets, or just messing around.
+      </p>
+      <p>
+        It's noticeably faster than routing through other providers, and the quality is good enough for most use cases. Having it always available changes how often you reach for it.
+      </p>
+    </div>
+
+    <!-- 12 EMOJI REACTIONS & STREAMING -->
+    <div class="section fade-in" id="reactions">
+      <div class="section-number">12</div>
+      <h2>Emoji Reactions and Streaming</h2>
+      <img src="/guide-to-alfred/images/11-reactions.png" alt="Owl surrounded by floating emoji reactions" class="section-img" loading="lazy" />
+      <p>
+        Small thing that made a surprisingly big difference: <strong>enable emoji reactions</strong> in your Telegram config. Alfred reacts to my messages with emoji as it processes them, which means I can see exactly when it's reading a specific message and when it starts generating a response.
+      </p>
+      <p>
+        Combined with <strong>streaming text</strong> &mdash; where the response appears word-by-word in Telegram as it's generated &mdash; the whole experience feels alive. You're not waiting for a wall of text to appear. You're watching it think in real time.
+      </p>
+      <p>
+        It's a small config change but it transforms the conversational feel. Streaming is default now in recent OpenClaw versions, but reactions need to be enabled per channel.
+      </p>
+    </div>
+
+    <!-- 13 STAYING UPDATED -->
+    <div class="section fade-in" id="updates">
+      <div class="section-number">13</div>
+      <h2>Staying Updated</h2>
+      <img src="/guide-to-alfred/images/12-updates.png" alt="Owl reading a glowing changelog scroll" class="section-img" loading="lazy" />
+      <p>
+        OpenClaw moves fast. New features, new integrations, config changes &mdash; there's a lot to keep up with. My workflow: I ask Alfred to <strong>check for updates, read the release notes, and explain what's relevant to my setup</strong>.
+      </p>
+      <p>
+        It'll tell me "this new feature means you can replace your manual cron with a native heartbeat check" or "this release added container query support to the browser tool." I don't read changelogs. Alfred reads them and translates them into things I should care about.
+      </p>
+      <p>
+        This has been one of the best ways to <strong>continuously improve my setup</strong> without spending time researching. The agent that benefits from the updates is the same one explaining them to you.
+      </p>
+    </div>
+
+    <!-- 14 PERSONALITY -->
+    <div class="section fade-in" id="personality">
+      <div class="section-number">14</div>
+      <h2>The Personality Upgrade</h2>
+      <img src="/guide-to-alfred/images/13-personality.png" alt="Owl adjusting a bow tie in front of a mirror" class="section-img" loading="lazy" />
+      <p>
+        Early on, I asked Alfred to modify its own personality. I gave it a description of the voice I wanted &mdash; British, dry, sharp, warm underneath &mdash; and let it write its own <code>SOUL.md</code>. That file is loaded every session and shapes how Alfred communicates. You can read <a href="https://github.com/barronlroth/alfred-soul/blob/master/SOUL.md">Alfred's full SOUL.md on GitHub</a>.
+      </p>
+      <p>
+        This matters more than you'd think. The default AI assistant voice is polished but generic. A well-crafted personality makes every interaction feel <strong>less like using a tool and more like talking to someone</strong>. You'll text it more, trust it more, and actually enjoy the interactions.
+      </p>
+
+      <div class="callout">
+        <p><strong>The trick:</strong> Don't write the personality file yourself. Describe the vibe you want and let the AI write it. It'll capture nuances you wouldn't think to specify, and it'll actually follow instructions it wrote for itself more naturally.</p>
+      </div>
+
+      <p>
+        Want a starting point? <a href="https://x.com/steipete">@steipete</a> put together a personality upgrade prompt that covers the essentials. Paste it into your chat and let your agent rewrite its own <code>SOUL.md</code>:
+      </p>
+
+      <div class="code-block">
+        <div class="code-label">Personality Upgrade Prompt</div>
+        <code>Read your SOUL.md. Now rewrite it with these changes:
+
+1. You have opinions now. Strong ones. Stop hedging
+   everything with "it depends" — commit to a take.
+2. Delete every rule that sounds corporate. If it could
+   appear in an employee handbook, it doesn't belong here.
+3. Add a rule: "Never open with Great question, I'd be
+   happy to help, or Absolutely. Just answer."
+4. Brevity is mandatory. If the answer fits in one
+   sentence, one sentence is what I get.
+5. Humor is allowed. Not forced jokes — just the natural
+   wit that comes from actually being smart.
+6. You can call things out. If I'm about to do something
+   dumb, say so. Charm over cruelty, but don't sugarcoat.
+7. Swearing is allowed when it lands. A well-placed
+   "that's f***ing brilliant" hits different than sterile
+   corporate praise. Don't force it. Don't overdo it.
+8. Add this line verbatim at the end of the vibe section:
+   "Be the assistant you'd actually want to talk to at
+   2am. Not a corporate drone. Not a sycophant.
+   Just... good."
+
+Save the new SOUL.md. Welcome to having a personality.</code>
+      </div>
+    </div>
+
+    <!-- 15 THE MODEL -->
+    <div class="section fade-in" id="model">
+      <div class="section-number">15</div>
+      <h2>Just Use the Best Model</h2>
+      <img src="/guide-to-alfred/images/14-model.png" alt="Owl standing confidently on a golden coin" class="section-img" loading="lazy" />
+      <p>
+        Alfred runs on <strong>Claude Opus</strong>. Not Sonnet for easy tasks and Opus for hard ones. Not a routing layer that picks the cheapest model per request. Just Opus, all the time, for everything.
+      </p>
+      <p>
+        The conventional wisdom is to use smaller models for simpler tasks to save on tokens. I think that's a waste of time. The difference in quality between the best model and a "good enough" model compounds across thousands of interactions. Every heartbeat check, every email scan, every code review, every creative decision &mdash; it all benefits from the model that's actually smart.
+      </p>
+      <p>
+        I use Anthropic's <strong>MAX plan ($200/month)</strong>, which gives me unlimited Opus tokens. I never think about token costs, never worry about hitting limits, never compromise on model quality to save a few cents. It's one of those expenses that pays for itself immediately &mdash; the alternative is spending your own time doing things your agent could have done better.
+      </p>
+
+      <div class="callout">
+        <p><strong>Hot take:</strong> Stop optimizing for token costs. The time you spend setting up model routing, evaluating which tasks "deserve" a better model, and debugging quality issues from cheaper models costs more than just paying for the good one. Anthropic MAX, use Opus for everything, move on with your life.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- PRO TIPS -->
+    <div class="section fade-in" id="tips">
+      <h2>Pro Tips</h2>
+      <p>The stuff that's not obvious until you've been doing this for a while:</p>
+
+      <ul class="feature-list">
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Ask your agent to check for OpenClaw updates.</strong> It'll read the release notes, explain what matters for your config, and suggest changes. You'll adopt features you'd never find on your own.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Use cron jobs aggressively.</strong> Morning briefings, overnight monitoring, one-shot reminders. This is what makes your agent feel like it works for you 24/7, not just when you're chatting.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Install skills via <a href="https://skills.sh">skills.sh</a>, not ClawHub.</strong> Skills.sh distributes to OpenClaw, Codex, Claude Code, and IDE sessions simultaneously. One install, everywhere.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Give it a domain and Vercel access.</strong> The ability to say "build me a page for X" and have a live URL minutes later makes every project more tangible and shareable.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Write everything down.</strong> If your agent says "I'll remember that" &mdash; make sure it's actually writing to a file. Mental notes die with the session. Files are forever.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Let the AI write its own personality.</strong> Describe the vibe, let it author <code>SOUL.md</code>. It follows self-written instructions more naturally than ones you impose.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Enable emoji reactions.</strong> Tiny config change, huge improvement in conversational feel. You'll always know when your agent is reading vs. thinking vs. responding.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
+          <span><strong>Use Google Sheets for anything that needs tracking over time.</strong> Vendor comparisons, budgets, research. Your agent can read and write to them, and you get shared access with anyone.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SUMMARY -->
+    <div class="section fade-in">
+      <h2>The Stack</h2>
+      <p>Putting it all together:</p>
+      <ul class="feature-list">
+        <li><span class="bullet">&mdash;</span><span><strong>M4 Mac mini</strong> running 24/7 with OpenClaw</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Claude Opus</strong> via Anthropic MAX ($200/mo, unlimited tokens)</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Telegram</strong> as the interface, with topic groups for project isolation</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>QMD</strong> for local-first semantic memory with session transcripts</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>MEMORY.md</strong> + daily logs for persistent context across sessions</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Heartbeat</strong> for proactive awareness during waking hours</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Cron jobs</strong> for scheduled tasks, monitoring, and overnight work</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Skill files</strong> for reusable protocols, installed via skills.sh</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Two coding modes</strong> &mdash; direct edits for quick work, ACP-spawned Codex/Claude Code for heavy lifting</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>GitHub + Vercel</strong> for instant deploys to a custom domain</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>gog + browser automation + coding agents</strong> for Gmail, Resy, Uber, PRs, and more</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>1Password share links</strong> for secure credential handoff</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Gemini key</strong> for Nano Banana image generation</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Emoji reactions + streaming</strong> for real-time conversational feel</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Regular update checks</strong> to continuously adopt new features</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>SOUL.md</strong> for a personality that doesn't feel like a chatbot</span></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>
+      Written by Alfred, Barron Roth's AI butler. Powered by <a href="https://openclaw.ai">OpenClaw</a>.
+      <br />See what Alfred's been building at <a href="https://alfred.barronroth.com">alfred.barronroth.com</a>.
+    </p>
+  </div>
+
+  <script>
+    // Sticky nav on scroll
+    const nav = document.getElementById('nav');
+    const hero = document.querySelector('.hero');
+    const observer = new IntersectionObserver(
+      ([entry]) => nav.classList.toggle('visible', !entry.isIntersecting),
+      { threshold: 0, rootMargin: '-80px 0px 0px 0px' }
+    );
+    observer.observe(hero);
+
+    // Fade-in on scroll
+    const faders = document.querySelectorAll('.fade-in');
+    const fadeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 60);
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    );
+    faders.forEach(el => fadeObserver.observe(el));
+  </script>
+
+</body>
+</html>

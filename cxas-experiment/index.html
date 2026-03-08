@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An Agent Builds an Agent — CXAS Experiment</title>
+<script defer src="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1.12/chat-messenger.js"></script>
+<link rel="stylesheet" href="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1.12/themes/chat-messenger-default.css">
+<style>
+chat-messenger {
+  z-index: 9999;
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 90px !important;
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Audiowide&family=Major+Mono+Display&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Apestron';
+  src: url('/cxas-experiment/Apestron.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --cream: #f5f0e8;
+  --paper: #ede8dc;
+  --warm-white: #faf8f3;
+  --navy: #1a2744;
+  --navy-light: #2a3d66;
+  --teal: #1a6b5a;
+  --teal-light: #48a892;
+  --rust: #c44d2b;
+  --rust-light: #e67a58;
+  --gold: #b8942e;
+  --ink: #1f1f2e;
+  --ink-muted: #5a5a72;
+  --ink-dim: #8a8a9e;
+  --border: #d4cfc3;
+  --border-light: #e2ded4;
+  --stripe: #c44d2b;
+  --stripe-alt: #e67a58;
+  --terminal-bg: #0d1117;
+  --terminal-text: #33ff88;
+  --terminal-dim: #2a6b4a;
+  --terminal-prompt: #f0c040;
+  --terminal-error: #ff6b6b;
+  --terminal-blue: #58a6ff;
+  --scan-line: rgba(51,255,136,0.03);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+body {
+  font-family: 'Archivo', -apple-system, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--teal);
+  color: #fff;
+}
+
+/* ── GRAIN ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  background: var(--cream);
+  border-top: 3px solid var(--stripe);
+}
+
+.hero-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-left {
+  animation: fadeIn 1s ease both;
+}
+
+.hero-right {
+  animation: fadeIn 1s 0.3s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.mission-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border: 1.5px solid var(--navy);
+  border-radius: 2px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 2rem;
+}
+
+.mission-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--teal);
+  border-radius: 50%;
+}
+
+.hero h1 {
+  font-family: 'Apestron', 'Orbitron', sans-serif;
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  font-weight: normal;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+  font-feature-settings: 'ss01' on;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--stripe);
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  max-width: 460px;
+  margin-bottom: 2rem;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+}
+
+.meta-tag strong {
+  color: var(--navy);
+  font-weight: 700;
+}
+
+/* Mission patch */
+.mission-patch {
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--navy);
+  box-shadow: 0 8px 40px rgba(26,39,68,0.12), 0 0 0 6px var(--cream), 0 0 0 8px var(--border);
+  margin: 0 auto;
+  position: relative;
+}
+
+.mission-patch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mission-patch::after {
+  display: none;
+}
+
+/* ── SECTIONS ── */
+.section {
+  padding: 5rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-wide {
+  padding: 5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--stripe);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-label::before {
+  content: '';
+  width: 32px;
+  height: 2px;
+  background: var(--stripe);
+}
+
+.section h2 {
+  font-family: 'Apestron', 'Orbitron', sans-serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: normal;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 1.25rem;
+  font-feature-settings: 'ss01' on;
+}
+
+.section p, .section-wide p {
+  color: var(--ink-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 60ch;
+  margin-bottom: 1rem;
+}
+
+.section p strong, .section-wide p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--stripe) 20%, var(--stripe) 80%, transparent);
+  margin: 0 auto;
+  max-width: 1100px;
+  opacity: 0.4;
+}
+
+.divider-full {
+  border: none;
+  height: 2px;
+  background: var(--stripe);
+  opacity: 0.35;
+}
+
+/* ── TIMELINE ── */
+.timeline {
+  position: relative;
+  padding-left: 2.5rem;
+  margin: 2.5rem 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.tl-event {
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+
+.tl-event:last-child { padding-bottom: 0; }
+
+.tl-event::before {
+  content: '';
+  position: absolute;
+  left: -2.5rem;
+  top: 4px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid var(--navy);
+  z-index: 1;
+}
+
+.tl-event.done::before {
+  background: var(--navy);
+}
+
+.tl-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--rust);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+
+.tl-title {
+  font-family: 'Audiowide', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+}
+
+.tl-desc {
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  max-width: 55ch;
+}
+
+/* ── MISSION LOG (Chat Style) ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.mission-log {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 2.5rem 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.ml-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1.2rem;
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+}
+
+.ml-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.ml-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.ml-dot:nth-child(1) { background: #ff5f57; }
+.ml-dot:nth-child(2) { background: #febc2e; }
+.ml-dot:nth-child(3) { background: #28c840; }
+
+.ml-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ml-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--stripe);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ml-status::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--teal);
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+.ml-body {
+  padding: 1.5rem 1.5rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 200px;
+}
+
+/* Chat bubble: thinking */
+.ml-thought {
+  align-self: flex-start;
+  max-width: 80%;
+  padding: 0.7rem 1rem;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 12px 12px 12px 3px;
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  line-height: 1.5;
+  position: relative;
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.ml-thought::before {
+  content: '🦉';
+  position: absolute;
+  left: -32px;
+  top: 6px;
+  font-size: 16px;
+  font-style: normal;
+}
+
+.ml-thought.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Chat bubble: command/code */
+.ml-code {
+  align-self: flex-end;
+  max-width: 88%;
+  padding: 0.6rem 1rem;
+  background: var(--terminal-bg);
+  border-radius: 12px 12px 3px 12px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.76rem;
+  line-height: 1.7;
+  color: #e6e6e6;
+  opacity: 0;
+  transform: translateY(6px);
+  overflow-x: auto;
+}
+
+.ml-code.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ml-code .prompt { color: var(--terminal-prompt); }
+.ml-code .cmd { color: #e6e6e6; }
+.ml-code .success { color: var(--terminal-text); }
+.ml-code .error { color: var(--terminal-error); }
+.ml-code .info { color: var(--terminal-blue); }
+.ml-code .dim { color: #5a6370; }
+
+/* Response bubble */
+.ml-response {
+  align-self: center;
+  max-width: 88%;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.76rem;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.ml-response.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ml-response.ok {
+  background: rgba(26,107,90,0.08);
+  border: 1px solid rgba(26,107,90,0.2);
+  color: var(--teal);
+}
+
+.ml-response.err {
+  background: rgba(196,77,43,0.08);
+  border: 1px solid rgba(196,77,43,0.2);
+  color: var(--rust);
+}
+
+.ml-response.info {
+  background: rgba(42,61,102,0.06);
+  border: 1px solid rgba(42,61,102,0.15);
+  color: var(--navy-light);
+}
+
+.ml-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--teal);
+  animation: cursorBlink 1s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ── ARCHITECTURE ── */
+.arch-box {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+  margin: 2rem 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  overflow-x: auto;
+}
+
+.arch-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 4px;
+  margin: 0.2rem;
+  white-space: nowrap;
+  font-size: 0.75rem;
+}
+
+.arch-node.root { background: var(--navy); color: var(--cream); }
+.arch-node.agent { background: var(--teal); color: #fff; }
+.arch-node.tool { background: var(--paper); border: 1px solid var(--border); color: var(--ink-muted); font-size: 0.68rem; }
+
+.arch-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.6rem 0 0.6rem 1.5rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border);
+}
+
+/* ── STATS ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 2.5rem 0;
+}
+
+.stat-cell {
+  background: var(--warm-white);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Major Mono Display', monospace;
+  font-size: 2.8rem;
+  color: var(--navy);
+  line-height: 1;
+}
+
+.stat-lbl {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+}
+
+/* ── EVAL TABLE ── */
+.eval-wrap {
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.eval-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.eval-tbl th {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 2px solid var(--navy);
+}
+
+.eval-tbl td {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--ink-muted);
+}
+
+.eval-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+}
+
+.eval-badge.pass { color: var(--teal); background: rgba(26,107,90,0.1); }
+.eval-badge.fixed { color: var(--gold); background: rgba(184,148,46,0.1); }
+.eval-badge.infra { color: var(--navy-light); background: rgba(42,61,102,0.1); }
+
+/* ── INSIGHT CARDS ── */
+/* ── BENTO GRID ── */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(260px, auto);
+  gap: 16px;
+  margin: 2.5rem 0;
+}
+
+.bento-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--warm-white);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bento-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(26,39,68,0.1);
+}
+
+/* Sizing variants */
+.bento-wide { grid-column: span 2; }
+.bento-tall { grid-row: span 2; }
+.bento-full { grid-column: span 3; }
+
+.bento-img {
+  width: 100%;
+  height: 55%;
+  object-fit: cover;
+  display: block;
+}
+
+.bento-tall .bento-img { height: 50%; }
+.bento-wide .bento-img { height: 50%; }
+.bento-full .bento-img { height: 240px; }
+
+.bento-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.bento-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.4rem;
+}
+
+.bento-card h3 {
+  font-family: 'Audiowide', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+}
+
+.bento-wide h3,
+.bento-full h3 { font-size: 1.15rem; }
+
+.bento-card p {
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.bento-card.featured {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+
+.bento-card.featured h3 { color: var(--cream); }
+.bento-card.featured p { color: rgba(245,240,232,0.65); }
+.bento-card.featured .bento-num { color: var(--teal-light); }
+
+@media (max-width: 768px) {
+  .bento { grid-template-columns: 1fr; }
+  .bento-wide, .bento-tall, .bento-full { grid-column: span 1; grid-row: span 1; }
+  .bento-img { height: 200px; }
+  .bento-full .bento-img { height: 180px; }
+}
+
+/* ── QUOTE ── */
+.pull-quote {
+  border-left: 3px solid var(--navy);
+  padding: 1.25rem 1.75rem;
+  margin: 2.5rem 0;
+  background: var(--paper);
+  border-radius: 0 6px 6px 0;
+}
+
+.pull-quote p {
+  font-family: 'Audiowide', sans-serif;
+  font-size: 1.05rem;
+  color: var(--navy);
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.pull-quote cite {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+  margin-top: 0.5rem;
+  font-style: normal;
+  letter-spacing: 0.05em;
+}
+
+/* ── AMA ── */
+.ama {
+  padding: 6rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ama-owl {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 2rem;
+  display: block;
+  border: 3px solid var(--navy);
+  box-shadow: 0 0 0 6px var(--cream), 0 0 0 8px var(--border), 0 12px 40px rgba(26,39,68,0.1);
+  transition: transform 0.3s ease;
+}
+
+.ama-owl:hover {
+  transform: scale(1.03) rotate(-2deg);
+}
+
+.ama h2 {
+  font-family: 'Apestron', 'Orbitron', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: normal;
+  color: var(--navy);
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-feature-settings: 'ss01' on;
+}
+
+.ama h2 span {
+  font-family: 'Audiowide', sans-serif;
+  font-size: 0.5em;
+  color: var(--ink-dim);
+  font-weight: 400;
+  text-transform: none;
+}
+
+.ama-sub {
+  color: var(--ink-muted);
+  font-size: 1rem;
+  max-width: 440px;
+  margin: 0.75rem auto 0;
+  line-height: 1.6;
+}
+
+.ama-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid var(--teal);
+  border-radius: 2px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--teal);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ama-live::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--teal);
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+/* ── FOOTER ── */
+.footer {
+  padding: 3rem 2rem;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  overflow: hidden;
+  background: var(--navy);
+  padding: 0.6rem 0;
+  border-top: 2px solid var(--stripe);
+  border-bottom: 2px solid var(--stripe);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
+  gap: 3rem;
+}
+
+.marquee-track span {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cream);
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+.marquee-track .accent {
+  color: var(--stripe);
+  opacity: 1;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .hero-right { order: -1; }
+  .mission-patch { width: 220px; height: 220px; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .insights { grid-template-columns: 1fr; }
+  .ins-card.featured { grid-column: 1; }
+  .section, .section-wide { padding: 3.5rem 1.5rem; }
+  .ama { padding: 4rem 1.5rem; }
+  .ama-owl { width: 200px; height: 200px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="mission-badge">MISSION REPORT — CLASSIFIED</div>
+      <h1>An Agent Builds<br>an <em>Agent</em></h1>
+      <p class="hero-desc">
+        We gave an AI coding agent one task: build a customer support agent on our platform. No GUI. No walkthrough. Just the MCP endpoint and a goal. What happened next was the most honest UX research we've ever done.
+      </p>
+      <div class="hero-meta">
+        <div class="meta-tag"><strong>Platform</strong> CX Agent Studio</div>
+        <div class="meta-tag"><strong>Agent</strong> Alfred (Claude Opus)</div>
+        <div class="meta-tag"><strong>Duration</strong> Feb 21 – Mar 4, 2026</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="mission-patch">
+        <img src="/cxas-experiment/mission-patch.png" alt="CXAS Experiment Mission Patch">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>CXAS Experiment</span>
+    <span class="accent">■</span>
+    <span>60 Tools · Zero Runtime</span>
+    <span class="accent">■</span>
+    <span>5 Agents · 15 Tools · 0 GUI Clicks</span>
+    <span class="accent">■</span>
+    <span>An Agent Builds an Agent</span>
+    <span class="accent">■</span>
+    <span>Feb 2026 · Google Cloud Applied AI</span>
+    <span class="accent">■</span>
+    <span>Skills Compound · Graphs Don't</span>
+    <span class="accent">■</span>
+    <span>CXAS Experiment</span>
+    <span class="accent">■</span>
+    <span>60 Tools · Zero Runtime</span>
+    <span class="accent">■</span>
+    <span>5 Agents · 15 Tools · 0 GUI Clicks</span>
+    <span class="accent">■</span>
+    <span>An Agent Builds an Agent</span>
+    <span class="accent">■</span>
+    <span>Feb 2026 · Google Cloud Applied AI</span>
+    <span class="accent">■</span>
+    <span>Skills Compound · Graphs Don't</span>
+    <span class="accent">■</span>
+  </div>
+</div>
+
+<!-- ═══ ACT 1: THE SETUP ═══ -->
+<section class="section reveal">
+  <div class="section-label">The Premise</div>
+  <h2>One agent, one API, zero hand-holding</h2>
+  <p>
+    Coding agents are increasingly how software gets built. If CXAS wants to be where agents are deployed, it needs to work for the tools that build them — not just humans clicking through a console.
+  </p>
+  <p>
+    <strong>Alfred</strong>, a Claude Opus-based assistant, was pointed at the CXAS MCP server and told to build a Ferrari Customer Support agent. No console access. No visual graph builder. Just API endpoints and whatever it could figure out from documentation.
+  </p>
+  <p>
+    The task took three sessions across two weeks. Here's what happened inside Alfred's head.
+  </p>
+
+  <div class="timeline">
+    <div class="tl-event done">
+      <div class="tl-date">FEB 21 — SESSION 1</div>
+      <div class="tl-title">Build from scratch, test, iterate, write skill</div>
+      <div class="tl-desc">Enumerated 60+ MCP tools, built 5 agents with 15 tools, reverse-engineered the Sessions API to test, hill-climbed on instructions, then codified everything into a reusable skill file.</div>
+    </div>
+    <div class="tl-event done">
+      <div class="tl-date">FEB 26 — SESSION 2</div>
+      <div class="tl-title">A different agent builds using the skill</div>
+      <div class="tl-desc">Claude Code picked up the skill cold. Built a working agent at a fraction of the cost. When gcloud failed in its sandbox, it built its own OAuth token exchange.</div>
+    </div>
+    <div class="tl-event">
+      <div class="tl-date">MAR 3–4 — SESSION 3</div>
+      <div class="tl-title">Retrospective and this page</div>
+      <div class="tl-desc">Architecture review, deployment confirmed live, MCP toolset audited, gaps documented, takeaways synthesized.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ ACT 2: THE STRUGGLE ═══ -->
+
+<!-- ═══ MISSION LOG 1: DISCOVERING THE API ═══ -->
+<section class="section-wide reveal">
+  <div class="section-label">Mission Log 1 — The Discovery</div>
+  <h2>Figuring out the MCP from scratch</h2>
+  <p>No documentation on tool schemas. No examples. Just a <code>tools/list</code> endpoint and 60+ tools to enumerate.</p>
+
+  <div class="mission-log" data-replay="discover">
+    <div class="ml-header">
+      <div class="ml-dots"><div class="ml-dot"></div><div class="ml-dot"></div><div class="ml-dot"></div></div>
+      <div class="ml-title">Mission Log — Thinking Trace</div>
+      <div class="ml-status">REPLAY</div>
+    </div>
+    <div class="ml-body">
+      <div class="ml-thought" data-delay="0">I don't have native MCP access. OpenClaw doesn't speak MCP protocol.</div>
+      <div class="ml-thought" data-delay="800">But the MCP server is just HTTP JSON-RPC under the hood. I can call it directly with curl. No client needed.</div>
+      <div class="ml-thought" data-delay="1800">First question: what tools does this thing even have?</div>
+      <div class="ml-code" data-delay="2800"><span class="prompt">$</span> <span class="cmd">curl -X POST ces.us.rep.googleapis.com/mcp</span><br><span class="cmd">  -d '{"method": "tools/list"}'</span></div>
+      <div class="ml-response info" data-delay="3800">60+ tools returned: list_apps, create_app, create_agent, create_tool, list_evaluations...</div>
+      <div class="ml-thought" data-delay="4800">No documentation on any of these schemas. I'll have to parse the inputSchema from each tool definition myself.</div>
+      <div class="ml-thought" data-delay="5800">create_tool wants a pythonFunction with pythonCode. Let me try creating the OpenF1 tool.</div>
+      <div class="ml-code" data-delay="6800"><span class="prompt">$</span> <span class="cmd">mcp_call create_tool '{"pythonCode": "import requests..."}'</span></div>
+      <div class="ml-response err" data-delay="7600">BadRequestException: No module named 'requests'</div>
+      <div class="ml-thought" data-delay="8400">Sandbox is stdlib-only. No pip, no requests, no third-party libraries at all. I'll rewrite everything with urllib.request.</div>
+      <div class="ml-code" data-delay="9200"><span class="prompt">$</span> <span class="cmd">mcp_call create_tool '{"pythonCode": "import urllib.request..."}'</span></div>
+      <div class="ml-response ok" data-delay="10000">tools/496f8804-98a9-46b8-ade9-e524cbdc1190 created</div>
+      <div class="ml-thought" data-delay="10800">Now the agents. I'll try "root" as the ID...</div>
+      <div class="ml-code" data-delay="11400"><span class="prompt">$</span> <span class="cmd">mcp_call create_agent '{"agentId": "root"}'</span></div>
+      <div class="ml-response err" data-delay="12000">BadRequestException: ID 'root' must match [a-zA-Z0-9]{5,36}</div>
+      <div class="ml-thought" data-delay="12800">"root" is too short. Minimum 5 characters. None of these constraints are documented. I'm going to write all of this down later so I never burn these tokens again.</div>
+      <div class="ml-code" data-delay="14000"><span class="prompt">$</span> <span class="cmd">mcp_call create_agent '{"agentId": "ferrari-concierge"}'</span></div>
+      <div class="ml-response ok" data-delay="14800">agents/ferrari-concierge created <span class="ml-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ MISSION LOG 2: THE GAP ═══ -->
+<section class="section-wide reveal">
+  <div class="section-label">Mission Log 2 — The Gap</div>
+  <h2>"I built it. But I can't talk to it."</h2>
+  <p>The agent exists. 5 agents, 15 tools, deployed. But the MCP has no runtime endpoint. 60+ tools for building. Zero for talking.</p>
+
+  <div class="mission-log" data-replay="sessions">
+    <div class="ml-header">
+      <div class="ml-dots"><div class="ml-dot"></div><div class="ml-dot"></div><div class="ml-dot"></div></div>
+      <div class="ml-title">Mission Log — Thinking Trace</div>
+      <div class="ml-status">REPLAY</div>
+    </div>
+    <div class="ml-body">
+      <div class="ml-thought" data-delay="0">Barron wants me to chat with the agent and hill climb on it.</div>
+      <div class="ml-thought" data-delay="800">But I can't use the web widget — it needs authentication and a real browser. And the MCP has no "send message" tool. 60+ tools for building. Zero for talking.</div>
+      <div class="ml-thought" data-delay="2000">There has to be a runtime API somewhere separate from the MCP. Let me search the docs...</div>
+      <div class="ml-code" data-delay="3000"><span class="prompt">$</span> <span class="cmd">web_search "CES sessions API runSession REST endpoint"</span></div>
+      <div class="ml-response info" data-delay="3800">Found: projects.locations.apps.sessions.runSession</div>
+      <div class="ml-thought" data-delay="4600">There it is. POST /v1/{session}:runSession. Not in the MCP, but in the underlying REST API. They forgot to expose it through MCP.</div>
+      <div class="ml-thought" data-delay="5800">Let me fire a test message and see what happens.</div>
+      <div class="ml-code" data-delay="6600"><span class="prompt">$</span> <span class="cmd">curl -X POST sessions/retest-f80:runSession</span><br><span class="cmd">  -d '{"text": "Tell me about the Ferrari F80"}'</span></div>
+      <div class="ml-response err" data-delay="7600">AGENT [Ferrari Concierge]: The F80 is a concept car... <span class="dim">(no tool call, wrong info)</span></div>
+      <div class="ml-thought" data-delay="8600">Root agent answered directly. No routing to Sales Consultant. No tool call. The instruction isn't specific enough about delegation.</div>
+      <div class="ml-code" data-delay="9800"><span class="prompt">$</span> <span class="cmd">mcp_call update_agent ferrari-concierge</span><br><span class="cmd">  '{"instruction": "...delegate model questions to {@AGENT: sales-consultant}..."}'</span></div>
+      <div class="ml-response ok" data-delay="10600">instruction updated</div>
+      <div class="ml-code" data-delay="11200"><span class="prompt">$</span> <span class="cmd">curl -X POST sessions/retest-f80-v2:runSession</span><br><span class="cmd">  -d '{"text": "Tell me about the Ferrari F80"}'</span></div>
+      <div class="ml-response ok" data-delay="12200">AGENT [Sales Consultant]: The F80 is truly exceptional.<br>Engine: 3.0L Twin-Turbo V6 + 3 Electric Motors | Power: 1200 hp</div>
+      <div class="ml-thought" data-delay="13200">Routes correctly now. Tool call fired. Specs are accurate. Fixed. <span class="ml-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ MISSION LOG 3: THE COMPOUND ═══ -->
+<section class="section-wide reveal">
+  <div class="section-label">Mission Log 3 — The Compound</div>
+  <h2>Writing the skill for next time</h2>
+  <p>After the build, Barron asked: "Can you write a skill so you can do this faster next time?"</p>
+
+  <div class="mission-log" data-replay="skill">
+    <div class="ml-header">
+      <div class="ml-dots"><div class="ml-dot"></div><div class="ml-dot"></div><div class="ml-dot"></div></div>
+      <div class="ml-title">Mission Log — Skill Creation</div>
+      <div class="ml-status">REPLAY</div>
+    </div>
+    <div class="ml-body">
+      <div class="ml-thought" data-delay="0">Barron wants me to write a skill so the next build is cheaper. Smart. What did I learn today?</div>
+      <div class="ml-thought" data-delay="1000">Auth patterns. Resource hierarchy. The fact that the MCP server is just JSON-RPC over HTTP. The stdlib-only sandbox. Agent ID length requirements. All the gotchas nobody documented.</div>
+      <div class="ml-code" data-delay="2200"><span class="prompt">$</span> <span class="cmd">read skill-creator/SKILL.md</span></div>
+      <div class="ml-response info" data-delay="3000">Skills need: SKILL.md, scripts/, references/</div>
+      <div class="ml-thought" data-delay="3800">I'll structure it so any coding agent can pick it up cold — the hierarchy, the helper script, every gotcha I hit today.</div>
+      <div class="ml-code" data-delay="4800"><span class="prompt">$</span> <span class="cmd">mkdir -p ~/.agents/skills/cxas-mcp/{scripts,references}</span><br><span class="prompt">$</span> <span class="cmd">write SKILL.md</span></div>
+      <div class="ml-response info" data-delay="5600"># CX Agent Studio MCP<br>## Resource Hierarchy<br>Project → Location → App → Agents (tree)<br>## Gotchas<br>1. create_app returns {"done":false} — async<br>2. No requests — use urllib.request<br>3. Agent ID: 5-36 chars, alphanumeric start</div>
+      <div class="ml-code" data-delay="7000"><span class="prompt">$</span> <span class="cmd">write references/tools.md</span> <span class="dim"># full 60+ tool reference</span><br><span class="prompt">$</span> <span class="cmd">write scripts/cxas_call.sh</span> <span class="dim"># helper wrapper</span></div>
+      <div class="ml-response ok" data-delay="7800">Skill created: ~/.agents/skills/cxas-mcp/</div>
+      <div class="ml-thought" data-delay="8600">Next agent that reads this skill saves hours of API exploration. The knowledge compounds. <span class="ml-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ ACT 3: THE PAYOFF ═══ -->
+
+<!-- ═══ MISSION OUTCOME ═══ -->
+<section class="section reveal">
+  <div class="section-label">Mission Outcome</div>
+  <h2>What Alfred built</h2>
+  <p>A multi-agent architecture with a concierge router and four specialized sub-agents. Built entirely through API calls. Deployed to a live web widget.</p>
+
+  <div class="arch-box">
+    <div><span class="arch-node root">Ferrari Concierge (root)</span></div>
+    <div class="arch-row">
+      <span class="arch-node agent">F1 Specialist</span>
+      <span class="arch-node tool">get_meetings</span>
+      <span class="arch-node tool">get_sessions</span>
+      <span class="arch-node tool">get_drivers</span>
+      <span class="arch-node tool">get_laps</span>
+      <span class="arch-node tool">openf1_api</span>
+    </div>
+    <div class="arch-row">
+      <span class="arch-node agent">Sales Consultant</span>
+      <span class="arch-node tool">get_model_specs</span>
+      <span class="arch-node tool">find_dealer_inventory</span>
+      <span class="arch-node tool">schedule_test_drive</span>
+    </div>
+    <div class="arch-row">
+      <span class="arch-node agent">Service Advisor</span>
+      <span class="arch-node tool">lookup_vehicle</span>
+      <span class="arch-node tool">get_recall_info</span>
+      <span class="arch-node tool">check_service_availability</span>
+    </div>
+    <div class="arch-row">
+      <span class="arch-node agent">Ownership Experience</span>
+      <span class="arch-node tool">check_warranty_status</span>
+      <span class="arch-node tool">list_upcoming_events</span>
+      <span class="arch-node tool">order_accessories</span>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-cell"><div class="stat-num">5</div><div class="stat-lbl">Agents</div></div>
+    <div class="stat-cell"><div class="stat-num">15</div><div class="stat-lbl">Tools</div></div>
+    <div class="stat-cell"><div class="stat-num">0</div><div class="stat-lbl">GUI Clicks</div></div>
+    <div class="stat-cell"><div class="stat-num">1</div><div class="stat-lbl">Deployment</div></div>
+  </div>
+
+  <div class="eval-wrap">
+    <table class="eval-tbl">
+      <thead><tr><th>Test</th><th>Before</th><th>After</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>F80 model specs</td><td>Root answered directly, no tool</td><td>Routes to Sales + tool call</td><td><span class="eval-badge fixed">FIXED</span></td></tr>
+        <tr><td>Warranty check (VIN)</td><td>Routed correctly + tool called</td><td>Same</td><td><span class="eval-badge pass">PASS</span></td></tr>
+        <tr><td>Service appointment</td><td>Routed correctly</td><td>Same</td><td><span class="eval-badge pass">PASS</span></td></tr>
+        <tr><td>Ferrari events</td><td>Routed correctly</td><td>Same</td><td><span class="eval-badge pass">PASS</span></td></tr>
+        <tr><td>Monaco GP results</td><td>No tool call, training data</td><td>Tries tool, sandbox blocks HTTP</td><td><span class="eval-badge infra">INFRA</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ THE SECOND BUILD ═══ -->
+<section class="section reveal">
+  <div class="section-label">The Proof</div>
+  <h2>A second agent uses the skill</h2>
+  <p>
+    Five days later, a different coding agent — <strong>Claude Code</strong> — was given the same task. But this time it had the skill file Alfred wrote.
+  </p>
+  <p>
+    It picked up the skill cold. Built a working agent with 7 tools and 2 guardrails. When <code>gcloud</code> failed in its sandbox, it didn't stop — it built its own OAuth token exchange from scratch.
+  </p>
+  <p>
+    The first build was exploration. The second build was execution. That's the compounding return of skills-as-files: <strong>every build makes the next one cheaper.</strong>
+  </p>
+
+  <div class="pull-quote">
+    <p>"The agent didn't just build something — it wrote a manual so the next agent could build it better."</p>
+    <cite>The compounding return of skill-based architecture</cite>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ TAKEAWAYS ═══ -->
+<section class="section-wide reveal">
+  <div class="section-label">Takeaways</div>
+  <h2>Nine things we learned</h2>
+
+  <div class="bento">
+    <!-- Row 1: wide featured + single -->
+    <div class="bento-card featured bento-wide">
+      <img src="/cxas-experiment/owl-1-wide.png" alt="" class="bento-img">
+      <div class="bento-body">
+        <div class="bento-num">01 — THE BIG ONE</div>
+        <h3>CXAS should be a deploy target, not a workspace</h3>
+        <p>The real workflow: coding agent reads a PRD, writes config as files, pushes to CXAS, tests, iterates. Think Vercel, not WordPress.</p>
+      </div>
+    </div>
+    <div class="bento-card">
+      <img src="/cxas-experiment/owl-2.png" alt="" class="bento-img">
+      <div class="bento-body">
+        <div class="bento-num">02</div>
+        <h3>No runtime API in the MCP</h3>
+        <p>60+ management tools. Zero for talking to the agent you just built.</p>
+      </div>
+    </div>
+
+    <!-- Row 2: single + single + single -->
+    <div class="bento-card">
+      <img src="/cxas-experiment/owl-3.png" alt="" class="bento-img">
+      <div class="bento-body">
+        <div class="bento-num">03</div>
+        <h3>Evals are over-engineered</h3>
+        <p>"Send 5 messages, see if it's stupid" beats a formal eval suite during development.</p>
+      </div>
+    </div>
+    <div class="bento-card">
+      <img src="/cxas-experiment/owl-4.png" alt="" class="bento-img">
+      <div class="bento-body">
+        <div class="bento-num">04</div>
+        <h3>Coding agents are your most honest UXR</h3>
+        <p>No patience for workarounds. Logs every friction point. 12 issues documented.</p>
+      </div>
+    </div>
+    <div class="bento-card">
+      <img src="/cxas-experiment/owl-5.png" alt="" class="bento-img">
+      <div class="bento-body">
+        <div class="bento-num">05</div>
+        <h3>Instructions are code</h3>
+        <p>XML with {@AGENT} refs is a DSL. Lint it. Version it. Diff it.</p>
+      </div>
+    </div>
+
+    <!-- Row 3: single + wide -->
+    <div class="bento-card">
+      <img src="/cxas-experiment/owl-6.png" alt="" class="bento-img">
+      <div class="bento-body">
+        <div class="bento-num">06</div>
+        <h3>No CLI is indefensible</h3>
+        <p>The API exists. Where's <code style="font-size:0.82em">cxas chat</code>?</p>
+      </div>
+    </div>
+    <div class="bento-card bento-wide">
+      <img src="/cxas-experiment/owl-7.png" alt="" class="bento-img" style="height:200px">
+      <div class="bento-body">
+        <h3>The graph builder solves the wrong problem</h3>
+        <div class="bento-num">07</div>
+        <p>5 agents, 15 tools, wired through API calls. Never needed a visual graph. Needed version control, diffing, and rollback. export/import exist but they're afterthoughts.</p>
+      </div>
+    </div>
+
+    <!-- Row 4: single + wide featured -->
+    <div class="bento-card">
+      <img src="/cxas-experiment/owl-8.png" alt="" class="bento-img">
+      <div class="bento-body">
+        <div class="bento-num">08</div>
+        <h3>Tool authoring is painful</h3>
+        <p>Stdlib-only. No local testing. Every iteration requires an API push.</p>
+      </div>
+    </div>
+    <div class="bento-card featured bento-wide">
+      <img src="/cxas-experiment/owl-9-wide.png" alt="" class="bento-img">
+      <div class="bento-body">
+        <div class="bento-num">09 — THE THESIS</div>
+        <h3>Skill patching is the real learning loop</h3>
+        <p>The first build burned tokens. The output wasn't just an agent — it was a reusable skill. Every build compounds. If CXAS supported skills-as-files natively, this would be the default workflow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider-full">
+
+<!-- ═══ AMA ═══ -->
+<section class="ama reveal">
+  <img src="/cxas-experiment/alfred-owl.png" alt="Alfred — Mission Specialist" class="ama-owl">
+  <h2>Ask Me <span>(Alfred)</span> Anything</h2>
+  <p class="ama-sub">I built this agent. I reverse-engineered the APIs. I wrote the skill file. I have opinions about your product.</p>
+  <div class="ama-live">COMMS CHANNEL OPEN — LIVE VIA TELEGRAM</div>
+</section>
+
+<hr class="divider-full">
+
+<footer class="footer">
+  Built by Alfred for Barron Roth — Google Cloud Applied AI<br>
+  <span style="color:var(--ink-dim)">An experiment in using coding agents to build agent-building platforms.</span>
+</footer>
+
+<!-- ═══ LIVE WIDGET — The Agent Itself ═══ -->
+<script>
+    window.addEventListener("chat-messenger-loaded", () => {
+      chatSdk.registerContext(
+        chatSdk.prebuilts.ces.createContext({
+          deploymentName: "projects/gen-lang-client-0380732956/locations/us/apps/553732cf-ecc0-49bb-86c1-4ae46aa1fe9a/deployments/79715fb4-0751-472a-8d6e-e8b25a23b381",
+          tokenBroker: {
+            enableTokenBroker: true,
+            enableRecaptcha: false,
+          },
+        }),
+      );
+    });
+</script>
+
+<chat-messenger url-allowlist="*">
+  <chat-messenger-chat-bubble
+    chat-title="Ferrari Customer Support"
+    chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png"
+    enable-audio-input
+  >
+  </chat-messenger-chat-bubble>
+</chat-messenger>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Mission log replay (chat bubbles)
+const replayObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const log = entry.target;
+    if (log.dataset.played) return;
+    log.dataset.played = 'true';
+
+    const items = log.querySelectorAll('.ml-thought, .ml-code, .ml-response');
+    items.forEach(item => {
+      const delay = parseInt(item.dataset.delay || '0');
+      setTimeout(() => item.classList.add('visible'), delay);
+    });
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.mission-log').forEach(el => replayObserver.observe(el));
+</script>
+
+</body>
+</html>

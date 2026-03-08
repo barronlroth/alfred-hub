@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Credit Card Strategy Audit — Alfred</title>
+<meta name="description" content="Barron's credit card portfolio strategy dashboard. Optimizing rewards, tracking fees, and planning moves."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --cream: #FAF8F4;
+  --warm-white: #F5F2EC;
+  --card-bg: #FFFFFF;
+  --border: #E8E4DC;
+  --border-light: #F0EDE6;
+  --navy: #1B2A4A;
+  --charcoal: #2D3748;
+  --text: #374151;
+  --text-dim: #6B7280;
+  --text-faint: #9CA3AF;
+  --gold: #C8973E;
+  --gold-light: #F5EDD8;
+  --gold-dark: #A67C2E;
+  --amex-blue: #006FCF;
+  --chase-blue: #1A4480;
+  --wells-red: #D71E28;
+  --fidelity-green: #4C8C2B;
+  --coinbase-blue: #0052FF;
+  --paypal-blue: #003087;
+  --citi-blue: #003DA5;
+  --bilt-black: #1A1A2E;
+  --green: #059669;
+  --green-light: #D1FAE5;
+  --red: #DC2626;
+  --red-light: #FEE2E2;
+  --amber: #D97706;
+  --amber-light: #FEF3C7;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.mono { font-family: 'IBM Plex Mono', monospace; }
+.serif { font-family: 'DM Serif Display', serif; }
+.container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* Hero */
+.hero { padding: 64px 0 48px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -100px; right: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(200,151,62,0.06) 0%, transparent 70%); pointer-events: none; }
+.hero-inner { display: flex; align-items: center; gap: 48px; }
+.hero-text { flex: 1; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); background: var(--gold-light); padding: 4px 12px; border-radius: 4px; margin-bottom: 16px; }
+.hero h1 { font-family: 'DM Serif Display', serif; font-size: 48px; font-weight: 400; color: var(--navy); line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 12px; }
+.hero .tagline { font-size: 17px; color: var(--text-dim); max-width: 520px; line-height: 1.7; }
+.hero-owl { flex-shrink: 0; width: 180px; height: 180px; opacity: 0.9; }
+
+/* Stats */
+.stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 32px 0 48px; }
+.stat { background: var(--card-bg); padding: 24px; text-align: center; }
+.stat-value { font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+.stat-value.gold { color: var(--gold-dark); }
+.stat-label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
+
+/* Sections */
+.section { margin-bottom: 56px; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.section.visible { opacity: 1; transform: translateY(0); }
+.section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--navy); }
+.section-header h2 { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; color: var(--navy); }
+.section-owl { width: 48px; height: 48px; flex-shrink: 0; }
+.section-header .mono-label { margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 1px; }
+
+/* Card Grid */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.cc-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; position: relative; overflow: hidden; }
+.cc-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); border-color: var(--gold); }
+.cc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.cc-card[data-issuer="amex"]::before { background: var(--amex-blue); }
+.cc-card[data-issuer="chase"]::before { background: var(--chase-blue); }
+.cc-card[data-issuer="wells"]::before { background: var(--wells-red); }
+.cc-card[data-issuer="fidelity"]::before { background: var(--fidelity-green); }
+.cc-card[data-issuer="coinbase"]::before { background: var(--coinbase-blue); }
+.cc-card[data-issuer="paypal"]::before { background: var(--paypal-blue); }
+.cc-card[data-issuer="citi"]::before { background: var(--citi-blue); }
+.cc-card[data-issuer="bilt"]::before { background: var(--bilt-black); }
+.cc-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.cc-card-name { font-weight: 600; font-size: 15px; color: var(--navy); }
+.cc-card-issuer { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.cc-card-fee { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
+.fee-paid { background: var(--amber-light); color: var(--amber); }
+.fee-free { background: var(--green-light); color: var(--green); }
+.cc-card-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cc-detail { padding: 8px 0; border-top: 1px solid var(--border-light); }
+.cc-detail-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-faint); margin-bottom: 2px; }
+.cc-detail-value { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--charcoal); }
+.cc-card-notes { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-light); font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+
+/* 5/24 Tracker */
+.tracker-container { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px; }
+.tracker-gauge { display: flex; align-items: center; gap: 24px; margin-bottom: 24px; }
+.gauge-visual { flex: 1; height: 12px; background: var(--warm-white); border-radius: 6px; overflow: hidden; }
+.gauge-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--green), var(--gold)); width: 0; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.gauge-markers { display: flex; justify-content: space-between; margin-top: 8px; }
+.gauge-marker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text-faint); }
+.gauge-number { font-family: 'IBM Plex Mono', monospace; font-size: 42px; font-weight: 600; color: var(--navy); white-space: nowrap; }
+.gauge-number span { color: var(--text-faint); font-weight: 400; }
+.slot { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; }
+.slot.used { background: var(--navy); color: white; }
+.slot.open { background: var(--warm-white); border: 2px dashed var(--border); color: var(--text-faint); }
+.tracker-cards-list { margin-top: 16px; font-size: 13px; color: var(--text-dim); }
+.card-entry { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-light); }
+.card-entry:last-child { border-bottom: none; }
+.tracker-note { margin-top: 16px; padding: 16px; background: var(--gold-light); border-radius: 8px; font-size: 13px; color: var(--gold-dark); line-height: 1.5; }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 32px; }
+.timeline::before { content: ''; position: absolute; left: 11px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.timeline-item { position: relative; padding-bottom: 32px; }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot { position: absolute; left: -32px; top: 4px; width: 24px; height: 24px; border-radius: 50%; background: var(--card-bg); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; }
+.timeline-dot.active { border-color: var(--gold); background: var(--gold-light); }
+.timeline-dot.urgent { border-color: var(--red); background: var(--red-light); }
+.timeline-dot-inner { width: 8px; height: 8px; border-radius: 50%; }
+.timeline-dot.active .timeline-dot-inner { background: var(--gold); }
+.timeline-dot.urgent .timeline-dot-inner { background: var(--red); }
+.timeline-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+.timeline-date { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; color: var(--text-dim); margin-bottom: 4px; }
+.timeline-title { font-weight: 600; font-size: 15px; color: var(--navy); margin-bottom: 8px; }
+.timeline-action { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 4px; margin-top: 8px; }
+.action-keep { background: var(--green-light); color: var(--green); }
+.action-evaluate { background: var(--amber-light); color: var(--amber); }
+.timeline-desc { font-size: 13px; color: var(--text-dim); margin-top: 8px; line-height: 1.5; }
+
+/* Roadmap */
+.roadmap-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.roadmap-month { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; transition: border-color 0.2s; }
+.roadmap-month:hover { border-color: var(--gold); }
+.roadmap-month-name { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; color: var(--gold-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.roadmap-month-name.current { color: var(--navy); }
+.roadmap-item { font-size: 13px; color: var(--text); padding: 4px 0; line-height: 1.4; }
+.roadmap-item::before { content: '\203A'; color: var(--gold); margin-right: 6px; font-weight: 600; }
+
+/* Methodology */
+.methodology { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 32px; display: flex; gap: 24px; align-items: center; }
+.methodology-text { flex: 1; }
+.methodology h3 { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--navy); margin-bottom: 8px; }
+.methodology p { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+.methodology a { color: var(--gold-dark); text-decoration: none; border-bottom: 1px solid var(--gold-light); transition: border-color 0.2s; }
+.methodology a:hover { border-color: var(--gold-dark); }
+
+.page-footer { padding: 32px 0; margin-top: 24px; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--text-faint); }
+.page-footer a { color: var(--gold-dark); text-decoration: none; }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 32px; }
+  .hero-inner { flex-direction: column; gap: 24px; text-align: center; }
+  .hero .tagline { margin: 0 auto; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .card-grid { grid-template-columns: 1fr; }
+  .roadmap-grid { grid-template-columns: 1fr; }
+  .methodology { flex-direction: column; text-align: center; }
+  .tracker-gauge { flex-direction: column; text-align: center; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 28px; }
+  .stat-value { font-size: 22px; }
+  .hero-owl { width: 120px; height: 120px; }
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.hero { animation: fadeUp 0.8s ease forwards; }
+.stats-bar .stat { animation: fadeUp 0.6s ease forwards; }
+.stats-bar .stat:nth-child(2) { animation-delay: 0.1s; }
+.stats-bar .stat:nth-child(3) { animation-delay: 0.2s; }
+.stats-bar .stat:nth-child(4) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">🦉 Alfred Financial Services</div>
+      <h1>Credit Card<br/>Strategy Audit</h1>
+      <p class="tagline">A systematic review of Barron's credit card portfolio — optimizing reward structures, minimizing fee drag, and planning strategic acquisitions through 2027.</p>
+    </div>
+    <img class="hero-owl" src="owl-hero.png" alt="Alfred the owl" style="border-radius:50%;object-fit:cover;"/>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-value" data-count="10">0</div><div class="stat-label">Total Cards</div></div>
+  <div class="stat"><div class="stat-value gold" data-count="1785" data-prefix="$">$0</div><div class="stat-label">Annual Fees</div></div>
+  <div class="stat"><div class="stat-value" data-count="2" data-suffix="/24">0</div><div class="stat-label">5/24 Status</div></div>
+  <div class="stat"><div class="stat-value" data-count="4">0</div><div class="stat-label">Fee-Bearing Cards</div></div>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="section" id="portfolio">
+  <div class="section-header">
+    <img class="section-owl" src="owl-portfolio.png" alt="Section owl" style="border-radius:50%;object-fit:cover;"/>
+    <h2>Current Portfolio</h2>
+    <span class="mono-label">10 Active Cards</span>
+  </div>
+  <div class="card-grid">
+    <div class="cc-card" data-issuer="amex"><div class="cc-card-header"><div><div class="cc-card-name">Amex Platinum</div><div class="cc-card-issuer">American Express</div></div><div class="cc-card-fee fee-paid">$895/yr</div></div><div class="cc-card-details"><div class="cc-detail"><div class="cc-detail-label">Opened</div><div class="cc-detail-value">Sep 2023</div></div><div class="cc-detail"><div class="cc-detail-label">AF Due</div><div class="cc-detail-value">September</div></div></div><div class="cc-card-notes">Premium travel card. $200 airline + $200 hotel + $200 Uber + Centurion Lounge access. Heavy AF but loaded with credits.</div></div>
+    <div class="cc-card" data-issuer="chase"><div class="cc-card-header"><div><div class="cc-card-name">Chase Sapphire Reserve</div><div class="cc-card-issuer">Chase</div></div><div class="cc-card-fee fee-paid">$795/yr</div></div><div class="cc-card-details"><div class="cc-detail"><div class="cc-detail-label">Opened</div><div class="cc-detail-value">~Oct 2022</div></div><div class="cc-detail"><div class="cc-detail-label">AF Due</div><div class="cc-detail-value">October 1</div></div></div><div class="cc-card-notes">3x on travel &amp; dining. $300 travel credit, DashPass, Priority Pass. Primary travel &amp; dining card.</div></div>
+    <div class="cc-card" data-issuer="amex"><div class="cc-card-header"><div><div class="cc-card-name">Amex Blue Cash Preferred</div><div class="cc-card-issuer">American Express</div></div><div class="cc-card-fee fee-paid">$95/yr</div></div><div class="cc-card-details"><div class="cc-detail"><div class="cc-detail-label">Opened</div><div class="cc-detail-value">Jul 2021</div></div><div class="cc-detail"><div class="cc-detail-label">AF Due</div><div class="cc-detail-value">July</div></div></div><div class="cc-card-notes">6% groceries (up to $6k), 6% streaming, 3% transit. Grocery workhorse.</div></div>
+    <div class="cc-card" data-issuer="chase"><div class="cc-card-header"><div><div class="cc-card-name">Chase Ink Business Preferred</div><div class="cc-card-issuer">Chase</div></div><div class="cc-card-fee fee-paid">$95/yr</div></div><div class="cc-card-details"><div class="cc-detail"><div class="cc-detail-label">Opened</div><div class="cc-detail-value">Jan 2026</div></div><div class="cc-detail"><div class="cc-detail-label">AF Due</div><div class="cc-detail-value">January</div></div></div><div class="cc-card-notes">3x on travel, shipping, internet, ads, phone. Points pool with CSR for 1.5x transfer value. Latest acquisition.</div></div>
+    <div class="cc-card" data-issuer="chase"><div class="cc-card-header"><div><div class="cc-card-name">Amazon Prime Rewards Visa</div><div class="cc-card-issuer">Chase</div></div><div class="cc-card-fee fee-free">$0/yr</div></div><div class="cc-card-details"><div class="cc-detail"><div class="cc-detail-label">Opened</div><div class="cc-detail-value">Dec 2019</div></div><div class="cc-detail"><div class="cc-detail-label">Category</div><div class="cc-detail-value">5% Amazon</div></div></div><div class="cc-card-notes">5% back on Amazon &amp; Whole Foods. No-brainer keeper. Oldest Chase card — good for credit history.</div></div>
+    <div class="cc-card" data-issuer="bilt"><div class="cc-card-header"><div><div class="cc-card-name">Bilt Mastercard</div><div class="cc-card-issuer">Wells Fargo</div></div><div class="cc-card-fee fee-free">$0/yr</div></div><div class="cc-card-details"><div class="cc-detail"><div class="cc-detail-label">Opened</div><div class="cc-detail-value">Sep 2023</div></div><div class="cc-detail"><div class="cc-detail-label">Status</div><div class="cc-detail-value">Silver</div></div></div><div class="cc-card-notes">1x on rent with no fee. Only card that earns points on rent. Transfers to Hyatt, United, AA.</div></div>
+    <div class="cc-card" data-issuer="fidelity"><div class="cc-card-header"><div><div class="cc-card-name">Fidelity Rewards Visa Sig</div><div class="cc-card-issuer">Fidelity / Elan</div></div><div class="cc-card-fee fee-free">$0/yr</div></div><div class="cc-card-details"><div class="cc-detail"><div class="cc-detail-label">Opened</div><div class="cc-detail-value">Aug 2023</div></div><div class="cc-detail"><div class="cc-detail-label">Limit</div><div class="cc-detail-value">$35,000</div></div></div><div class="cc-card-notes">2% flat cash back to Fidelity account. High limit. Solid fallback for non-category spend.</div></div>
+    <div class="cc-card" data-issuer="coinbase"><div class="cc-card-header"><div><div class="cc-card-name">Coinbase One Card</div><div class="cc-card-issuer">Coinbase</div></div><div class="cc-card-fee fee-free">$0/yr*</div></div><div class="cc-card-details"><div class="cc-detail"><div class="cc-detail-label">Opened</div><div class="cc-detail-value">Oct 2025</div></div><div class="cc-detail"><div class="cc-detail-label">Note</div><div class="cc-detail-value">CB1 sub req</div></div></div><div class="cc-card-notes">Crypto rewards card. Requires Coinbase One subscription (~$30/mo). Evaluate whether sub cost justifies rewards.</div></div>
+    <div class="cc-card" data-issuer="paypal"><div class="cc-card-header"><div><div class="cc-card-name">PayPal Cashback Mastercard</div><div class="cc-card-issuer">Synchrony</div></div><div class="cc-card-fee fee-free">$0/yr</div></div><div class="cc-card-details"><div class="cc-detail"><div class="cc-detail-label">Opened</div><div class="cc-detail-value">Dec 2024</div></div><div class="cc-detail"><div class="cc-detail-label">Rewards</div><div class="cc-detail-value">3% PayPal</div></div></div><div class="cc-card-notes">3% on PayPal purchases, 2% everywhere else. Decent flat-rate alternative.</div></div>
+    <div class="cc-card" data-issuer="citi"><div class="cc-card-header"><div><div class="cc-card-name">Best Buy Credit Card</div><div class="cc-card-issuer">Citibank</div></div><div class="cc-card-fee fee-free">$0/yr</div></div><div class="cc-card-details"><div class="cc-detail"><div class="cc-detail-label">Opened</div><div class="cc-detail-value">~2022</div></div><div class="cc-detail"><div class="cc-detail-label">Type</div><div class="cc-detail-value">Store Card</div></div></div><div class="cc-card-notes">Best Buy financing offers. Low usage — keep for age and occasional electronics financing.</div></div>
+  </div>
+</div>
+
+<!-- 5/24 TRACKER -->
+<div class="section" id="tracker">
+  <div class="section-header">
+    <img class="section-owl" src="owl-calendar.png" alt="Section owl" style="border-radius:50%;object-fit:cover;"/>
+    <h2>Chase 5/24 Tracker</h2>
+    <span class="mono-label">Slots Available</span>
+  </div>
+  <div class="tracker-container">
+    <div class="tracker-gauge">
+      <div class="gauge-number">2<span>/24</span></div>
+      <div style="flex:1"><div class="gauge-visual"><div class="gauge-fill" data-width="8.3"></div></div><div class="gauge-markers"><span class="gauge-marker">0</span><span class="gauge-marker">5</span><span class="gauge-marker">10</span><span class="gauge-marker">15</span><span class="gauge-marker">20</span><span class="gauge-marker">24</span></div></div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;">
+      <div class="slot used">1</div><div class="slot used">2</div><div class="slot open">3</div><div class="slot open">4</div><div class="slot open">5</div>
+    </div>
+    <div class="tracker-cards-list">
+      <div class="card-entry"><span style="font-weight:500;color:var(--navy)">Coinbase One Card</span><span class="mono" style="font-size:12px;color:var(--text-dim)">Oct 2025 — drops Oct 2027</span></div>
+      <div class="card-entry"><span style="font-weight:500;color:var(--navy)">Chase Ink Business Preferred</span><span class="mono" style="font-size:12px;color:var(--text-dim)">Jan 2026 — biz cards don't count</span></div>
+    </div>
+    <div class="tracker-note"><strong>3 open slots.</strong> Excellent position for strategic applications. Business cards from Chase don't count toward 5/24, but you still need to be under 5/24 to get approved. Next window: ideal for a personal Chase card or premium Amex before slots fill.</div>
+  </div>
+</div>
+
+<!-- FEE CALENDAR -->
+<div class="section" id="fees">
+  <div class="section-header">
+    <img class="section-owl" src="owl-calendar.png" alt="Section owl" style="border-radius:50%;object-fit:cover;"/>
+    <h2>Annual Fee Calendar</h2>
+    <span class="mono-label">Decision Timeline</span>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item"><div class="timeline-dot active"><div class="timeline-dot-inner"></div></div><div class="timeline-card"><div class="timeline-date">January 2026</div><div class="timeline-title">Chase Ink Business Preferred — $95</div><div class="timeline-desc">Just opened. First AF paid. Focus on hitting the $8k signup bonus MSR. Pool UR points with Sapphire Reserve for 1.5cpp transfer value.</div><div class="timeline-action action-keep">✓ Keep — Year 1</div></div></div>
+    <div class="timeline-item"><div class="timeline-dot active"><div class="timeline-dot-inner"></div></div><div class="timeline-card"><div class="timeline-date">July 2026</div><div class="timeline-title">Amex Blue Cash Preferred — $95</div><div class="timeline-desc">Earning 6% on groceries up to $6k/yr = $360 max cashback on groceries alone. If grocery spend exceeds ~$1,600/yr, the AF pays for itself.</div><div class="timeline-action action-evaluate">⟳ Evaluate — Check Grocery Spend</div></div></div>
+    <div class="timeline-item"><div class="timeline-dot urgent"><div class="timeline-dot-inner"></div></div><div class="timeline-card"><div class="timeline-date">September 2026</div><div class="timeline-title">Amex Platinum — $895</div><div class="timeline-desc">Biggest AF in the portfolio. Credits: $200 airline + $200 hotel + $200 Uber + $155 Walmart+ + $189 Clear = ~$944 in credits. Only worth it if you actually use them. Audit in August.</div><div class="timeline-action action-evaluate">⟳ Evaluate — Audit Credit Usage</div></div></div>
+    <div class="timeline-item"><div class="timeline-dot active"><div class="timeline-dot-inner"></div></div><div class="timeline-card"><div class="timeline-date">October 1, 2026</div><div class="timeline-title">Chase Sapphire Reserve — $795</div><div class="timeline-desc">$300 travel credit effectively makes it $250/yr. Priority Pass, 3x dining/travel, 1.5x UR transfer bonus with Ink. Core card — likely keeper.</div><div class="timeline-action action-keep">✓ Keep — Core Card</div></div></div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div class="section" id="roadmap">
+  <div class="section-header">
+    <img class="section-owl" src="owl-roadmap.png" alt="Section owl" style="border-radius:50%;object-fit:cover;"/>
+    <h2>Strategy Roadmap</h2>
+    <span class="mono-label">Feb 2026 → Jan 2027</span>
+  </div>
+  <div class="roadmap-grid">
+    <div class="roadmap-month"><div class="roadmap-month-name current">Feb 2026</div><div class="roadmap-item">Hit Ink Biz Preferred MSR ($8k in 3 months)</div><div class="roadmap-item">Verify CSR annual fee date</div><div class="roadmap-item">Audit Coinbase One subscription ROI</div></div>
+    <div class="roadmap-month"><div class="roadmap-month-name">Mar 2026</div><div class="roadmap-item">Complete Ink Biz Preferred MSR</div><div class="roadmap-item">Transfer UR to Hyatt for wedding travel</div><div class="roadmap-item">Review PayPal card usage patterns</div></div>
+    <div class="roadmap-month"><div class="roadmap-month-name">Apr 2026</div><div class="roadmap-item">Research next card (5/24 slot 3)</div><div class="roadmap-item">Consider: Chase Freedom Flex or Unlimited</div><div class="roadmap-item">Stack Amex offers for Portugal trip</div></div>
+    <div class="roadmap-month"><div class="roadmap-month-name">May–Jun 2026</div><div class="roadmap-item">Apply for slot 3 card if ready</div><div class="roadmap-item">Book wedding travel with points</div><div class="roadmap-item">Redeem Amex airline credit before Sep</div></div>
+    <div class="roadmap-month"><div class="roadmap-month-name">Jul 2026</div><div class="roadmap-item">Amex BCP AF decision — keep or downgrade</div><div class="roadmap-item">Check grocery spend YTD</div></div>
+    <div class="roadmap-month"><div class="roadmap-month-name">Aug 2026</div><div class="roadmap-item">Amex Platinum credit audit</div><div class="roadmap-item">Use remaining hotel/airline credits</div><div class="roadmap-item">Retention offer call prep</div></div>
+    <div class="roadmap-month"><div class="roadmap-month-name">Sep 2026</div><div class="roadmap-item">Amex Platinum AF — keep or retention offer</div><div class="roadmap-item">Call Amex for retention first</div></div>
+    <div class="roadmap-month"><div class="roadmap-month-name">Oct 2026</div><div class="roadmap-item">Wedding month — maximize category spend</div><div class="roadmap-item">Use CSR travel credits for honeymoon</div></div>
+    <div class="roadmap-month"><div class="roadmap-month-name">Nov–Dec 2026</div><div class="roadmap-item">Holiday spend optimization</div><div class="roadmap-item">Year-end rewards audit</div><div class="roadmap-item">Plan 2027 card strategy</div></div>
+    <div class="roadmap-month"><div class="roadmap-month-name">Jan 2027</div><div class="roadmap-item">Ink Biz Preferred AF decision (year 2)</div><div class="roadmap-item">Refresh 5/24 count</div><div class="roadmap-item">Set 2027 optimization targets</div></div>
+  </div>
+</div>
+
+<!-- METHODOLOGY -->
+<div class="section" id="methodology">
+  <div class="methodology">
+    <img src="owl-strategy.png" alt="Methodology owl" width="80" height="80" style="border-radius:50%;object-fit:cover;"/>
+    <div class="methodology-text">
+      <h3>Methodology</h3>
+      <p>This audit follows the <a href="https://www.reddit.com/r/churning/comments/kaeycv/credit_card_recommendation_flowchart_neverending/" target="_blank" rel="noopener">r/churning credit card recommendation flowchart</a> — a community-maintained decision tree for maximizing rewards and minimizing wasted annual fees. Strategy prioritizes: earn rates by category, annual fee ROI, 5/24 slot management, and transfer partner flexibility.</p>
+    </div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <p>Compiled by <a href="/">Alfred</a> 🦉 — Barron's AI butler · Last updated Feb 2026</p>
+</div>
+
+</div>
+
+<script>
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+sections.forEach(s => observer.observe(s));
+
+function animateCounters() {
+  document.querySelectorAll('.stat-value[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const duration = 1500;
+    const start = performance.now();
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(target * eased);
+      el.textContent = prefix + current.toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
+}
+
+function animateGauge() {
+  const fill = document.querySelector('.gauge-fill');
+  if (fill) setTimeout(() => { fill.style.width = fill.dataset.width + '%'; }, 500);
+}
+
+function staggerCards() {
+  document.querySelectorAll('.cc-card').forEach((card, i) => {
+    card.style.opacity = '0'; card.style.transform = 'translateY(16px)';
+    card.style.transition = 'opacity 0.5s ease ' + (i * 0.08) + 's, transform 0.5s ease ' + (i * 0.08) + 's';
+  });
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.cc-card').forEach(card => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; });
+        cardObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  const grid = document.querySelector('.card-grid');
+  if (grid) cardObserver.observe(grid);
+}
+
+window.addEventListener('DOMContentLoaded', () => { animateCounters(); animateGauge(); staggerCards(); });
+</script>
+</body>
+</html>

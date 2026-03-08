@@ -1,3 +1,15 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/maitre-d/:path*",
+      "destination": "https://maitred.fun/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/maitre-d",
+      "destination": "https://maitred.fun",
+      "permanent": true
+    }
+  ]
 }

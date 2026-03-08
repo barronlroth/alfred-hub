@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Victoria's Portugal — July 2026</title>
+<meta property="og:title" content="Victoria's Portugal — July 2026">
+<meta property="og:description" content="11 nights across Ericeira, Évora, Comporta & Lisbon">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F4F0;
+  --surface: #FFFFFF;
+  --ink: #1A1815;
+  --ink-secondary: #6B6560;
+  --ink-tertiary: #9E9790;
+  --accent: #B8522A;
+  --accent-muted: rgba(184,82,42,0.08);
+  --accent-hover: #9E4523;
+  --azulejo: #1E4D6B;
+  --azulejo-muted: rgba(30,77,107,0.07);
+  --wine: #6B2D35;
+  --wine-muted: rgba(107,45,53,0.07);
+  --olive: #4A6B3A;
+  --olive-muted: rgba(74,107,58,0.07);
+  --border: rgba(26,24,21,0.06);
+  --border-strong: rgba(26,24,21,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 4rem;
+  padding-left: clamp(1rem, 4vw, 6rem);
+}
+
+.hero-tag {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: slideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.hero h1 {
+  font-family: 'Newsreader', serif;
+  font-weight: 300;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+.hero h1 .accent {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  opacity: 0;
+  animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+
+.hero-meta span {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink-secondary);
+  letter-spacing: 0.02em;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding-right: clamp(1rem, 4vw, 4rem);
+  opacity: 0;
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.hero-route-vertical {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.hero-route-vertical::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 1px;
+  background: var(--border-strong);
+}
+
+.route-item {
+  padding: 1.25rem 0;
+  position: relative;
+}
+
+.route-item::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-tertiary);
+  background: var(--bg);
+}
+
+.route-item:first-child::before { border-color: var(--azulejo); background: var(--azulejo); }
+
+.route-item .city {
+  font-family: 'Newsreader', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.route-item .nights {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--ink-tertiary);
+  margin-top: 0.15rem;
+  letter-spacing: 0.04em;
+}
+
+.route-item .dates {
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+  letter-spacing: 0.02em;
+}
+
+/* ═══ NAV ═══ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(247,244,240,0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+}
+
+.nav a {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 1rem 1.25rem;
+  color: var(--ink-tertiary);
+  text-decoration: none;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  white-space: nowrap;
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1.25rem;
+  right: 1.25rem;
+  height: 1.5px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav a:hover { color: var(--ink); }
+.nav a.active { color: var(--accent); }
+.nav a.active::after { transform: scaleX(1); }
+
+/* ═══ FLIGHTS ═══ */
+.flights-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 6rem 2rem 4rem;
+}
+
+.flights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.flight-block {
+  background: var(--surface);
+  padding: 2rem;
+}
+
+.flight-dir {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 1rem;
+}
+
+.flight-codes {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.flight-code {
+  font-family: 'Newsreader', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+
+.flight-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-strong);
+  position: relative;
+}
+
+.flight-line::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -2.5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.flight-date {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--ink-secondary);
+  margin-top: 0.75rem;
+}
+
+/* ═══ SECTION ARCHITECTURE ═══ */
+.stop {
+  padding: 6rem 2rem 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.stop-header {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+  align-items: end;
+}
+
+.stop-number {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(6rem, 12vw, 10rem);
+  font-weight: 300;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  opacity: 0.06;
+}
+
+.stop-title-block h2 {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stop-title-block .tagline {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink-secondary);
+  max-width: 45ch;
+}
+
+.stop-dates-bar {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+/* ═══ DAY BLOCKS ═══ */
+.day {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.day-aside {
+  padding-top: 0.15rem;
+}
+
+.day-date {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+}
+
+.day-num {
+  font-family: 'Newsreader', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--ink);
+  margin-top: 0.25rem;
+}
+
+.day-content h3 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+
+.day-content p {
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--ink-secondary);
+  max-width: 60ch;
+  margin-bottom: 0.75rem;
+}
+
+.day-content p:last-child { margin-bottom: 0; }
+
+.day-content strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ═══ SPOTS LIST ═══ */
+.spots {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.spot {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--border);
+  align-items: start;
+}
+
+.spot:last-child { border-bottom: 1px solid var(--border); }
+
+.spot-marker {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.1rem;
+}
+
+.spot-marker svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--ink-tertiary);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.spot-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.spot-desc {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+  margin-top: 0.1rem;
+}
+
+/* ═══ HOTEL ═══ */
+.hotel {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  position: relative;
+}
+
+.hotel-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+.hotel h4 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+
+.hotel p {
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink-secondary);
+  max-width: 60ch;
+}
+
+.hotel-details {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.hotel-detail {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--ink-tertiary);
+}
+
+.hotel-alt {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+}
+
+.hotel-alt strong {
+  font-weight: 500;
+  color: var(--ink-secondary);
+}
+
+/* ═══ SECTION PHOTO ═══ */
+.section-photo {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 3rem;
+}
+
+.hotel-photo {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .section-photo { aspect-ratio: 16 / 9; border-radius: 8px; margin-bottom: 2rem; }
+  .hotel-photo { aspect-ratio: 4 / 3; }
+}
+
+/* ═══ REC GRID (2-col asymmetric) ═══ */
+.recs {
+  margin-top: 2rem;
+}
+
+.recs-title {
+  font-family: 'Newsreader', serif;
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+.rec-stack {
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.rec-stack.three-up {
+  grid-template-columns: 1fr;
+}
+
+.rec {
+  background: var(--surface);
+  padding: 1.5rem;
+}
+
+.rec:first-child { grid-row: span 2; }
+
+.rec-stack.three-up .rec:first-child { grid-row: span 1; }
+
+.rec-type {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 0.4rem;
+}
+
+.rec h5 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}
+
+.rec p {
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--ink-secondary);
+}
+
+/* ═══ SECTION DIVIDER ═══ */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.divider .line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.divider .label {
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--ink-tertiary);
+  white-space: nowrap;
+}
+
+/* ═══ PRACTICAL ═══ */
+.practical {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 6rem 2rem;
+}
+
+.practical-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.practical h2 {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-bottom: 3rem;
+}
+
+.practical-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.practical-item {
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(247,244,240,0.1);
+}
+
+.practical-item:nth-child(odd) { padding-right: 2rem; }
+.practical-item:nth-child(even) { padding-left: 2rem; border-left: 1px solid rgba(247,244,240,0.1); }
+
+.practical-item h4 {
+  font-size: 0.88rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: var(--bg);
+}
+
+.practical-item p {
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(247,244,240,0.55);
+}
+
+/* ═══ FOOTER ═══ */
+footer {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.footer-sig {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+}
+
+.footer-sub {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+  margin-top: 0.25rem;
+  letter-spacing: 0.04em;
+}
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.vis {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══ COLOR ACCENTS PER STOP ═══ */
+.stop--ericeira .stop-number { color: var(--azulejo); }
+.stop--ericeira .stop-title-block h2 { color: var(--azulejo); }
+.stop--ericeira .hotel { border-left: 3px solid var(--azulejo); }
+.stop--ericeira .rec-type { color: var(--azulejo); }
+
+.stop--evora .stop-number { color: var(--wine); }
+.stop--evora .stop-title-block h2 { color: var(--wine); }
+.stop--evora .hotel { border-left: 3px solid var(--wine); }
+.stop--evora .rec-type { color: var(--wine); }
+
+.stop--comporta .stop-number { color: var(--olive); }
+.stop--comporta .stop-title-block h2 { color: var(--olive); }
+.stop--comporta .hotel { border-left: 3px solid var(--olive); }
+.stop--comporta .rec-type { color: var(--olive); }
+
+.stop--lisbon .stop-number { color: var(--accent); }
+.stop--lisbon .stop-title-block h2 { color: var(--accent); }
+.stop--lisbon .hotel { border-left: 3px solid var(--accent); }
+.stop--lisbon .rec-type { color: var(--accent); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 6rem 1.5rem 3rem;
+    gap: 3rem;
+  }
+  .hero-left { padding-left: 0; padding-bottom: 0; }
+  .hero-right { align-items: flex-start; padding-right: 0; }
+
+  .stop-header {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .stop-number {
+    font-size: 4rem;
+    position: absolute;
+    right: 0;
+    top: -0.5rem;
+  }
+  .stop-header { position: relative; }
+
+  .day {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .day-aside {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+  .day-num { font-size: 1.5rem; margin-top: 0; }
+
+  .flights-grid { grid-template-columns: 1fr; }
+  .rec-stack { grid-template-columns: 1fr; }
+  .rec:first-child { grid-row: span 1; }
+  .practical-grid { grid-template-columns: 1fr; }
+  .practical-item:nth-child(even) { padding-left: 0; border-left: none; }
+  .practical-item:nth-child(odd) { padding-right: 0; }
+
+  .nav { padding: 0 1rem; overflow-x: auto; justify-content: flex-start; }
+  .nav a { padding: 0.8rem 0.75rem; font-size: 0.68rem; }
+
+  .stop { padding: 4rem 1.5rem 3rem; }
+}
+
+/* ═══ SECTION HEADER COMPONENT ═══ */
+.section-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.section-title h2 {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(1.8rem, 3vw, 2.2rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="top">
+  <div class="hero-left">
+    <div class="hero-tag">Victoria / July 2026</div>
+    <h1>Portu<span class="accent">gal</span></h1>
+    <div class="hero-meta">
+      <span>11 nights &middot; 4 stops &middot; 1 wedding</span>
+      <span>Surf, wine, and the Atlantic coast</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-route-vertical">
+      <div class="route-item">
+        <div class="city">Ericeira</div>
+        <div class="nights">4 nights</div>
+        <div class="dates">Jul 15 &ndash; 19</div>
+      </div>
+      <div class="route-item">
+        <div class="city">&Eacute;vora</div>
+        <div class="nights">2 nights</div>
+        <div class="dates">Jul 19 &ndash; 21</div>
+      </div>
+      <div class="route-item">
+        <div class="city">Comporta</div>
+        <div class="nights">3 nights</div>
+        <div class="dates">Jul 21 &ndash; 24</div>
+      </div>
+      <div class="route-item">
+        <div class="city">Lisbon</div>
+        <div class="nights">2 nights</div>
+        <div class="dates">Jul 24 &ndash; 26</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="nav">
+  <a href="#flights">Flights</a>
+  <a href="#ericeira">Ericeira</a>
+  <a href="#evora">&Eacute;vora</a>
+  <a href="#comporta">Comporta</a>
+  <a href="#lisbon">Lisbon</a>
+  <a href="#practical">Practical</a>
+</nav>
+
+<!-- ═══ FLIGHTS ═══ -->
+<section class="flights-section" id="flights">
+  <div class="section-title reveal"><h2>Flights</h2></div>
+  <div class="flights-grid reveal">
+    <div class="flight-block">
+      <div class="flight-dir">Arriving</div>
+      <div class="flight-codes">
+        <span class="flight-code">&mdash;</span>
+        <div class="flight-line"></div>
+        <span class="flight-code">LIS</span>
+      </div>
+      <div class="flight-date">Wednesday, July 15</div>
+    </div>
+    <div class="flight-block">
+      <div class="flight-dir">Departing</div>
+      <div class="flight-codes">
+        <span class="flight-code">LIS</span>
+        <div class="flight-line"></div>
+        <span class="flight-code">&mdash;</span>
+      </div>
+      <div class="flight-date">Sunday, July 26</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ERICEIRA ═══ -->
+<section class="stop stop--ericeira" id="ericeira">
+  <div class="stop-header reveal">
+    <div class="stop-number">01</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">Jul 15 &ndash; 19 / 4 Nights</div>
+      <h2>Ericeira</h2>
+      <div class="tagline">Europe's only World Surfing Reserve. A whitewashed fishing village on Atlantic cliffs, 45 minutes from Lisbon.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Vista_da_Ericeira.jpg/1920px-Vista_da_Ericeira.jpg" alt="Ericeira — whitewashed fishing village on the Atlantic coast" loading="lazy">
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Wednesday</div>
+      <div class="day-num">15</div>
+    </div>
+    <div class="day-content">
+      <h3>Arrival</h3>
+      <p>Land in Lisbon, pick up a rental car at the airport, and drive 45 minutes north along the coast to Ericeira. Drop bags at the hotel, stroll the cobblestoned old town. Grilled sardines and a cold Sagres on a terrace above the Atlantic.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Thursday</div>
+      <div class="day-num">16</div>
+    </div>
+    <div class="day-content">
+      <h3>First Surf Day</h3>
+      <p>Morning beginner lesson at <strong>Foz do Lizandro</strong> &mdash; a wide sandy beach with gentle, forgiving waves. Multiple schools, full gear rental, patient instructors. Afternoon in town &mdash; backstreets, surf shops, a&ccedil;a&iacute; bowls. Dinner: <em>arroz de marisco</em> at a seaside table.</p>
+      <div class="spots">
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Foz do Lizandro</div>
+            <div class="spot-desc">Wide sandy beach, perfect beginner waves. 15-min walk south of town.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Praia do Sul</div>
+            <div class="spot-desc">Sheltered beach break right in town. Good on calmer days.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">S&atilde;o Juli&atilde;o</div>
+            <div class="spot-desc">Long beach break just south. Gentle whitewash, ideal for beginners.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Friday</div>
+      <div class="day-num">17</div>
+    </div>
+    <div class="day-content">
+      <h3>Sintra Day Trip</h3>
+      <p>Drive 30 minutes to <strong>Sintra</strong> &mdash; a UNESCO wonderland of pastel palaces in misty forests. Hit Pena Palace early, wander the Moorish Castle walls, descend into town for <em>travesseiros</em> from Piriquita.</p>
+      <p>Optional: detour to <strong>Cabo da Roca</strong> on the way back &mdash; continental Europe's westernmost point. Dramatic cliffs, wild wind, spectacular sunset.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Saturday</div>
+      <div class="day-num">18</div>
+    </div>
+    <div class="day-content">
+      <h3>Surf &amp; Wine</h3>
+      <p>Morning: second surf session. Try a different beach or level up at <strong>Ribeira d'Ilhas</strong>, Ericeira's most famous break (works for beginners on smaller days).</p>
+      <p>Afternoon: drive 20 minutes inland to the Lisbon wine region. Rolling hills around <strong>Mafra</strong> and <strong>Torres Vedras</strong> produce excellent whites and light reds.</p>
+      <div class="spots">
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><path d="M12 2L15 8H9L12 2Z"/><rect x="11" y="8" width="2" height="8"/><ellipse cx="12" cy="18" rx="5" ry="3"/></svg></div>
+          <div>
+            <div class="spot-name">Adega M&atilde;e</div>
+            <div class="spot-desc">Modern winery near Torres Vedras. Great whites, beautiful tasting room.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><path d="M12 2L15 8H9L12 2Z"/><rect x="11" y="8" width="2" height="8"/><ellipse cx="12" cy="18" rx="5" ry="3"/></svg></div>
+          <div>
+            <div class="spot-name">Quinta de Sant'Ana</div>
+            <div class="spot-desc">Family-run organic vineyard in Mafra. Charming, intimate, no crowds.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Surf Schools -->
+  <div class="recs reveal">
+    <div class="recs-title">Surf Schools</div>
+    <div class="rec-stack three-up">
+      <div class="rec">
+        <div class="rec-type">Surf School</div>
+        <h5>Ericeira Surf House</h5>
+        <p>Beginner-friendly lessons at Foz do Lizandro and Ribeira d'Ilhas. Group and private options. Full gear included.</p>
+      </div>
+      <div class="rec">
+        <div class="rec-type">Surf School</div>
+        <h5>Sea Krew</h5>
+        <p>Small-group lessons with experienced instructors. Focused on beginners. Also offer SUP and bodyboard.</p>
+      </div>
+      <div class="rec">
+        <div class="rec-type">Surf School</div>
+        <h5>Boardriders Ericeira</h5>
+        <p>Local school with ISA-certified coaches. Private lessons for more focused instruction.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel -->
+  <div class="hotel reveal">
+    <div class="hotel-label">Where to stay</div>
+    <img class="hotel-photo" src="https://immerso.pt/wp-content/uploads/luxury_hotel_portugal_ericeira4.webp" alt="Immerso Hotel — design-forward boutique hotel in Ericeira" loading="lazy">
+    <h4>Immerso Hotel</h4>
+    <p>Design-forward boutique on the cliffs above Ericeira. Clean lines, ocean views from every room, an infinity pool that melts into the Atlantic. Small enough to feel intimate, polished enough to feel special.</p>
+    <div class="hotel-details">
+      <span class="hotel-detail">Ericeira</span>
+      <span class="hotel-detail">~30 rooms</span>
+      <span class="hotel-detail">Pool &amp; spa</span>
+    </div>
+    <div class="hotel-alt"><strong>Also consider:</strong> Aethos Ericeira (surf-chic retreat), Vila Gal&eacute; Ericeira (cliff-top, larger but great views)</div>
+  </div>
+</section>
+
+<div class="divider"><div class="line"></div><div class="label">~2 hr drive</div><div class="line"></div></div>
+
+<!-- ═══ ÉVORA ═══ -->
+<section class="stop stop--evora" id="evora">
+  <div class="stop-header reveal">
+    <div class="stop-number">02</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">Jul 19 &ndash; 21 / 2 Nights</div>
+      <h2>&Eacute;vora</h2>
+      <div class="tagline">UNESCO World Heritage city in the heart of the Alentejo. Roman ruins, medieval walls, and Portugal's greatest wine region.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Pra%C3%A7a_de_Giraldo%2C_Evora_%2810250693386%29_%28cropped%29.jpg/1920px-Pra%C3%A7a_de_Giraldo%2C_Evora_%2810250693386%29_%28cropped%29.jpg" alt="Évora — Praça do Giraldo, the historic city center" loading="lazy">
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Sunday</div>
+      <div class="day-num">19</div>
+    </div>
+    <div class="day-content">
+      <h3>Arrival &amp; the Wedding</h3>
+      <p>Drive ~2 hours southeast through golden Alentejo plains. Check in, explore the historic center on foot. The <strong>Roman Temple of Diana</strong> sits impossibly well-preserved in the center. The <strong>Chapel of Bones</strong> at the Church of S&atilde;o Francisco is eerie and unforgettable.</p>
+      <p>Evening: wedding festivities begin.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Monday</div>
+      <div class="day-num">20</div>
+    </div>
+    <div class="day-content">
+      <h3>Wedding Day</h3>
+      <p>Today belongs to the celebration. &Eacute;vora's ancient streets make a stunning backdrop. If there's free time, climb the Cathedral rooftop terrace for panoramic views, or sit in <strong>Pra&ccedil;a do Giraldo</strong> with a gal&atilde;o and people-watch.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Tuesday</div>
+      <div class="day-num">21</div>
+    </div>
+    <div class="day-content">
+      <h3>Alentejo Wineries &rarr; Comporta</h3>
+      <p>Morning at one of the Alentejo's legendary wine estates. This region produces Portugal's most celebrated reds &mdash; full-bodied, earthy, built for the landscape. Afternoon: drive ~1.5 hours west to Comporta.</p>
+    </div>
+  </div>
+
+  <!-- Wineries -->
+  <div class="recs reveal">
+    <div class="recs-title">Wineries</div>
+    <div class="rec-stack">
+      <div class="rec">
+        <div class="rec-type">Winery &amp; Restaurant</div>
+        <h5>Herdade do Espor&atilde;o</h5>
+        <p>One of Portugal's most respected estates. Beautiful grounds, excellent tasting experiences, farm-to-table restaurant. Book ahead &mdash; ~40 min from &Eacute;vora but worth every minute.</p>
+      </div>
+      <div class="rec">
+        <div class="rec-type">Historic Winery</div>
+        <h5>Adega da Cartuxa</h5>
+        <p>Producers of the legendary P&ecirc;ra-Manca. Just outside &Eacute;vora's walls &mdash; taste wines that have been made here for centuries.</p>
+      </div>
+      <div class="rec">
+        <div class="rec-type">Family Estate</div>
+        <h5>Ervideira Wines</h5>
+        <p>Family-run since the 1880s. Known for their Invis&iacute;vel sparkling ros&eacute;. 30 min south of &Eacute;vora.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel -->
+  <div class="hotel reveal">
+    <div class="hotel-label">Where to stay</div>
+    <img class="hotel-photo" src="https://cdn.weasy.io/users/adcevora/galleries/albergariacalvario-0064_0050.jpg" alt="Albergaria do Calvário — boutique hotel inside Évora's ancient walls" loading="lazy">
+    <h4>Albergaria do Calv&aacute;rio</h4>
+    <p>A 16th-century olive oil mill converted into a boutique hotel inside &Eacute;vora's ancient walls. Warm stone, vaulted ceilings, quiet gardens. Centuries of character, perfect mattress.</p>
+    <div class="hotel-details">
+      <span class="hotel-detail">Historic center</span>
+      <span class="hotel-detail">4-star</span>
+      <span class="hotel-detail">Former olive oil mill</span>
+    </div>
+    <div class="hotel-alt"><strong>Also consider:</strong> Vit&oacute;ria Stone Hotel (contemporary, rooftop pool), &Eacute;vora Olive Hotel (modern comfort, old-town charm)</div>
+  </div>
+</section>
+
+<div class="divider"><div class="line"></div><div class="label">~1.5 hr drive</div><div class="line"></div></div>
+
+<!-- ═══ COMPORTA ═══ -->
+<section class="stop stop--comporta" id="comporta">
+  <div class="stop-header reveal">
+    <div class="stop-number">03</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">Jul 21 &ndash; 24 / 3 Nights</div>
+      <h2>Comporta</h2>
+      <div class="tagline">Pine forests, rice paddies, and endless white sand. Portugal's barefoot-luxury coast &mdash; think Tulum without the crowds.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Quinta_da_Comporta_%28cropped%29.jpg/1920px-Quinta_da_Comporta_%28cropped%29.jpg" alt="Comporta — rice paddies and pine forests on Portugal's Alentejo coast" loading="lazy">
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Tuesday</div>
+      <div class="day-num">21</div>
+    </div>
+    <div class="day-content">
+      <h3>Arrival</h3>
+      <p>Drive through the Alentejo countryside to Portugal's best-kept secret. Straw-roofed beach restaurants, pine forests stretching to white-sand beaches. Check in, walk to the nearest praia for a sunset swim. Dinner at a beach shack &mdash; fresh fish, local wine, sand between your toes.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Wednesday</div>
+      <div class="day-num">22</div>
+    </div>
+    <div class="day-content">
+      <h3>Beach &amp; Wine</h3>
+      <p>Morning: rent bikes, ride through rice paddies to <strong>Praia da Comporta</strong> or <strong>Praia do Carvalhal</strong>. Miles of sand, almost no one around.</p>
+      <p>Afternoon wine tasting. The Set&uacute;bal peninsula produces fantastic moscatel and increasingly impressive reds.</p>
+      <div class="spots">
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><path d="M12 2L15 8H9L12 2Z"/><rect x="11" y="8" width="2" height="8"/><ellipse cx="12" cy="18" rx="5" ry="3"/></svg></div>
+          <div>
+            <div class="spot-name">Herdade da Comporta Wines</div>
+            <div class="spot-desc">Estate wines from the local terroir. Tasting room in the village.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><path d="M12 2L15 8H9L12 2Z"/><rect x="11" y="8" width="2" height="8"/><ellipse cx="12" cy="18" rx="5" ry="3"/></svg></div>
+          <div>
+            <div class="spot-name">Jos&eacute; Maria da Fonseca</div>
+            <div class="spot-desc">Historic producer in nearby Azeit&atilde;o (~40 min). Famous muscatel, beautiful cellar tour.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Thursday</div>
+      <div class="day-num">23</div>
+    </div>
+    <div class="day-content">
+      <h3>Arr&aacute;bida &amp; Set&uacute;bal</h3>
+      <p>Day trip to <strong>Serra da Arr&aacute;bida</strong> &mdash; a lush natural park with hidden coves, turquoise water, and dramatic cliffs. Drive the winding coastal road, stop at <strong>Praia de Galapinhos</strong> (voted one of Europe's best beaches).</p>
+      <p>Continue to <strong>Set&uacute;bal</strong> for lunch. The Mercado do Livramento is one of Portugal's best food markets. Try <em>choco frito</em> (fried cuttlefish), the local specialty.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Friday</div>
+      <div class="day-num">24</div>
+    </div>
+    <div class="day-content">
+      <h3>Last Beach Morning &rarr; Lisbon</h3>
+      <p>Sunrise swim, long breakfast, reluctant checkout. Drive ~1.5 hours north across the Tagus bridge into Lisbon for the grand finale.</p>
+    </div>
+  </div>
+
+  <!-- Hotel -->
+  <div class="hotel reveal">
+    <div class="hotel-label">Where to stay</div>
+    <img class="hotel-photo" src="https://static.guestcentric.net/bin/7eab4f4b6fa24a40/sublime-comporta-country-retreat-amp-spa-imageLinkpools_-wellness_-sublime-comporta4_areal-view-biological-pool-nature-property-3.jpg" alt="Sublime Comporta — aerial view of the pool and pine forest retreat" loading="lazy">
+    <h4>Sublime Comporta</h4>
+    <p>Five-star retreat hidden in 17 hectares of pine and cork forest. Just 14 rooms &mdash; each a private world of warm wood, natural textiles, and floor-to-ceiling glass. Pool, spa, two restaurants. Barefoot luxury that actually delivers.</p>
+    <div class="hotel-details">
+      <span class="hotel-detail">Comporta</span>
+      <span class="hotel-detail">5-star</span>
+      <span class="hotel-detail">14 rooms</span>
+      <span class="hotel-detail">2 restaurants</span>
+    </div>
+    <div class="hotel-alt"><strong>Also consider:</strong> Spatia Comporta (adults-only, 5-star, expanded 2025), Vermelho Melides by Christian Louboutin (bold, red, extraordinary)</div>
+  </div>
+</section>
+
+<div class="divider"><div class="line"></div><div class="label">~1.5 hr drive</div><div class="line"></div></div>
+
+<!-- ═══ LISBON ═══ -->
+<section class="stop stop--lisbon" id="lisbon">
+  <div class="stop-header reveal">
+    <div class="stop-number">04</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">Jul 24 &ndash; 26 / 2 Nights</div>
+      <h2>Lisbon</h2>
+      <div class="tagline">The city of seven hills. Fado in narrow alleys, terracotta rooftops, and the best pastry on earth.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Lisbon_alfalma.jpg/1920px-Lisbon_alfalma.jpg" alt="Lisbon — Alfama rooftops and the Tagus river" loading="lazy">
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Friday</div>
+      <div class="day-num">24</div>
+    </div>
+    <div class="day-content">
+      <h3>Arrive &amp; Alfama</h3>
+      <p>Check into a boutique hotel in the historic center. Start in <strong>Alfama</strong> &mdash; the oldest neighbourhood. A labyrinth of narrow streets, fado drifting from open windows, miradouros at every turn.</p>
+      <p>Hit <strong>Miradouro da Gra&ccedil;a</strong> or <strong>Portas do Sol</strong> for golden hour over the rooftops. Dinner in Alfama or Chiado.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Saturday</div>
+      <div class="day-num">25</div>
+    </div>
+    <div class="day-content">
+      <h3>Lisbon All Day</h3>
+      <p>Morning: <strong>Bel&eacute;m</strong> &mdash; Jer&oacute;nimos Monastery, Torre de Bel&eacute;m, and a mandatory pastel de nata at Past&eacute;is de Bel&eacute;m (the original, since 1837).</p>
+      <p>Afternoon: <strong>LX Factory</strong> for industrial-chic browsing, <strong>Time Out Market</strong> for grazing, or vintage shopping in Pr&iacute;ncipe Real.</p>
+      <p>Evening: ride <strong>Tram 28</strong> at dusk. Final dinner at <strong>Cervejaria Ramiro</strong> for the definitive seafood feast &mdash; lobster, tiger prawns, percebes, and the legendary <em>prego</em> steak sandwich to close.</p>
+      <div class="spots">
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Past&eacute;is de Bel&eacute;m</div>
+            <div class="spot-desc">The original 1837 past&eacute;is de nata. Non-negotiable.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Cervejaria Ramiro</div>
+            <div class="spot-desc">Legendary seafood hall. Get the prego to finish.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">A Baiuca</div>
+            <div class="spot-desc">Tiny fado restaurant in Alfama. Intimate, authentic, unforgettable.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Sunday</div>
+      <div class="day-num">26</div>
+    </div>
+    <div class="day-content">
+      <h3>Departure</h3>
+      <p>One last Portuguese coffee, drop the rental car at the airport, and fly home with sand still in your shoes and wine on your breath. At&eacute; logo.</p>
+    </div>
+  </div>
+
+  <!-- Hotel -->
+  <div class="hotel reveal">
+    <div class="hotel-label">Where to stay</div>
+    <img class="hotel-photo" src="https://static.guestcentric.net/bin/1e4cb8b06c6e9c4d/memmo-alfama-banner20-ma-terrace-1.webp" alt="Memmo Alfama — terrace with panoramic views over Alfama and the Tagus" loading="lazy">
+    <h4>Memmo Alfama</h4>
+    <p>Perched in the heart of Alfama with panoramic terrace views over the Tagus. Sleek rooms, rooftop pool, steps from Lisbon's most atmospheric streets. Boutique without being precious.</p>
+    <div class="hotel-details">
+      <span class="hotel-detail">Alfama, Lisbon</span>
+      <span class="hotel-detail">Boutique</span>
+      <span class="hotel-detail">Rooftop pool</span>
+    </div>
+    <div class="hotel-alt"><strong>Also consider:</strong> Verride Pal&aacute;cio (18th-century palace, insane views), The Lumiares (Bairro Alto, converted palace)</div>
+  </div>
+</section>
+
+<!-- ═══ PRACTICAL ═══ -->
+<section class="practical" id="practical">
+  <div class="practical-inner">
+    <h2 class="reveal">Practical Notes</h2>
+    <div class="practical-grid">
+      <div class="practical-item reveal">
+        <h4>Rental Car</h4>
+        <p>Pick up at Lisbon Airport on arrival, drop off on departure. Essential for this route &mdash; all drives are scenic and under 2 hours. Book through Discovercars or Auto Jardim.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Connectivity</h4>
+        <p>EU roaming works for most plans. Otherwise grab a Vodafone or MEO prepaid SIM at the airport. WiFi is excellent everywhere.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Money</h4>
+        <p>Euro. Cards accepted almost everywhere. Bring cash for small beach bars, tips, and market stalls. Tipping 5&ndash;10% appreciated, not required.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>July Weather</h4>
+        <p>25&ndash;35&deg;C. The coast stays cooler with Atlantic breezes. &Eacute;vora will be the hottest stop &mdash; plan indoor activities midday. Pack sunscreen, hat, light layers for evenings.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Timing</h4>
+        <p>Portugal is WET (UTC+1 in summer). Dinner is late &mdash; restaurants fill 8&ndash;9:30 PM. Embrace the rhythm.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Wine Notes</h4>
+        <p>Alentejo reds are the stars. Ericeira's region does great whites. Comporta's moscatel is a must. Vinho verde from the north is everywhere and perfect for hot days.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-sig">Crafted by Alfred</div>
+  <div class="footer-sub">Boa viagem.</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('vis');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  const r = el.getBoundingClientRect();
+  if (r.top < window.innerHeight + 50) {
+    el.style.transitionDelay = (i * 0.04) + 's';
+    requestAnimationFrame(() => el.classList.add('vis'));
+  } else {
+    obs.observe(el);
+  }
+});
+
+// Nav active state
+const nav = document.getElementById('nav');
+const links = nav.querySelectorAll('a');
+const ids = Array.from(links).map(a => a.getAttribute('href').slice(1));
+
+window.addEventListener('scroll', () => {
+  let cur = '';
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 200) cur = id;
+  });
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}, { passive: true });
+</script>
+</body>
+</html>

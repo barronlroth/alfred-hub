@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nina's Bachelorette — Jackson Hole 2026</title>
+<meta property="og:title" content="Nina's Bachelorette — Jackson Hole 2026">
+<meta property="og:description" content="4 nights in the Tetons. Horses, Yellowstone, and the Cowboy Bar.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5F2ED;
+  --surface: #FFFFFF;
+  --ink: #1C1A17;
+  --ink-secondary: #5E584F;
+  --ink-tertiary: #969085;
+  --accent: #8B5E3C;
+  --accent-muted: rgba(139,94,60,0.08);
+  --accent-hover: #724D31;
+  --sage: #5B7A5E;
+  --sage-muted: rgba(91,122,94,0.07);
+  --slate: #4A5568;
+  --slate-muted: rgba(74,85,104,0.07);
+  --sunset: #C2703E;
+  --sunset-muted: rgba(194,112,62,0.07);
+  --gold: #A68B3C;
+  --gold-muted: rgba(166,139,60,0.07);
+  --border: rgba(28,26,23,0.06);
+  --border-strong: rgba(28,26,23,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 4rem;
+  padding-left: clamp(1rem, 4vw, 6rem);
+}
+
+.hero-tag {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: slideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.hero h1 {
+  font-family: 'Newsreader', serif;
+  font-weight: 300;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+.hero h1 .accent { color: var(--accent); font-style: italic; }
+
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  opacity: 0;
+  animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+
+.hero-meta span {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink-secondary);
+  letter-spacing: 0.02em;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding-right: clamp(1rem, 4vw, 4rem);
+  opacity: 0;
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.hero-route-vertical {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.hero-route-vertical::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 1px;
+  background: var(--border-strong);
+}
+
+.route-item {
+  padding: 1.25rem 0;
+  position: relative;
+}
+
+.route-item::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-tertiary);
+  background: var(--bg);
+}
+
+.route-item:first-child::before { border-color: var(--accent); background: var(--accent); }
+
+.route-item .city {
+  font-family: 'Newsreader', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.route-item .nights {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--ink-tertiary);
+  margin-top: 0.15rem;
+  letter-spacing: 0.04em;
+}
+
+.route-item .dates {
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+  letter-spacing: 0.02em;
+}
+
+/* ═══ NAV ═══ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245,242,237,0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.nav a {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 1rem 1.25rem;
+  color: var(--ink-tertiary);
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+  white-space: nowrap;
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1.25rem;
+  right: 1.25rem;
+  height: 1.5px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+
+.nav a:hover { color: var(--ink); }
+.nav a.active { color: var(--accent); }
+.nav a.active::after { transform: scaleX(1); }
+
+/* ═══ SECTIONS ═══ */
+.stop {
+  padding: 6rem 2rem 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.stop-header {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+  align-items: end;
+}
+
+.stop-number {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(6rem, 12vw, 10rem);
+  font-weight: 300;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  opacity: 0.06;
+}
+
+.stop-title-block h2 {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stop-title-block .tagline {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink-secondary);
+  max-width: 50ch;
+}
+
+.stop-dates-bar {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+/* ═══ DAY BLOCKS ═══ */
+.day {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.day-aside { padding-top: 0.15rem; }
+
+.day-date {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+}
+
+.day-num {
+  font-family: 'Newsreader', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--ink);
+  margin-top: 0.25rem;
+}
+
+.day-content h3 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+
+.day-content p {
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--ink-secondary);
+  max-width: 60ch;
+  margin-bottom: 0.75rem;
+}
+
+.day-content p:last-child { margin-bottom: 0; }
+.day-content strong { font-weight: 500; color: var(--ink); }
+
+/* ═══ SPOTS ═══ */
+.spots { margin-top: 1.25rem; display: flex; flex-direction: column; }
+
+.spot {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--border);
+  align-items: start;
+}
+
+.spot:last-child { border-bottom: 1px solid var(--border); }
+
+.spot-marker {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.1rem;
+}
+
+.spot-marker svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--ink-tertiary);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.spot-name { font-size: 0.88rem; font-weight: 500; color: var(--ink); }
+.spot-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink-tertiary); margin-top: 0.1rem; }
+
+/* ═══ SECTION PHOTO ═══ */
+.section-photo {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 3rem;
+}
+
+/* ═══ YELLOWSTONE TIMELINE ═══ */
+.timeline { margin-top: 1.5rem; }
+
+.timeline-stop {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 1.25rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+  align-items: start;
+}
+
+.timeline-stop:last-child { border-bottom: 1px solid var(--border); }
+
+.timeline-time {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  padding-top: 0.15rem;
+  white-space: nowrap;
+}
+
+.timeline-name { font-size: 0.92rem; font-weight: 500; color: var(--ink); }
+.timeline-desc { font-size: 0.82rem; font-weight: 300; color: var(--ink-secondary); margin-top: 0.2rem; line-height: 1.65; }
+
+/* ═══ TIP BOX ═══ */
+.tip-box {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--sage-muted);
+  border-left: 3px solid var(--sage);
+  border-radius: 0 8px 8px 0;
+}
+
+.tip-box h4 {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 0.5rem;
+}
+
+.tip-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tip-box li {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--ink-secondary);
+  line-height: 1.7;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.tip-box li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--sage);
+}
+
+/* ═══ OPTION CARDS ═══ */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+
+.option-card {
+  background: var(--surface);
+  padding: 1.5rem;
+}
+
+.option-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 0.5rem;
+}
+
+.option-card h5 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}
+
+.option-card p {
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--ink-secondary);
+}
+
+/* ═══ HOTEL ═══ */
+.hotel {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.hotel-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+.hotel h4 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+
+.hotel p {
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink-secondary);
+  max-width: 60ch;
+}
+
+.hotel-details {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.hotel-detail {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--ink-tertiary);
+}
+
+/* ═══ DIVIDER ═══ */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.divider .line { flex: 1; height: 1px; background: var(--border-strong); }
+
+.divider .label {
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--ink-tertiary);
+  white-space: nowrap;
+}
+
+/* ═══ PRACTICAL ═══ */
+.practical {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 6rem 2rem;
+}
+
+.practical-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.practical h2 {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-bottom: 3rem;
+}
+
+.practical-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.practical-item {
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(245,242,237,0.1);
+}
+
+.practical-item:nth-child(odd) { padding-right: 2rem; }
+.practical-item:nth-child(even) { padding-left: 2rem; border-left: 1px solid rgba(245,242,237,0.1); }
+
+.practical-item h4 {
+  font-size: 0.88rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: var(--bg);
+}
+
+.practical-item p {
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(245,242,237,0.55);
+}
+
+/* ═══ FOOTER ═══ */
+footer {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.footer-sig {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+}
+
+.footer-sub {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+  margin-top: 0.25rem;
+  letter-spacing: 0.04em;
+}
+
+/* ═══ COLOR ACCENTS PER DAY ═══ */
+.stop--arrival .stop-number { color: var(--accent); }
+.stop--arrival .stop-title-block h2 { color: var(--accent); }
+.stop--arrival .hotel { border-left: 3px solid var(--accent); }
+
+.stop--horses .stop-number { color: var(--sunset); }
+.stop--horses .stop-title-block h2 { color: var(--sunset); }
+
+.stop--yellowstone .stop-number { color: var(--sage); }
+.stop--yellowstone .stop-title-block h2 { color: var(--sage); }
+
+.stop--chill .stop-number { color: var(--slate); }
+.stop--chill .stop-title-block h2 { color: var(--slate); }
+
+.stop--departure .stop-number { color: var(--gold); }
+.stop--departure .stop-title-block h2 { color: var(--gold); }
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.vis { opacity: 1; transform: translateY(0); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 6rem 1.5rem 3rem;
+    gap: 3rem;
+  }
+  .hero-left { padding-left: 0; padding-bottom: 0; }
+  .hero-right { align-items: flex-start; padding-right: 0; }
+
+  .stop-header { grid-template-columns: 1fr; gap: 0.5rem; position: relative; }
+  .stop-number { font-size: 4rem; position: absolute; right: 0; top: -0.5rem; }
+
+  .day { grid-template-columns: 1fr; gap: 0.75rem; }
+  .day-aside { display: flex; align-items: baseline; gap: 0.75rem; }
+  .day-num { font-size: 1.5rem; margin-top: 0; }
+
+  .timeline-stop { grid-template-columns: 60px 1fr; gap: 0.75rem; }
+  .options-grid { grid-template-columns: 1fr; }
+
+  .practical-grid { grid-template-columns: 1fr; }
+  .practical-item:nth-child(even) { padding-left: 0; border-left: none; }
+  .practical-item:nth-child(odd) { padding-right: 0; }
+
+  .nav { padding: 0 1rem; overflow-x: auto; justify-content: flex-start; }
+  .nav a { padding: 0.8rem 0.75rem; font-size: 0.68rem; }
+
+  .stop { padding: 4rem 1.5rem 3rem; }
+  .section-photo { aspect-ratio: 16 / 9; border-radius: 8px; margin-bottom: 2rem; }
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.section-title h2 {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(1.8rem, 3vw, 2.2rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="top">
+  <div class="hero-left">
+    <div class="hero-tag">Nina's Bachelorette / August 2026</div>
+    <h1>Jackson<br><span class="accent">Hole</span></h1>
+    <div class="hero-meta">
+      <span>4 nights &middot; 12 girls &middot; the Tetons</span>
+      <span>Horses, geysers, and the Cowboy Bar</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-route-vertical">
+      <div class="route-item">
+        <div class="city">Arrive</div>
+        <div class="nights">Settle in</div>
+        <div class="dates">Thu, Aug 27</div>
+      </div>
+      <div class="route-item">
+        <div class="city">Horseback &amp; Town</div>
+        <div class="nights">Trail ride + night out</div>
+        <div class="dates">Fri, Aug 28</div>
+      </div>
+      <div class="route-item">
+        <div class="city">Yellowstone</div>
+        <div class="nights">Full day in the park</div>
+        <div class="dates">Sat, Aug 29</div>
+      </div>
+      <div class="route-item">
+        <div class="city">Chill Day</div>
+        <div class="nights">Float, boat, or spa</div>
+        <div class="dates">Sun, Aug 30</div>
+      </div>
+      <div class="route-item">
+        <div class="city">Fly Home</div>
+        <div class="nights">Until next time</div>
+        <div class="dates">Mon, Aug 31</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="nav">
+  <a href="#arrival">Arrival</a>
+  <a href="#horses">Horses & Town</a>
+  <a href="#yellowstone">Yellowstone</a>
+  <a href="#chill">Chill Day</a>
+  <a href="#departure">Departure</a>
+  <a href="#practical">Practical</a>
+</nav>
+
+<!-- ═══ DAY 1: ARRIVAL ═══ -->
+<section class="stop stop--arrival" id="arrival">
+  <div class="stop-header reveal">
+    <div class="stop-number">01</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">Thursday, August 27</div>
+      <h2>Arrival</h2>
+      <div class="tagline">Everyone rolls in throughout the day. No schedule, no pressure. Just get here.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Barns_grand_tetons.jpg/1920px-Barns_grand_tetons.jpg" alt="Grand Teton mountains with barn in foreground" loading="lazy">
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Thursday</div>
+      <div class="day-num">27</div>
+    </div>
+    <div class="day-content">
+      <h3>Roll In &amp; Settle</h3>
+      <p>Flights land throughout the day &mdash; Jackson Hole Airport (JAC) is just 15 minutes from town and right inside Grand Teton National Park. Possibly the most scenic landing in America.</p>
+      <p>Pick up rental cars, grab groceries at <strong>Jackson Whole Grocer</strong> or Albertsons (snacks, drinks, breakfast supplies for the week), and head to the cabins.</p>
+      <p>Once everyone's arrived: <strong>drinks on the deck, hot tub, catch up.</strong> No plan needed. The mountains do the talking.</p>
+      <div class="spots">
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Jackson Town Square</div>
+            <div class="spot-desc">Elk antler arches, galleries, boutiques. Worth a wander for early arrivals.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Persephone Bakery</div>
+            <div class="spot-desc">French-inspired bakery beloved by locals. Perfect coffee + pastry stop.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hotel reveal">
+    <div class="hotel-label">Home Base</div>
+    <h4>Teton Cabins</h4>
+    <p>Your home for the weekend. Cabin life with mountain views, a hot tub under the stars, and enough space for everyone to spread out. Cozy, casual, and exactly right for this crew.</p>
+    <div class="hotel-details">
+      <span class="hotel-detail">Jackson Hole, WY</span>
+      <span class="hotel-detail">12 guests</span>
+      <span class="hotel-detail">4 nights</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="line"></div><div class="label">🐎</div><div class="line"></div></div>
+
+<!-- ═══ DAY 2: HORSES & TOWN ═══ -->
+<section class="stop stop--horses" id="horses">
+  <div class="stop-header reveal">
+    <div class="stop-number">02</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">Friday, August 28</div>
+      <h2>Horses &amp; Town</h2>
+      <div class="tagline">Morning in the saddle, evening in cowboy boots. This is the day that sets the tone.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Grand_Teton_National_Park%2C_WY_-_Cunningham_Cabin_%2828339069320%29.jpg/1920px-Grand_Teton_National_Park%2C_WY_-_Cunningham_Cabin_%2828339069320%29.jpg" alt="Teton Range and open field in Grand Teton National Park" loading="lazy">
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Friday</div>
+      <div class="day-num">28</div>
+    </div>
+    <div class="day-content">
+      <h3>Trail Ride</h3>
+      <p>Morning horseback ride through the <strong>Bridger-Teton National Forest</strong> with Teton views the entire time. Two-hour guided ride &mdash; no experience needed, the horses know the trail. Wildflowers, mountain air, and the kind of quiet you can't get in a city.</p>
+      <p>Group of 12 will likely split across two ride times. Book early &mdash; late August is peak season.</p>
+      <div class="spots">
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Willow Creek Horseback Rides</div>
+            <div class="spot-desc">16 miles south of Jackson. 100% in national forest. (307) 733-7086</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Jackson Hole Outfitters</div>
+            <div class="spot-desc">Half-day and full-day options. Wilderness camping trips available too.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Friday</div>
+      <div class="day-num">eve</div>
+    </div>
+    <div class="day-content">
+      <h3>Night on the Town</h3>
+      <p>Back to the cabins to clean up, then into Jackson for the big night out. Start with a proper group dinner, then hit the bars.</p>
+      <div class="spots">
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Glorietta</div>
+            <div class="spot-desc">Modern Italian-ish. Great cocktails, great for groups. Lively energy.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Million Dollar Cowboy Bar</div>
+            <div class="spot-desc">THE bar. Saddle barstools, live music, on Town Square since 1937. Non-negotiable.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">The Rose</div>
+            <div class="spot-desc">Craft cocktail bar. Chill vibes for when you want something a bit more refined.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Silver Dollar Bar</div>
+            <div class="spot-desc">Inside the Wort Hotel. Live music most nights. 2,032 silver dollars inlaid in the bar top.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="line"></div><div class="label">~1h 15m drive</div><div class="line"></div></div>
+
+<!-- ═══ DAY 3: YELLOWSTONE ═══ -->
+<section class="stop stop--yellowstone" id="yellowstone">
+  <div class="stop-header reveal">
+    <div class="stop-number">03</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">Saturday, August 29</div>
+      <h2>Yellowstone</h2>
+      <div class="tagline">The Lower Loop in a day. Geysers, rainbow springs, a canyon that stops you cold, and bison everywhere. Get up early. It's worth it.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Grand_Prismatic_Spring_and_Midway_Geyser_Basin_from_above.jpg/1920px-Grand_Prismatic_Spring_and_Midway_Geyser_Basin_from_above.jpg" alt="Grand Prismatic Spring aerial view — Yellowstone National Park" loading="lazy">
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Saturday</div>
+      <div class="day-num">29</div>
+    </div>
+    <div class="day-content">
+      <h3>The Lower Loop</h3>
+      <p>96 miles of the most concentrated geological chaos on Earth. You'll enter through the <strong>South Entrance</strong> (~1h 15m from Jackson), loop through the park's greatest hits, and be back by dinner. Here's the route, timed out:</p>
+
+      <div class="timeline">
+        <div class="timeline-stop">
+          <div class="timeline-time">6:30 AM</div>
+          <div>
+            <div class="timeline-name">Leave the Cabins</div>
+            <div class="timeline-desc">Coffee in hand, snacks packed. Drive north through Grand Teton National Park &mdash; the Tetons will be lit gold on your left.</div>
+          </div>
+        </div>
+        <div class="timeline-stop">
+          <div class="timeline-time">7:45 AM</div>
+          <div>
+            <div class="timeline-name">Enter Yellowstone (South Entrance)</div>
+            <div class="timeline-desc">$35/vehicle or use a parks pass. Buy online at recreation.gov in advance to skip the line.</div>
+          </div>
+        </div>
+        <div class="timeline-stop">
+          <div class="timeline-time">8:00 AM</div>
+          <div>
+            <div class="timeline-name">West Thumb Geyser Basin</div>
+            <div class="timeline-desc">First stop, right inside the entrance. Boardwalk loop along Yellowstone Lake with colorful hot springs steaming into the water. 30&ndash;45 min.</div>
+          </div>
+        </div>
+        <div class="timeline-stop">
+          <div class="timeline-time">9:30 AM</div>
+          <div>
+            <div class="timeline-name">Old Faithful</div>
+            <div class="timeline-desc">Check the eruption prediction at the visitor center (erupts roughly every 90 min). Explore the Upper Geyser Basin boardwalks while you wait. When it goes off &mdash; you'll understand the hype.</div>
+          </div>
+        </div>
+        <div class="timeline-stop">
+          <div class="timeline-time">11:00 AM</div>
+          <div>
+            <div class="timeline-name">Grand Prismatic Spring</div>
+            <div class="timeline-desc"><strong>The photo.</strong> Walk the Midway Geyser Basin boardwalks first, then drive to the Fairy Falls Trailhead and hike the overlook trail (~1.6 mi round trip) for the aerial rainbow view. Absolutely unreal.</div>
+          </div>
+        </div>
+        <div class="timeline-stop">
+          <div class="timeline-time">12:30 PM</div>
+          <div>
+            <div class="timeline-name">Lunch</div>
+            <div class="timeline-desc">Old Faithful Inn has a dining room and grab-and-go. Or eat the snacks you packed (honestly, better move &mdash; lines can be long).</div>
+          </div>
+        </div>
+        <div class="timeline-stop">
+          <div class="timeline-time">1:30 PM</div>
+          <div>
+            <div class="timeline-name">Drive to Canyon Village</div>
+            <div class="timeline-desc">45-minute scenic drive north through the park interior.</div>
+          </div>
+        </div>
+        <div class="timeline-stop">
+          <div class="timeline-time">2:15 PM</div>
+          <div>
+            <div class="timeline-name">Grand Canyon of the Yellowstone</div>
+            <div class="timeline-desc"><strong>Artist Point</strong> &mdash; the most iconic viewpoint in the park. Then hike to the <strong>Brink of the Lower Falls</strong> (steep but short) for an up-close look at the 308-foot waterfall crashing below. 1&ndash;1.5 hrs total.</div>
+          </div>
+        </div>
+        <div class="timeline-stop">
+          <div class="timeline-time">4:00 PM</div>
+          <div>
+            <div class="timeline-name">Hayden Valley</div>
+            <div class="timeline-desc">Drive slowly south through Yellowstone's prime wildlife corridor. Bison herds are almost guaranteed. Elk, wolves, and bears are possible. Pull over at turnouts. Take your time.</div>
+          </div>
+        </div>
+        <div class="timeline-stop">
+          <div class="timeline-time">5:00 PM</div>
+          <div>
+            <div class="timeline-name">Head Home</div>
+            <div class="timeline-desc">Continue south past Yellowstone Lake, exit through the South Entrance. Back in Jackson by ~6:15 PM. Pizza and collapse at the cabins, or rally for dinner in town &mdash; dealer's choice.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <h4>Yellowstone Tips</h4>
+        <ul>
+          <li>Bring layers &mdash; mountain weather shifts fast, even in August</li>
+          <li>Sunscreen, water bottles, and SNACKS. Food options in the park are limited.</li>
+          <li>Stay on boardwalks at thermal features. The ground is literally boiling underneath.</li>
+          <li>Cell service is spotty to nonexistent &mdash; download Google Maps offline before you go</li>
+          <li>Wildlife rules: 100 yards from bears/wolves, 25 yards from bison/elk. They are not pets.</li>
+          <li>Gas up before entering the park</li>
+          <li>Bear spray is recommended and available at park stores</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="line"></div><div class="label">🌿</div><div class="line"></div></div>
+
+<!-- ═══ DAY 4: CHILL DAY ═══ -->
+<section class="stop stop--chill" id="chill">
+  <div class="stop-header reveal">
+    <div class="stop-number">04</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">Sunday, August 30</div>
+      <h2>Chill Day</h2>
+      <div class="tagline">Recovery, adventure, or both. Pick your own speed. This is the flex day.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Schwabacher_Landing%2C_Grand_Teton_NP.jpg/1920px-Schwabacher_Landing%2C_Grand_Teton_NP.jpg" alt="Snake River with Teton reflection at Schwabacher Landing" loading="lazy">
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Sunday</div>
+      <div class="day-num">30</div>
+    </div>
+    <div class="day-content">
+      <h3>Pick Your Vibe</h3>
+      <p>After a big Yellowstone day, Sunday is wide open. Split up or stick together &mdash; all three of these are excellent. Vote as a group or mix and match.</p>
+
+      <div class="options-grid">
+        <div class="option-card">
+          <div class="option-label">Adventure</div>
+          <h5>Float the Snake River</h5>
+          <p>Scenic float trip through Grand Teton National Park. No rapids, just 13 miles of calm water with Teton views towering above you. Wildlife is common &mdash; moose, eagles, otters. ~3 hours on the water.</p>
+        </div>
+        <div class="option-card">
+          <div class="option-label">On the Water</div>
+          <h5>Jackson Lake Boat Day</h5>
+          <p>Rent a deck cruiser (fits 12) or two pontoons at Signal Mountain Marina. Cruise the alpine lake, find a sandy cove, anchor and swim. Mountains straight out of the water.</p>
+        </div>
+        <div class="option-card">
+          <div class="option-label">R&amp;R</div>
+          <h5>Spa &amp; Town</h5>
+          <p>Spa treatments at Amangani or the Four Seasons. Browse galleries and boutiques in town. Long lunch at Persephone. Sometimes the best adventure is no adventure at all.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Sunday</div>
+      <div class="day-num">eve</div>
+    </div>
+    <div class="day-content">
+      <h3>Last Night</h3>
+      <p>Final dinner together. <strong>Cafe Genevieve</strong> has a great porch and Southern-meets-Western comfort food. Or go upscale at <strong>Snake River Grill</strong> on Town Square. End the night back at the cabins &mdash; bonfire, hot tub, stars you won't believe.</p>
+      <div class="spots">
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Cafe Genevieve</div>
+            <div class="spot-desc">Log cabin on the edge of Town Square. Pig candy, fried chicken, incredible porch seating.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Snake River Grill</div>
+            <div class="spot-desc">Upscale dining right on Town Square. Reserve ahead for a group this size.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="line"></div><div class="label">✈️</div><div class="line"></div></div>
+
+<!-- ═══ DAY 5: DEPARTURE ═══ -->
+<section class="stop stop--departure" id="departure">
+  <div class="stop-header reveal">
+    <div class="stop-number">05</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">Monday, August 31</div>
+      <h2>Fly Home</h2>
+      <div class="tagline">One last mountain morning. Then back to reality &mdash; but you'll be different now.</div>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Monday</div>
+      <div class="day-num">31</div>
+    </div>
+    <div class="day-content">
+      <h3>Until Next Time</h3>
+      <p>Everyone heads out early. Grab coffee and a pastry at <strong>Persephone Bakery</strong> or breakfast at <strong>The Bunnery</strong> (a local institution since 1975). Jackson Hole Airport is just 15 minutes from town &mdash; possibly the most scenic drive to a gate you'll ever make.</p>
+      <p>Clean out the cabins, drop the keys, return the rental cars, and fly home with the Tetons in your rearview. 🏔️</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRACTICAL ═══ -->
+<section class="practical" id="practical">
+  <div class="practical-inner">
+    <h2 class="reveal">Practical Notes</h2>
+    <div class="practical-grid">
+      <div class="practical-item reveal">
+        <h4>Getting There</h4>
+        <p>Fly into Jackson Hole Airport (JAC). It's inside Grand Teton National Park &mdash; 15 min to town. Direct flights from most major cities in summer. Book early, August fills fast.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Rental Cars</h4>
+        <p>You'll need 3 SUVs for 12 people (plus gear). Reserve well ahead &mdash; Jackson Hole rentals sell out. All the driving (Yellowstone, horseback, town) requires cars.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>August Weather</h4>
+        <p>Days: 75&ndash;85&deg;F, sunny. Evenings: drops to 40&ndash;50&deg;F. Afternoon thunderstorms are possible. Bring layers, a light jacket, and sunscreen. Yellowstone will be cooler at elevation.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>What to Pack</h4>
+        <p>Hiking shoes (not just sandals), layers for mountain weather, swimsuit for the hot tub and lake, something cute for town night, sunscreen, water bottle, portable charger.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Yellowstone Pass</h4>
+        <p>$35 per vehicle at the gate, or buy an annual America the Beautiful pass ($80) at recreation.gov. Buy online to skip the entrance line. Covers Grand Teton too.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Cell Service</h4>
+        <p>Good in Jackson. Spotty to nonexistent in Yellowstone and on remote roads. Download offline maps (Google Maps or Maps.me) before the Yellowstone day.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Groceries</h4>
+        <p>Stock up on arrival at Jackson Whole Grocer (upscale) or Albertsons (normal). Get breakfast stuff, snacks, drinks. The cabins have a kitchen &mdash; use it for breakfasts to save time and money.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Bear Aware</h4>
+        <p>This is bear country (grizzly and black bear). Carry bear spray in Yellowstone (sold at park stores). Keep food secured. Make noise on trails. They're more afraid of you, but let's keep it that way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-sig">Crafted by Alfred 🦉</div>
+  <div class="footer-sub">See you at the altar, Nina. 💛</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('vis');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  const r = el.getBoundingClientRect();
+  if (r.top < window.innerHeight + 50) {
+    el.style.transitionDelay = (i * 0.04) + 's';
+    requestAnimationFrame(() => el.classList.add('vis'));
+  } else {
+    obs.observe(el);
+  }
+});
+
+const nav = document.getElementById('nav');
+const links = nav.querySelectorAll('a');
+const ids = Array.from(links).map(a => a.getAttribute('href').slice(1));
+
+window.addEventListener('scroll', () => {
+  let cur = '';
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 200) cur = id;
+  });
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}, { passive: true });
+</script>
+</body>
+</html>

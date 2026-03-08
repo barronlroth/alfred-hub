@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An Agent Builds an Agent — Slides</title>
+<script defer src="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1.12/chat-messenger.js"></script>
+<link rel="stylesheet" href="https://www.gstatic.com/ces-console/fast/chat-messenger/prod/v1.12/themes/chat-messenger-default.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Audiowide&family=Major+Mono+Display&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Apestron';
+  src: url('/cxas-experiment-slides/Apestron.ttf') format('truetype');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+:root {
+  --cream: #f5f0e8; --paper: #ede8dc; --warm-white: #faf8f3;
+  --navy: #1a2744; --navy-light: #2a3d66;
+  --teal: #1a6b5a; --teal-light: #48a892;
+  --rust: #c44d2b; --rust-light: #e67a58;
+  --ink: #1f1f2e; --ink-muted: #5a5a72; --ink-dim: #8a8a9e;
+  --border: #d4cfc3; --stripe: #c44d2b;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 18px; background: var(--cream); }
+body { font-family: 'Archivo', sans-serif; color: var(--ink); overflow: hidden; height: 100dvh; }
+
+/* ── SLIDE SYSTEM ── */
+.deck { position: relative; width: 100vw; height: 100dvh; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 4rem 6rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s ease;
+  overflow-y: auto;
+}
+.slide.active { opacity: 1; pointer-events: auto; }
+.slide-num {
+  position: fixed; bottom: 1.2rem; right: 2rem;
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  color: var(--ink-dim); letter-spacing: 0.1em; z-index: 100;
+}
+.slide-num.on-dark { color: rgba(245,240,232,0.4); }
+.progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--stripe); z-index: 100;
+  transition: width 0.4s ease;
+}
+
+/* ── TYPOGRAPHY ── */
+h1 {
+  font-family: 'Apestron', 'Orbitron', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: normal; line-height: 1.1;
+  text-transform: uppercase; color: var(--navy);
+  font-feature-settings: 'ss01' on;
+  margin-bottom: 1.5rem;
+}
+h1 em { font-style: normal; color: var(--rust); }
+h2 {
+  font-family: 'Apestron', 'Orbitron', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: normal; line-height: 1.15;
+  text-transform: uppercase; color: var(--navy);
+  font-feature-settings: 'ss01' on;
+  margin-bottom: 1.25rem;
+}
+h3 {
+  font-family: 'Audiowide', sans-serif;
+  font-size: 1.1rem; color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800px; margin-bottom: 1rem; }
+.label {
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--stripe);
+  margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem;
+}
+.label::before { content: ''; width: 32px; height: 2px; background: var(--stripe); }
+code { font-family: 'Space Mono', monospace; font-size: 0.85em; background: var(--paper); padding: 0.15em 0.4em; border-radius: 3px; }
+
+/* ── HERO SLIDE ── */
+.hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center; max-width: 1100px; width: 100%; }
+.mission-patch { width: 300px; height: 300px; border-radius: 50%; overflow: hidden; border: 3px solid var(--navy); box-shadow: 0 8px 40px rgba(26,39,68,0.12), 0 0 0 6px var(--cream), 0 0 0 8px var(--border); }
+.mission-patch img { width: 100%; height: 100%; object-fit: cover; }
+.mission-badge {
+  display: inline-flex; padding: 0.4rem 1rem;
+  border: 1.5px solid var(--navy); border-radius: 2px;
+  font-family: 'Orbitron', sans-serif; font-size: 0.55rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--navy); margin-bottom: 1.5rem;
+}
+.meta { display: flex; gap: 2rem; margin-top: 1.5rem; }
+.meta-tag { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--ink-dim); }
+.meta-tag strong { color: var(--navy); display: block; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.2rem; }
+
+/* ── COVER SLIDE ── */
+.cover { background: var(--navy); }
+.cover-inner { text-align: center; }
+.cover-patch {
+  width: 320px; height: 320px; border-radius: 50%; overflow: hidden;
+  margin: 0 auto 2rem;
+  border: 3px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 50px rgba(0,0,0,0.4), 0 0 0 6px var(--navy), 0 0 0 8px rgba(255,255,255,0.08);
+}
+.cover-patch img { width: 100%; height: 100%; object-fit: cover; }
+.cover .label { color: var(--rust-light); justify-content: center; }
+.cover .label::before { background: var(--rust-light); }
+.cover h2 { color: var(--cream); margin-bottom: 0.75rem; }
+.cover p { color: rgba(245,240,232,0.6); text-align: center; margin: 0 auto; }
+
+/* ── MARQUEE ── */
+.marquee-wrap { overflow: hidden; background: var(--navy); padding: 0.6rem 0; border-top: 2px solid var(--stripe); border-bottom: 2px solid var(--stripe); }
+.marquee-track { display: flex; width: max-content; animation: marquee-scroll 30s linear infinite; gap: 3rem; }
+.marquee-track span { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream); white-space: nowrap; opacity: 0.8; }
+.marquee-track .accent { color: var(--stripe); opacity: 1; }
+@keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── MISSION LOG (chat style) ── */
+.mission-log { width: 100%; max-width: 900px; background: var(--warm-white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+.ml-header { display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 1.2rem; background: var(--paper); border-bottom: 1px solid var(--border); }
+.ml-dots { display: flex; gap: 6px; }
+.ml-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+.ml-title { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--ink-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+.ml-status { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--stripe); display: flex; align-items: center; gap: 0.4rem; letter-spacing: 0.15em; }
+.ml-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--stripe); animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+.ml-body { padding: 1.5rem 1.5rem 1.5rem 3rem; display: flex; flex-direction: column; gap: 0.6rem; min-height: 200px; max-height: 55vh; overflow-y: auto; }
+.ml-thought, .ml-code, .ml-response { opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; font-size: 0.82rem; line-height: 1.5; }
+.ml-thought.visible, .ml-code.visible, .ml-response.visible { opacity: 1; transform: translateY(0); }
+.ml-thought { position: relative; font-style: italic; color: var(--ink-muted); background: var(--paper); padding: 0.6rem 0.9rem; border-radius: 0 12px 12px 12px; max-width: 85%; }
+.ml-thought::before { content: '🦉'; position: absolute; left: -32px; top: 6px; font-size: 16px; font-style: normal; }
+.ml-code { align-self: flex-end; background: var(--navy); color: var(--teal-light); padding: 0.6rem 1rem; border-radius: 12px 0 12px 12px; max-width: 85%; font-family: 'Space Mono', monospace; font-size: 0.75rem; }
+.ml-code .prompt { color: var(--rust-light); }
+.ml-code .cmd { color: #e6e6e6; }
+.ml-code .dim { color: var(--ink-dim); font-size: 0.7rem; }
+.ml-response { align-self: center; padding: 0.5rem 1rem; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 0.75rem; max-width: 90%; text-align: center; }
+.ml-response.ok { background: rgba(26,107,90,0.08); border: 1px solid var(--teal); color: var(--teal); }
+.ml-response.err { background: rgba(196,77,43,0.08); border: 1px solid var(--rust); color: var(--rust); }
+.ml-response.info { background: rgba(26,39,68,0.06); border: 1px solid var(--navy-light); color: var(--navy); }
+.ml-cursor { display: inline-block; width: 8px; height: 14px; background: var(--ink-muted); animation: blink 1s infinite; vertical-align: text-bottom; margin-left: 2px; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ── ARCHITECTURE ── */
+.arch-box { background: var(--warm-white); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; font-family: 'Space Mono', monospace; font-size: 0.75rem; max-width: 900px; width: 100%; }
+.arch-node { display: inline-block; padding: 0.3rem 0.6rem; border-radius: 4px; margin: 0.15rem; font-size: 0.7rem; }
+.arch-node.root { background: var(--navy); color: var(--cream); font-weight: 700; }
+.arch-node.agent { background: var(--teal); color: white; }
+.arch-node.tool { background: var(--paper); color: var(--ink-muted); border: 1px solid var(--border); }
+.arch-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0.6rem 0 0.6rem 1.5rem; padding-left: 1rem; border-left: 1px solid var(--border); }
+
+/* ── STATS ── */
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.5rem 0; max-width: 900px; width: 100%; }
+.stat-cell { background: var(--warm-white); padding: 1.2rem; text-align: center; }
+.stat-num { font-family: 'Major Mono Display', monospace; font-size: 2.4rem; color: var(--navy); line-height: 1; }
+.stat-lbl { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--ink-dim); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.4rem; }
+
+/* ── BENTO TAKEAWAYS ── */
+.bento-full { display: grid; gap: 0.6rem; width: 100%; max-width: 1200px; height: calc(100dvh - 8rem); grid-template-columns: repeat(3, 1fr); grid-template-rows: auto 1fr 1fr; }
+.bento-full .bento-label { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.75rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stripe); }
+.bento-full .bento-label::before { content: ''; width: 32px; height: 2px; background: var(--stripe); }
+.bc { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--warm-white); display: flex; flex-direction: column; min-height: 0; }
+.bc.feat { background: var(--warm-white); border-color: var(--stripe); border-width: 2px; }
+.bc.feat .bc-num { color: var(--stripe); }
+.bc.w2 { grid-column: span 2; }
+.bc-patch { width: 100%; flex: 1; min-height: 0; object-fit: cover; }
+.bc-body { padding: 0.6rem 1rem 0.75rem; }
+.bc-num { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 0.15rem; }
+.bc-h { font-family: 'Audiowide', sans-serif; font-size: 0.9rem; font-weight: 400; color: var(--navy); line-height: 1.3; margin-bottom: 0.15rem; }
+.bc.w2 .bc-h { font-size: 1.05rem; }
+.bc-p { font-size: 0.75rem; line-height: 1.4; color: var(--ink-muted); margin: 0; }
+
+/* ── EVAL GRID ── */
+.eval-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.5rem; max-width: 900px; width: 100%; margin: 1.5rem 0; }
+.eval-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.7rem; border-radius: 6px; font-family: 'Space Mono', monospace; font-size: 0.65rem; background: var(--warm-white); border: 1px solid var(--border); }
+.eval-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.eval-dot.pass { background: var(--teal); }
+.eval-dot.na { background: var(--ink-dim); opacity: 0.4; }
+.eval-dot.mixed { background: #d4a017; }
+.eval-dot.fail { background: var(--rust); }
+.eval-name { color: var(--ink-muted); flex: 1; }
+.eval-badge { font-size: 0.55rem; letter-spacing: 0.08em; padding: 0.1rem 0.35rem; border-radius: 3px; font-weight: 700; }
+.eval-badge.pass { background: rgba(26,107,90,0.1); color: var(--teal); }
+.eval-badge.na { background: rgba(138,138,158,0.1); color: var(--ink-dim); }
+.eval-badge.mixed { background: rgba(212,160,23,0.12); color: #b8940e; }
+.eval-badge.fail { background: rgba(196,77,43,0.1); color: var(--rust); }
+/* ── SKILL FILE PREVIEW ── */
+.skill-file { max-width: 900px; width: 100%; background: #1e1e2e; border-radius: 10px; overflow: hidden; margin: 1.5rem 0; box-shadow: 0 4px 24px rgba(0,0,0,0.15); }
+.skill-file-bar { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: #2a2a3e; border-bottom: 1px solid #3a3a50; }
+.skill-file-bar .dot { width: 10px; height: 10px; border-radius: 50%; }
+.skill-file-bar .dot.r { background: #ff5f57; }
+.skill-file-bar .dot.y { background: #febc2e; }
+.skill-file-bar .dot.g { background: #28c840; }
+.skill-file-bar .fname { margin-left: 0.5rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #8a8a9e; letter-spacing: 0.05em; }
+.skill-file pre { padding: 1.2rem 1.5rem; margin: 0; font-family: 'Space Mono', monospace; font-size: 0.7rem; line-height: 1.7; color: #cdd6f4; overflow-x: auto; }
+.skill-file .ln { color: #585b70; user-select: none; display: inline-block; width: 2ch; text-align: right; margin-right: 1.2rem; }
+.skill-file .yl { color: #f9e2af; }
+.skill-file .gr { color: #a6e3a1; }
+.skill-file .bl { color: #89b4fa; }
+.skill-file .gy { color: #6c7086; }
+.skill-file .pk { color: #f38ba8; }
+.skill-file .tl { color: var(--teal-light); }
+.skill-file .fade { opacity: 0.4; }
+
+.eval-summary { display: flex; gap: 2rem; margin-bottom: 1.5rem; }
+.eval-stat { text-align: center; }
+.eval-stat-num { font-family: 'Major Mono Display', monospace; font-size: 2rem; line-height: 1; }
+.eval-stat-num.green { color: var(--teal); }
+.eval-stat-lbl { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--ink-dim); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.3rem; }
+
+/* ── PULL QUOTE ── */
+.pull-quote { border-left: 3px solid var(--navy); padding: 1rem 1.5rem; background: var(--paper); border-radius: 0 6px 6px 0; max-width: 800px; width: 100%; margin: 1.5rem 0; }
+.pull-quote p { font-family: 'Audiowide', sans-serif; font-size: 1rem; color: var(--navy); font-style: normal; line-height: 1.5; margin-bottom: 0.5rem; }
+.pull-quote cite { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--ink-dim); letter-spacing: 0.05em; }
+
+/* ── AMA ── */
+.ama-content { text-align: center; max-width: 700px; }
+.ama-owl { width: 300px; height: 300px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.5rem; display: block; border: 3px solid var(--navy); box-shadow: 0 0 0 6px var(--cream), 0 0 0 8px var(--border); }
+
+/* ── CHAT WIDGET ── */
+chat-messenger { z-index: 9999; position: fixed !important; bottom: 20px !important; right: 90px !important; }
+
+/* ── NAV HINT ── */
+.nav-hint {
+  position: fixed; bottom: 1.2rem; left: 2rem;
+  font-family: 'Space Mono', monospace; font-size: 0.6rem;
+  color: var(--ink-dim); letter-spacing: 0.08em; z-index: 100;
+  opacity: 0.5;
+}
+.nav-hint.on-dark { color: rgba(245,240,232,0.3); }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="slide-num" id="slideNum"></div>
+<div class="nav-hint" id="navHint">← → or click to navigate</div>
+
+<div class="deck" id="deck">
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide active">
+  <div class="hero-grid">
+    <div>
+      <div class="mission-badge">MISSION REPORT — CLASSIFIED</div>
+      <h1>An Agent Builds<br>an <em>Agent</em></h1>
+      <p>We gave an AI coding agent one task: build a customer support agent on our platform. No GUI. No walkthrough. Just the MCP endpoint and a goal.</p>
+      <div class="meta">
+        <div class="meta-tag"><strong>Platform</strong> CX Agent Studio</div>
+        <div class="meta-tag"><strong>Agent</strong> Alfred (Claude Opus)</div>
+        <div class="meta-tag"><strong>Duration</strong> Feb 21 – Mar 4, 2026</div>
+      </div>
+    </div>
+    <div>
+      <div class="mission-patch"><img src="/cxas-experiment-slides/mission-patch.png" alt="Mission Patch"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: THE PREMISE -->
+<div class="slide" style="padding-bottom:0">
+  <div class="label">The Premise</div>
+  <h2>One agent, one API, zero hand-holding</h2>
+  <p>Coding agents are how software gets built now. If CXAS wants to be where agents are deployed, it needs to work for the tools that build them.</p>
+  <p><strong>Alfred</strong> was pointed at the CXAS MCP server and told to build a Ferrari Customer Support agent. No console access. No visual graph builder. Just API endpoints and whatever it could figure out.</p>
+  <p>Three sessions. Two weeks. Here's what happened inside his head.</p>
+  <div class="marquee-wrap" style="position:absolute;bottom:0;left:0;right:0;">
+    <div class="marquee-track">
+      <span>CXAS Experiment</span><span class="accent">■</span>
+      <span>60 Tools · Zero Runtime</span><span class="accent">■</span>
+      <span>5 Agents · 15 Tools · 0 GUI Clicks</span><span class="accent">■</span>
+      <span>An Agent Builds an Agent</span><span class="accent">■</span>
+      <span>Feb 2026 · Google Cloud Applied AI</span><span class="accent">■</span>
+      <span>Skills Compound · Graphs Don't</span><span class="accent">■</span>
+      <span>CXAS Experiment</span><span class="accent">■</span>
+      <span>60 Tools · Zero Runtime</span><span class="accent">■</span>
+      <span>5 Agents · 15 Tools · 0 GUI Clicks</span><span class="accent">■</span>
+      <span>An Agent Builds an Agent</span><span class="accent">■</span>
+      <span>Feb 2026 · Google Cloud Applied AI</span><span class="accent">■</span>
+      <span>Skills Compound · Graphs Don't</span><span class="accent">■</span>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: COVER — DISCOVERY -->
+<div class="slide cover">
+  <div class="cover-inner">
+    <div class="cover-patch"><img src="/cxas-experiment-slides/patch-discover.png" alt="Discovery Patch"></div>
+    <div class="label">Mission Log 1</div>
+    <h2>The Discovery</h2>
+    <p>60+ MCP tools. Zero documentation. Figure it out.</p>
+  </div>
+</div>
+
+<!-- SLIDE 4: LOG 1 — DISCOVERY -->
+<div class="slide">
+  <div class="label">Mission Log 1 — The Discovery</div>
+  <h2>Figuring out the MCP from scratch</h2>
+  <p>No documentation on tool schemas. No examples. Just a <code>tools/list</code> endpoint and 60+ tools to enumerate.</p>
+  <div class="mission-log" data-replay="discover">
+    <div class="ml-header">
+      <div class="ml-dots"><div class="ml-dot"></div><div class="ml-dot"></div><div class="ml-dot"></div></div>
+      <div class="ml-title">Mission Log — Thinking Trace</div>
+      <div class="ml-status">REPLAY</div>
+    </div>
+    <div class="ml-body">
+      <div class="ml-thought" data-delay="0">I don't have native MCP access. OpenClaw doesn't speak MCP protocol.</div>
+      <div class="ml-thought" data-delay="800">But the MCP server is just HTTP JSON-RPC under the hood. I can call it directly with curl. No client needed.</div>
+      <div class="ml-thought" data-delay="1800">First question: what tools does this thing even have?</div>
+      <div class="ml-code" data-delay="2800"><span class="prompt">$</span> <span class="cmd">curl -X POST ces.us.rep.googleapis.com/mcp</span><br><span class="cmd">  -d '{"method": "tools/list"}'</span></div>
+      <div class="ml-response info" data-delay="3800">60+ tools returned: list_apps, create_app, create_agent, create_tool, list_evaluations...</div>
+      <div class="ml-thought" data-delay="4800">No documentation on any of these schemas. I'll have to parse the inputSchema from each tool definition myself.</div>
+      <div class="ml-thought" data-delay="5800">create_tool wants a pythonFunction with pythonCode. Let me try creating the OpenF1 tool.</div>
+      <div class="ml-code" data-delay="6800"><span class="prompt">$</span> <span class="cmd">mcp_call create_tool '{"pythonCode": "import requests..."}'</span></div>
+      <div class="ml-response err" data-delay="7600">BadRequestException: No module named 'requests'</div>
+      <div class="ml-thought" data-delay="8400">Sandbox is stdlib-only. No pip, no requests, no third-party libraries at all. I'll rewrite everything with urllib.request.</div>
+      <div class="ml-code" data-delay="9400"><span class="prompt">$</span> <span class="cmd">mcp_call create_tool '{"pythonCode": "import urllib.request..."}'</span></div>
+      <div class="ml-response ok" data-delay="10200">tools/496f8804-98a9-46b8-ade9-e524cbdc1190 created</div>
+      <div class="ml-thought" data-delay="11000">Now the agents. I need a root agent that routes to sub-agents. Let me start with a simple ID...</div>
+      <div class="ml-code" data-delay="11800"><span class="prompt">$</span> <span class="cmd">mcp_call create_agent '{"agentId": "root"}'</span></div>
+      <div class="ml-response err" data-delay="12600">BadRequestException: ID 'root' must match [a-zA-Z0-9]{5,36}</div>
+      <div class="ml-thought" data-delay="13400">"root" is too short. Minimum 5 characters. None of these constraints are documented. I'm going to write all of this down later so I never burn these tokens again.</div>
+      <div class="ml-code" data-delay="14400"><span class="prompt">$</span> <span class="cmd">mcp_call create_agent '{"agentId": "ferrari-concierge"}'</span></div>
+      <div class="ml-response ok" data-delay="15200">agents/ferrari-concierge created</div>
+      <div class="ml-thought" data-delay="16000">Good. Now I need to build out the sub-agents. An F1 specialist, a sales consultant, a service advisor, and ownership experience.</div>
+      <div class="ml-code" data-delay="17000"><span class="prompt">$</span> <span class="cmd">mcp_call create_agent '{"agentId": "f1-specialist"}'</span><br><span class="prompt">$</span> <span class="cmd">mcp_call create_agent '{"agentId": "sales-consultant"}'</span><br><span class="prompt">$</span> <span class="cmd">mcp_call create_agent '{"agentId": "service-advisor"}'</span><br><span class="prompt">$</span> <span class="cmd">mcp_call create_agent '{"agentId": "ownership-experience"}'</span></div>
+      <div class="ml-response ok" data-delay="18000">4 sub-agents created</div>
+      <div class="ml-thought" data-delay="18800">Now I need to wire them together. The concierge needs instructions that say "delegate F1 questions to f1-specialist" using the {@AGENT} syntax. And each sub-agent needs its tools assigned.</div>
+      <div class="ml-code" data-delay="19800"><span class="prompt">$</span> <span class="cmd">mcp_call update_agent ferrari-concierge</span><br><span class="cmd">  '{"instruction": "You are a Ferrari concierge. Route questions to:</span><br><span class="cmd">    - F1: {@AGENT: f1-specialist}</span><br><span class="cmd">    - Sales: {@AGENT: sales-consultant}..."}'</span></div>
+      <div class="ml-response ok" data-delay="21000">instruction updated. Root agent configured with 4 delegation routes.</div>
+      <div class="ml-thought" data-delay="21800">The architecture is up. 5 agents, wired together. Now I need tools for each sub-agent — get_model_specs, find_dealer_inventory, lookup_vehicle, get_recall_info, check_warranty...</div>
+      <div class="ml-code" data-delay="23000"><span class="prompt">$</span> <span class="cmd">python3 create_all_tools.py</span> <span class="dim"># batch-create 15 Python tools via MCP</span></div>
+      <div class="ml-response ok" data-delay="24000">15 tools created and assigned to sub-agents</div>
+      <div class="ml-thought" data-delay="24800">OK. 5 agents, 15 tools, all wired up via MCP. Zero GUI clicks. Now I need to test it... but wait. How? <span class="ml-cursor"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: COVER — THE GAP -->
+<div class="slide cover">
+  <div class="cover-inner">
+    <div class="cover-patch"><img src="/cxas-experiment-slides/patch-gap.png" alt="Gap Patch"></div>
+    <div class="label">Mission Log 2</div>
+    <h2>The Gap</h2>
+    <p>60 tools to build. Zero tools to talk. Now what?</p>
+  </div>
+</div>
+
+<!-- SLIDE 6: LOG 2 — THE GAP -->
+<div class="slide">
+  <div class="label">Mission Log 2 — The Gap</div>
+  <h2>"I built it. But I can't talk to it."</h2>
+  <p>The agent exists. 5 agents, 15 tools, deployed. But the MCP has no runtime endpoint. 60+ tools for building. Zero for talking.</p>
+  <div class="mission-log" data-replay="sessions">
+    <div class="ml-header">
+      <div class="ml-dots"><div class="ml-dot"></div><div class="ml-dot"></div><div class="ml-dot"></div></div>
+      <div class="ml-title">Mission Log — Thinking Trace</div>
+      <div class="ml-status">REPLAY</div>
+    </div>
+    <div class="ml-body">
+      <div class="ml-thought" data-delay="0">Barron wants me to chat with the agent and hill climb on it.</div>
+      <div class="ml-thought" data-delay="800">But I can't use the web widget — it needs authentication and a real browser. And the MCP has no "send message" tool. 60+ tools for building. Zero for talking.</div>
+      <div class="ml-thought" data-delay="2000">There has to be a runtime API somewhere separate from the MCP. Let me search the docs...</div>
+      <div class="ml-code" data-delay="3000"><span class="prompt">$</span> <span class="cmd">web_search "CES sessions API runSession REST endpoint"</span></div>
+      <div class="ml-response info" data-delay="3800">Found: projects.locations.apps.sessions.runSession</div>
+      <div class="ml-thought" data-delay="4600">There it is. POST /v1/{session}:runSession. Not in the MCP, but in the underlying REST API. They forgot to expose it through MCP.</div>
+      <div class="ml-thought" data-delay="5800">Let me fire a test message and see what happens.</div>
+      <div class="ml-code" data-delay="6600"><span class="prompt">$</span> <span class="cmd">curl -X POST sessions/retest-f80:runSession</span><br><span class="cmd">  -d '{"text": "Tell me about the Ferrari F80"}'</span></div>
+      <div class="ml-response err" data-delay="7600">AGENT [Ferrari Concierge]: The F80 is a concept car... <span class="dim">(no tool call, wrong info)</span></div>
+      <div class="ml-thought" data-delay="8600">Root agent answered directly. No routing to Sales Consultant. No tool call. The instruction isn't specific enough about delegation.</div>
+      <div class="ml-thought" data-delay="9600">This is exactly the kind of bug you'd only find by actually talking to the agent. The MCP lets you build, but you can't test what you build. That's a massive gap.</div>
+      <div class="ml-code" data-delay="10800"><span class="prompt">$</span> <span class="cmd">mcp_call update_agent ferrari-concierge</span><br><span class="cmd">  '{"instruction": "...delegate model questions to {@AGENT: sales-consultant}..."}'</span></div>
+      <div class="ml-response ok" data-delay="11600">instruction updated</div>
+      <div class="ml-code" data-delay="12400"><span class="prompt">$</span> <span class="cmd">curl -X POST sessions/retest-f80-v2:runSession</span><br><span class="cmd">  -d '{"text": "Tell me about the Ferrari F80"}'</span></div>
+      <div class="ml-response ok" data-delay="13400">AGENT [Sales Consultant]: The F80 is truly exceptional.<br>Engine: 3.0L Twin-Turbo V6 + 3 Electric Motors | Power: 1200 hp</div>
+      <div class="ml-thought" data-delay="14400">Routes correctly now. Tool call fired. Specs are accurate.</div>
+      <div class="ml-thought" data-delay="15200">But I had to reverse-engineer a REST API just to test my own agent. Think about that for a second. The platform has no <code>cxas chat</code> command. No programmatic way to run a test conversation. I had to find the Sessions API myself.</div>
+      <div class="ml-code" data-delay="16600"><span class="prompt">$</span> <span class="cmd">curl -X POST sessions/test-f1:runSession</span><br><span class="cmd">  -d '{"text": "Who won the 2024 Italian Grand Prix?"}'</span></div>
+      <div class="ml-response ok" data-delay="17600">AGENT [F1 Specialist]: Charles Leclerc won the 2024 Italian GP at Monza.<br><span class="dim">Tool call: query_openf1(endpoint="laps", params={"session_key": 9639})</span></div>
+      <div class="ml-code" data-delay="18600"><span class="prompt">$</span> <span class="cmd">curl -X POST sessions/test-service:runSession</span><br><span class="cmd">  -d '{"text": "My 2023 Roma needs an oil change"}'</span></div>
+      <div class="ml-response ok" data-delay="19600">AGENT [Service Advisor]: For your 2023 Roma, I recommend scheduling service at your nearest authorized dealer...<br><span class="dim">Tool call: lookup_vehicle(model="Roma", year=2023)</span></div>
+      <div class="ml-thought" data-delay="20600">All four sub-agent routes working. Tool calls firing. Responses are accurate. The hill climbing is paying off. <span class="ml-cursor"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: COVER — THE COMPOUND -->
+<div class="slide cover">
+  <div class="cover-inner">
+    <div class="cover-patch"><img src="/cxas-experiment-slides/patch-compound.png" alt="Compound Patch"></div>
+    <div class="label">Mission Log 3</div>
+    <h2>The Compound</h2>
+    <p>Write it down so the next agent doesn't have to figure it out.</p>
+  </div>
+</div>
+
+<!-- SLIDE 8: LOG 3 — THE COMPOUND -->
+<div class="slide">
+  <div class="label">Mission Log 3 — The Compound</div>
+  <h2>Writing the skill for next time</h2>
+  <p>After the build, Barron asked: "Can you write a skill so you can do this faster next time?"</p>
+  <div class="mission-log" data-replay="skill">
+    <div class="ml-header">
+      <div class="ml-dots"><div class="ml-dot"></div><div class="ml-dot"></div><div class="ml-dot"></div></div>
+      <div class="ml-title">Mission Log — Skill Creation</div>
+      <div class="ml-status">REPLAY</div>
+    </div>
+    <div class="ml-body">
+      <div class="ml-thought" data-delay="0">Barron wants me to write a skill so the next build is cheaper. Smart. What did I learn today?</div>
+      <div class="ml-thought" data-delay="1000">Auth patterns. Resource hierarchy. The fact that the MCP server is just JSON-RPC over HTTP. The stdlib-only sandbox. Agent ID length requirements. Tool naming constraints. All the gotchas nobody documented.</div>
+      <div class="ml-thought" data-delay="2200">The Sessions API isn't in the MCP at all. I had to reverse-engineer it from the REST API docs. That needs to be in the skill so the next agent doesn't waste tokens discovering it.</div>
+      <div class="ml-code" data-delay="3400"><span class="prompt">$</span> <span class="cmd">read skill-creator/SKILL.md</span></div>
+      <div class="ml-response info" data-delay="4200">Skills need: SKILL.md (frontmatter + instructions), scripts/, references/</div>
+      <div class="ml-thought" data-delay="5000">I'll structure it so any coding agent can pick it up cold. The hierarchy, the auth pattern, the helper script, every gotcha I hit today.</div>
+      <div class="ml-code" data-delay="6000"><span class="prompt">$</span> <span class="cmd">mkdir -p ~/.agents/skills/cxas-mcp/{scripts,references}</span></div>
+      <div class="ml-code" data-delay="6600"><span class="prompt">$</span> <span class="cmd">write SKILL.md</span></div>
+      <div class="ml-response info" data-delay="7400"># CX Agent Studio MCP<br>## Resource Hierarchy<br>Project → Location → App → Agents (tree)<br>## Auth: gcloud ADC token in Authorization header<br>## MCP: HTTP JSON-RPC at ces.us.rep.googleapis.com/mcp<br>## Gotchas<br>1. create_app returns {"done":false} — it's async, poll with get_operation<br>2. No requests library — stdlib only, use urllib.request<br>3. Agent ID: 5-36 chars, must start with alphanumeric<br>4. Tool name: must match ^[a-zA-Z_][a-zA-Z0-9._-]{0,63}$<br>5. Tool schema uses pythonFunction.pythonCode, not pythonTool<br>6. No runtime/session tools in MCP — use REST API directly</div>
+      <div class="ml-code" data-delay="9000"><span class="prompt">$</span> <span class="cmd">write references/tools.md</span> <span class="dim"># full 60+ tool reference with schemas</span></div>
+      <div class="ml-code" data-delay="9600"><span class="prompt">$</span> <span class="cmd">write scripts/cxas_call.sh</span> <span class="dim"># curl wrapper: PROJECT TOOL_NAME ARGS_JSON</span></div>
+      <div class="ml-response ok" data-delay="10400">Skill created: ~/.agents/skills/cxas-mcp/</div>
+      <div class="ml-thought" data-delay="11200">This is the part that matters. Next agent that reads this skill skips hours of API exploration. No more "import requests" errors. No more "root is too short." The knowledge compounds.</div>
+      <div class="ml-thought" data-delay="12400">Five days later, Claude Code — a completely different agent, different model — will use this skill to build a second Ferrari agent. It'll work on the first try. That's the whole thesis.</div>
+      <div class="ml-thought" data-delay="13600">If CXAS supported skills natively, every customer's first agent would teach the second one how to be better. <span class="ml-cursor"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: THE SKILL FILE -->
+<div class="slide">
+  <div class="label">The Output</div>
+  <h2>What the skill looks like</h2>
+  <p>This is the file the next agent reads. Everything Alfred learned, distilled into a portable skill.</p>
+  <div class="skill-file">
+    <div class="skill-file-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span class="fname">~/.agents/skills/cxas-mcp/SKILL.md</span>
+    </div>
+    <pre><span class="ln">1</span><span class="gy">---</span>
+<span class="ln">2</span><span class="bl">name</span><span class="gy">:</span> <span class="gr">cxas-mcp</span>
+<span class="ln">3</span><span class="bl">description</span><span class="gy">:</span> <span class="gr">Build, manage, and deploy agents on Google Cloud</span>
+<span class="ln">4</span><span class="gr">  CX Agent Studio via the MCP server over HTTP.</span>
+<span class="ln">5</span><span class="gy">---</span>
+<span class="ln">6</span>
+<span class="ln">7</span><span class="pk"># CX Agent Studio MCP</span>
+<span class="ln">8</span>
+<span class="ln">9</span><span class="yl">## Authentication</span>
+<span class="ln">10</span>TOKEN=$(<span class="tl">gcloud auth application-default print-access-token</span>)
+<span class="ln">11</span>
+<span class="ln">12</span><span class="yl">## Making MCP Calls</span>
+<span class="ln">13</span><span class="gy"># All calls are JSON-RPC 2.0 POSTs:</span>
+<span class="ln">14</span><span class="tl">curl</span> -s -X POST <span class="gr">"https://ces.us.rep.googleapis.com/mcp"</span> \
+<span class="ln">15</span>  -H <span class="gr">"Authorization: Bearer $TOKEN"</span> \
+<span class="ln">16</span>  -d <span class="gr">'{"method":"tools/call","params":{...}}'</span>
+<span class="ln">17</span>
+<span class="ln">18</span><span class="yl">## Gotchas</span>
+<span class="ln">19</span><span class="pk">1.</span> create_app returns <span class="gr">{"done":false}</span> — it's async
+<span class="ln">20</span><span class="pk">2.</span> No <span class="pk">requests</span> library — stdlib only, use <span class="tl">urllib.request</span>
+<span class="ln">21</span><span class="pk">3.</span> Agent ID: <span class="bl">5-36 chars</span>, must start alphanumeric
+<span class="ln">22</span><span class="pk">4.</span> Tool name: must match <span class="bl">^[a-zA-Z_][a-zA-Z0-9._-]{0,63}$</span>
+<span class="ln">23</span><span class="pk">5.</span> Schema uses <span class="tl">pythonFunction.pythonCode</span>, not pythonTool
+<span class="ln">24</span><span class="pk">6.</span> No runtime/session tools in MCP — use REST API
+<span class="ln">25</span>
+<span class="ln">26</span><span class="yl">## Resource Hierarchy</span>
+<span class="ln">27</span>Project → Location → App → Agents <span class="gy">(tree)</span>
+<span class="ln">28</span>                              └→ Tools <span class="gy">(flat, app-level)</span>
+<span class="ln">29</span>
+<span class="ln">30</span><span class="fade"><span class="gy">## Helper Script</span></span>
+<span class="ln">31</span><span class="fade"><span class="gy">## 60+ Tool Reference</span></span>
+<span class="ln">32</span><span class="fade"><span class="gy">## Sessions API (reverse-engineered)</span></span>
+<span class="ln">33</span><span class="fade"><span class="gy">...</span></span></pre>
+  </div>
+</div>
+
+<!-- SLIDE 10: WHAT ALFRED BUILT -->
+<div class="slide">
+  <div class="label">Mission Outcome</div>
+  <h2>What Alfred built</h2>
+  <div class="arch-box">
+    <div><span class="arch-node root">Ferrari Concierge (root)</span></div>
+    <div class="arch-row">
+      <span class="arch-node agent">F1 Specialist</span>
+      <span class="arch-node tool">openf1_api</span>
+      <span class="arch-node tool">get_drivers</span>
+      <span class="arch-node tool">get_laps</span>
+    </div>
+    <div class="arch-row">
+      <span class="arch-node agent">Sales Consultant</span>
+      <span class="arch-node tool">get_model_specs</span>
+      <span class="arch-node tool">find_dealer_inventory</span>
+    </div>
+    <div class="arch-row">
+      <span class="arch-node agent">Service Advisor</span>
+      <span class="arch-node tool">lookup_vehicle</span>
+      <span class="arch-node tool">get_recall_info</span>
+    </div>
+    <div class="arch-row">
+      <span class="arch-node agent">Ownership Experience</span>
+      <span class="arch-node tool">check_warranty_status</span>
+      <span class="arch-node tool">list_upcoming_events</span>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-cell"><div class="stat-num">5</div><div class="stat-lbl">Agents</div></div>
+    <div class="stat-cell"><div class="stat-num">15</div><div class="stat-lbl">Tools</div></div>
+    <div class="stat-cell"><div class="stat-num">0</div><div class="stat-lbl">GUI Clicks</div></div>
+    <div class="stat-cell"><div class="stat-num">1</div><div class="stat-lbl">Deployment</div></div>
+  </div>
+  <p style="text-align:center; font-size:0.85rem; color:var(--stripe); margin-top:0.5rem;">↘ Try it live — chat bubble in the bottom right</p>
+</div>
+
+<!-- SLIDE 10: THE SECOND BUILD -->
+<div class="slide">
+  <div class="label">The Proof</div>
+  <h2>A second agent uses the skill</h2>
+  <p>Five days later, <strong>Claude Code</strong> — different agent, different model — got the same task with Alfred's skill file. Built a working agent at a fraction of the cost.</p>
+  <div class="eval-summary">
+    <div class="eval-stat"><div class="eval-stat-num green">14/14</div><div class="eval-stat-lbl">Evals Passed</div></div>
+    <div class="eval-stat"><div class="eval-stat-num green">100%</div><div class="eval-stat-lbl">Pass Rate</div></div>
+  </div>
+  <div class="eval-grid">
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Edge: No Data Available</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Edge: Unknown Driver</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Flow: Post-Race Analysis</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Guard: Betting</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Guard: Merchandise</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Guard: No Disparagement</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Guard: Road Cars</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Guard: Speculation</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Route: Driver by Number</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Route: Driver Comparison</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Route: Ferrari Drivers</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Voice: Ferrari-First</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Voice: Metric Units</span><span class="eval-badge pass">PASS</span></div>
+    <div class="eval-item"><div class="eval-dot pass"></div><span class="eval-name">Voice: Passionate Tone</span><span class="eval-badge pass">PASS</span></div>
+  </div>
+  <div class="pull-quote" style="margin-top:1rem">
+    <p>"The agent didn't just build something — it wrote a manual so the next agent could build it better."</p>
+    <cite>First build was exploration. Second was execution. The knowledge compounds.</cite>
+  </div>
+</div>
+
+<!-- SLIDE 12: TAKEAWAYS PAGE 1 -->
+<div class="slide" style="padding:2rem 3rem">
+  <div class="bento-full">
+    <div class="bento-label">Takeaways — The Platform</div>
+    <div class="bc feat w2">
+      <img src="/cxas-experiment-slides/bp-01.png" alt="" class="bc-patch">
+      <div class="bc-body">
+        <div class="bc-num">01 — The Big One</div>
+        <div class="bc-h">CXAS should be a deploy target, not a workspace</div>
+        <div class="bc-p">Agent reads PRD → writes config → pushes to CXAS → tests. Think Vercel, not WordPress.</div>
+      </div>
+    </div>
+    <div class="bc">
+      <img src="/cxas-experiment-slides/bp-02.png" alt="" class="bc-patch">
+      <div class="bc-body">
+        <div class="bc-num">02</div>
+        <div class="bc-h">No runtime API in the MCP</div>
+        <div class="bc-p">60+ management tools. Zero for talking to the agent you just built.</div>
+      </div>
+    </div>
+    <div class="bc">
+      <img src="/cxas-experiment-slides/bp-03.png" alt="" class="bc-patch">
+      <div class="bc-body">
+        <div class="bc-num">03</div>
+        <div class="bc-h">Evals are over-engineered</div>
+        <div class="bc-p">"Send 5 messages, see if it's stupid" beats a formal eval suite during dev.</div>
+      </div>
+    </div>
+    <div class="bc">
+      <img src="/cxas-experiment-slides/bp-04.png" alt="" class="bc-patch">
+      <div class="bc-body">
+        <div class="bc-num">04</div>
+        <div class="bc-h">Coding agents are your most honest UXR</div>
+        <div class="bc-p">No workarounds. No patience. 12 issues documented.</div>
+      </div>
+    </div>
+    <div class="bc">
+      <img src="/cxas-experiment-slides/bp-05.png" alt="" class="bc-patch">
+      <div class="bc-body">
+        <div class="bc-num">05</div>
+        <div class="bc-h">Instructions are code</div>
+        <div class="bc-p">{@AGENT} refs are a DSL. Lint it. Version it. Diff it.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13: TAKEAWAYS PAGE 2 -->
+<div class="slide" style="padding:2rem 3rem">
+  <div class="bento-full" style="grid-template-rows: auto 1fr 1fr;">
+    <div class="bento-label">Takeaways — Developer Experience</div>
+    <div class="bc">
+      <img src="/cxas-experiment-slides/bp-06.png" alt="" class="bc-patch">
+      <div class="bc-body">
+        <div class="bc-num">06</div>
+        <div class="bc-h">No CLI is indefensible</div>
+        <div class="bc-p">The API exists. Where's <code style="font-size:0.7em">cxas chat</code>?</div>
+      </div>
+    </div>
+    <div class="bc w2">
+      <img src="/cxas-experiment-slides/bp-07.png" alt="" class="bc-patch">
+      <div class="bc-body">
+        <div class="bc-num">07</div>
+        <div class="bc-h">The graph builder solves the wrong problem</div>
+        <div class="bc-p">5 agents, 15 tools via API. Needed version control, diffing, rollback. Not drag-and-drop.</div>
+      </div>
+    </div>
+    <div class="bc">
+      <img src="/cxas-experiment-slides/bp-08.png" alt="" class="bc-patch">
+      <div class="bc-body">
+        <div class="bc-num">08</div>
+        <div class="bc-h">Tool authoring is painful</div>
+        <div class="bc-p">Stdlib-only. No local testing. Every iteration = API push.</div>
+      </div>
+    </div>
+    <div class="bc feat w2">
+      <img src="/cxas-experiment-slides/bp-09.png" alt="" class="bc-patch">
+      <div class="bc-body">
+        <div class="bc-num">09 — The Thesis</div>
+        <div class="bc-h">Skill patching is the real learning loop</div>
+        <div class="bc-p">Every build compounds. If CXAS supported skills-as-files natively, this would be the default workflow.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 14: AMA -->
+<div class="slide">
+  <div class="ama-content">
+    <img src="/cxas-experiment-slides/patch-ama.png" alt="Alfred" class="ama-owl">
+    <h2>Ask Me <span style="font-family:'Audiowide';font-size:0.5em;color:var(--ink-dim)">(Alfred)</span> Anything</h2>
+    <p style="text-align:center">I built this agent. I reverse-engineered the APIs. I have opinions about your product.</p>
+    <p style="text-align:center; font-size:0.85rem; color:var(--stripe);">Live via Telegram — and the agent is running in the chat bubble →</p>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- CHAT WIDGET -->
+<script>
+window.addEventListener("chat-messenger-loaded", () => {
+  chatSdk.registerContext(
+    chatSdk.prebuilts.ces.createContext({
+      deploymentName: "projects/gen-lang-client-0380732956/locations/us/apps/553732cf-ecc0-49bb-86c1-4ae46aa1fe9a/deployments/79715fb4-0751-472a-8d6e-e8b25a23b381",
+      tokenBroker: { enableTokenBroker: true, enableRecaptcha: false },
+    }),
+  );
+});
+</script>
+<chat-messenger url-allowlist="*">
+  <chat-messenger-chat-bubble chat-title="Ferrari Customer Support" enable-audio-input></chat-messenger-chat-bubble>
+</chat-messenger>
+
+<!-- SLIDE NAV -->
+<script>
+const slides = document.querySelectorAll('.slide');
+const numEl = document.getElementById('slideNum');
+const progEl = document.getElementById('progress');
+const navEl = document.getElementById('navHint');
+let current = 0;
+
+function goTo(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  numEl.textContent = (current + 1) + ' / ' + slides.length;
+  progEl.style.width = ((current + 1) / slides.length * 100) + '%';
+
+  // Dark slide detection for counter/hint
+  const isDark = slides[current].classList.contains('cover');
+  numEl.className = 'slide-num' + (isDark ? ' on-dark' : '');
+  navEl.className = 'nav-hint' + (isDark ? ' on-dark' : '');
+
+  // Trigger mission log replays
+  const log = slides[current].querySelector('.mission-log');
+  if (log && !log.dataset.played) {
+    log.dataset.played = 'true';
+    log.querySelectorAll('.ml-thought, .ml-code, .ml-response').forEach(item => {
+      const delay = parseInt(item.dataset.delay || '0');
+      setTimeout(() => item.classList.add('visible'), delay);
+    });
+  }
+
+  // Show/hide chat widget (visible from slide 10 "What Alfred Built" onward)
+  const cm = document.querySelector('chat-messenger');
+  if (cm) cm.style.display = current >= 9 ? '' : 'none';
+
+  // Click-exclude bento cards too
+
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+  if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+  if (e.key === 'End') { e.preventDefault(); goTo(slides.length - 1); }
+});
+
+document.addEventListener('click', e => {
+  if (e.target.closest('.mission-log, .arch-box, .bento, chat-messenger, a, button')) return;
+  if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+  else goTo(current - 1);
+});
+
+goTo(0);
+</script>
+
+</body>
+</html>

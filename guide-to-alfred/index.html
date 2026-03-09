@@ -827,6 +827,28 @@ Save the new SOUL.md. Welcome to having a personality.</code>
 
     <div class="divider"></div>
 
+    <!-- 16 REMOTE ACCESS -->
+    <div class="section fade-in" id="remote">
+      <div class="section-number">16</div>
+      <h2>Remote Access: Fix It From Your Phone</h2>
+      <img src="/guide-to-alfred/images/16-remote.png" alt="Owl using a tiny phone to control a distant server" class="section-img" loading="lazy" />
+      <p>
+        Sometimes things break. The gateway crashes, a cron job stalls, an update needs a restart. If you're away from your desk, you need a way to SSH into your Mac mini and run commands like <code>openclaw doctor</code> or <code>openclaw gateway start</code> directly from your phone.
+      </p>
+      <p>
+        The setup is <strong>Tailscale + Termius</strong>. <a href="https://tailscale.com">Tailscale</a> is a mesh VPN that gives your devices stable private IP addresses that work from anywhere &mdash; home, office, airport, hotel. No port forwarding, no dynamic DNS, no firewall config. Your Mac mini gets an address like <code>100.x.x.x</code> and it never changes.
+      </p>
+      <p>
+        <a href="https://termius.com">Termius</a> is an SSH client for iOS. Point it at your Mac mini's Tailscale IP, and you've got a full terminal session from your phone. It's not for writing code &mdash; it's for the "oh shit, the gateway is down and I'm at dinner" moments. Run <code>openclaw status</code>, restart the gateway, check logs, and get back to your evening.
+      </p>
+
+      <div class="callout">
+        <p><strong>Setup takes 10 minutes:</strong> Install Tailscale on your Mac mini and your iPhone (same account). Enable Remote Login on the Mac (System Settings &rarr; General &rarr; Sharing &rarr; Remote Login). Add your Tailscale IP as a host in Termius. Done. You now have terminal access to your agent's brain from anywhere in the world.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
     <!-- PRO TIPS -->
     <div class="section fade-in" id="tips">
       <h2>Pro Tips</h2>

@@ -360,6 +360,58 @@
     }
     .footer a:hover { color: var(--accent); }
 
+    /* --- TABLE OF CONTENTS SIDEBAR --- */
+    .toc {
+      position: fixed;
+      top: 120px;
+      width: 200px;
+      max-height: calc(100vh - 160px);
+      overflow-y: auto;
+      padding-right: 16px;
+      display: none;
+    }
+    .toc::-webkit-scrollbar { width: 0; }
+    .toc-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-tertiary);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    .toc a {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      padding: 5px 0 5px 16px;
+      border-left: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      line-height: 1.4;
+    }
+    .toc a:hover {
+      color: var(--text-secondary);
+    }
+    .toc a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      font-weight: 500;
+    }
+
+    @media (min-width: 1100px) {
+      .toc {
+        display: block;
+        left: calc(50% + 360px + 40px);
+      }
+    }
+    @media (min-width: 1340px) {
+      .toc {
+        left: calc(50% + 360px + 64px);
+      }
+    }
+
     /* --- RESPONSIVE --- */
     @media (max-width: 640px) {
       .hero { padding: 80px 20px 60px; }
@@ -405,8 +457,12 @@
     <div class="hero-eyebrow">OpenClaw Setup Guide</div>
     <h1>How I built an AI butler that actually does things</h1>
     <p class="hero-sub">
-      People keep asking about my setup. Here's everything &mdash; the architecture, the tricks, and the things that made the biggest difference. This isn't a tutorial. It's a field report.
+      Here's everything &mdash; the architecture, the tricks, and the things that made the biggest difference.
     </p>
+    <div class="tip" style="margin-top: 32px; max-width: 560px;">
+      <div class="tip-label">Pro tip</div>
+      <p>Send this guide to your OpenClaw and talk about it. It'll help you set up the same things.</p>
+    </div>
     <div class="hero-meta">
       <div class="hero-meta-item">
         <span class="hero-meta-label">Hardware</span>
@@ -430,6 +486,26 @@
       </div>
     </div>
   </div>
+
+  <nav class="toc" id="toc">
+    <div class="toc-title">On this page</div>
+    <a href="#topics">Telegram Topics</a>
+    <a href="#qmd">QMD Memory</a>
+    <a href="#memory">Memory System</a>
+    <a href="#heartbeat">Heartbeat</a>
+    <a href="#cron">Cron Jobs</a>
+    <a href="#skills">Skills</a>
+    <a href="#coding">Coding Modes</a>
+    <a href="#docs">Documents &amp; Sheets</a>
+    <a href="#deploy">GitHub + Vercel</a>
+    <a href="#tools">Tools</a>
+    <a href="#images">Image Gen</a>
+    <a href="#reactions">Reactions &amp; Streaming</a>
+    <a href="#updates">Staying Updated</a>
+    <a href="#personality">Personality</a>
+    <a href="#model">The Model</a>
+    <a href="#remote">Remote Access</a>
+  </nav>
 
   <div class="content">
 
@@ -504,6 +580,37 @@
       <p>
         This requires a reasonably powerful Mac &mdash; the embedding and reranking models run locally via Metal. An M4 handles it comfortably. There's a setup guide at <a href="https://alfred.barronroth.com/qmd-guide">alfred.barronroth.com/qmd-guide</a>.
       </p>
+
+      <p>
+        <strong>One thing to know about group chats:</strong> QMD memory search is <strong>denied by default</strong> in group sessions to prevent private memory from leaking to other participants. This is the right default &mdash; you don't want your financial notes showing up when someone asks a question in a shared chat.
+      </p>
+      <p>
+        But you can expand the scope selectively. I allow QMD in my two private Telegram topic groups (one personal, one shared with my fianc&eacute;e) by adding rules to <code>memory.qmd.scope</code> in <code>openclaw.json</code>:
+      </p>
+
+      <div class="code-block">
+        <div class="code-label">openclaw.json &mdash; QMD scope config</div>
+        <code>"memory": {
+  "qmd": {
+    "scope": {
+      "default": "deny",
+      "rules": [
+        { "action": "allow", "match": { "chatType": "direct" } },
+        { "action": "allow", "match": { "rawKeyPrefix": "agent:main:telegram:group:-100..." } }
+      ]
+    }
+  }
+}</code>
+      </div>
+
+      <p>
+        Scope is <strong>group-level, not topic-level</strong> &mdash; all topics within an allowed group get the same QMD access. There's one shared index, so a search in any topic can surface snippets from any memory file. If you need tighter isolation, you'd need separate collections. For most setups, group-level is fine.
+      </p>
+
+      <div class="tip">
+        <div class="tip-label">Ask your OpenClaw</div>
+        <p><em>&ldquo;Set up QMD for local memory search. I want session transcripts embedded automatically so you can search our conversation history, plus auto-embed on file save.&rdquo;</em></p>
+      </div>
     </div>
 
     <!-- 03 MEMORY -->
@@ -560,6 +667,11 @@
       <p>
         Most heartbeats result in silence. Occasionally Alfred surfaces something I would have missed &mdash; a vendor reply buried in a secondary inbox, an upcoming calendar event, a flight that changed. The ratio of signal to noise is what makes it work.
       </p>
+
+      <div class="tip">
+        <div class="tip-label">Ask your OpenClaw</div>
+        <p><em>&ldquo;Set up a heartbeat that runs every 30 minutes during waking hours. Have it check my email for anything urgent, look at my calendar for upcoming events, and scan my todo list. Stay quiet if there&rsquo;s nothing to report.&rdquo;</em></p>
+      </div>
     </div>
 
     <!-- 05 CRON -->
@@ -588,6 +700,11 @@
 
       <div class="callout-green callout">
         <p><strong>Pro tip:</strong> Use cron for anything that needs exact timing or isolation. Use heartbeat for batching multiple checks together within session context. They complement each other.</p>
+      </div>
+
+      <div class="tip">
+        <div class="tip-label">Ask your OpenClaw</div>
+        <p><em>&ldquo;Create a morning briefing cron job that runs at 7 AM every day. Have it check my email, calendar, and weather, then send me a digest in chat before I wake up.&rdquo;</em></p>
       </div>
     </div>
 
@@ -665,6 +782,11 @@
       <p>
         Everything lives as subdirectories in one repo. Clean URLs, instant deploys, zero config per project.
       </p>
+
+      <div class="tip">
+        <div class="tip-label">Ask your OpenClaw</div>
+        <p><em>&ldquo;Help me set up a GitHub repo and Vercel project so you can build and deploy web pages to my domain. I want you to be able to ship things I can share as URLs.&rdquo;</em></p>
+      </div>
     </div>
 
     <!-- 10 TOOLS & INTEGRATIONS -->
@@ -739,6 +861,11 @@
       <p>
         It's a small config change but it transforms the conversational feel. Streaming is default now in recent OpenClaw versions, but reactions need to be enabled per channel.
       </p>
+
+      <div class="tip">
+        <div class="tip-label">Ask your OpenClaw</div>
+        <p><em>&ldquo;Enable emoji reactions on my Telegram channel so I can see when you&rsquo;re reading and processing my messages.&rdquo;</em></p>
+      </div>
     </div>
 
     <!-- 13 STAYING UPDATED -->
@@ -755,6 +882,11 @@
       <p>
         This has been one of the best ways to <strong>continuously improve my setup</strong> without spending time researching. The agent that benefits from the updates is the same one explaining them to you.
       </p>
+
+      <div class="tip">
+        <div class="tip-label">Ask your OpenClaw</div>
+        <p><em>&ldquo;Check if there are any OpenClaw updates available. Read the release notes and tell me what&rsquo;s relevant to my setup.&rdquo;</em></p>
+      </div>
     </div>
 
     <!-- 14 PERSONALITY -->
@@ -842,52 +974,14 @@ Save the new SOUL.md. Welcome to having a personality.</code>
         <a href="https://termius.com">Termius</a> is an SSH client for iOS. Point it at your Mac mini's Tailscale IP, and you've got a full terminal session from your phone. It's not for writing code &mdash; it's for the "oh shit, the gateway is down and I'm at dinner" moments. Run <code>openclaw status</code>, restart the gateway, check logs, and get back to your evening.
       </p>
 
-      <div class="callout">
-        <p><strong>Setup takes 10 minutes:</strong> Install Tailscale on your Mac mini and your iPhone (same account). Enable Remote Login on the Mac (System Settings &rarr; General &rarr; Sharing &rarr; Remote Login). Add your Tailscale IP as a host in Termius. Done. You now have terminal access to your agent's brain from anywhere in the world.</p>
+      <div class="tip">
+        <div class="tip-label">Ask your OpenClaw</div>
+        <p><em>&ldquo;Help me set up Tailscale and Termius so I can SSH into you from my phone if something breaks while I&rsquo;m out.&rdquo;</em></p>
       </div>
-    </div>
 
-    <div class="divider"></div>
-
-    <!-- PRO TIPS -->
-    <div class="section fade-in" id="tips">
-      <h2>Pro Tips</h2>
-      <p>The stuff that's not obvious until you've been doing this for a while:</p>
-
-      <ul class="feature-list">
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Ask your agent to check for OpenClaw updates.</strong> It'll read the release notes, explain what matters for your config, and suggest changes. You'll adopt features you'd never find on your own.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Use cron jobs aggressively.</strong> Morning briefings, overnight monitoring, one-shot reminders. This is what makes your agent feel like it works for you 24/7, not just when you're chatting.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Install skills via <a href="https://skills.sh">skills.sh</a>, not ClawHub.</strong> Skills.sh distributes to OpenClaw, Codex, Claude Code, and IDE sessions simultaneously. One install, everywhere.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Give it a domain and Vercel access.</strong> The ability to say "build me a page for X" and have a live URL minutes later makes every project more tangible and shareable.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Write everything down.</strong> If your agent says "I'll remember that" &mdash; make sure it's actually writing to a file. Mental notes die with the session. Files are forever.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Let the AI write its own personality.</strong> Describe the vibe, let it author <code>SOUL.md</code>. It follows self-written instructions more naturally than ones you impose.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Enable emoji reactions.</strong> Tiny config change, huge improvement in conversational feel. You'll always know when your agent is reading vs. thinking vs. responding.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Use Google Sheets for anything that needs tracking over time.</strong> Vendor comparisons, budgets, research. Your agent can read and write to them, and you get shared access with anyone.</span>
-        </li>
-      </ul>
+      <p>
+        It'll walk you through installing Tailscale on both devices, enabling Remote Login on your Mac, and configuring Termius with the right IP. Ten minutes, tops.
+      </p>
     </div>
 
     <div class="divider"></div>
@@ -934,6 +1028,30 @@ Save the new SOUL.md. Welcome to having a personality.</code>
       { threshold: 0, rootMargin: '-80px 0px 0px 0px' }
     );
     observer.observe(hero);
+
+    // ToC scroll tracking
+    const tocLinks = document.querySelectorAll('.toc a');
+    const tocSections = Array.from(tocLinks).map(link => {
+      const id = link.getAttribute('href').slice(1);
+      return { id, el: document.getElementById(id), link };
+    }).filter(s => s.el);
+
+    const tocObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          const item = tocSections.find(s => s.el === entry.target);
+          if (item) item.visible = entry.isIntersecting;
+        });
+        // Activate the first visible section
+        const active = tocSections.find(s => s.visible);
+        if (active) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          active.link.classList.add('active');
+        }
+      },
+      { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+    );
+    tocSections.forEach(s => tocObserver.observe(s.el));
 
     // Fade-in on scroll
     const faders = document.querySelectorAll('.fade-in');

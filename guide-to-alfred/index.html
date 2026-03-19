@@ -694,6 +694,10 @@
         </li>
         <li>
           <span class="bullet">&mdash;</span>
+          <span><strong>Log health check</strong> &mdash; runs at 2 AM, scans the last 24 hours of gateway logs for errors, cron failures, API issues, and delivery problems. Only pings me if something's actually broken, with a proposed fix. This is how I found out my skills were silently failing to load &mdash; hundreds of warnings I never would have seen.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
           <span><strong>One-shot reminders</strong> &mdash; "remind me in 20 minutes" becomes a cron that fires once and delivers to the chat.</span>
         </li>
       </ul>

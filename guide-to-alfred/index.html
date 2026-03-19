@@ -698,6 +698,10 @@
         </li>
         <li>
           <span class="bullet">&mdash;</span>
+          <span><strong>Self-upgrade</strong> &mdash; two crons working together. One runs at 3 AM and silently updates skills (ClawHub + skills.sh), QMD, and Homebrew dependencies. The other runs at 5 PM and checks for OpenClaw core updates &mdash; if a new version is available, it reads the release notes and tells me what's relevant to my setup. Everything stays current without me thinking about it. I wake up with the latest skills and get pinged only when there's a meaningful OpenClaw release.</span>
+        </li>
+        <li>
+          <span class="bullet">&mdash;</span>
           <span><strong>One-shot reminders</strong> &mdash; "remind me in 20 minutes" becomes a cron that fires once and delivers to the chat.</span>
         </li>
       </ul>

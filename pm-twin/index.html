@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Twin — Internal Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Apestron';
+  src: url('/cxas-experiment-slides/Apestron.ttf') format('truetype');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+:root {
+  --cream: #f5f0e8; --paper: #ede8dc; --warm-white: #faf8f3;
+  --navy: #1a2744; --navy-light: #2a3d66;
+  --teal: #1a6b5a; --teal-light: #48a892;
+  --rust: #c44d2b; --rust-light: #e67a58;
+  --ink: #1f1f2e; --ink-muted: #5a5a72; --ink-dim: #8a8a9e;
+  --border: #d4cfc3; --stripe: #c44d2b;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 18px; background: var(--cream); }
+body { font-family: 'Archivo', sans-serif; color: var(--ink); overflow: hidden; height: 100dvh; }
+
+/* ── SLIDE SYSTEM ── */
+.deck { position: relative; width: 100vw; height: 100dvh; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 4rem 6rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(8px);
+  overflow-y: auto;
+}
+.slide.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.slide-num {
+  position: fixed; bottom: 1.2rem; right: 2rem;
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  color: var(--ink-dim); letter-spacing: 0.1em; z-index: 100;
+}
+.progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--stripe); z-index: 100;
+  transition: width 0.4s ease;
+}
+
+/* ── DOT NAV ── */
+.dot-nav {
+  position: fixed; right: 1.2rem; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 8px; z-index: 100;
+}
+.dot-nav button {
+  width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--ink-dim);
+  background: transparent; cursor: pointer; padding: 0;
+  transition: background 0.3s, border-color 0.3s, transform 0.2s;
+}
+.dot-nav button:hover { transform: scale(1.4); }
+.dot-nav button.active { background: var(--stripe); border-color: var(--stripe); }
+
+/* ── TYPOGRAPHY ── */
+h1 {
+  font-family: 'Apestron', 'Orbitron', sans-serif;
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  font-weight: normal; line-height: 1.05;
+  text-transform: uppercase; color: var(--navy);
+  margin-bottom: 1.5rem;
+}
+h2 {
+  font-family: 'Apestron', 'Orbitron', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: normal; line-height: 1.15;
+  text-transform: uppercase; color: var(--navy);
+  margin-bottom: 1.25rem;
+}
+p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800px; margin-bottom: 1rem; }
+.label {
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--stripe);
+  margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem;
+}
+.label::before { content: ''; width: 32px; height: 2px; background: var(--stripe); }
+
+/* ── TITLE SLIDE ── */
+.title-content { text-align: center; max-width: 800px; }
+.title-badge {
+  display: inline-flex; padding: 0.4rem 1rem;
+  border: 1.5px solid var(--navy); border-radius: 2px;
+  font-family: 'Orbitron', sans-serif; font-size: 0.55rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--navy); margin-bottom: 1.5rem;
+}
+.title-sub {
+  font-family: 'Archivo', sans-serif; font-size: 1.2rem;
+  color: var(--ink-muted); line-height: 1.6; max-width: 600px; margin: 0 auto;
+}
+
+/* ── DREAM SLIDE (image) ── */
+.dream-img {
+  max-width: 500px; width: 100%; border-radius: 10px;
+  box-shadow: 0 8px 40px rgba(26,39,68,0.12); margin-bottom: 1.5rem;
+}
+.dream-caption {
+  font-family: 'Archivo', sans-serif; font-size: 1.15rem;
+  color: var(--ink-muted); font-style: italic; text-align: center; max-width: 600px;
+}
+
+/* ── PROBLEM SLIDE ── */
+.problem-text {
+  text-align: center; max-width: 700px;
+}
+.problem-text .big {
+  font-family: 'Archivo', sans-serif; font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 600; color: var(--navy); line-height: 1.4; margin-bottom: 0.8rem;
+}
+.problem-text .dim {
+  font-family: 'Archivo', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 400; color: var(--ink-dim); line-height: 1.5;
+}
+
+/* ── TERMINAL ── */
+.terminal {
+  max-width: 820px; width: 100%; background: #1e1e2e; border-radius: 10px;
+  overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+.terminal-bar {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem;
+  background: #2a2a3e; border-bottom: 1px solid #3a3a50;
+}
+.terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+.terminal-dot.r { background: #ff5f57; }
+.terminal-dot.y { background: #febc2e; }
+.terminal-dot.g { background: #28c840; }
+.terminal-title { margin-left: 0.5rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #8a8a9e; letter-spacing: 0.05em; }
+.terminal pre {
+  padding: 1.2rem 1.5rem; margin: 0; font-family: 'Space Mono', monospace;
+  font-size: 0.68rem; line-height: 1.65; color: #cdd6f4; overflow-x: auto; white-space: pre-wrap;
+}
+.terminal .gy { color: #6c7086; }
+.terminal .pk { color: #f38ba8; }
+.terminal .tl { color: var(--teal-light); }
+
+.punchline {
+  font-family: 'Space Mono', monospace; font-size: 0.8rem;
+  color: var(--rust); text-align: center; margin-top: 1.2rem; letter-spacing: 0.03em;
+}
+
+/* ── CONSTELLATION SLIDE ── */
+.constellation-layout {
+  display: flex; width: 100%; max-width: 1200px; height: 70vh; gap: 2rem; align-items: center;
+}
+.constellation-text {
+  width: 30%; flex-shrink: 0;
+}
+.constellation-text p {
+  font-size: 1rem; line-height: 1.7; color: var(--ink-muted);
+}
+.constellation-viz {
+  width: 70%; height: 100%; position: relative; overflow: hidden;
+}
+.constellation-chip {
+  position: absolute; display: flex; align-items: center; gap: 4px;
+  padding: 3px 10px 3px 6px; border-radius: 20px;
+  background: rgba(30,30,46,0.85); color: #e0dcd4;
+  white-space: nowrap; z-index: 2;
+  transform: translate(-50%, -50%);
+  transition: none;
+  border-width: 1.5px; border-style: solid;
+}
+.constellation-chip .chip-icon { font-style: normal; }
+.constellation-chip .chip-label { font-family: 'Space Mono', monospace; }
+.you-badge {
+  position: absolute; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--navy); border: 2px solid var(--rust);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Mono', monospace; font-size: 0.55rem; font-weight: 700;
+  color: var(--cream); letter-spacing: 0.1em; z-index: 3;
+  left: 50%; top: 50%; transform: translate(-50%, -50%);
+}
+.constellation-lines {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+}
+
+@keyframes chip-drift-1 { 0%,100% { transform: translate(-50%, -50%) translate(0, 0); } 50% { transform: translate(-50%, -50%) translate(3px, -2px); } }
+@keyframes chip-drift-2 { 0%,100% { transform: translate(-50%, -50%) translate(0, 0); } 50% { transform: translate(-50%, -50%) translate(-2px, 3px); } }
+@keyframes chip-drift-3 { 0%,100% { transform: translate(-50%, -50%) translate(0, 0); } 50% { transform: translate(-50%, -50%) translate(2px, 2px); } }
+
+/* ── CATALYST CARDS ── */
+.catalyst-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  max-width: 1000px; width: 100%; margin: 2rem 0 1.5rem;
+}
+.catalyst-card {
+  background: var(--warm-white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 2rem 1.5rem; text-align: center;
+}
+.catalyst-icon {
+  font-size: 2rem; margin-bottom: 1rem; display: block;
+}
+.catalyst-card h3 {
+  font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy);
+  margin-bottom: 0.75rem;
+}
+.catalyst-card p {
+  font-size: 0.85rem; line-height: 1.6; color: var(--ink-muted);
+  text-align: center; margin: 0 auto;
+}
+.catalyst-footer {
+  font-family: 'Space Mono', monospace; font-size: 0.75rem;
+  color: var(--ink-dim); text-align: center; max-width: 700px; line-height: 1.6;
+}
+
+/* ── FIX SLIDE ── */
+.fix-content { text-align: center; max-width: 700px; }
+.fix-content p { text-align: center; margin: 0 auto 1rem; }
+.fix-highlight {
+  font-family: 'Orbitron', sans-serif; font-size: 0.9rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--rust); margin-top: 1.5rem;
+}
+
+/* ── ARCHITECTURE SLIDE ── */
+.arch-cols {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  max-width: 1000px; width: 100%; margin: 1.5rem 0;
+}
+.arch-col {
+  background: var(--warm-white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.5rem; text-align: center;
+}
+.arch-col .file-name {
+  font-family: 'Space Mono', monospace; font-size: 0.8rem;
+  color: var(--navy); font-weight: 700; margin-bottom: 0.5rem;
+}
+.arch-col p {
+  font-size: 0.82rem; line-height: 1.5; color: var(--ink-muted);
+  text-align: center; margin: 0 auto;
+}
+.yaml-block {
+  max-width: 700px; width: 100%; background: #1e1e2e; border-radius: 10px;
+  overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+.yaml-block .terminal-bar { background: #2a2a3e; border-bottom: 1px solid #3a3a50; }
+.yaml-block pre {
+  padding: 1rem 1.5rem; margin: 0; font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; line-height: 1.7; color: #cdd6f4; overflow-x: auto;
+}
+.yaml-block .yl { color: #f9e2af; }
+.yaml-block .gr { color: #a6e3a1; }
+.yaml-block .bl { color: #89b4fa; }
+.yaml-block .gy { color: #6c7086; }
+
+/* ── CHAIN SLIDE ── */
+.chain-content { max-width: 750px; width: 100%; }
+.chain-prompt {
+  font-family: 'Space Mono', monospace; font-size: 0.82rem;
+  background: #1e1e2e; color: #cdd6f4; padding: 0.8rem 1.2rem;
+  border-radius: 8px; margin-bottom: 2rem;
+}
+.chain-prompt .prompt-char { color: var(--teal-light); }
+.chain-timeline { position: relative; padding-left: 2.5rem; }
+.chain-timeline::before {
+  content: ''; position: absolute; left: 0.85rem; top: 0; bottom: 0;
+  width: 2px; background: var(--border);
+}
+.chain-step {
+  position: relative; padding: 0.6rem 0 0.6rem 1.5rem;
+  opacity: 0; transform: translateX(-8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.chain-step.visible { opacity: 1; transform: translateX(0); }
+.chain-step::before {
+  content: ''; position: absolute; left: -1.65rem; top: 1rem;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--border); border: 2px solid var(--cream);
+  transition: background 0.4s;
+}
+.chain-step.visible::before { background: var(--teal); }
+.chain-step .step-icon { font-size: 1rem; margin-right: 0.5rem; }
+.chain-step .step-title {
+  font-family: 'Archivo', sans-serif; font-weight: 700;
+  font-size: 0.9rem; color: var(--navy); display: inline;
+}
+.chain-step .step-desc {
+  font-family: 'Archivo', sans-serif; font-size: 0.8rem;
+  color: var(--ink-dim); margin-left: 0.3rem;
+}
+.chain-output {
+  margin-top: 1.5rem; padding: 1rem 1.2rem;
+  background: rgba(26,107,90,0.06); border: 1px solid var(--teal);
+  border-radius: 8px; text-align: center;
+  font-family: 'Space Mono', monospace; font-size: 0.78rem;
+  color: var(--teal); opacity: 0; transition: opacity 0.6s ease;
+}
+.chain-output.visible { opacity: 1; }
+
+/* ── UNLOCK CARDS ── */
+.unlock-cards {
+  display: flex; flex-direction: column; gap: 0.8rem;
+  max-width: 800px; width: 100%; margin: 1.5rem 0;
+}
+.unlock-card {
+  display: grid; grid-template-columns: 140px 1fr; gap: 1rem;
+  background: var(--warm-white); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1rem 1.5rem; align-items: center;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.unlock-card.visible { opacity: 1; transform: translateY(0); }
+.unlock-card .uc-action {
+  font-family: 'Orbitron', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--rust);
+  font-weight: 600;
+}
+.unlock-card .uc-prompt {
+  font-family: 'Space Mono', monospace; font-size: 0.72rem;
+  color: var(--navy); margin-bottom: 0.3rem;
+}
+.unlock-card .uc-desc {
+  font-size: 0.78rem; color: var(--ink-dim); line-height: 1.4;
+}
+
+/* ── GET STARTED ── */
+.steps {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+  max-width: 1000px; width: 100%; margin: 2rem 0;
+}
+.step {
+  text-align: center; padding: 1.5rem 1rem;
+}
+.step-num {
+  font-family: 'Orbitron', sans-serif; font-size: 2rem;
+  font-weight: 700; color: var(--navy); opacity: 0.15; margin-bottom: 0.5rem;
+}
+.step h3 {
+  font-family: 'Archivo', sans-serif; font-size: 0.9rem;
+  font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;
+}
+.step p {
+  font-size: 0.8rem; color: var(--ink-muted); text-align: center;
+  margin: 0 auto; line-height: 1.5;
+}
+
+/* ── CLOSER ── */
+.closer-content { text-align: center; max-width: 700px; }
+.closer-content .line1 {
+  font-family: 'Archivo', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
+  color: var(--ink-muted); margin-bottom: 0.6rem; font-weight: 400;
+}
+.closer-content .line2 {
+  font-family: 'Archivo', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
+  color: var(--navy); margin-bottom: 1.5rem; font-weight: 600;
+}
+.closer-content .line3 {
+  font-family: 'Orbitron', sans-serif; font-size: clamp(1rem, 1.8vw, 1.4rem);
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust);
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="slide-num" id="slideNum"></div>
+<div class="dot-nav" id="dotNav"></div>
+
+<div class="deck" id="deck">
+
+<!-- SLIDE 0: TITLE -->
+<div class="slide active">
+  <div class="title-content">
+    <div class="title-badge">Internal / March 2026</div>
+    <h1>PM Twin</h1>
+    <p class="title-sub">Eliminate context saturation.<br>Ship artifacts in one prompt.</p>
+  </div>
+</div>
+
+<!-- SLIDE 1: THE DREAM -->
+<div class="slide">
+  <div style="text-align:center;">
+    <div class="label" style="justify-content:center;">The Dream</div>
+    <img src="/pm-twin/gabor-tweet.jpg" alt="Gabor Tweet" class="dream-img">
+    <p class="dream-caption">"This is already possible. You just have to solve one problem first."</p>
+  </div>
+</div>
+
+<!-- SLIDE 2: THE PROBLEM -->
+<div class="slide">
+  <div class="problem-text">
+    <div class="label" style="justify-content:center;">The Problem</div>
+    <p class="big">The model is capable enough.</p>
+    <p class="dim">It just doesn't have your context.</p>
+  </div>
+</div>
+
+<!-- SLIDE 3: REALITY -->
+<div class="slide" style="padding: 3rem 5vw;">
+  <div class="label">Reality</div>
+  <h2>What using AI actually looks like</h2>
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+      <span class="terminal-title">claude — prompt.md</span>
+    </div>
+    <pre>You are a Senior PM at Google Cloud on the Applied AI team.
+I'm working on Project Jupiter — it's our enterprise agent
+builder. Key context:
+<span class="gy">- The latest PRD is here:</span> <span class="pk">[paste 3000 word doc]</span>
+<span class="gy">- Here's the chat transcript from today's standup:</span>
+  <span class="pk">[paste 200 lines of Google Chat]</span>
+<span class="gy">- Key stakeholders:</span> Sarah (EM), Mike (TL), Priya (UXR)
+<span class="gy">- We had a meeting yesterday where we decided to pivot
+  the onboarding flow. Notes:</span> <span class="pk">[paste meeting transcript]</span>
+<span class="gy">- Related OKRs:</span> <span class="pk">[paste from spreadsheet]</span>
+<span class="gy">- Customer escalation from Acme Corp:</span> <span class="pk">[paste email thread]</span>
+<span class="gy">- Eng design doc with API constraints:</span> <span class="pk">[paste another doc]</span>
+<span class="gy">- Adjacent team (Project Saturn) scope overlap:</span> <span class="pk">[paste chat]</span>
+<span class="gy">- Competitive analysis from last sprint:</span> <span class="pk">[paste slides]</span>
+<span class="gy">- User research findings from Priya:</span> <span class="pk">[paste research summary]</span>
+
+OK NOW — given ALL of that context, write me a
+status update doc for the steering committee.</pre>
+  </div>
+  <p class="punchline">...and you still missed 3 relevant threads.</p>
+</div>
+
+<!-- SLIDE 4: THE REALIZATION (CONSTELLATION) -->
+<div class="slide" style="padding: 3rem 5vw;" id="slide-constellation">
+  <div class="constellation-layout">
+    <div class="constellation-text">
+      <div class="label">The Realization</div>
+      <h2 style="font-size: clamp(1.3rem, 2.2vw, 2rem);">A project isn't a doc. It's a constellation.</h2>
+      <p>All that pasting made me realize what my work actually is. I work on projects — and projects aren't artifacts. They're ephemeral blobs of context drifting through time.</p>
+    </div>
+    <div class="constellation-viz" id="constellationViz">
+      <svg class="constellation-lines" id="constellationLines"></svg>
+      <div class="you-badge">YOU</div>
+      <!-- chips injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: THE CATALYST -->
+<div class="slide">
+  <div style="text-align:center; width:100%; max-width: 1000px;">
+    <div class="label" style="justify-content:center;">The Catalyst</div>
+    <h2>Three things happened at once</h2>
+    <div class="catalyst-cards">
+      <div class="catalyst-card">
+        <span class="catalyst-icon">&#128196;</span>
+        <h3>Skills became a primitive</h3>
+        <p>A plain-text instruction file. No fine-tuning, no code. Gemini CLI adopted the skills protocol.</p>
+      </div>
+      <div class="catalyst-card">
+        <span class="catalyst-icon">&#129504;</span>
+        <h3>Memory got simple</h3>
+        <p>Markdown files the agent reads on wake, writes before sleep. Inspired by OpenClaw.</p>
+      </div>
+      <div class="catalyst-card">
+        <span class="catalyst-icon">&#128172;</span>
+        <h3>Chat became accessible</h3>
+        <p>The final piece. Google Chat added to the Workspace MCP server. The full picture was obtainable.</p>
+      </div>
+    </div>
+    <p class="catalyst-footer">Skills gave agents direction. Memory gave them continuity. Chat completed the context.</p>
+  </div>
+</div>
+
+<!-- SLIDE 6: THE FIX -->
+<div class="slide">
+  <div class="fix-content">
+    <div class="label" style="justify-content:center;">The Fix</div>
+    <h2>So I built PM Twin</h2>
+    <p>A skill that gives your AI the same project context you carry in your head. You describe your project universe once — your chats, your docs, your lingo — and the agent resolves the rest every time you prompt.</p>
+    <p class="fix-highlight">Three files. Zero pasting. Full context.</p>
+  </div>
+</div>
+
+<!-- SLIDE 7: ARCHITECTURE -->
+<div class="slide" style="padding: 3rem 5vw;">
+  <div style="text-align:center; width:100%; max-width:1000px;">
+    <div class="label" style="justify-content:center;">Architecture</div>
+    <h2>Your context, structured once</h2>
+    <div class="arch-cols">
+      <div class="arch-col">
+        <div class="file-name">pmcontext.yaml</div>
+        <p>Your project universe. Chat spaces, pinned docs, sheets, customer accounts.</p>
+      </div>
+      <div class="arch-col">
+        <div class="file-name">glossary.md</div>
+        <p>Your team's language. Codenames, acronyms, people, systems.</p>
+      </div>
+      <div class="arch-col">
+        <div class="file-name">memory/</div>
+        <p>Persistent context across sessions. The skill writes what it learns.</p>
+      </div>
+    </div>
+    <div class="yaml-block">
+      <div class="terminal-bar">
+        <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+        <span class="terminal-title">pmcontext.yaml</span>
+      </div>
+      <pre><span class="yl">projects</span><span class="gy">:</span>
+  <span class="bl">jupiter</span><span class="gy">:</span>
+    <span class="yl">name</span><span class="gy">:</span> <span class="gr">Project Jupiter</span>
+    <span class="yl">description</span><span class="gy">:</span> <span class="gr">Enterprise agent builder platform</span>
+    <span class="yl">chats</span><span class="gy">:</span>
+      <span class="gy">-</span> <span class="yl">space</span><span class="gy">:</span> <span class="gr">spaces/AAAA1234</span>
+        <span class="yl">name</span><span class="gy">:</span> <span class="gr">Jupiter Core Team</span>
+      <span class="gy">-</span> <span class="yl">space</span><span class="gy">:</span> <span class="gr">spaces/BBBB5678</span>
+        <span class="yl">name</span><span class="gy">:</span> <span class="gr">Jupiter XFN</span>
+    <span class="yl">docs</span><span class="gy">:</span>
+      <span class="gy">-</span> <span class="yl">id</span><span class="gy">:</span> <span class="gr">1a2b3c4d</span>
+        <span class="yl">name</span><span class="gy">:</span> <span class="gr">Jupiter PRD v3</span>
+      <span class="gy">-</span> <span class="yl">id</span><span class="gy">:</span> <span class="gr">5e6f7g8h</span>
+        <span class="yl">name</span><span class="gy">:</span> <span class="gr">API Design Doc</span>
+    <span class="yl">meetings</span><span class="gy">:</span>
+      <span class="gy">-</span> <span class="gr">Jupiter Weekly Sync</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: THE CHAIN (HERO ANIMATED) -->
+<div class="slide" id="slide-chain" style="padding: 3rem 5vw;">
+  <div class="chain-content">
+    <div class="label">The Chain</div>
+    <h2 style="font-size: clamp(1.3rem, 2.2vw, 1.8rem);">One prompt. Watch what happens.</h2>
+    <div class="chain-prompt">
+      <span class="prompt-char">$</span> Catch me up on everything that happened with Jupiter today.
+    </div>
+    <div class="chain-timeline" id="chainTimeline">
+      <div class="chain-step" data-delay="0">
+        <span class="step-icon">&#128203;</span>
+        <span class="step-title">Resolve project</span>
+        <span class="step-desc">— reads pmcontext.yaml → "Jupiter" matches → loads config</span>
+      </div>
+      <div class="chain-step" data-delay="1000">
+        <span class="step-icon">&#128214;</span>
+        <span class="step-title">Absorb glossary</span>
+        <span class="step-desc">— Jupiter = codename, key people identified</span>
+      </div>
+      <div class="chain-step" data-delay="2000">
+        <span class="step-icon">&#129504;</span>
+        <span class="step-title">Read memory</span>
+        <span class="step-desc">— last work: updated PRD, flagged API concern</span>
+      </div>
+      <div class="chain-step" data-delay="3000">
+        <span class="step-icon">&#128172;</span>
+        <span class="step-title">Pull chat history</span>
+        <span class="step-desc">— Workspace MCP → 14 threads, 3 from today</span>
+      </div>
+      <div class="chain-step" data-delay="4000">
+        <span class="step-icon">&#127909;</span>
+        <span class="step-title">Find transcripts</span>
+        <span class="step-desc">— "Notes by Gemini" → Jupiter Weekly Sync</span>
+      </div>
+      <div class="chain-step" data-delay="5000">
+        <span class="step-icon">&#128196;</span>
+        <span class="step-title">Follow references</span>
+        <span class="step-desc">— transcript links to design doc → reads it</span>
+      </div>
+      <div class="chain-step" data-delay="6000">
+        <span class="step-icon">&#10024;</span>
+        <span class="step-title">Synthesize</span>
+        <span class="step-desc">— full context assembled → generates output</span>
+      </div>
+    </div>
+    <div class="chain-output" id="chainOutput">
+      Output: A complete, context-rich status doc. Names correct. Decisions cited.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: WHAT THIS UNLOCKS -->
+<div class="slide" id="slide-unlock" style="padding: 3rem 5vw;">
+  <div style="width:100%; max-width:800px;">
+    <div class="label">What This Unlocks</div>
+    <h2 style="font-size: clamp(1.2rem, 2vw, 1.7rem);">You stop being the bottleneck between context and output.</h2>
+    <div class="unlock-cards" id="unlockCards">
+      <div class="unlock-card">
+        <div class="uc-action">Catch up</div>
+        <div>
+          <div class="uc-prompt">"What happened with Jupiter this week?"</div>
+          <div class="uc-desc">Synthesized from chats, meetings, doc changes.</div>
+        </div>
+      </div>
+      <div class="unlock-card">
+        <div class="uc-action">Create</div>
+        <div>
+          <div class="uc-prompt">"Write the PRD follow-up based on yesterday's decisions."</div>
+          <div class="uc-desc">Diffs transcript against PRD.</div>
+        </div>
+      </div>
+      <div class="unlock-card">
+        <div class="uc-action">Prepare</div>
+        <div>
+          <div class="uc-prompt">"Prep me for tomorrow's steering review."</div>
+          <div class="uc-desc">Reads OKRs, threads, Buganizer, status doc.</div>
+        </div>
+      </div>
+      <div class="unlock-card">
+        <div class="uc-action">Connect</div>
+        <div>
+          <div class="uc-prompt">"What did Saturn say about our API proposal?"</div>
+          <div class="uc-desc">Crosses project boundaries via YAML.</div>
+        </div>
+      </div>
+      <div class="unlock-card">
+        <div class="uc-action">Ship</div>
+        <div>
+          <div class="uc-prompt">"Write the doc I promised in the meeting."</div>
+          <div class="uc-desc">The Gabor dream. It just works.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: GET STARTED -->
+<div class="slide">
+  <div style="text-align:center; width:100%; max-width:1000px;">
+    <div class="label" style="justify-content:center;">Get Started</div>
+    <h2>Five minutes of setup. Hours saved every week.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Install the skill</h3>
+        <p>Drop pm-twin into your skills directory.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Create pmcontext.yaml</h3>
+        <p>Map your projects, chats, and docs.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Add glossary.md</h3>
+        <p>Define your team's lingo and codenames.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Prompt naturally</h3>
+        <p>"Write a status doc for Jupiter"</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: CLOSER -->
+<div class="slide">
+  <div class="closer-content">
+    <p class="line1">Your AI already knows how to write docs.</p>
+    <p class="line2">It just doesn't know <em style="font-style:italic; color:var(--rust);">your</em> docs.</p>
+    <p class="line3">PM Twin fixes that.</p>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.slide');
+  const TOTAL = slides.length;
+  const numEl = document.getElementById('slideNum');
+  const progEl = document.getElementById('progress');
+  const dotNav = document.getElementById('dotNav');
+  let current = 0;
+
+  // Build dot nav
+  for (let i = 0; i < TOTAL; i++) {
+    const btn = document.createElement('button');
+    btn.addEventListener('click', (e) => { e.stopPropagation(); goTo(i); });
+    dotNav.appendChild(btn);
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= TOTAL) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    numEl.textContent = (current + 1) + ' / ' + TOTAL;
+    progEl.style.width = ((current + 1) / TOTAL * 100) + '%';
+
+    // Update dot nav
+    dotNav.querySelectorAll('button').forEach((b, i) => {
+      b.classList.toggle('active', i === current);
+    });
+
+    // Constellation animation on slide 4
+    if (current === 4) initConstellation();
+
+    // Chain animation on slide 8
+    if (current === 8) playChain();
+
+    // Unlock cards on slide 9
+    if (current === 9) playUnlock();
+  }
+  window.goTo = goTo;
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    if (e.key === 'End') { e.preventDefault(); goTo(TOTAL - 1); }
+  });
+
+  // Click
+  document.addEventListener('click', e => {
+    if (e.target.closest('.dot-nav, a, button, .terminal, .yaml-block')) return;
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+    else goTo(current - 1);
+  });
+
+  // Touch/swipe
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx < 0) goTo(current + 1);
+      else goTo(current - 1);
+    }
+  }, { passive: true });
+
+  // ── CONSTELLATION ──
+  const constellationData = {
+    inner: [
+      { label: 'Jupiter PRD', icon: '\u{1F4C4}', color: '#c44d2b' },
+      { label: 'API Design Doc', icon: '\u{1F4DD}', color: '#2a3d66' },
+      { label: 'Core Team Chat', icon: '\u{1F4AC}', color: '#1a6b5a' },
+      { label: 'Jupiter Weekly Sync', icon: '\u{1F3A5}', color: '#2a3d66' },
+      { label: 'Q2 OKRs', icon: '\u{1F4CB}', color: '#c44d2b' },
+      { label: 'Launch Deck', icon: '\u{1F4CA}', color: '#c44d2b' },
+      { label: 'Sprint Board', icon: '\u{1F5C2}', color: '#1a6b5a' },
+      { label: 'b/312847291', icon: '\u{1F41B}', color: '#2a3d66' },
+    ],
+    middle: [
+      { label: 'XFN Chat', icon: '\u{1F4AC}', color: '#1a6b5a' },
+      { label: '1:1 w/ Sarah', icon: '\u{1F464}', color: '#2a3d66' },
+      { label: 'Onboarding Mock', icon: '\u{1F3A8}', color: '#c44d2b' },
+      { label: 'Migration Runbook', icon: '\u{1F4D3}', color: '#2a3d66' },
+      { label: 'Acme Escalation', icon: '\u{1F3E2}', color: '#c44d2b' },
+      { label: 'UXR Findings', icon: '\u{1F52C}', color: '#1a6b5a' },
+      { label: 'PR #847', icon: '\u{1F500}', color: '#1a6b5a' },
+      { label: 'Latency Dashboard', icon: '\u{1F4C8}', color: '#2a3d66' },
+      { label: 'Feature Request #19', icon: '\u{2728}', color: '#c44d2b' },
+    ],
+    outer: [
+      { label: 'Saturn Scope Thread', icon: '\u{1F4AC}', color: '#1a6b5a' },
+      { label: 'Competitor Tweet', icon: '\u{1F426}', color: '#c44d2b' },
+      { label: 'Steering Deck', icon: '\u{1F4CA}', color: '#2a3d66' },
+      { label: 'CL/482910', icon: '\u{1F500}', color: '#1a6b5a' },
+      { label: 'Priya 1:1 Notes', icon: '\u{1F4DD}', color: '#2a3d66' },
+      { label: 'Initech Contract', icon: '\u{1F3E2}', color: '#c44d2b' },
+      { label: 'Eng Retro Doc', icon: '\u{1F4C4}', color: '#2a3d66' },
+      { label: 'Pricing Sheet', icon: '\u{1F4CB}', color: '#c44d2b' },
+      { label: 'Support Ticket #4401', icon: '\u{1F3AB}', color: '#1a6b5a' },
+      { label: 'Go/launch-jupiter', icon: '\u{1F517}', color: '#2a3d66' },
+      { label: 'Weekly Standup Chat', icon: '\u{1F4AC}', color: '#1a6b5a' },
+      { label: 'Mike TL Feedback', icon: '\u{1F464}', color: '#c44d2b' },
+      { label: 'Eng Design Review', icon: '\u{1F4D3}', color: '#2a3d66' },
+    ]
+  };
+
+  let constellationInitialized = false;
+  function initConstellation() {
+    if (constellationInitialized) return;
+    constellationInitialized = true;
+
+    const viz = document.getElementById('constellationViz');
+    const svg = document.getElementById('constellationLines');
+    const w = viz.offsetWidth;
+    const h = viz.offsetHeight;
+    const cx = w / 2;
+    const cy = h / 2;
+
+    const drifts = ['chip-drift-1', 'chip-drift-2', 'chip-drift-3'];
+
+    function placeRing(items, radiusFrac, fontSize, opacity) {
+      const rx = w * radiusFrac * 0.5;
+      const ry = h * radiusFrac * 0.5;
+      items.forEach((item, i) => {
+        const angle = (2 * Math.PI * i / items.length) - Math.PI / 2;
+        const x = cx + rx * Math.cos(angle);
+        const y = cy + ry * Math.sin(angle);
+
+        const chip = document.createElement('div');
+        chip.className = 'constellation-chip';
+        chip.style.borderColor = item.color;
+        chip.style.fontSize = fontSize + 'px';
+        chip.style.opacity = '0';
+        chip.style.left = cx + 'px';
+        chip.style.top = cy + 'px';
+        chip.innerHTML = `<span class="chip-icon">${item.icon}</span><span class="chip-label">${item.label}</span>`;
+
+        const driftName = drifts[i % 3];
+        const driftDur = (6 + Math.random() * 6).toFixed(1);
+        chip.style.animationDelay = (Math.random() * 3).toFixed(1) + 's';
+
+        viz.appendChild(chip);
+
+        // Animate outward
+        setTimeout(() => {
+          chip.style.transition = 'left 1.5s cubic-bezier(0.16, 1, 0.3, 1), top 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease';
+          chip.style.left = x + 'px';
+          chip.style.top = y + 'px';
+          chip.style.opacity = String(opacity);
+        }, 100 + i * 60);
+
+        // Add drift after entrance
+        setTimeout(() => {
+          chip.style.transition = 'none';
+          chip.style.animation = `${driftName} ${driftDur}s ease-in-out infinite`;
+        }, 2000);
+
+        // SVG line
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+        line.setAttribute('x2', x); line.setAttribute('y2', y);
+        line.setAttribute('stroke', item.color);
+        line.setAttribute('stroke-opacity', (0.04 + Math.random() * 0.04).toFixed(2));
+        line.setAttribute('stroke-width', '1');
+        svg.appendChild(line);
+      });
+    }
+
+    svg.setAttribute('width', w);
+    svg.setAttribute('height', h);
+
+    placeRing(constellationData.inner, 0.38, 13, 1);
+    placeRing(constellationData.middle, 0.65, 12, 0.75);
+    placeRing(constellationData.outer, 0.88, 11, 0.55);
+  }
+
+  // ── CHAIN ANIMATION ──
+  let chainPlayed = false;
+  function playChain() {
+    if (chainPlayed) return;
+    chainPlayed = true;
+    const steps = document.querySelectorAll('#chainTimeline .chain-step');
+    steps.forEach((step, i) => {
+      const delay = parseInt(step.dataset.delay || '0');
+      setTimeout(() => step.classList.add('visible'), delay + 300);
+    });
+    setTimeout(() => {
+      document.getElementById('chainOutput').classList.add('visible');
+    }, 7500);
+  }
+
+  // ── UNLOCK CARDS ──
+  let unlockPlayed = false;
+  function playUnlock() {
+    if (unlockPlayed) return;
+    unlockPlayed = true;
+    const cards = document.querySelectorAll('#unlockCards .unlock-card');
+    cards.forEach((card, i) => {
+      setTimeout(() => card.classList.add('visible'), 200 + i * 250);
+    });
+  }
+
+  goTo(0);
+})();
+</script>
+
+</body>
+</html>

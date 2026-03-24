@@ -208,9 +208,30 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
   font-size: 0.85rem; line-height: 1.6; color: var(--ink-muted);
   text-align: center; margin: 0 auto;
 }
+/* Architecture tabs */
+.arch-tab {
+  display: block; width: 100%; text-align: left;
+  background: var(--paper); border: 2px solid var(--border);
+  border-radius: 8px; padding: 1rem 1.25rem; cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  font-family: inherit;
+}
+.arch-tab:hover { background: var(--warm-white); }
+.arch-tab.active { border-color: var(--rust); background: var(--warm-white); }
+.arch-tab .file-name { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--navy); font-weight: 600; }
+.arch-tab p { color: var(--ink-muted); line-height: 1.4; }
+.arch-preview {
+  background: var(--ink); border-radius: 8px; overflow: hidden; height: 100%;
+}
+.arch-preview pre {
+  padding: 1rem 1.25rem; margin: 0;
+  font-family: 'Space Mono', monospace; font-size: 0.7rem;
+  line-height: 1.7; color: #c8c3b8; white-space: pre; overflow-x: auto;
+}
 .catalyst-footer {
   font-family: 'Space Mono', monospace; font-size: 0.75rem;
-  color: var(--ink-dim); text-align: center; max-width: 700px; line-height: 1.6;
+  color: var(--ink-dim); text-align: center; width: 100%; line-height: 1.6;
+  margin-top: 2rem;
 }
 
 /* ── FIX SLIDE ── */
@@ -402,7 +423,7 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
   <div class="terminal">
     <div class="terminal-bar">
       <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
-      <span class="terminal-title">claude — prompt.md</span>
+      <span class="terminal-title">gemini — prompt</span>
     </div>
     <pre>You are a Senior PM at Google Cloud on the Applied AI team.
 I'm working on Project Jupiter — it's our enterprise agent
@@ -451,12 +472,12 @@ status update doc for the steering committee.</pre>
       <div class="catalyst-card">
         <span class="catalyst-icon">&#128196;</span>
         <h3>Skills became a primitive</h3>
-        <p>A plain-text instruction file. No fine-tuning, no code. Gemini CLI adopted the skills protocol.</p>
+        <p>A markdown instruction file. No fine-tuning, no code. Gemini CLI adopted the skills protocol.</p>
       </div>
       <div class="catalyst-card">
-        <span class="catalyst-icon">&#129504;</span>
-        <h3>Memory got simple</h3>
-        <p>Markdown files the agent reads on wake, writes before sleep. Inspired by OpenClaw.</p>
+        <span class="catalyst-icon">🦞</span>
+        <h3>OpenClaw Memory</h3>
+        <p>Markdown files the agent reads on wake, writes before sleep. Dead simple. No database, no embeddings.</p>
       </div>
       <div class="catalyst-card">
         <span class="catalyst-icon">&#128172;</span>
@@ -472,7 +493,7 @@ status update doc for the steering committee.</pre>
 <div class="slide">
   <div class="fix-content">
     <div class="label" style="justify-content:center;">The Fix</div>
-    <h2>So I built PM Twin</h2>
+    <h2>PM Twin was born</h2>
     <p>A skill that gives your AI the same project context you carry in your head. You describe your project universe once — your chats, your docs, your lingo — and the agent resolves the rest every time you prompt.</p>
     <p class="fix-highlight">Three files. Zero pasting. Full context.</p>
   </div>
@@ -480,44 +501,98 @@ status update doc for the steering committee.</pre>
 
 <!-- SLIDE 7: ARCHITECTURE -->
 <div class="slide" style="padding: 3rem 5vw;">
-  <div style="text-align:center; width:100%; max-width:1000px;">
-    <div class="label" style="justify-content:center;">Architecture</div>
-    <h2>Your context, structured once</h2>
-    <div class="arch-cols">
-      <div class="arch-col">
-        <div class="file-name">pmcontext.yaml</div>
-        <p>Your project universe. Chat spaces, pinned docs, sheets, customer accounts.</p>
+  <div style="width:100%; max-width:1100px;">
+    <div class="label" style="justify-content:center; text-align:center;">Architecture</div>
+    <h2 style="text-align:center;">Your context, structured once</h2>
+    <div style="display:flex; gap:2rem; margin-top:2rem; align-items:stretch;">
+      <!-- Left: file tabs -->
+      <div style="width:35%; display:flex; flex-direction:column; gap:0.75rem;">
+        <button class="arch-tab active" onclick="showArchPreview(0)" data-tab="0">
+          <div class="file-name" style="margin-bottom:0.25rem;">📋 pmcontext.yaml</div>
+          <p style="font-size:0.8rem; margin:0;">Your project universe. Chat spaces, pinned docs, sheets, customer accounts.</p>
+        </button>
+        <button class="arch-tab" onclick="showArchPreview(1)" data-tab="1">
+          <div class="file-name" style="margin-bottom:0.25rem;">📖 glossary.md</div>
+          <p style="font-size:0.8rem; margin:0;">Your team's language. Codenames, acronyms, people, systems.</p>
+        </button>
+        <button class="arch-tab" onclick="showArchPreview(2)" data-tab="2">
+          <div class="file-name" style="margin-bottom:0.25rem;">🧠 memory/</div>
+          <p style="font-size:0.8rem; margin:0;">Persistent context across sessions. The skill writes what it learns.</p>
+        </button>
       </div>
-      <div class="arch-col">
-        <div class="file-name">glossary.md</div>
-        <p>Your team's language. Codenames, acronyms, people, systems.</p>
+      <!-- Right: preview pane -->
+      <div style="width:65%;">
+        <div class="arch-preview" id="archPreview0" style="display:block;">
+          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">pmcontext.yaml</span></div>
+          <pre><span class="yl">projects</span><span class="gy">:</span>
+  <span class="gy">-</span> <span class="yl">name</span><span class="gy">:</span> <span class="gr">"Project Jupiter"</span>
+    <span class="yl">aliases</span><span class="gy">:</span> <span class="gr">[jupiter, agent-builder]</span>
+    <span class="yl">chat_spaces</span><span class="gy">:</span>
+      <span class="gy">-</span> <span class="gr">"spaces/AAAA1234"</span>  <span class="gy"># Core team</span>
+      <span class="gy">-</span> <span class="gr">"spaces/BBBB5678"</span>  <span class="gy"># XFN</span>
+    <span class="yl">pinned_docs</span><span class="gy">:</span>
+      <span class="gy">-</span> <span class="gr">"docs/d/1abc..."</span>   <span class="gy"># PRD v3</span>
+      <span class="gy">-</span> <span class="gr">"docs/d/2def..."</span>   <span class="gy"># API Design Doc</span>
+    <span class="yl">pinned_sheets</span><span class="gy">:</span>
+      <span class="gy">-</span> <span class="gr">"sheets/d/3ghi..."</span> <span class="gy"># Q2 OKRs</span>
+    <span class="yl">customers</span><span class="gy">:</span>
+      <span class="gy">-</span> <span class="gr">"acme-corp"</span>
+      <span class="gy">-</span> <span class="gr">"initech"</span>
+
+  <span class="gy">-</span> <span class="yl">name</span><span class="gy">:</span> <span class="gr">"Project Saturn"</span>
+    <span class="yl">aliases</span><span class="gy">:</span> <span class="gr">[saturn, orchestration]</span>
+    <span class="yl">chat_spaces</span><span class="gy">:</span>
+      <span class="gy">-</span> <span class="gr">"spaces/CCCC9012"</span></pre>
+        </div>
+        <div class="arch-preview" id="archPreview1" style="display:none;">
+          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">glossary.md</span></div>
+          <pre><span class="bl"># Glossary</span>
+
+<span class="yl">## Projects</span>
+<span class="gy">-</span> <span class="gr">Jupiter</span> — Enterprise agent builder platform (external name: Agent Studio)
+<span class="gy">-</span> <span class="gr">Saturn</span> — Orchestration layer for multi-agent workflows
+<span class="gy">-</span> <span class="gr">Neptune</span> — Internal evaluation & testing harness
+
+<span class="yl">## People</span>
+<span class="gy">-</span> <span class="gr">Sarah Chen</span> — EM, Jupiter core team
+<span class="gy">-</span> <span class="gr">Mike Torres</span> — TL, API & infra
+<span class="gy">-</span> <span class="gr">Priya Kapoor</span> — UXR lead, onboarding studies
+<span class="gy">-</span> <span class="gr">Ravi</span> — PM on Saturn (adjacent team)
+
+<span class="yl">## Acronyms</span>
+<span class="gy">-</span> <span class="gr">CAS</span> — Customer Agent Studio (old name, deprecated)
+<span class="gy">-</span> <span class="gr">MCP</span> — Model Context Protocol
+<span class="gy">-</span> <span class="gr">XFN</span> — Cross-functional
+<span class="gy">-</span> <span class="gr">LGTM</span> — Looks good to me (code review approval)
+<span class="gy">-</span> <span class="gr">P0</span> — Highest priority issue</pre>
+        </div>
+        <div class="arch-preview" id="archPreview2" style="display:none;">
+          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">memory/work_log_2026_W13.md</span></div>
+          <pre><span class="bl"># Work Log — Week 13, 2026</span>
+
+<span class="yl">## Monday 3/24</span>
+<span class="gy">-</span> Updated Jupiter PRD section 3 (onboarding flow) based on
+  Friday's sync. Sarah approved the revised timeline.
+<span class="gy">-</span> Reviewed Saturn's API proposal — flagged scope overlap
+  with Jupiter's integration layer. Sent note to Ravi.
+<span class="gy">-</span> Acme Corp escalation: customer wants batch processing
+  by Q3. Added to Jupiter roadmap as P1.
+
+<span class="yl">## Tuesday 3/25</span>
+<span class="gy">-</span> Steering committee prep: pulled Q2 OKR progress,
+  compiled launch readiness checklist.
+<span class="gy">-</span> Priya shared UXR findings on onboarding drop-off.
+  Key insight: users abandon at step 3 (agent config).
+<span class="gy">-</span> <span class="gr">Mental note:</span> Mike prefers async updates over
+  meetings. Use Chat for API status going forward.
+
+<span class="yl">## Wednesday 3/26</span>
+<span class="gy">-</span> Jupiter Weekly Sync: decided to ship onboarding v2
+  behind a feature flag. Mike owns implementation.
+<span class="gy">-</span> Drafted stakeholder email re: timeline slip. Waiting
+  for Sarah's sign-off before sending.</pre>
+        </div>
       </div>
-      <div class="arch-col">
-        <div class="file-name">memory/</div>
-        <p>Persistent context across sessions. The skill writes what it learns.</p>
-      </div>
-    </div>
-    <div class="yaml-block">
-      <div class="terminal-bar">
-        <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
-        <span class="terminal-title">pmcontext.yaml</span>
-      </div>
-      <pre><span class="yl">projects</span><span class="gy">:</span>
-  <span class="bl">jupiter</span><span class="gy">:</span>
-    <span class="yl">name</span><span class="gy">:</span> <span class="gr">Project Jupiter</span>
-    <span class="yl">description</span><span class="gy">:</span> <span class="gr">Enterprise agent builder platform</span>
-    <span class="yl">chats</span><span class="gy">:</span>
-      <span class="gy">-</span> <span class="yl">space</span><span class="gy">:</span> <span class="gr">spaces/AAAA1234</span>
-        <span class="yl">name</span><span class="gy">:</span> <span class="gr">Jupiter Core Team</span>
-      <span class="gy">-</span> <span class="yl">space</span><span class="gy">:</span> <span class="gr">spaces/BBBB5678</span>
-        <span class="yl">name</span><span class="gy">:</span> <span class="gr">Jupiter XFN</span>
-    <span class="yl">docs</span><span class="gy">:</span>
-      <span class="gy">-</span> <span class="yl">id</span><span class="gy">:</span> <span class="gr">1a2b3c4d</span>
-        <span class="yl">name</span><span class="gy">:</span> <span class="gr">Jupiter PRD v3</span>
-      <span class="gy">-</span> <span class="yl">id</span><span class="gy">:</span> <span class="gr">5e6f7g8h</span>
-        <span class="yl">name</span><span class="gy">:</span> <span class="gr">API Design Doc</span>
-    <span class="yl">meetings</span><span class="gy">:</span>
-      <span class="gy">-</span> <span class="gr">Jupiter Weekly Sync</span></pre>
     </div>
   </div>
 </div>
@@ -699,6 +774,14 @@ status update doc for the steering committee.</pre>
   }
   window.goTo = goTo;
 
+  // Architecture tab switching
+  window.showArchPreview = function(idx) {
+    document.querySelectorAll('.arch-preview').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.arch-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('archPreview' + idx).style.display = 'block';
+    document.querySelector('.arch-tab[data-tab="' + idx + '"]').classList.add('active');
+  };
+
   // Keyboard
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
@@ -814,7 +897,11 @@ status update doc for the steering committee.</pre>
           chip.style.opacity = String(opacity);
         }, 100 + i * 60);
 
-        // Add drift after entrance
+        // Add drift after entrance + tag with ring for rotation
+        chip.dataset.ring = (radiusFrac < 0.5 ? '0' : radiusFrac < 0.7 ? '1' : '2');
+        chip.dataset.baseX = String(x);
+        chip.dataset.baseY = String(y);
+        chip.dataset.angle = String((2 * Math.PI * i / items.length) - Math.PI / 2);
         setTimeout(() => {
           chip.style.transition = 'none';
           chip.style.animation = `${driftName} ${driftDur}s ease-in-out infinite`;
@@ -837,6 +924,38 @@ status update doc for the steering committee.</pre>
     placeRing(constellationData.inner, 0.38, 13, 1);
     placeRing(constellationData.middle, 0.65, 12, 0.75);
     placeRing(constellationData.outer, 0.88, 11, 0.55);
+
+    // Slow ring rotation + mouse parallax
+    const ringSpeeds = [0.0003, -0.0002, 0.00015]; // radians per frame, different directions
+    let mouseOffX = 0, mouseOffY = 0;
+    
+    viz.addEventListener('mousemove', (e) => {
+      const rect = viz.getBoundingClientRect();
+      mouseOffX = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+      mouseOffY = ((e.clientY - rect.top) / rect.height - 0.5) * 15;
+    });
+    viz.addEventListener('mouseleave', () => { mouseOffX = 0; mouseOffY = 0; });
+
+    let rotationStart = performance.now();
+    function rotateRings(now) {
+      if (current !== 4) { requestAnimationFrame(rotateRings); return; }
+      const elapsed = now - rotationStart;
+      const chips = viz.querySelectorAll('.constellation-chip');
+      chips.forEach(chip => {
+        const ring = parseInt(chip.dataset.ring);
+        const baseAngle = parseFloat(chip.dataset.angle);
+        const ringFrac = ring === 0 ? 0.38 : ring === 1 ? 0.65 : 0.88;
+        const rx = w * ringFrac * 0.5;
+        const ry = h * ringFrac * 0.5;
+        const newAngle = baseAngle + elapsed * ringSpeeds[ring];
+        const nx = cx + rx * Math.cos(newAngle) + mouseOffX * (ring + 1) * 0.5;
+        const ny = cy + ry * Math.sin(newAngle) + mouseOffY * (ring + 1) * 0.5;
+        chip.style.left = nx + 'px';
+        chip.style.top = ny + 'px';
+      });
+      requestAnimationFrame(rotateRings);
+    }
+    setTimeout(() => requestAnimationFrame(rotateRings), 2500);
   }
 
   // ── CHAIN ANIMATION ──

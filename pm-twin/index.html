@@ -208,6 +208,21 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
   font-size: 0.85rem; line-height: 1.6; color: var(--ink-muted);
   text-align: center; margin: 0 auto;
 }
+/* Cover slides (navy bg) */
+.cover { background: var(--navy); }
+.cover-inner { text-align: center; }
+.cover-patch {
+  width: 280px; height: 280px; border-radius: 50%; overflow: hidden;
+  margin: 0 auto 2rem;
+  border: 3px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 50px rgba(0,0,0,0.4), 0 0 0 6px var(--navy), 0 0 0 8px rgba(255,255,255,0.08);
+}
+.cover-patch img { width: 100%; height: 100%; object-fit: cover; }
+.cover .label { color: var(--rust-light); justify-content: center; }
+.cover .label::before { background: var(--rust-light); }
+.cover h2 { color: var(--cream); margin-bottom: 0.75rem; }
+.cover p { color: rgba(245,240,232,0.6); text-align: center; margin: 0 auto; font-size: 1.2rem; }
+
 /* Architecture tabs */
 .arch-tab {
   display: block; width: 100%; text-align: left;
@@ -228,6 +243,10 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
   font-family: 'Space Mono', monospace; font-size: 0.7rem;
   line-height: 1.7; color: #c8c3b8; white-space: pre; overflow-x: auto;
 }
+.arch-preview .yl { color: #f9e2af; }
+.arch-preview .gr { color: #a6e3a1; }
+.arch-preview .bl { color: #89b4fa; }
+.arch-preview .gy { color: #6c7086; }
 .catalyst-footer {
   font-family: 'Space Mono', monospace; font-size: 0.75rem;
   color: var(--ink-dim); text-align: center; width: 100%; line-height: 1.6;
@@ -490,12 +509,12 @@ status update doc for the steering committee.</pre>
 </div>
 
 <!-- SLIDE 6: THE FIX -->
-<div class="slide">
-  <div class="fix-content">
+<div class="slide cover">
+  <div class="cover-inner">
+    <div class="cover-patch"><img src="/pm-twin/pm-twin-patch.jpg" alt="PM Twin Mission Patch"></div>
     <div class="label" style="justify-content:center;">The Fix</div>
     <h2>PM Twin was born</h2>
-    <p>A skill that gives your AI the same project context you carry in your head. You describe your project universe once — your chats, your docs, your lingo — and the agent resolves the rest every time you prompt.</p>
-    <p class="fix-highlight">Three files. Zero pasting. Full context.</p>
+    <p>Three files. Zero pasting. Full context.</p>
   </div>
 </div>
 
@@ -508,14 +527,18 @@ status update doc for the steering committee.</pre>
       <!-- Left: file tabs -->
       <div style="width:35%; display:flex; flex-direction:column; gap:0.75rem;">
         <button class="arch-tab active" onclick="showArchPreview(0)" data-tab="0">
-          <div class="file-name" style="margin-bottom:0.25rem;">📋 pmcontext.yaml</div>
-          <p style="font-size:0.8rem; margin:0;">Your project universe. Chat spaces, pinned docs, sheets, customer accounts.</p>
+          <div class="file-name" style="margin-bottom:0.25rem;">📄 pm-twin.md</div>
+          <p style="font-size:0.8rem; margin:0;">The skill file itself. Workflows, search strategies, and the wake-up protocol.</p>
         </button>
         <button class="arch-tab" onclick="showArchPreview(1)" data-tab="1">
+          <div class="file-name" style="margin-bottom:0.25rem;">📋 pm_context.yaml</div>
+          <p style="font-size:0.8rem; margin:0;">Your project universe. Chat spaces, pinned docs, sheets, customer accounts.</p>
+        </button>
+        <button class="arch-tab" onclick="showArchPreview(2)" data-tab="2">
           <div class="file-name" style="margin-bottom:0.25rem;">📖 glossary.md</div>
           <p style="font-size:0.8rem; margin:0;">Your team's language. Codenames, acronyms, people, systems.</p>
         </button>
-        <button class="arch-tab" onclick="showArchPreview(2)" data-tab="2">
+        <button class="arch-tab" onclick="showArchPreview(3)" data-tab="3">
           <div class="file-name" style="margin-bottom:0.25rem;">🧠 memory/</div>
           <p style="font-size:0.8rem; margin:0;">Persistent context across sessions. The skill writes what it learns.</p>
         </button>
@@ -523,7 +546,39 @@ status update doc for the steering committee.</pre>
       <!-- Right: preview pane -->
       <div style="width:65%;">
         <div class="arch-preview" id="archPreview0" style="display:block;">
-          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">pmcontext.yaml</span></div>
+          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">pm-twin.md</span></div>
+          <pre><span class="gy">---</span>
+<span class="yl">name</span><span class="gy">:</span> <span class="gr">pm-twin</span>
+<span class="yl">description</span><span class="gy">:</span> <span class="gr">Act as a high-level Tech Chief of Staff for PMs.</span>
+<span class="gy">---</span>
+
+<span class="bl"># PM Twin (Chief of Staff)</span>
+
+<span class="yl">## 1. The "Wake Up" Protocol</span>
+Before answering any query, ground yourself:
+<span class="gy">1.</span> <span class="gr">Load Memory</span> — read ALL files in .agent/memory/
+   Ingests pm_context.yaml, glossary.md, and work logs.
+<span class="gy">2.</span> <span class="gr">Fetch Pinned</span> — read all URLs in pm_context.yaml
+
+<span class="yl">## 2. Workflows</span>
+
+<span class="bl">A. Context Synthesis</span> <span class="gy">("What's new?")</span>
+<span class="gy">1.</span> Search transcripts: <span class="gr">"Notes by Gemini"</span> modified recently
+<span class="gy">2.</span> Entity-link each to a project via pm_context.yaml
+<span class="gy">3.</span> Read transcript + main doc → identify decisions, AIs
+<span class="gy">4.</span> Propose: <span class="gr">"Should I update [Doc] with [Decision]?"</span>
+
+<span class="bl">B. Targeted Updates</span> <span class="gy">("Update X based on Y")</span>
+<span class="gy">1.</span> Discover artifact + source via Drive search
+<span class="gy">2.</span> Diff source against artifact
+<span class="gy">3.</span> Apply changes → journal the work
+
+<span class="bl">C. Journaling</span> <span class="gy">(The "Scribe")</span>
+<span class="gy">-</span> Append narrative entries to memory/work_log_YYYY_W##.md
+<span class="gy">-</span> Log intent and results, not raw tool calls</pre>
+        </div>
+        <div class="arch-preview" id="archPreview1" style="display:none;">
+          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">pm_context.yaml</span></div>
           <pre><span class="yl">projects</span><span class="gy">:</span>
   <span class="gy">-</span> <span class="yl">name</span><span class="gy">:</span> <span class="gr">"Project Jupiter"</span>
     <span class="yl">aliases</span><span class="gy">:</span> <span class="gr">[jupiter, agent-builder]</span>
@@ -544,7 +599,7 @@ status update doc for the steering committee.</pre>
     <span class="yl">chat_spaces</span><span class="gy">:</span>
       <span class="gy">-</span> <span class="gr">"spaces/CCCC9012"</span></pre>
         </div>
-        <div class="arch-preview" id="archPreview1" style="display:none;">
+        <div class="arch-preview" id="archPreview2" style="display:none;">
           <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">glossary.md</span></div>
           <pre><span class="bl"># Glossary</span>
 
@@ -566,7 +621,7 @@ status update doc for the steering committee.</pre>
 <span class="gy">-</span> <span class="gr">LGTM</span> — Looks good to me (code review approval)
 <span class="gy">-</span> <span class="gr">P0</span> — Highest priority issue</pre>
         </div>
-        <div class="arch-preview" id="archPreview2" style="display:none;">
+        <div class="arch-preview" id="archPreview3" style="display:none;">
           <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">memory/work_log_2026_W13.md</span></div>
           <pre><span class="bl"># Work Log — Week 13, 2026</span>
 
@@ -609,7 +664,7 @@ status update doc for the steering committee.</pre>
       <div class="chain-step" data-delay="0">
         <span class="step-icon">&#128203;</span>
         <span class="step-title">Resolve project</span>
-        <span class="step-desc">— reads pmcontext.yaml → "Jupiter" matches → loads config</span>
+        <span class="step-desc">— reads pm_context.yaml → "Jupiter" matches → loads config</span>
       </div>
       <div class="chain-step" data-delay="1000">
         <span class="step-icon">&#128214;</span>
@@ -693,11 +748,52 @@ status update doc for the steering committee.</pre>
   </div>
 </div>
 
-<!-- SLIDE 10: GET STARTED -->
+<!-- SLIDE 10: SOCIAL PROOF / ADOPTION -->
+<div class="slide">
+  <div style="text-align:center; width:100%; max-width:900px;">
+    <div class="label" style="justify-content:center;">Adoption</div>
+    <h2>It's already spreading.</h2>
+    <div id="adoptionChart" style="position:relative; width:100%; height:300px; margin:2rem auto;">
+      <svg width="100%" height="100%" viewBox="0 0 800 300" preserveAspectRatio="none" style="overflow:visible;">
+        <!-- Grid lines -->
+        <line x1="60" y1="260" x2="760" y2="260" stroke="#d4cfc3" stroke-width="1"/>
+        <line x1="60" y1="200" x2="760" y2="200" stroke="#d4cfc3" stroke-width="0.5" stroke-dasharray="4,4"/>
+        <line x1="60" y1="140" x2="760" y2="140" stroke="#d4cfc3" stroke-width="0.5" stroke-dasharray="4,4"/>
+        <line x1="60" y1="80" x2="760" y2="80" stroke="#d4cfc3" stroke-width="0.5" stroke-dasharray="4,4"/>
+        <!-- Y-axis labels -->
+        <text x="50" y="265" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">0</text>
+        <text x="50" y="205" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">400</text>
+        <text x="50" y="145" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">800</text>
+        <text x="50" y="85" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">1,300+</text>
+        <!-- X-axis labels -->
+        <text x="120" y="280" text-anchor="middle" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">Jan</text>
+        <text x="300" y="280" text-anchor="middle" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">Feb</text>
+        <text x="480" y="280" text-anchor="middle" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">Mar</text>
+        <text x="660" y="280" text-anchor="middle" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">Now</text>
+        <!-- Parabolic curve -->
+        <path id="adoptionPath" d="M80,255 Q200,250 300,240 Q400,220 480,180 Q560,120 640,80 Q700,55 740,40" fill="none" stroke="var(--rust)" stroke-width="3" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="1000"/>
+        <!-- Glow under curve -->
+        <path d="M80,255 Q200,250 300,240 Q400,220 480,180 Q560,120 640,80 Q700,55 740,40 L740,260 L80,260 Z" fill="url(#curveGradient)" opacity="0"/>
+        <defs>
+          <linearGradient id="curveGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--rust)" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="var(--rust)" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- Dot at the end -->
+        <circle id="adoptionDot" cx="740" cy="40" r="5" fill="var(--rust)" opacity="0"/>
+      </svg>
+    </div>
+    <p style="font-family:'Space Mono',monospace; font-size:0.85rem; color:var(--ink-dim); margin-top:1rem;">go/pm-twin stats</p>
+  </div>
+</div>
+
+<!-- SLIDE 11: GET STARTED -->
 <div class="slide">
   <div style="text-align:center; width:100%; max-width:1000px;">
     <div class="label" style="justify-content:center;">Get Started</div>
     <h2>Five minutes of setup. Hours saved every week.</h2>
+    <div style="font-family:'Space Mono',monospace; font-size:2rem; color:var(--rust); margin:1.5rem 0 2rem; letter-spacing:0.05em;">go/pm-twin</div>
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
@@ -706,7 +802,7 @@ status update doc for the steering committee.</pre>
       </div>
       <div class="step">
         <div class="step-num">02</div>
-        <h3>Create pmcontext.yaml</h3>
+        <h3>Create pm_context.yaml</h3>
         <p>Map your projects, chats, and docs.</p>
       </div>
       <div class="step">
@@ -726,9 +822,8 @@ status update doc for the steering committee.</pre>
 <!-- SLIDE 11: CLOSER -->
 <div class="slide">
   <div class="closer-content">
-    <p class="line1">Your AI already knows how to write docs.</p>
-    <p class="line2">It just doesn't know <em style="font-style:italic; color:var(--rust);">your</em> docs.</p>
-    <p class="line3">PM Twin fixes that.</p>
+    <img src="/pm-twin/gabor-tweet.jpg" alt="Gabor's tweet" style="max-width:420px; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.12); margin-bottom:2rem; opacity:0.9;">
+    <p class="line3" style="margin-top:0;">Solved.</p>
   </div>
 </div>
 
@@ -771,6 +866,7 @@ status update doc for the steering committee.</pre>
 
     // Unlock cards on slide 9
     if (current === 9) playUnlock();
+    if (current === 10) playAdoption();
   }
   window.goTo = goTo;
 
@@ -986,6 +1082,25 @@ status update doc for the steering committee.</pre>
 
   goTo(0);
 })();
+  // Adoption curve animation
+  let adoptionPlayed = false;
+  function playAdoption() {
+    if (adoptionPlayed) return;
+    adoptionPlayed = true;
+    const path = document.getElementById('adoptionPath');
+    const dot = document.getElementById('adoptionDot');
+    const fill = path.nextElementSibling;
+    if (path) {
+      path.style.transition = 'stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1)';
+      path.style.strokeDashoffset = '0';
+    }
+    if (fill) {
+      setTimeout(() => { fill.style.transition = 'opacity 1s ease'; fill.style.opacity = '1'; }, 1000);
+    }
+    if (dot) {
+      setTimeout(() => { dot.style.transition = 'opacity 0.3s ease'; dot.style.opacity = '1'; }, 1800);
+    }
+  }
 </script>
 
 </body>

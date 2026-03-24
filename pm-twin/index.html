@@ -6,7 +6,7 @@
 <title>PM Twin — Internal Slides</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 @font-face {
   font-family: 'Apestron';
@@ -23,7 +23,7 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { font-size: 18px; background: var(--cream); }
-body { font-family: 'Archivo', sans-serif; color: var(--ink); overflow: hidden; height: 100dvh; }
+body { font-family: 'Inter', sans-serif; color: var(--ink); overflow: hidden; height: 100dvh; }
 
 /* ── SLIDE SYSTEM ── */
 .deck { position: relative; width: 100vw; height: 100dvh; }
@@ -93,7 +93,7 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--navy); margin-bottom: 1.5rem;
 }
 .title-sub {
-  font-family: 'Archivo', sans-serif; font-size: 1.2rem;
+  font-family: 'Inter', sans-serif; font-size: 1.2rem;
   color: var(--ink-muted); line-height: 1.6; max-width: 600px; margin: 0 auto;
 }
 
@@ -103,7 +103,7 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
   box-shadow: 0 8px 40px rgba(26,39,68,0.12); margin-bottom: 1.5rem;
 }
 .dream-caption {
-  font-family: 'Archivo', sans-serif; font-size: 1.15rem;
+  font-family: 'Inter', sans-serif; font-size: 1.15rem;
   color: var(--ink-muted); font-style: italic; text-align: center; max-width: 600px;
 }
 
@@ -112,11 +112,11 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
   text-align: center; max-width: 700px;
 }
 .problem-text .big {
-  font-family: 'Archivo', sans-serif; font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-family: 'Inter', sans-serif; font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 600; color: var(--navy); line-height: 1.4; margin-bottom: 0.8rem;
 }
 .problem-text .dim {
-  font-family: 'Archivo', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-family: 'Inter', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
   font-weight: 400; color: var(--ink-dim); line-height: 1.5;
 }
 
@@ -321,11 +321,11 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
 .chain-step.visible::before { background: var(--teal); }
 .chain-step .step-icon { font-size: 1rem; margin-right: 0.5rem; }
 .chain-step .step-title {
-  font-family: 'Archivo', sans-serif; font-weight: 700;
+  font-family: 'Inter', sans-serif; font-weight: 700;
   font-size: 0.9rem; color: var(--navy); display: inline;
 }
 .chain-step .step-desc {
-  font-family: 'Archivo', sans-serif; font-size: 0.8rem;
+  font-family: 'Inter', sans-serif; font-size: 0.8rem;
   color: var(--ink-dim); margin-left: 0.3rem;
 }
 .chain-output {
@@ -376,7 +376,7 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
   font-weight: 700; color: var(--navy); opacity: 0.15; margin-bottom: 0.5rem;
 }
 .step h3 {
-  font-family: 'Archivo', sans-serif; font-size: 0.9rem;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem;
   font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;
 }
 .step p {
@@ -386,12 +386,37 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
 
 /* ── CLOSER ── */
 .closer-content { text-align: center; max-width: 700px; }
+/* Stamp */
+.stamp-wrap {
+  position: relative; display: inline-block;
+}
+.stamp {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-12deg) scale(0);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3.5rem; font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--rust);
+  border: 5px solid var(--rust);
+  border-radius: 12px;
+  padding: 0.2em 0.6em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  mix-blend-mode: multiply;
+  text-shadow: 0 0 20px rgba(196, 77, 43, 0.3);
+}
+.stamp.visible {
+  transform: translate(-50%, -50%) rotate(-12deg) scale(1);
+  opacity: 0.85;
+}
 .closer-content .line1 {
-  font-family: 'Archivo', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-family: 'Inter', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
   color: var(--ink-muted); margin-bottom: 0.6rem; font-weight: 400;
 }
 .closer-content .line2 {
-  font-family: 'Archivo', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-family: 'Inter', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
   color: var(--navy); margin-bottom: 1.5rem; font-weight: 600;
 }
 .closer-content .line3 {
@@ -409,11 +434,12 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
 <div class="deck" id="deck">
 
 <!-- SLIDE 0: TITLE -->
-<div class="slide active">
-  <div class="title-content">
-    <div class="title-badge">Internal / March 2026</div>
-    <h1>PM Twin</h1>
-    <p class="title-sub">Eliminate context saturation.<br>Ship artifacts in one prompt.</p>
+<div class="slide active cover">
+  <div class="cover-inner">
+    <div class="cover-patch"><img src="/pm-twin/pm-twin-patch.jpg" alt="PM Twin Mission Patch"></div>
+    <div class="label" style="justify-content:center;">March 24, 2026 / Barron Roth — Product Manager, Applied AI</div>
+    <h1 style="color:var(--cream);">PM Twin</h1>
+    <p>Build your Agentic Chief of Staff | AEv PM Summit</p>
   </div>
 </div>
 
@@ -822,8 +848,10 @@ Before answering any query, ground yourself:
 <!-- SLIDE 11: CLOSER -->
 <div class="slide">
   <div class="closer-content">
-    <img src="/pm-twin/gabor-tweet.jpg" alt="Gabor's tweet" style="max-width:420px; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.12); margin-bottom:2rem; opacity:0.9;">
-    <p class="line3" style="margin-top:0;">Solved.</p>
+    <div class="stamp-wrap">
+      <img src="/pm-twin/gabor-tweet.jpg" alt="Gabor's tweet" style="max-width:420px; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.12); opacity:0.9;">
+      <div class="stamp">SOLVED</div>
+    </div>
   </div>
 </div>
 
@@ -867,6 +895,7 @@ Before answering any query, ground yourself:
     // Unlock cards on slide 9
     if (current === 9) playUnlock();
     if (current === 10) playAdoption();
+    if (current === 12) { setTimeout(() => { const s = document.querySelector('.stamp'); if (s) s.classList.add('visible'); }, 600); }
   }
   window.goTo = goTo;
 

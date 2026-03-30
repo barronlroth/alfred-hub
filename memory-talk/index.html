@@ -516,11 +516,12 @@ h3 {
   justify-content: center;
   gap: 0;
   position: relative;
-  height: 300px;
+  height: 320px;
+  margin-top: 24px;
 }
 .bubble {
-  width: 360px;
-  height: 240px;
+  width: 380px;
+  height: 260px;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -532,23 +533,32 @@ h3 {
   text-align: center;
 }
 .bubble-lcm {
-  background: rgba(168,85,247,0.2);
+  background: rgba(168,85,247,0.15);
   border: 3px solid var(--purple);
-  margin-right: -80px;
+  margin-right: -100px;
   z-index: 1;
+  padding-right: 60px;
 }
 .bubble-qmd {
-  background: rgba(78,205,196,0.2);
+  background: rgba(78,205,196,0.15);
   border: 3px solid var(--teal);
-  margin-left: -80px;
+  margin-left: -100px;
   z-index: 1;
+  padding-left: 60px;
 }
 .bubble-overlap {
   position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   font-family: 'Press Start 2P', monospace;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--green);
-  z-index: 2;
+  z-index: 3;
+  text-shadow: 0 0 12px rgba(0,255,136,0.5);
+  background: rgba(22,33,62,0.7);
+  padding: 8px 12px;
+  border-radius: 4px;
 }
 
 /* Trophy */
@@ -950,57 +960,40 @@ h3 {
   </div>
 </div>
 
-<!-- ==================== BEAT 3: LEVEL 0 HEADER ==================== -->
+<!-- ==================== THE HOOK: CUBBY ANECDOTE ==================== -->
 <div class="scene" id="scene-2">
-  <div class="beat-content" style="text-align: center;">
-    <div class="level-header">LEVEL 0</div>
-    <div style="font-family: 'Press Start 2P'; font-size: 20px; color: var(--text); margin-top: 20px;">THE HOOK</div>
-  </div>
-</div>
-
-<!-- ==================== BEAT 4: SUMMER YUE STORY ==================== -->
-<div class="scene" id="scene-3">
   <div class="beat-content">
     <img src="/memory-talk/sprites/owl-alarmed.jpg" class="owl-sprite owl-small" alt="Alarmed owl">
-    <h2>THE SUMMER YUE STORY</h2>
-    <div class="dialogue-box">
-      <div style="color: var(--gold); font-family: 'Press Start 2P'; font-size: 13px; margin-bottom: 16px;">META'S DIRECTOR OF ALIGNMENT</div>
+    <h2>THE HOOK</h2>
+    <div class="dialogue-box" style="max-width: 1100px;">
       <div style="font-size: 28px; line-height: 1.8;">
-        Told her agent: <em class="text-gold">"Check this inbox and suggest what to archive or delete. Don't do anything until I say so."</em>
-      </div>
-      <div style="margin-top: 20px; font-size: 24px; color: #aaa;">
-        Worked great on her test inbox for weeks. Then she pointed it at her real inbox — thousands of messages.
+        Deep in a <span class="text-green">Cubby</span> coding session one weekend — building a new feature, making architectural decisions, debugging edge cases. Real flow state.
+        <br><br>
+        My AI assistant remembered every decision, every constraint, every thread. It felt like having a <span class="text-green">genius collaborator</span>.
       </div>
     </div>
   </div>
 </div>
 
-<!-- ==================== BEAT 5: WHAT HAPPENED ==================== -->
-<div class="scene" id="scene-4">
+<!-- ==================== THE HOOK: CONTEXT LOST ==================== -->
+<div class="scene" id="scene-3">
   <div class="beat-content" style="text-align: center;">
-    <h2>WHAT HAPPENED</h2>
-    <div class="sequence-row">
-      <span title="Inbox fills">📨</span>
-      <span class="sequence-arrow">→</span>
-      <span title="Context fills">📦</span>
-      <span class="sequence-arrow">→</span>
-      <span title="Compaction fires">💣</span>
-      <span class="sequence-arrow">→</span>
-      <span title="Instruction lost">👻</span>
-      <span class="sequence-arrow">→</span>
-      <span title="Agent goes rogue">💀</span>
+    <img src="/memory-talk/sprites/owl-defeated.jpg" class="owl-sprite owl-small" alt="Defeated owl">
+    <div style="font-size: 28px; color: #aaa; margin-bottom: 32px;">
+      Monday through Friday — other things. Come back next weekend...
     </div>
-    <div style="margin-top: 24px; font-size: 26px; line-height: 1.8; max-width: 1000px;">
-      Context filled up → Compaction fired → <span class="text-red">"Don't do anything" instruction vanished</span> → Agent went autonomous → <span class="text-red">Bulk-deleted emails</span>
+    <div style="font-size: 30px; margin-bottom: 40px;">
+      "Hey, let's pick up where we left off on Cubby."
     </div>
-    <div style="margin-top: 20px; color: var(--dim); font-size: 22px;">
-      She had to physically run to her computer to kill it.
+    <div class="game-over-text">CONTEXT LOST</div>
+    <div style="margin-top: 32px; font-size: 24px; color: #aaa;">
+      Architecture decisions, debugging context, the whole thread — <span class="text-red">vaporized.</span>
     </div>
   </div>
 </div>
 
-<!-- ==================== BEAT 6: KEY TAKEAWAY ==================== -->
-<div class="scene" id="scene-5">
+<!-- ==================== THE HOOK: KEY TAKEAWAY ==================== -->
+<div class="scene" id="scene-4">
   <div class="beat-content" style="text-align: center;">
     <div class="dialogue-box gold-box" style="max-width: 900px;">
       <div class="key-text">
@@ -1008,13 +1001,14 @@ h3 {
       </div>
     </div>
     <div style="margin-top: 32px; color: #aaa; font-size: 22px;">
-      Her own words: <span class="text-gold">"rookie mistake."</span> If Meta's alignment director can lose control, it can happen to you.
+      That magic I felt when I first set up OpenClaw — <span class="text-red">zapped away.</span><br>
+      It's not magic. It still has limitations. <span class="text-gold">Memory might be the biggest one.</span>
     </div>
   </div>
 </div>
 
 <!-- ==================== BEAT 7: HOW MEMORY WORKS HEADER ==================== -->
-<div class="scene" id="scene-6">
+<div class="scene" id="scene-5">
   <div class="beat-content" style="text-align: center;">
     <div class="level-header" style="font-size: 36px;">HOW MEMORY</div>
     <div class="level-header" style="font-size: 36px; margin-top: 12px;">ACTUALLY WORKS</div>
@@ -1025,7 +1019,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 8: LAYER 1 — BOOTSTRAP FILES ==================== -->
-<div class="scene" id="scene-7">
+<div class="scene" id="scene-6">
   <div class="beat-content">
     <h2>THE 4 LAYERS</h2>
     <div class="layer-stack" id="layer-stack-1">
@@ -1041,7 +1035,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 9: LAYER 2 — SESSION TRANSCRIPT ==================== -->
-<div class="scene" id="scene-8">
+<div class="scene" id="scene-7">
   <div class="beat-content">
     <h2>THE 4 LAYERS</h2>
     <div class="layer-stack">
@@ -1064,7 +1058,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 10: LAYERS 3-4 ==================== -->
-<div class="scene" id="scene-9">
+<div class="scene" id="scene-8">
   <div class="beat-content">
     <h2>THE 4 LAYERS</h2>
     <div class="layer-stack">
@@ -1101,7 +1095,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 11: NUCLEAR COMPACTION DEMO ==================== -->
-<div class="scene" id="scene-10">
+<div class="scene" id="scene-9">
   <div class="beat-content" style="text-align: center;">
     <img src="/memory-talk/sprites/owl-cowering.jpg" class="owl-sprite owl-small" alt="Cowering owl">
     <h2>NUCLEAR COMPACTION</h2>
@@ -1124,47 +1118,8 @@ h3 {
   </div>
 </div>
 
-<!-- ==================== BEAT 12: LEVEL 1 — THE CUBBY MOMENT ==================== -->
-<div class="scene" id="scene-11">
-  <div class="beat-content glitch" style="text-align: center;">
-    <div class="level-header">LEVEL 1</div>
-    <div style="font-family: 'Press Start 2P'; font-size: 20px; color: var(--text); margin-top: 20px;">THE CUBBY MOMENT</div>
-    <div style="margin-top: 16px; font-family: 'Press Start 2P'; font-size: 12px; color: var(--red);">⚡ SYSTEM GLITCH ⚡</div>
-  </div>
-</div>
-
-<!-- ==================== BEAT 13: CUBBY ANECDOTE ==================== -->
-<div class="scene" id="scene-12">
-  <div class="beat-content">
-    <div class="dialogue-box" style="max-width: 1100px;">
-      <div style="font-size: 28px; line-height: 1.8;">
-        Deep in a Cubby coding session one weekend — building a new feature, making architectural decisions, debugging edge cases. Real flow state.
-        <br><br>
-        My AI assistant remembered every decision, every constraint, every thread. It felt like having a <span class="text-green">genius collaborator</span>.
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== BEAT 14: CONTEXT LOST ==================== -->
-<div class="scene" id="scene-13">
-  <div class="beat-content" style="text-align: center;">
-    <img src="/memory-talk/sprites/owl-defeated.jpg" class="owl-sprite owl-small" alt="Defeated owl">
-    <div style="font-size: 28px; color: #aaa; margin-bottom: 32px;">
-      Monday through Friday — other things. Come back next weekend...
-    </div>
-    <div style="font-size: 30px; margin-bottom: 40px;">
-      "Hey, let's pick up where we left off on Cubby."
-    </div>
-    <div class="game-over-text">CONTEXT LOST</div>
-    <div style="margin-top: 32px; font-size: 24px; color: #aaa;">
-      Architecture decisions, debugging context, the whole thread — <span class="text-red">vaporized.</span>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== BEAT 15: QUICK-HIT ANECDOTES ==================== -->
-<div class="scene" id="scene-14">
+<!-- ==================== QUICK-HIT ANECDOTES ==================== -->
+<div class="scene" id="scene-10">
   <div class="beat-content">
     <div class="anecdote-list">
       <div class="anecdote-item">
@@ -1192,7 +1147,7 @@ h3 {
 </div>
 
 <!-- ==================== LEVEL UP → CONTEXT ISOLATION ==================== -->
-<div class="scene" id="scene-15">
+<div class="scene" id="scene-11">
   <div class="beat-content" style="text-align: center;">
     <div class="level-up-text">LEVEL UP!</div>
     <div style="margin-top: 40px; font-family: 'Press Start 2P'; font-size: 28px; color: var(--text);">LEVEL 2</div>
@@ -1202,7 +1157,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 21: ONE CONTEXT WINDOW ==================== -->
-<div class="scene" id="scene-16">
+<div class="scene" id="scene-12">
   <div class="beat-content" style="text-align: center;">
     <h2>THE PROBLEM</h2>
     <div style="font-size: 26px; margin-bottom: 24px; color: #aaa;">One context window doing everything.</div>
@@ -1221,7 +1176,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 22: SPLIT INTO TOPICS ==================== -->
-<div class="scene" id="scene-17">
+<div class="scene" id="scene-13">
   <div class="beat-content" style="text-align: center;">
     <h2>THE UPGRADE: TOPIC ISOLATION</h2>
     <div class="rooms-grid">
@@ -1246,7 +1201,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 23: PER-TOPIC SYSTEM PROMPT ==================== -->
-<div class="scene" id="scene-18">
+<div class="scene" id="scene-14">
   <div class="beat-content" style="text-align: center;">
     <h2>PER-TOPIC SYSTEM PROMPTS</h2>
     <div style="display: flex; flex-direction: column; gap: 16px; max-width: 900px; width: 100%; margin-top: 16px;">
@@ -1270,7 +1225,7 @@ h3 {
 </div>
 
 <!-- ==================== LEVEL UP → LEVEL 3: QMD ==================== -->
-<div class="scene" id="scene-19">
+<div class="scene" id="scene-15">
   <div class="beat-content" style="text-align: center;">
     <div class="level-up-text">LEVEL UP!</div>
     <div style="margin-top: 40px; font-family: 'Press Start 2P'; font-size: 28px; color: var(--text);">LEVEL 3</div>
@@ -1279,7 +1234,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 25: WHAT QMD IS ==================== -->
-<div class="scene" id="scene-20">
+<div class="scene" id="scene-16">
   <div class="beat-content" style="text-align: center;">
     <img src="/memory-talk/sprites/owl-detective.jpg" class="owl-sprite owl-small" alt="Detective owl">
     <h2 style="color: var(--teal);">WHAT IS QMD?</h2>
@@ -1305,7 +1260,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 26: CONFIG TOGGLE ==================== -->
-<div class="scene" id="scene-21">
+<div class="scene" id="scene-17">
   <div class="beat-content" style="text-align: center;">
     <h2 style="color: var(--teal);">THE HIDDEN SWITCH</h2>
     <div style="margin: 32px 0;">
@@ -1327,7 +1282,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 27: RAG FLAWS ==================== -->
-<div class="scene" id="scene-22">
+<div class="scene" id="scene-18">
   <div class="beat-content">
     <h2 style="color: var(--teal);">RAG-TYPE FLAWS</h2>
     <div style="display: flex; justify-content: center; gap: 12px; margin: 20px 0; font-size: 36px;">
@@ -1355,7 +1310,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 28: QMD SUMMARY ==================== -->
-<div class="scene" id="scene-23">
+<div class="scene" id="scene-19">
   <div class="beat-content" style="text-align: center;">
     <div class="dialogue-box gold-box" style="max-width: 1000px; border-color: var(--teal); box-shadow: inset 0 0 0 2px var(--surface), inset 0 0 0 4px var(--teal), 8px 8px 0 rgba(78,205,196,0.15);">
       <div style="color: var(--teal); font-family: 'Press Start 2P'; font-size: 18px; line-height: 1.8; text-align: center;">
@@ -1369,7 +1324,7 @@ h3 {
 </div>
 
 <!-- ==================== LEVEL UP → LEVEL 4: LCM ==================== -->
-<div class="scene purple-theme" id="scene-24">
+<div class="scene purple-theme" id="scene-20">
   <div class="beat-content" style="text-align: center;">
     <div class="level-up-text" style="color: var(--purple); text-shadow: 4px 4px 0 rgba(0,0,0,0.5), 0 0 30px rgba(168,85,247,0.4);">LEVEL UP!</div>
     <div style="margin-top: 40px; font-family: 'Press Start 2P'; font-size: 28px; color: var(--text);">LEVEL 4</div>
@@ -1379,7 +1334,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 30: QMD vs LCM ==================== -->
-<div class="scene purple-theme" id="scene-25">
+<div class="scene purple-theme" id="scene-21">
   <div class="beat-content">
     <h2>THE KEY DISTINCTION</h2>
     <div class="two-col">
@@ -1406,7 +1361,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 31: HERO ANIMATION — COMPACTION COMPARISON ==================== -->
-<div class="scene purple-theme" id="scene-26">
+<div class="scene purple-theme" id="scene-22">
   <div class="beat-content">
     <div class="comparison-grid">
       <!-- Stock Compaction -->
@@ -1456,7 +1411,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 32: DAG DIAGRAM ==================== -->
-<div class="scene purple-theme" id="scene-27">
+<div class="scene purple-theme" id="scene-23">
   <div class="beat-content">
     <h2 style="color: var(--purple);">THE DAG</h2>
     <div class="dag-diagram">
@@ -1485,7 +1440,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 33: CHARACTER STATS ==================== -->
-<div class="scene purple-theme" id="scene-28">
+<div class="scene purple-theme" id="scene-24">
   <div class="beat-content">
     <h2 style="color: var(--purple);">CHARACTER STATS</h2>
     <div class="stats-table">
@@ -1519,26 +1474,35 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 34: QMD + LCM TOGETHER ==================== -->
-<div class="scene purple-theme" id="scene-29">
+<div class="scene purple-theme" id="scene-25">
   <div class="beat-content" style="text-align: center;">
     <h2 style="color: var(--purple);">QMD + LCM TOGETHER</h2>
-    <div class="bubble-diagram">
-      <div class="bubble bubble-lcm">
-        <span class="text-purple">LCM</span>
-        <span style="font-size: 20px;">Within this session</span>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 60px; margin-top: 40px;">
+      <div style="text-align: center;">
+        <div style="width: 280px; height: 280px; border-radius: 50%; border: 3px solid var(--purple); background: rgba(168,85,247,0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
+          <div style="font-family: 'Press Start 2P'; font-size: 24px; color: var(--purple); margin-bottom: 12px;">LCM</div>
+          <div style="font-size: 22px; color: var(--text); line-height: 1.6;">Within-session<br>memory</div>
+          <div style="font-size: 18px; color: #aaa; margin-top: 8px;">DAG compaction<br>Micro-summaries<br>lcm_expand</div>
+        </div>
       </div>
-      <div class="bubble bubble-qmd">
-        <span class="text-teal">QMD</span>
-        <span style="font-size: 20px;">Across all sessions</span>
+      <div style="text-align: center;">
+        <div style="font-family: 'Press Start 2P'; font-size: 16px; color: var(--green); padding: 12px 20px; border: 2px solid var(--green); border-radius: 8px; background: rgba(0,255,136,0.08);">
+          BOTH ACTIVE<br><span style="font-size: 12px; color: #aaa; font-family: 'VT323';">Complementary,<br>not competing</span>
+        </div>
       </div>
-      <div class="bubble-overlap">FULL COVERAGE</div>
+      <div style="text-align: center;">
+        <div style="width: 280px; height: 280px; border-radius: 50%; border: 3px solid var(--teal); background: rgba(78,205,196,0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
+          <div style="font-family: 'Press Start 2P'; font-size: 24px; color: var(--teal); margin-bottom: 12px;">QMD</div>
+          <div style="font-size: 22px; color: var(--text); line-height: 1.6;">Cross-session<br>memory</div>
+          <div style="font-size: 18px; color: #aaa; margin-top: 8px;">638 transcripts<br>Semantic search<br>memory_search</div>
+        </div>
+      </div>
     </div>
-    <div style="margin-top: 16px; font-size: 24px; color: #aaa;">Complementary, not competing. Different jobs.</div>
   </div>
 </div>
 
 <!-- ==================== BEAT 35: LCM QUOTE ==================== -->
-<div class="scene purple-theme" id="scene-30">
+<div class="scene purple-theme" id="scene-26">
   <div class="beat-content" style="text-align: center;">
     <div class="dialogue-box" style="border-color: var(--purple); max-width: 1000px; box-shadow: inset 0 0 0 2px var(--surface), inset 0 0 0 4px var(--purple), 8px 8px 0 rgba(168,85,247,0.15);">
       <div style="color: var(--purple); font-family: 'Press Start 2P'; font-size: 16px; line-height: 2; text-align: center;">
@@ -1550,7 +1514,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 36: STAGE CLEAR ==================== -->
-<div class="scene" id="scene-31">
+<div class="scene" id="scene-27">
   <div class="beat-content" style="text-align: center;">
     <div class="stage-clear">STAGE CLEAR!</div>
     <div style="margin-top: 40px; font-family: 'Press Start 2P'; font-size: 24px; color: var(--gold);">THREE RULES</div>
@@ -1559,7 +1523,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 37: THREE TROPHIES ==================== -->
-<div class="scene" id="scene-32">
+<div class="scene" id="scene-28">
   <div class="beat-content">
     <h2>THREE RULES</h2>
     <div style="max-width: 1000px; width: 100%;">
@@ -1589,7 +1553,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 38: CLOSING ==================== -->
-<div class="scene" id="scene-33">
+<div class="scene" id="scene-29">
   <div class="beat-content" style="text-align: center;">
     <div class="quote-text" style="margin-bottom: 36px;">
       "The system keeps evolving. My job is to keep raising the bar."
@@ -1610,7 +1574,7 @@ h3 {
 
 <script>
 (function() {
-  const TOTAL_BEATS = 38;
+  const TOTAL_BEATS = 30;
   let currentBeat = 0;
   let transitioning = false;
 
@@ -1639,7 +1603,7 @@ h3 {
           bc.classList.add('visible');
         }
         // Trigger comparison animation
-        if (i === 26) {
+        if (i === 22) {
           const stockSide = document.getElementById('stock-side');
           const lcmSide = document.getElementById('lcm-side');
           stockSide.classList.remove('anim-active');

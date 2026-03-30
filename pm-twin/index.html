@@ -6,11 +6,11 @@
 <title>PM Twin — Internal Slides</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 @font-face {
   font-family: 'Apestron';
-  src: url('/cxas-experiment-slides/Apestron.ttf') format('truetype');
+  src: url('/pm-twin/Apestron.ttf') format('truetype');
   font-weight: normal; font-style: normal; font-display: swap;
 }
 :root {
@@ -20,6 +20,12 @@
   --rust: #c44d2b; --rust-light: #e67a58;
   --ink: #1f1f2e; --ink-muted: #5a5a72; --ink-dim: #8a8a9e;
   --border: #d4cfc3; --stripe: #c44d2b;
+  /* Type scale (1.25 ratio) */
+  --text-xs: 0.7rem; --text-sm: 0.8rem; --text-base: 1rem;
+  --text-lg: 1.15rem; --text-xl: 1.5rem;
+  --text-2xl: clamp(1.6rem, 3vw, 2.2rem); --text-3xl: clamp(2.8rem, 5.5vw, 4rem);
+  /* Letter-spacing tokens */
+  --ls-label: 0.15em; --ls-display: -0.02em;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { font-size: 18px; background: var(--cream); }
@@ -40,7 +46,7 @@ body { font-family: 'Inter', sans-serif; color: var(--ink); overflow: hidden; he
 .slide-num {
   position: fixed; bottom: 1.2rem; right: 2rem;
   font-family: 'Space Mono', monospace; font-size: 0.65rem;
-  color: var(--ink-dim); letter-spacing: 0.1em; z-index: 100;
+  color: var(--ink-dim); letter-spacing: var(--ls-label); z-index: 100;
 }
 .progress {
   position: fixed; top: 0; left: 0; height: 3px;
@@ -64,23 +70,27 @@ body { font-family: 'Inter', sans-serif; color: var(--ink); overflow: hidden; he
 /* ── TYPOGRAPHY ── */
 h1 {
   font-family: 'Apestron', 'Orbitron', sans-serif;
-  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  font-size: var(--text-3xl);
   font-weight: normal; line-height: 1.05;
   text-transform: uppercase; color: var(--navy);
+  letter-spacing: var(--ls-display);
+  font-feature-settings: 'ss01' on;
   margin-bottom: 1.5rem;
 }
 h2 {
   font-family: 'Apestron', 'Orbitron', sans-serif;
-  font-size: clamp(1.6rem, 3vw, 2.6rem);
-  font-weight: normal; line-height: 1.15;
+  font-size: var(--text-2xl);
+  font-weight: normal; line-height: 1.2;
   text-transform: uppercase; color: var(--navy);
+  letter-spacing: var(--ls-display);
   margin-bottom: 1.25rem;
 }
-p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800px; margin-bottom: 1rem; }
+h2.compact { font-size: clamp(1.3rem, 2.2vw, 1.8rem); }
+p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-width: 800px; margin-bottom: 1rem; }
 .label {
-  font-family: 'Space Mono', monospace; font-size: 0.65rem;
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--stripe);
-  margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem;
+  font-family: 'Space Mono', monospace; font-size: 0.75rem;
+  letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--stripe);
+  margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem;
 }
 .label::before { content: ''; width: 32px; height: 2px; background: var(--stripe); }
 
@@ -90,7 +100,7 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
   display: inline-flex; padding: 0.4rem 1rem;
   border: 1.5px solid var(--navy); border-radius: 2px;
   font-family: 'Orbitron', sans-serif; font-size: 0.55rem; font-weight: 600;
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--navy); margin-bottom: 1.5rem;
+  letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--navy); margin-bottom: 1.5rem;
 }
 .title-sub {
   font-family: 'Inter', sans-serif; font-size: 1.2rem;
@@ -201,7 +211,7 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
 }
 .catalyst-card h3 {
   font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy);
+  letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--navy);
   margin-bottom: 0.75rem;
 }
 .catalyst-card p {
@@ -258,7 +268,7 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
 .fix-content p { text-align: center; margin: 0 auto 1rem; }
 .fix-highlight {
   font-family: 'Orbitron', sans-serif; font-size: 0.9rem;
-  letter-spacing: 0.1em; text-transform: uppercase;
+  letter-spacing: var(--ls-label); text-transform: uppercase;
   color: var(--rust); margin-top: 1.5rem;
 }
 
@@ -352,7 +362,7 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
 .unlock-card.visible { opacity: 1; transform: translateY(0); }
 .unlock-card .uc-action {
   font-family: 'Orbitron', sans-serif; font-size: 0.7rem;
-  letter-spacing: 0.08em; text-transform: uppercase; color: var(--rust);
+  letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--rust);
   font-weight: 600;
 }
 .unlock-card .uc-prompt {
@@ -421,7 +431,7 @@ p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-muted); max-width: 800
 }
 .closer-content .line3 {
   font-family: 'Orbitron', sans-serif; font-size: clamp(1rem, 1.8vw, 1.4rem);
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust);
+  letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--rust);
 }
 </style>
 </head>
@@ -496,7 +506,7 @@ status update doc for the steering committee.</pre>
   <div class="constellation-layout">
     <div class="constellation-text">
       <div class="label">The Realization</div>
-      <h2 style="font-size: clamp(1.3rem, 2.2vw, 2rem);">A project isn't a doc. It's a constellation.</h2>
+      <h2 class="compact">A project isn't a doc. It's a constellation.</h2>
       <p>All that pasting made me realize what my work actually is. I work on projects — and projects aren't artifacts. They're ephemeral blobs of context drifting through time.</p>
     </div>
     <div class="constellation-viz" id="constellationViz">
@@ -681,7 +691,7 @@ Before answering any query, ground yourself:
 <div class="slide" id="slide-chain" style="padding: 3rem 5vw;">
   <div class="chain-content">
     <div class="label">The Chain</div>
-    <h2 style="font-size: clamp(1.3rem, 2.2vw, 1.8rem);">One prompt. Watch what happens.</h2>
+    <h2 class="compact">One prompt. Watch what happens.</h2>
     <div class="chain-prompt">
       <span class="prompt-char">$</span> Catch me up on everything that happened with Jupiter today.
     </div>
@@ -732,7 +742,7 @@ Before answering any query, ground yourself:
 <div class="slide" id="slide-unlock" style="padding: 3rem 5vw;">
   <div style="width:100%; max-width:800px;">
     <div class="label">What This Unlocks</div>
-    <h2 style="font-size: clamp(1.2rem, 2vw, 1.7rem);">You stop being the bottleneck between context and output.</h2>
+    <h2 class="compact">You stop being the bottleneck between context and output.</h2>
     <div class="unlock-cards" id="unlockCards">
       <div class="unlock-card">
         <div class="uc-action">Catch up</div>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katie & Mitch's SF Weekend 🌁</title>
+
+<!-- Social Preview -->
+<meta property="og:title" content="Katie & Mitch's SF Weekend">
+<meta property="og:description" content="Pick your adventures — one big, one city, and one mandatory burger 🌁">
+<meta property="og:url" content="https://alfred.barronroth.com/katie-mitch-sf/">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --warm-cream: #FFF8F0;
+  --terracotta: #C4593C;
+  --terracotta-light: #E8A490;
+  --sage: #7A9E7E;
+  --sage-light: #B8D4BB;
+  --ocean: #5B8FA8;
+  --ocean-light: #A3C9D9;
+  --gold: #D4A843;
+  --gold-light: #F0D88A;
+  --charcoal: #2C2C2C;
+  --warm-gray: #6B6360;
+  --fog: #E8E2DA;
+  --selected-glow: rgba(122, 158, 126, 0.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--warm-cream);
+  color: var(--charcoal);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  right: -30%;
+  width: 80vw;
+  height: 80vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196, 89, 60, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -40%;
+  left: -20%;
+  width: 70vw;
+  height: 70vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(122, 158, 126, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 3rem 0 2rem;
+  animation: fadeUp 0.8s ease-out;
+}
+
+.hero-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--charcoal);
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+
+.hero h1 em {
+  color: var(--terracotta);
+  font-style: italic;
+}
+
+.hero .subtitle {
+  font-size: 1.15rem;
+  color: var(--warm-gray);
+  font-weight: 300;
+  max-width: 520px;
+  margin: 0.75rem auto 0;
+  line-height: 1.6;
+}
+
+.dates-badge {
+  display: inline-block;
+  background: var(--fog);
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--warm-gray);
+  margin-top: 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+/* Rule callout */
+.rule-callout {
+  background: linear-gradient(135deg, rgba(122, 158, 126, 0.1), rgba(91, 143, 168, 0.08));
+  border: 1px solid rgba(122, 158, 126, 0.2);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+  margin: 0.5rem 0 2.5rem;
+  animation: fadeUp 0.8s ease-out 0.15s both;
+}
+
+.rule-callout .rule-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.rule-callout .rule-text {
+  font-size: 1rem;
+  color: var(--charcoal);
+  font-weight: 500;
+}
+
+.rule-callout .rule-sub {
+  font-size: 0.85rem;
+  color: var(--warm-gray);
+  font-weight: 300;
+  margin-top: 0.25rem;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.8s ease-out both;
+}
+
+.section:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) { animation-delay: 0.3s; }
+.section:nth-child(4) { animation-delay: 0.4s; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--fog);
+}
+
+.section-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.section-icon.saturday { background: rgba(196, 89, 60, 0.12); }
+.section-icon.city { background: rgba(91, 143, 168, 0.12); }
+.section-icon.mandatory { background: rgba(212, 168, 67, 0.12); }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.section-note {
+  font-size: 0.85rem;
+  color: var(--warm-gray);
+  font-weight: 300;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  transform: translateY(-3px);
+}
+
+.card.selected {
+  border-color: var(--sage);
+  box-shadow: 0 4px 20px var(--selected-glow);
+}
+
+.card.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  filter: grayscale(0.3);
+}
+
+.check {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--sage);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.card.selected .check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card-img {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .card-img img {
+  transform: scale(1.05);
+}
+
+.card-body {
+  padding: 1rem 1.15rem 1.15rem;
+}
+
+.card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.card-desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--warm-gray);
+  margin-bottom: 0.75rem;
+}
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 1rem;
+  font-weight: 500;
+}
+
+.tag.time { background: rgba(196, 89, 60, 0.08); color: var(--terracotta); }
+.tag.drive { background: rgba(91, 143, 168, 0.08); color: var(--ocean); }
+.tag.cost { background: rgba(212, 168, 67, 0.08); color: #B8922E; }
+.tag.tip { background: rgba(122, 158, 126, 0.08); color: var(--sage); }
+.tag.walk { background: rgba(91, 143, 168, 0.08); color: var(--ocean); }
+
+/* Mandatory card */
+.mandatory-card {
+  background: white;
+  border-radius: 16px;
+  border: 3px solid var(--gold);
+  box-shadow: 0 4px 20px rgba(212, 168, 67, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.mandatory-card .card-img {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.mandatory-card .card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mandatory-card .card-body {
+  padding: 1rem 1.15rem 1.15rem;
+}
+
+.mandatory-card .card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.mandatory-card .card-desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--warm-gray);
+  margin-bottom: 0.75rem;
+}
+
+.mandatory-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--gold);
+  color: white;
+  padding: 0.3rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem 0 1rem;
+  color: var(--warm-gray);
+  font-size: 0.85rem;
+}
+
+.footer em {
+  font-family: 'Playfair Display', serif;
+  color: var(--terracotta);
+}
+
+/* Summary bar */
+.summary-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid var(--fog);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 100;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+}
+
+.summary-bar.visible {
+  transform: translateY(0);
+}
+
+.summary-count {
+  background: var(--sage);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.summary-text {
+  font-size: 0.95rem;
+  color: var(--warm-gray);
+}
+
+.share-btn {
+  background: var(--terracotta);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: 0.5rem;
+}
+
+.share-btn:hover {
+  background: #A94930;
+  transform: scale(1.03);
+}
+
+.sent-msg {
+  display: none;
+  font-weight: 600;
+  color: var(--sage);
+}
+
+.sent-msg.show { display: inline; }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .hero { padding: 2rem 0 1.5rem; }
+  .container { padding: 1.25rem 1rem 5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="hero">
+    <span class="hero-emoji">🌁</span>
+    <h1>Katie & Mitch's <em>SF Weekend</em></h1>
+    <p class="subtitle">Your curated adventure menu — pick one big adventure, one city exploration, and accept your mandatory burger destiny.</p>
+    <div class="dates-badge">📅 March 27 – 29, 2026</div>
+  </div>
+
+  <div class="rule-callout">
+    <div class="rule-icon">✌️</div>
+    <div class="rule-text">Pick 2 adventures</div>
+    <div class="rule-sub">One Big Adventure · One City Exploration · Plus one non-negotiable 🍔</div>
+  </div>
+
+  <!-- BIG ADVENTURES (Saturday) -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon saturday">🏔️</div>
+      <div>
+        <div class="section-title">Big Adventure</div>
+        <div class="section-note">Pick one — full day Saturday commitment, worth every minute</div>
+      </div>
+    </div>
+    <div class="cards" id="saturday-cards">
+
+      <div class="card" data-id="tomales-bay" data-category="saturday" onclick="toggle(this)">
+        <div class="check">✓</div>
+        <div class="card-img"><img src="/katie-mitch-sf/images/tule-elk.png" alt="Tomales Bay" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Tomales Bay: Elk Hike + Fresh Oysters</div>
+          <div class="card-desc">Hike through wildflower-covered bluffs to spot herds of tule elk roaming free, then reward yourselves with oysters fresh from Tomales Bay. Nature and seafood perfection.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Full day</span>
+            <span class="tag drive">🚗 1.5 hrs north</span>
+            <span class="tag tip">💡 Hike first, oysters after</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="mt-tam" data-category="saturday" onclick="toggle(this)">
+        <div class="check">✓</div>
+        <div class="card-img"><img src="/katie-mitch-sf/images/muir-woods.png" alt="Mt Tamalpais" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Mount Tamalpais Day Hike</div>
+          <div class="card-desc">The crown jewel of Marin hiking. Panoramic views from the summit — ocean, bay, and city all at once. Multiple trail options from mellow to legit. Bring layers, it gets windy up top.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Full day</span>
+            <span class="tag drive">🚗 45 min north</span>
+            <span class="tag cost">💰 Free</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="napa" data-category="saturday" onclick="toggle(this)">
+        <div class="check">✓</div>
+        <div class="card-img"><img src="/katie-mitch-sf/images/napa.png" alt="Napa Valley" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Napa Valley Wine Country</div>
+          <div class="card-desc">World-class wineries, gorgeous rolling hills, incredible food. Hit 2–3 tastings, grab lunch in Yountville, and pretend you're on a European vacation. Full day, fully worth it.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Full day</span>
+            <span class="tag drive">🚗 1.5 hrs north</span>
+            <span class="tag cost">💰 $$–$$$</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="alamere-falls" data-category="saturday" onclick="toggle(this)">
+        <div class="check">✓</div>
+        <div class="card-img"><img src="/katie-mitch-sf/images/alamere-falls.png" alt="Alamere Falls" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Alamere Falls Hike</div>
+          <div class="card-desc">One of only two tidefalls in California — a waterfall that drops directly onto the beach and into the ocean. The hike through Point Reyes is beautiful, and the payoff is genuinely jaw-dropping. Bucket-list stuff.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Full day</span>
+            <span class="tag drive">🚗 1.5 hrs north</span>
+            <span class="tag cost">💰 Free</span>
+            <span class="tag tip">💡 ~8 mi round trip, moderate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="pescadero" data-category="saturday" onclick="toggle(this)">
+        <div class="check">✓</div>
+        <div class="card-img"><img src="/katie-mitch-sf/images/pescadero.png" alt="Pescadero" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Pescadero Farm Loop</div>
+          <div class="card-desc">A little European countryside detour an hour south. Tour Harley Farms goat dairy, grab legendary artichoke bread from Arcangeli Grocery, explore tide pools at Pescadero State Beach. Charming and totally unique.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Half day</span>
+            <span class="tag drive">🚗 1 hr south</span>
+            <span class="tag cost">💰 $</span>
+            <span class="tag tip">💡 Pair with Pigeon Point Lighthouse</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="half-moon-bay" data-category="saturday" onclick="toggle(this)">
+        <div class="check">✓</div>
+        <div class="card-img"><img src="/katie-mitch-sf/images/half-moon-bay.png" alt="Half Moon Bay" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Half Moon Bay Coastal Day</div>
+          <div class="card-desc">Charming coastal town with dramatic cliffs, world-famous Mavericks surf break, great seafood, and a gorgeous Coastal Trail walk. Laid-back California vibes with real wow-factor scenery.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Full day</span>
+            <span class="tag drive">🚗 45 min south</span>
+            <span class="tag cost">💰 $–$$</span>
+            <span class="tag tip">💡 Sam's Chowder House for lunch</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CITY EXPLORATION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon city">🌁</div>
+      <div>
+        <div class="section-title">City Exploration</div>
+        <div class="section-note">Pick one — Friday, Saturday evening, or Sunday morning</div>
+      </div>
+    </div>
+    <div class="cards" id="city-cards">
+
+      <div class="card" data-id="bike-ggb" data-category="city" onclick="toggle(this)">
+        <div class="check">✓</div>
+        <div class="card-img"><img src="/katie-mitch-sf/images/bike-ggb.png" alt="Bike Golden Gate" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Bike the Golden Gate → Sausalito</div>
+          <div class="card-desc">Rent bikes, ride across the Golden Gate Bridge, explore the charming waterfront town of Sausalito, then ferry back. The quintessential SF experience — iconic for a reason.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Half day</span>
+            <span class="tag cost">💰 ~$40 bike rental</span>
+            <span class="tag tip">💡 Ferry back from Sausalito</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="lands-end" data-category="city" onclick="toggle(this)">
+        <div class="check">✓</div>
+        <div class="card-img"><img src="/katie-mitch-sf/images/lands-end.png" alt="Lands End" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Lands End Trail</div>
+          <div class="card-desc">Gorgeous coastal trail with Golden Gate Bridge views, rugged cliffs, and the eerie ruins of Sutro Baths. Easy-moderate walk right in the city — stunning at any time of day. One of SF's best-kept secrets.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 1.5–2 hrs</span>
+            <span class="tag walk">🚶 Bus to trailhead</span>
+            <span class="tag cost">💰 Free</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="sf-shopping" data-category="city" onclick="toggle(this)">
+        <div class="check">✓</div>
+        <div class="card-img"><img src="/katie-mitch-sf/images/sf-shopping.png" alt="SF Shopping" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">Walk Around SF + Shopping</div>
+          <div class="card-desc">Explore SF's best neighborhoods on foot — Hayes Valley boutiques, Union Square flagship stores, Valencia Street's eclectic shops. Coffee stops, people-watching, and zero agenda required.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ Half day</span>
+            <span class="tag walk">🚶 Walkable</span>
+            <span class="tag cost">💰 $–$$$</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NON-NEGOTIABLE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon mandatory">🍔</div>
+      <div>
+        <div class="section-title">Non-Negotiable</div>
+        <div class="section-note">This isn't a choice. This is happening.</div>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="mandatory-card">
+        <div class="mandatory-badge">Mandatory</div>
+        <div class="card-img"><img src="/katie-mitch-sf/images/in-n-out.png" alt="In-N-Out" loading="lazy"></div>
+        <div class="card-body">
+          <div class="card-name">In-N-Out Burger</div>
+          <div class="card-desc">Non-negotiable California pilgrimage. Double-Double animal style, animal fries, Neapolitan shake. It's not just a burger — it's a rite of passage. You physically cannot leave without doing this.</div>
+          <div class="card-meta">
+            <span class="tag time">⏱ 30 min</span>
+            <span class="tag drive">🚗 Fisherman's Wharf location</span>
+            <span class="tag cost">💰 $</span>
+            <span class="tag tip">💡 Ask for animal style everything</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Made with 🌁 by Nina & Barron's robot butler, <em>Alfred</em></p>
+  </div>
+</div>
+
+<!-- Summary bar -->
+<div class="summary-bar" id="summaryBar">
+  <span class="summary-count" id="summaryCount">0</span>
+  <span class="summary-text">adventures picked</span>
+  <button class="share-btn" id="shareBtn" onclick="sendPicks()">Send to Nina 💌</button>
+  <div class="sent-msg" id="sentMsg">✅ Sent!</div>
+</div>
+
+<script>
+const selected = { saturday: null, city: null };
+const STORAGE_KEY = 'katie-mitch-sf-picks-v2';
+
+// Restore from localStorage
+try {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  if (saved.saturday) selected.saturday = saved.saturday;
+  if (saved.city) selected.city = saved.city;
+} catch(e) {}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.card[data-category]').forEach(card => {
+    const cat = card.dataset.category;
+    if (selected[cat] === card.dataset.id) {
+      card.classList.add('selected');
+    }
+  });
+  updateState();
+});
+
+function toggle(card) {
+  const id = card.dataset.id;
+  const cat = card.dataset.category;
+
+  if (selected[cat] === id) {
+    selected[cat] = null;
+    card.classList.remove('selected');
+  } else {
+    if (selected[cat]) {
+      const prev = document.querySelector(`.card[data-id="${selected[cat]}"]`);
+      if (prev) prev.classList.remove('selected');
+    }
+    selected[cat] = id;
+    card.classList.add('selected');
+  }
+
+  save();
+  updateState();
+}
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(selected));
+}
+
+function updateState() {
+  const count = (selected.saturday ? 1 : 0) + (selected.city ? 1 : 0);
+
+  const bar = document.getElementById('summaryBar');
+  const countEl = document.getElementById('summaryCount');
+  countEl.textContent = count;
+  bar.classList.toggle('visible', count > 0);
+
+  ['saturday', 'city'].forEach(cat => {
+    const cards = document.querySelectorAll(`.card[data-category="${cat}"]`);
+    cards.forEach(c => {
+      if (selected[cat] && selected[cat] !== c.dataset.id) {
+        c.classList.add('disabled');
+      } else {
+        c.classList.remove('disabled');
+      }
+    });
+  });
+}
+
+function sendPicks() {
+  const picks = [];
+  document.querySelectorAll('.card.selected').forEach(card => {
+    picks.push(card.querySelector('.card-name').textContent);
+  });
+  picks.push("In-N-Out Burger (mandatory 🍔)");
+  const text = "Katie & Mitch's SF picks:\n" + picks.map(p => "• " + p).join("\n");
+  const btn = document.getElementById('shareBtn');
+  const msg = document.getElementById('sentMsg');
+
+  if (navigator.share) {
+    navigator.share({ title: "Katie & Mitch's SF Picks", text: text }).catch(() => fallbackCopy(text, btn, msg));
+  } else {
+    fallbackCopy(text, btn, msg);
+  }
+}
+
+function fallbackCopy(text, btn, msg) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.style.display = 'none';
+    msg.classList.add('show');
+    setTimeout(() => { btn.style.display = ''; msg.classList.remove('show'); }, 3000);
+  }).catch(() => alert("Your picks:\n\n" + text));
+}
+</script>
+
+</body>
+</html>

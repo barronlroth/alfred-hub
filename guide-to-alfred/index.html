@@ -147,6 +147,7 @@
     /* --- SECTION --- */
     .section {
       margin-bottom: 80px;
+      scroll-margin-top: 100px;
     }
     .section-number {
       font-family: 'JetBrains Mono', monospace;
@@ -425,7 +426,8 @@
     .section-img {
       width: 100%;
       max-width: 480px;
-      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
       border-radius: var(--radius);
       margin: 24px auto;
       display: block;
@@ -505,6 +507,7 @@
     <a href="#personality">Personality</a>
     <a href="#model">The Model</a>
     <a href="#remote">Remote Access</a>
+    <a href="#voice">Voice Transcription</a>
   </nav>
 
   <div class="content">
@@ -994,6 +997,59 @@ Save the new SOUL.md. Welcome to having a personality.</code>
 
     <div class="divider"></div>
 
+    <!-- 17 VOICE TRANSCRIPTION -->
+    <div class="section fade-in" id="voice">
+      <div class="section-number">17</div>
+      <h2>Voice Transcription: Local &amp; Free</h2>
+      <img src="/guide-to-alfred/images/17-voice.jpg" alt="Owl with headphones listening to audio" class="section-img" loading="lazy" />
+      <p>
+        When I send Alfred a voice note on Telegram, it needs to be transcribed to text before he can process it. By default, OpenClaw sends the audio to <strong>OpenAI's API</strong> (gpt-4o-mini-transcribe) &mdash; a few cents per message, plus the latency of a network round trip, plus your audio leaving your device.
+      </p>
+      <p>
+        I replaced that with <strong>Parakeet MLX</strong>, an NVIDIA speech model ported to run natively on Apple Silicon via MLX. It transcribes voice notes locally on the M4 Mac mini in about 1.3 seconds. Same accuracy for clear phone-mic recordings, zero cost, fully offline.
+      </p>
+      <p>
+        I benchmarked both against my actual Telegram voice notes: Parakeet averaged <strong>1.32s</strong> with almost no variance (±30ms). OpenAI averaged <strong>1.15s</strong> but swung wildly between 0.6s and 2.0s depending on network conditions. For a voice-first workflow, consistency matters more than shaving 170ms on a good day.
+      </p>
+      <p>
+        The config uses Parakeet as the primary backend with OpenAI as an automatic fallback. If the local model ever fails (timeout, weird audio format), OpenClaw seamlessly falls back to the cloud. Best of both worlds.
+      </p>
+      <div class="code-block">
+        <div class="code-label">openclaw.json</div>
+        <pre><code>{
+  "tools": {
+    "media": {
+      "audio": {
+        "enabled": true,
+        "models": [
+          {
+            "type": "cli",
+            "command": "parakeet-mlx",
+            "args": ["{{MediaPath}}", "--output-format", "txt",
+                     "--output-dir", "{{MediaDir}}"],
+            "timeoutSeconds": 30
+          },
+          {
+            "provider": "openai",
+            "model": "gpt-4o-mini-transcribe"
+          }
+        ]
+      }
+    }
+  }
+}</code></pre>
+      </div>
+      <p>
+        Setup is two commands: <code>brew install pipx &amp;&amp; pipx install parakeet-mlx</code>. First run downloads the model (~1.2GB). After that, it's instant. There are faster options &mdash; FluidAudio CoreML hits 0.19s &mdash; but Parakeet is the sweet spot of speed, accuracy, and ease of install. OpenClaw has native support for its output format.
+      </p>
+      <div class="tip">
+        <div class="tip-label">Ask your OpenClaw</div>
+        <p><em>&ldquo;I want to set up voice transcription using an on-device model. Let&rsquo;s look into Parakeet MLX.&rdquo;</em></p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
     <!-- SUMMARY -->
     <div class="section fade-in">
       <h2>The Stack</h2>
@@ -1014,6 +1070,7 @@ Save the new SOUL.md. Welcome to having a personality.</code>
         <li><span class="bullet">&mdash;</span><span><strong>Gemini key</strong> for Nano Banana image generation</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Emoji reactions + streaming</strong> for real-time conversational feel</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Regular update checks</strong> to continuously adopt new features</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Parakeet MLX</strong> for local voice transcription &mdash; free, fast, offline</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>SOUL.md</strong> for a personality that doesn't feel like a chatbot</span></li>
       </ul>
     </div>
@@ -1075,6 +1132,25 @@ Save the new SOUL.md. Welcome to having a personality.</code>
       { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
     );
     faders.forEach(el => fadeObserver.observe(el));
+
+    // Deferred anchor scroll — wait for images to settle, then scroll to hash
+    if (window.location.hash) {
+      const scrollToHash = () => {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+          target.classList.add('visible'); // ensure fade-in is shown
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+      // Wait for all images to load (or fail), then scroll
+      Promise.all(
+        Array.from(document.images)
+          .filter(img => !img.complete)
+          .map(img => new Promise(r => { img.onload = img.onerror = r; }))
+      ).then(scrollToHash);
+      // Fallback: scroll after 1s even if images are slow
+      setTimeout(scrollToHash, 1000);
+    }
   </script>
 
 </body>

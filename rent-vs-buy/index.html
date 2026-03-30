@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rent vs. Buy — Financial Comparison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg-card:#111110;--bg-elevated:#1a1918;--bg-input:#141413;
+  --border:#2a2825;--border-subtle:#1f1d1a;
+  --gold:#c9a227;--gold-dim:#8b7019;--gold-bright:#e8bf2e;--gold-glow:rgba(201,162,39,.08);
+  --amber:#d4883a;--teal:#3a9d8f;
+  --text:#e8e4dc;--text-dim:#8a857c;--text-muted:#5a564f;
+  --buy-color:#c9a227;--rent-color:#3a9d8f;
+  --font-display:'Instrument Serif',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --radius:6px;--radius-lg:10px;
+}
+html{font-size:15px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;overflow-x:hidden}
+
+/* Noise overlay */
+body::before{content:'';position:fixed;inset:0;opacity:.03;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Layout */
+.container{max-width:1400px;margin:0 auto;padding:2rem 2rem 4rem}
+header{text-align:center;padding:3rem 0 2.5rem;border-bottom:1px solid var(--border-subtle);margin-bottom:2.5rem}
+header h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;letter-spacing:-.02em;color:var(--text);line-height:1.1}
+header h1 span{color:var(--gold);font-style:italic}
+header p{color:var(--text-dim);font-size:.875rem;margin-top:.75rem;font-weight:300;letter-spacing:.04em;text-transform:uppercase}
+
+/* Summary cards */
+.summary-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-bottom:2.5rem}
+.summary-card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:1.5rem 1.75rem;position:relative;overflow:hidden}
+.summary-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.summary-card.verdict::before{background:linear-gradient(90deg,var(--gold),var(--amber))}
+.summary-card.buy-card::before{background:var(--buy-color)}
+.summary-card.rent-card::before{background:var(--rent-color)}
+.summary-card .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:.5rem;font-weight:500}
+.summary-card .value{font-family:var(--font-display);font-size:1.8rem;font-weight:400;line-height:1.2}
+.summary-card .sub{font-size:.78rem;color:var(--text-dim);margin-top:.35rem;font-weight:300}
+.summary-card.verdict .value{color:var(--gold-bright)}
+
+/* Chart container */
+.chart-section{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:2rem;margin-bottom:2.5rem;position:relative}
+.chart-section h2{font-family:var(--font-display);font-size:1.5rem;font-weight:400;margin-bottom:.25rem}
+.chart-section .chart-subtitle{font-size:.78rem;color:var(--text-dim);margin-bottom:1.5rem;font-weight:300}
+.chart-legend{display:flex;gap:1.5rem;margin-bottom:1rem;font-size:.78rem}
+.chart-legend span{display:flex;align-items:center;gap:.4rem;color:var(--text-dim)}
+.chart-legend span::before{content:'';width:20px;height:3px;border-radius:2px}
+.chart-legend .leg-buy::before{background:var(--buy-color)}
+.chart-legend .leg-rent::before{background:var(--rent-color)}
+canvas{width:100%;height:auto;display:block;border-radius:var(--radius)}
+.chart-tooltip{position:absolute;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:.6rem .8rem;font-size:.75rem;pointer-events:none;opacity:0;transition:opacity .15s;z-index:10;white-space:nowrap}
+
+/* Controls */
+.controls-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.25rem;margin-bottom:2.5rem}
+.control-group{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:1.5rem 1.75rem}
+.control-group h3{font-family:var(--font-display);font-size:1.15rem;font-weight:400;margin-bottom:1.25rem;color:var(--text);display:flex;align-items:center;gap:.5rem}
+.control-group h3 .icon{font-size:.9rem;opacity:.6}
+
+.slider-row{margin-bottom:1.1rem}
+.slider-row:last-child{margin-bottom:0}
+.slider-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.4rem}
+.slider-label label{font-size:.78rem;color:var(--text-dim);font-weight:400;display:flex;align-items:center;gap:.3rem}
+.slider-label .slider-value{font-size:.82rem;font-weight:500;color:var(--text);font-variant-numeric:tabular-nums;min-width:5em;text-align:right}
+.tooltip-trigger{cursor:help;color:var(--gold-dim);font-size:.7rem;border:1px solid var(--gold-dim);border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;position:relative;vertical-align:middle;margin-left:2px}
+.tooltip-trigger:hover .tooltip-text{opacity:1;visibility:visible;transform:translateY(0)}
+.tooltip-text{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:.6rem .8rem;font-size:.72rem;color:var(--text-dim);width:240px;line-height:1.5;opacity:0;visibility:hidden;transition:all .2s;z-index:20;text-align:left;pointer-events:none;font-weight:300}
+
+input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:var(--border);outline:none;cursor:pointer}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);cursor:pointer;box-shadow:0 0 8px rgba(201,162,39,.3);transition:transform .15s,box-shadow .15s}
+input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.15);box-shadow:0 0 12px rgba(201,162,39,.5)}
+input[type="range"]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);cursor:pointer}
+
+.term-toggle{display:flex;gap:.5rem;margin-top:.3rem}
+.term-btn{padding:.35rem .9rem;border:1px solid var(--border);border-radius:var(--radius);background:transparent;color:var(--text-dim);font-size:.75rem;font-family:var(--font-body);cursor:pointer;transition:all .2s}
+.term-btn.active{background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:500}
+
+/* Breakdown table */
+.breakdown-section{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2.5rem}
+.breakdown-panel{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:1.5rem 1.75rem}
+.breakdown-panel h3{font-family:var(--font-display);font-size:1.1rem;font-weight:400;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.breakdown-panel h3 .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dot-buy{background:var(--buy-color)}
+.dot-rent{background:var(--rent-color)}
+.breakdown-row{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid var(--border-subtle);font-size:.8rem}
+.breakdown-row:last-child{border-bottom:none}
+.breakdown-row .br-label{color:var(--text-dim);font-weight:300}
+.breakdown-row .br-value{color:var(--text);font-variant-numeric:tabular-nums;font-weight:400}
+.breakdown-row.total{border-top:1px solid var(--border);padding-top:.6rem;margin-top:.2rem}
+.breakdown-row.total .br-label,.breakdown-row.total .br-value{font-weight:500;color:var(--text)}
+
+/* Amortization mini chart */
+.amort-section{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:2rem;margin-bottom:2.5rem}
+.amort-section h2{font-family:var(--font-display);font-size:1.3rem;font-weight:400;margin-bottom:.25rem}
+.amort-section .chart-subtitle{font-size:.78rem;color:var(--text-dim);margin-bottom:1.25rem;font-weight:300}
+.amort-legend{display:flex;gap:1.5rem;margin-bottom:.75rem;font-size:.75rem}
+.amort-legend span{display:flex;align-items:center;gap:.35rem;color:var(--text-dim)}
+.amort-legend span::before{content:'';width:14px;height:10px;border-radius:2px}
+.amort-legend .leg-interest::before{background:rgba(201,162,39,.5)}
+.amort-legend .leg-principal::before{background:var(--gold)}
+
+/* Equity opp cost */
+.opp-cost-section{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:2rem;margin-bottom:2.5rem}
+.opp-cost-section h2{font-family:var(--font-display);font-size:1.3rem;font-weight:400;margin-bottom:.25rem}
+.opp-cost-section .chart-subtitle{font-size:.78rem;color:var(--text-dim);margin-bottom:1rem;font-weight:300}
+.opp-row{display:flex;justify-content:space-between;align-items:baseline;padding:.5rem 0;border-bottom:1px solid var(--border-subtle);font-size:.82rem}
+.opp-row:last-child{border-bottom:none}
+.opp-row .opp-label{color:var(--text-dim);font-weight:300}
+.opp-row .opp-value{font-variant-numeric:tabular-nums;font-weight:400}
+.opp-row .opp-value.gold{color:var(--gold)}
+.opp-row .opp-value.teal{color:var(--rent-color)}
+.opp-row .opp-value.diff{color:var(--amber)}
+
+footer{text-align:center;padding:2rem 0 0;border-top:1px solid var(--border-subtle);margin-top:1rem}
+footer p{font-size:.72rem;color:var(--text-muted);font-weight:300;letter-spacing:.02em}
+
+/* Responsive */
+@media(max-width:768px){
+  .container{padding:1rem 1rem 3rem}
+  header{padding:2rem 0 1.5rem}
+  .summary-row{grid-template-columns:1fr}
+  .controls-grid{grid-template-columns:1fr}
+  .breakdown-section{grid-template-columns:1fr}
+  .chart-section{padding:1.25rem}
+  .summary-card .value{font-size:1.4rem}
+}
+@media(max-width:480px){
+  html{font-size:14px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Rent <span>vs.</span> Buy</h1>
+    <p>A wealth-building comparison over time</p>
+  </header>
+
+  <!-- Summary Cards -->
+  <div class="summary-row">
+    <div class="summary-card verdict" id="verdict-card">
+      <div class="label">Verdict at Year <span id="verdict-year">20</span></div>
+      <div class="value" id="verdict-value">—</div>
+      <div class="sub" id="verdict-sub"></div>
+    </div>
+    <div class="summary-card buy-card">
+      <div class="label">Buy — Net Worth</div>
+      <div class="value" id="buy-nw">—</div>
+      <div class="sub" id="buy-sub">Home equity minus costs</div>
+    </div>
+    <div class="summary-card rent-card">
+      <div class="label">Rent — Net Worth</div>
+      <div class="value" id="rent-nw">—</div>
+      <div class="sub" id="rent-sub">Investment portfolio after tax</div>
+    </div>
+  </div>
+
+  <!-- Main Chart -->
+  <div class="chart-section" id="chart-container">
+    <h2>Net Worth Over Time</h2>
+    <div class="chart-subtitle">Comparing total wealth accumulation for each scenario</div>
+    <div class="chart-legend">
+      <span class="leg-buy">Buy</span>
+      <span class="leg-rent">Rent</span>
+    </div>
+    <canvas id="mainChart" width="1200" height="440"></canvas>
+    <div class="chart-tooltip" id="chartTooltip"></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls-grid">
+    <!-- Core -->
+    <div class="control-group">
+      <h3><span class="icon">◆</span> Core Assumptions</h3>
+      <div class="slider-row">
+        <div class="slider-label"><label>Home Price</label><span class="slider-value" id="v-homePrice">$6,000,000</span></div>
+        <input type="range" id="homePrice" min="500000" max="15000000" step="50000" value="6000000">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Down Payment</label><span class="slider-value" id="v-downPct">20%</span></div>
+        <input type="range" id="downPct" min="5" max="50" step="1" value="20">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Mortgage Rate</label><span class="slider-value" id="v-mortRate">6.80%</span></div>
+        <input type="range" id="mortRate" min="200" max="1000" step="5" value="680">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Mortgage Term</label><span class="slider-value" id="v-mortTerm">30 years</span></div>
+        <div class="term-toggle">
+          <button class="term-btn" data-val="15" id="term15">15 yr</button>
+          <button class="term-btn active" data-val="30" id="term30">30 yr</button>
+        </div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Time Horizon</label><span class="slider-value" id="v-horizon">20 years</span></div>
+        <input type="range" id="horizon" min="5" max="40" step="1" value="20">
+      </div>
+    </div>
+
+    <!-- Buy-side costs -->
+    <div class="control-group">
+      <h3><span class="icon">▲</span> Buy-Side Costs</h3>
+      <div class="slider-row">
+        <div class="slider-label"><label>Property Tax Rate</label><span class="slider-value" id="v-propTax">1.20%</span></div>
+        <input type="range" id="propTax" min="50" max="300" step="5" value="120">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Homeowner's Insurance</label><span class="slider-value" id="v-homeIns">0.35%</span></div>
+        <input type="range" id="homeIns" min="10" max="100" step="5" value="35">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Maintenance</label><span class="slider-value" id="v-maint">1.00%</span></div>
+        <input type="range" id="maint" min="50" max="200" step="5" value="100">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>HOA (Monthly)</label><span class="slider-value" id="v-hoa">$0</span></div>
+        <input type="range" id="hoa" min="0" max="2000" step="50" value="0">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Closing Costs (Buy)</label><span class="slider-value" id="v-closeCost">3.0%</span></div>
+        <input type="range" id="closeCost" min="200" max="500" step="10" value="300">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Selling Costs</label><span class="slider-value" id="v-sellCost">5.5%</span></div>
+        <input type="range" id="sellCost" min="0" max="800" step="10" value="550">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Home Appreciation</label><span class="slider-value" id="v-homeAppr">3.50%</span></div>
+        <input type="range" id="homeAppr" min="0" max="1000" step="10" value="350">
+      </div>
+    </div>
+
+    <!-- Rent-side -->
+    <div class="control-group">
+      <h3><span class="icon">●</span> Rent-Side</h3>
+      <div class="slider-row">
+        <div class="slider-label">
+          <label>Price-to-Rent Ratio
+            <span class="tooltip-trigger">?<span class="tooltip-text">Typical price-to-rent ratios range from 15–25× annual rent. SF averages ~20–25×. A ratio of 20 means annual rent = home price ÷ 20.</span></span>
+          </label>
+          <span class="slider-value" id="v-ptr">20×</span>
+        </div>
+        <input type="range" id="ptr" min="10" max="40" step="1" value="20">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Implied Monthly Rent</label><span class="slider-value" id="v-monthlyRent">$25,000</span></div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Rent Increase Rate</label><span class="slider-value" id="v-rentInc">3.50%</span></div>
+        <input type="range" id="rentInc" min="0" max="800" step="10" value="350">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Renter's Insurance (Monthly)</label><span class="slider-value" id="v-rentIns">$150</span></div>
+        <input type="range" id="rentIns" min="50" max="500" step="10" value="150">
+      </div>
+    </div>
+
+    <!-- Investment & Tax -->
+    <div class="control-group">
+      <h3><span class="icon">◈</span> Investment & Tax</h3>
+      <div class="slider-row">
+        <div class="slider-label"><label>Stock Market Return</label><span class="slider-value" id="v-stockRet">8.00%</span></div>
+        <input type="range" id="stockRet" min="400" max="1200" step="10" value="800">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><label>Capital Gains Tax</label><span class="slider-value" id="v-capGains">23.8%</span></div>
+        <input type="range" id="capGains" min="0" max="3000" step="10" value="2380">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <label>Marginal Tax Rate
+            <span class="tooltip-trigger">?<span class="tooltip-text">Combined federal (37%) + California (13.3%) = ~50.3%. Applied to mortgage interest deduction. SALT deduction capped at $10K.</span></span>
+          </label>
+          <span class="slider-value">~50.3%</span>
+        </div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <label>Home Sale Exclusion
+            <span class="tooltip-trigger">?<span class="tooltip-text">Married filing jointly can exclude up to $500K of capital gains on primary residence sale (must live there 2 of last 5 years).</span></span>
+          </label>
+          <span class="slider-value">$500,000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breakdown -->
+  <div class="breakdown-section">
+    <div class="breakdown-panel">
+      <h3><span class="dot dot-buy"></span> Buy — Year 1 Costs</h3>
+      <div id="buy-breakdown"></div>
+    </div>
+    <div class="breakdown-panel">
+      <h3><span class="dot dot-rent"></span> Rent — Year 1 Costs</h3>
+      <div id="rent-breakdown"></div>
+    </div>
+  </div>
+
+  <!-- Amortization -->
+  <div class="amort-section">
+    <h2>Mortgage Amortization</h2>
+    <div class="chart-subtitle">Interest vs. principal breakdown over the loan term</div>
+    <div class="amort-legend">
+      <span class="leg-principal">Principal</span>
+      <span class="leg-interest">Interest</span>
+    </div>
+    <canvas id="amortChart" width="1200" height="260"></canvas>
+  </div>
+
+  <!-- Equity Opportunity Cost -->
+  <div class="opp-cost-section">
+    <h2>Equity Opportunity Cost</h2>
+    <div class="chart-subtitle">What if mortgage principal payments were invested in the stock market instead?</div>
+    <div id="opp-cost-rows"></div>
+  </div>
+
+  <footer>
+    <p>For illustrative purposes only. Consult a financial advisor for personalized guidance. All figures are pre-income-tax estimates.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+// --- Helpers ---
+const $=id=>document.getElementById(id);
+const fmt=n=>{
+  if(Math.abs(n)>=1e6) return (n<0?'-':'')+'$'+Math.abs(n/1e6).toFixed(n%1e6===0?0:1)+'M';
+  return (n<0?'-':'')+'$'+Math.abs(Math.round(n)).toLocaleString('en-US');
+};
+const fmtFull=n=>(n<0?'-':'')+'$'+Math.abs(Math.round(n)).toLocaleString('en-US');
+const pct=(n,d=2)=>(n).toFixed(d)+'%';
+
+// --- State ---
+let state={};
+function readState(){
+  state={
+    homePrice:+$('homePrice').value,
+    downPct:+$('downPct').value/100,
+    mortRate:+$('mortRate').value/10000,
+    mortTerm:$('term30').classList.contains('active')?30:15,
+    horizon:+$('horizon').value,
+    propTax:+$('propTax').value/10000,
+    homeIns:+$('homeIns').value/10000,
+    maint:+$('maint').value/10000,
+    hoa:+$('hoa').value,
+    closeCost:+$('closeCost').value/10000,
+    sellCost:+$('sellCost').value/10000,
+    homeAppr:+$('homeAppr').value/10000,
+    ptr:+$('ptr').value,
+    rentInc:+$('rentInc').value/10000,
+    rentIns:+$('rentIns').value,
+    stockRet:+$('stockRet').value/10000,
+    capGains:+$('capGains').value/10000,
+    margTax:0.503,
+    exclusion:500000,
+    stdDeduction:30000,
+    saltCap:10000
+  };
+}
+
+// --- Display values ---
+function updateDisplays(){
+  const s=state;
+  $('v-homePrice').textContent=fmt(s.homePrice);
+  $('v-downPct').textContent=pct(s.downPct*100,0);
+  $('v-mortRate').textContent=pct(s.mortRate*100);
+  $('v-mortTerm').textContent=s.mortTerm+' years';
+  $('v-horizon').textContent=s.horizon+' years';
+  $('v-propTax').textContent=pct(s.propTax*100);
+  $('v-homeIns').textContent=pct(s.homeIns*100);
+  $('v-maint').textContent=pct(s.maint*100);
+  $('v-hoa').textContent=fmtFull(s.hoa);
+  $('v-closeCost').textContent=pct(s.closeCost*100,1);
+  $('v-sellCost').textContent=pct(s.sellCost*100,1);
+  $('v-homeAppr').textContent=pct(s.homeAppr*100);
+  $('v-ptr').textContent=s.ptr+'×';
+  const monthlyRent=s.homePrice/s.ptr/12;
+  $('v-monthlyRent').textContent=fmtFull(monthlyRent);
+  $('v-rentInc').textContent=pct(s.rentInc*100);
+  $('v-rentIns').textContent=fmtFull(s.rentIns);
+  $('v-stockRet').textContent=pct(s.stockRet*100);
+  $('v-capGains').textContent=pct(s.capGains*100,1);
+  $('verdict-year').textContent=s.horizon;
+}
+
+// --- Financial Model ---
+function calcMonthlyPayment(principal,annualRate,termYears){
+  const r=annualRate/12;
+  const n=termYears*12;
+  if(r===0) return principal/n;
+  return principal*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
+}
+
+function amortSchedule(principal,annualRate,termYears){
+  const monthly=calcMonthlyPayment(principal,annualRate,termYears);
+  const r=annualRate/12;
+  let bal=principal;
+  const years=[];
+  for(let y=0;y<termYears;y++){
+    let yearInterest=0,yearPrincipal=0;
+    for(let m=0;m<12;m++){
+      const interest=bal*r;
+      const princ=monthly-interest;
+      yearInterest+=interest;
+      yearPrincipal+=princ;
+      bal=Math.max(0,bal-princ);
+    }
+    years.push({interest:yearInterest,principal:yearPrincipal,balance:bal});
+  }
+  return {monthly,years};
+}
+
+function compute(){
+  const s=state;
+  const downPayment=s.homePrice*s.downPct;
+  const loanAmount=s.homePrice-downPayment;
+  const closingCosts=s.homePrice*s.closeCost;
+  const upfrontCash=downPayment+closingCosts;
+  const amort=amortSchedule(loanAmount,s.mortRate,s.mortTerm);
+  const monthlyMortgage=amort.monthly;
+
+  const buyData=[];
+  const rentData=[];
+  let homeValue=s.homePrice;
+  let mortBalance=loanAmount;
+  const monthlyR=s.mortRate/12;
+
+  // Rent side
+  let rentPortfolio=upfrontCash; // invest what buyer spends upfront
+  let rentBasis=upfrontCash;
+  let monthlyRent=s.homePrice/s.ptr/12;
+  let totalPrincipalPaid=0;
+
+  // Year 0
+  buyData.push(-closingCosts); // net position at start: spent closing + down, have home equity = downPayment - closingCosts net = homePrice - loanAmount - closingCosts
+  // Actually let's track net worth properly
+  // Buy NW at year 0: home value - mortgage = down payment. But spent closing costs too. So: downPayment - closingCosts
+  // Rent NW at year 0: upfrontCash (invested)
+
+  const buyNW=[downPayment-closingCosts];
+  const rentNW=[upfrontCash];
+
+  let cumPrincipal=0;
+  let principalAtStockRate=0;
+
+  for(let y=1;y<=s.horizon;y++){
+    // Home appreciates
+    homeValue*=(1+s.homeAppr);
+
+    // Annual property tax, insurance, maintenance, HOA
+    const annPropTax=homeValue*s.propTax; // on current value (simplified, some jurisdictions use purchase price)
+    const annInsurance=homeValue*s.homeIns;
+    const annMaint=homeValue*s.maint;
+    const annHOA=s.hoa*12;
+
+    // Mortgage payment for this year
+    let yearInterest=0, yearPrincipal=0;
+    if(y<=s.mortTerm && mortBalance>0){
+      for(let m=0;m<12;m++){
+        const interest=mortBalance*monthlyR;
+        const princ=Math.min(monthlyMortgage-interest, mortBalance);
+        yearInterest+=interest;
+        yearPrincipal+=princ;
+        mortBalance=Math.max(0,mortBalance-princ);
+      }
+    }
+    cumPrincipal+=yearPrincipal;
+    totalPrincipalPaid+=yearPrincipal;
+
+    // Tax benefit calculation
+    // Itemized: mortgage interest + min(propTax, SALT cap)
+    const saltDeduction=Math.min(annPropTax, s.saltCap);
+    const itemized=yearInterest+saltDeduction;
+    const taxBenefit=itemized>s.stdDeduction?(itemized-s.stdDeduction)*s.margTax:0;
+
+    // Buy annual cost (out of pocket beyond mortgage principal which builds equity)
+    const buyAnnualCost=yearInterest+annPropTax+annInsurance+annMaint+annHOA-taxBenefit;
+    const buyMonthlyCost=(yearPrincipal+buyAnnualCost)/12;
+
+    // Buy net worth
+    const buyNetWorth=homeValue-mortBalance-closingCosts*(y===0?1:0);
+
+    // If at end of horizon, subtract selling costs and consider cap gains
+    let buyFinalNW=homeValue-mortBalance;
+    if(y===s.horizon){
+      const gain=homeValue-s.homePrice;
+      const taxableGain=Math.max(0,gain-s.exclusion);
+      const sellingCostAmt=homeValue*s.sellCost;
+      buyFinalNW=homeValue-mortBalance-sellingCostAmt;
+      // Cap gains on home sale taxed at capital gains rate
+      // Actually home sale gains above exclusion taxed at cap gains rate
+      buyFinalNW-=taxableGain*s.capGains;
+    }
+    buyNW.push(y===s.horizon?buyFinalNW:(homeValue-mortBalance));
+
+    // Rent side
+    const annRent=monthlyRent*12;
+    const annRentIns=s.rentIns*12;
+    const rentAnnualCost=annRent+annRentIns;
+
+    // Buy total outflow this year (mortgage + all costs - tax benefit)
+    const buyTotalOutflow=(y<=s.mortTerm?monthlyMortgage*12:0)+annPropTax+annInsurance+annMaint+annHOA-taxBenefit;
+
+    // Renter saves/spends difference
+    const rentSavings=buyTotalOutflow-rentAnnualCost;
+
+    // Portfolio grows, then add/subtract savings
+    rentPortfolio*=(1+s.stockRet);
+    rentPortfolio+=rentSavings;
+
+    // Track basis for cap gains
+    if(rentSavings>0) rentBasis+=rentSavings;
+
+    // Equity opp cost tracking
+    principalAtStockRate=principalAtStockRate*(1+s.stockRet)+yearPrincipal;
+
+    let rentFinalNW=rentPortfolio;
+    if(y===s.horizon){
+      const gains=Math.max(0,rentPortfolio-rentBasis);
+      rentFinalNW=rentPortfolio-gains*s.capGains;
+    }
+    rentNW.push(y===s.horizon?rentFinalNW:rentPortfolio);
+
+    // Increase rent
+    monthlyRent*=(1+s.rentInc);
+  }
+
+  // Amortization data
+  const amortData=amort.years.slice(0,s.mortTerm);
+
+  // Opportunity cost
+  const equityAtHomeRate=cumPrincipal*(1+s.homeAppr); // simplified
+  // More accurate: compound each year's principal
+  let equityCompounded=0;
+  let tempBal=loanAmount;
+  for(let y=0;y<Math.min(s.horizon,s.mortTerm);y++){
+    const yd=amort.years[y];
+    equityCompounded+=yd.principal;
+  }
+
+  return {buyNW,rentNW,amortData,
+    monthlyMortgage,upfrontCash,downPayment,closingCosts,loanAmount,
+    cumPrincipal:totalPrincipalPaid,principalAtStockRate,
+    equityInHome:equityCompounded};
+}
+
+// --- Rendering ---
+function renderSummary(result){
+  const {buyNW,rentNW}=result;
+  const buyFinal=buyNW[buyNW.length-1];
+  const rentFinal=rentNW[rentNW.length-1];
+  const diff=buyFinal-rentFinal;
+
+  $('buy-nw').textContent=fmt(buyFinal);
+  $('rent-nw').textContent=fmt(rentFinal);
+
+  if(diff>0){
+    $('verdict-value').textContent='Buy wins by '+fmt(Math.abs(diff));
+    $('verdict-value').style.color='var(--buy-color)';
+    $('verdict-sub').textContent='Buying builds '+fmt(Math.abs(diff))+' more wealth over '+state.horizon+' years';
+  } else if(diff<0){
+    $('verdict-value').textContent='Rent wins by '+fmt(Math.abs(diff));
+    $('verdict-value').style.color='var(--rent-color)';
+    $('verdict-sub').textContent='Renting & investing builds '+fmt(Math.abs(diff))+' more wealth over '+state.horizon+' years';
+  } else {
+    $('verdict-value').textContent='Dead even';
+    $('verdict-value').style.color='var(--gold-bright)';
+    $('verdict-sub').textContent='Both scenarios produce equivalent wealth';
+  }
+}
+
+function renderBreakdown(result){
+  const s=state;
+  const monthlyRent=s.homePrice/s.ptr/12;
+  const annPropTax=s.homePrice*s.propTax;
+  const annIns=s.homePrice*s.homeIns;
+  const annMaint=s.homePrice*s.maint;
+  const annHOA=s.hoa*12;
+  const mortAnn=result.monthlyMortgage*12;
+  const saltDed=Math.min(annPropTax,s.saltCap);
+  const yr1Interest=result.amortData.length>0?result.amortData[0].interest:0;
+  const itemized=yr1Interest+saltDed;
+  const taxBenefit=itemized>s.stdDeduction?(itemized-s.stdDeduction)*s.margTax:0;
+
+  const buyTotal=mortAnn+annPropTax+annIns+annMaint+annHOA-taxBenefit;
+  const rentTotal=monthlyRent*12+s.rentIns*12;
+
+  $('buy-breakdown').innerHTML=[
+    row('Mortgage (P&I)',fmtFull(mortAnn)),
+    row('Property Tax',fmtFull(annPropTax)),
+    row('Insurance',fmtFull(annIns)),
+    row('Maintenance',fmtFull(annMaint)),
+    annHOA?row('HOA',fmtFull(annHOA)):'',
+    row('Tax Benefit','−'+fmtFull(taxBenefit)),
+    '<div class="breakdown-row total">'+
+      '<span class="br-label">Net Annual Cost</span><span class="br-value">'+fmtFull(buyTotal)+'</span></div>',
+    '<div class="breakdown-row">'+
+      '<span class="br-label">Monthly</span><span class="br-value">'+fmtFull(buyTotal/12)+'</span></div>'
+  ].join('');
+
+  $('rent-breakdown').innerHTML=[
+    row('Rent',fmtFull(monthlyRent*12)),
+    row("Renter's Insurance",fmtFull(s.rentIns*12)),
+    '<div class="breakdown-row total">'+
+      '<span class="br-label">Net Annual Cost</span><span class="br-value">'+fmtFull(rentTotal)+'</span></div>',
+    '<div class="breakdown-row">'+
+      '<span class="br-label">Monthly</span><span class="br-value">'+fmtFull(rentTotal/12)+'</span></div>',
+    '<div class="breakdown-row">'+
+      '<span class="br-label">Surplus Invested/yr</span><span class="br-value" style="color:var(--rent-color)">'+fmtFull(Math.max(0,buyTotal-rentTotal))+'</span></div>'
+  ].join('');
+}
+function row(l,v){return '<div class="breakdown-row"><span class="br-label">'+l+'</span><span class="br-value">'+v+'</span></div>';}
+
+function renderOppCost(result){
+  const s=state;
+  const html=[
+    '<div class="opp-row"><span class="opp-label">Total principal paid ('+Math.min(s.horizon,s.mortTerm)+' yrs)</span><span class="opp-value">'+fmtFull(result.cumPrincipal)+'</span></div>',
+    '<div class="opp-row"><span class="opp-label">That equity earning home appreciation ('+pct(s.homeAppr*100,1)+')</span><span class="opp-value gold">'+fmtFull(result.equityInHome)+'</span></div>',
+    '<div class="opp-row"><span class="opp-label">Same $ invested at stock return ('+pct(s.stockRet*100,1)+')</span><span class="opp-value teal">'+fmtFull(result.principalAtStockRate)+'</span></div>',
+    '<div class="opp-row"><span class="opp-label">Opportunity cost of equity</span><span class="opp-value diff">'+fmtFull(result.principalAtStockRate-result.equityInHome)+'</span></div>'
+  ].join('');
+  $('opp-cost-rows').innerHTML=html;
+}
+
+// --- Canvas Charts ---
+function drawMainChart(result){
+  const canvas=$('mainChart');
+  const dpr=window.devicePixelRatio||1;
+  const rect=canvas.parentElement.getBoundingClientRect();
+  const w=rect.width-64; // padding
+  canvas.style.width=w+'px';
+  canvas.style.height=Math.min(440,w*0.38)+'px';
+  canvas.width=w*dpr;
+  canvas.height=Math.min(440,w*0.38)*dpr;
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  const cw=w, ch=parseFloat(canvas.style.height);
+
+  const {buyNW,rentNW}=result;
+  const allVals=[...buyNW,...rentNW];
+  let minV=Math.min(...allVals);
+  let maxV=Math.max(...allVals);
+  const pad=Math.abs(maxV-minV)*0.1||100000;
+  minV-=pad; maxV+=pad;
+
+  const marginL=80, marginR=30, marginT=20, marginB=40;
+  const plotW=cw-marginL-marginR;
+  const plotH=ch-marginT-marginB;
+  const n=buyNW.length;
+
+  const x=i=>marginL+(i/(n-1))*plotW;
+  const y=v=>marginT+(1-(v-minV)/(maxV-minV))*plotH;
+
+  ctx.clearRect(0,0,cw,ch);
+
+  // Grid lines
+  ctx.strokeStyle='#1f1d1a';
+  ctx.lineWidth=1;
+  const gridCount=5;
+  for(let i=0;i<=gridCount;i++){
+    const gy=marginT+(plotH/gridCount)*i;
+    ctx.beginPath();ctx.moveTo(marginL,gy);ctx.lineTo(cw-marginR,gy);ctx.stroke();
+    const val=maxV-(maxV-minV)*(i/gridCount);
+    ctx.fillStyle='#5a564f';ctx.font='11px "DM Sans",sans-serif';ctx.textAlign='right';
+    ctx.fillText(fmt(val),marginL-10,gy+4);
+  }
+
+  // X axis labels
+  ctx.fillStyle='#5a564f';ctx.textAlign='center';
+  const step=n<=20?5:10;
+  for(let i=0;i<n;i++){
+    if(i%step===0||i===n-1){
+      ctx.fillText('Yr '+i,x(i),ch-8);
+    }
+  }
+
+  // Zero line if visible
+  if(minV<0&&maxV>0){
+    ctx.strokeStyle='#2a2825';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(marginL,y(0));ctx.lineTo(cw-marginR,y(0));ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Draw lines
+  function drawLine(data,color){
+    ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.lineCap='round';
+    ctx.beginPath();
+    for(let i=0;i<data.length;i++){
+      const px=x(i),py=y(data[i]);
+      i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+
+    // Glow
+    ctx.strokeStyle=color;ctx.lineWidth=6;ctx.globalAlpha=0.1;
+    ctx.beginPath();
+    for(let i=0;i<data.length;i++){
+      const px=x(i),py=y(data[i]);
+      i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+    ctx.globalAlpha=1;
+  }
+
+  drawLine(buyNW,'#c9a227');
+  drawLine(rentNW,'#3a9d8f');
+
+  // Crossover point
+  for(let i=1;i<n;i++){
+    const prevDiff=buyNW[i-1]-rentNW[i-1];
+    const currDiff=buyNW[i]-rentNW[i];
+    if((prevDiff>0&&currDiff<=0)||(prevDiff<0&&currDiff>=0)||(prevDiff<=0&&currDiff>0)||(prevDiff>=0&&currDiff<0)){
+      // Interpolate
+      const t=Math.abs(prevDiff)/(Math.abs(prevDiff)+Math.abs(currDiff));
+      const cx_=x(i-1+t);
+      const cy_=y(buyNW[i-1]+(buyNW[i]-buyNW[i-1])*t);
+      // Draw crossover marker
+      ctx.beginPath();ctx.arc(cx_,cy_,6,0,Math.PI*2);
+      ctx.fillStyle='#d4883a';ctx.fill();
+      ctx.beginPath();ctx.arc(cx_,cy_,3,0,Math.PI*2);
+      ctx.fillStyle='#0a0a0a';ctx.fill();
+      // Label
+      ctx.fillStyle='#d4883a';ctx.font='600 11px "DM Sans",sans-serif';ctx.textAlign='center';
+      ctx.fillText('Crossover ~Yr '+(i-1+t).toFixed(1),cx_,cy_-14);
+      break;
+    }
+  }
+
+  // End dots
+  const lastI=n-1;
+  [[buyNW[lastI],'#c9a227'],[rentNW[lastI],'#3a9d8f']].forEach(([v,c])=>{
+    ctx.beginPath();ctx.arc(x(lastI),y(v),5,0,Math.PI*2);ctx.fillStyle=c;ctx.fill();
+  });
+
+  // Hover interaction
+  canvas.onmousemove=e=>{
+    const rect2=canvas.getBoundingClientRect();
+    const mx=(e.clientX-rect2.left)*(canvas.width/dpr)/(rect2.width)/1*(1);
+    // Simplified: find closest year
+    const idx=Math.round(((e.clientX-rect2.left-marginL*(rect2.width/cw))/(plotW*(rect2.width/cw)))*(n-1));
+    if(idx>=0&&idx<n){
+      const tip=$('chartTooltip');
+      tip.innerHTML='<strong>Year '+idx+'</strong><br>Buy: '+fmtFull(buyNW[idx])+'<br>Rent: '+fmtFull(rentNW[idx])+'<br>Δ: '+fmtFull(buyNW[idx]-rentNW[idx]);
+      tip.style.opacity=1;
+      tip.style.left=(e.clientX-canvas.parentElement.getBoundingClientRect().left+15)+'px';
+      tip.style.top=(e.clientY-canvas.parentElement.getBoundingClientRect().top-10)+'px';
+    }
+  };
+  canvas.onmouseleave=()=>{$('chartTooltip').style.opacity=0;};
+}
+
+function drawAmortChart(result){
+  const canvas=$('amortChart');
+  const dpr=window.devicePixelRatio||1;
+  const rect=canvas.parentElement.getBoundingClientRect();
+  const w=rect.width-64;
+  canvas.style.width=w+'px';
+  canvas.style.height='200px';
+  canvas.width=w*dpr;
+  canvas.height=200*dpr;
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  const cw=w, ch=200;
+
+  const data=result.amortData;
+  if(!data.length) return;
+  const n=Math.min(data.length,state.horizon);
+  const maxPmt=data[0].interest+data[0].principal;
+
+  const marginL=70,marginR=20,marginT=10,marginB=30;
+  const plotW=cw-marginL-marginR;
+  const plotH=ch-marginT-marginB;
+  const barW=Math.max(2,Math.min(20,(plotW/n)-2));
+
+  ctx.clearRect(0,0,cw,ch);
+
+  for(let i=0;i<n;i++){
+    const xPos=marginL+(i/n)*plotW+((plotW/n-barW)/2);
+    const intH=(data[i].interest/maxPmt)*plotH;
+    const prinH=(data[i].principal/maxPmt)*plotH;
+
+    // Interest (top)
+    ctx.fillStyle='rgba(201,162,39,0.3)';
+    ctx.fillRect(xPos,marginT+plotH-intH-prinH,barW,intH);
+
+    // Principal (bottom)
+    ctx.fillStyle='#c9a227';
+    ctx.fillRect(xPos,marginT+plotH-prinH,barW,prinH);
+  }
+
+  // X labels
+  ctx.fillStyle='#5a564f';ctx.font='10px "DM Sans",sans-serif';ctx.textAlign='center';
+  const step=n<=15?1:n<=30?5:10;
+  for(let i=0;i<n;i++){
+    if(i%step===0||i===n-1){
+      const xPos=marginL+((i+0.5)/n)*plotW;
+      ctx.fillText(i+1,xPos,ch-8);
+    }
+  }
+
+  // Y labels
+  ctx.textAlign='right';
+  ctx.fillText(fmtFull(maxPmt),marginL-8,marginT+12);
+  ctx.fillText('$0',marginL-8,marginT+plotH+4);
+}
+
+// --- Main update ---
+let raf=null;
+function update(){
+  readState();
+  updateDisplays();
+  const result=compute();
+  renderSummary(result);
+  renderBreakdown(result);
+  renderOppCost(result);
+  drawMainChart(result);
+  drawAmortChart(result);
+}
+
+// --- Event Binding ---
+const sliders=['homePrice','downPct','mortRate','horizon','propTax','homeIns','maint','hoa','closeCost','sellCost','homeAppr','ptr','rentInc','rentIns','stockRet','capGains'];
+sliders.forEach(id=>{
+  const el=$(id);
+  if(!el) return;
+  el.addEventListener('input',()=>{
+    if(raf) cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(update);
+  });
+});
+
+// Term toggle
+$('term15').addEventListener('click',()=>{
+  $('term15').classList.add('active');
+  $('term30').classList.remove('active');
+  update();
+});
+$('term30').addEventListener('click',()=>{
+  $('term30').classList.add('active');
+  $('term15').classList.remove('active');
+  update();
+});
+
+// Resize
+window.addEventListener('resize',()=>{
+  if(raf) cancelAnimationFrame(raf);
+  raf=requestAnimationFrame(update);
+});
+
+// Init
+update();
+
+})();
+</script>
+</body>
+</html>

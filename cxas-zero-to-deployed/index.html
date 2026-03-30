@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero to Deployed — The CXAS Developer Experience Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+  :root {
+    --stone-50: oklch(96.5% 0.008 65);
+    --stone-100: oklch(93% 0.012 65);
+    --stone-200: oklch(87% 0.015 65);
+    --stone-300: oklch(78% 0.018 65);
+    --stone-400: oklch(65% 0.02 65);
+    --stone-500: oklch(52% 0.02 65);
+    --stone-700: oklch(35% 0.015 65);
+    --stone-800: oklch(25% 0.012 65);
+    --stone-900: oklch(17% 0.01 65);
+
+    --terra: oklch(58% 0.14 38);
+    --terra-light: oklch(72% 0.09 38);
+    --terra-dark: oklch(42% 0.12 38);
+
+    --forest: oklch(42% 0.08 160);
+    --forest-light: oklch(60% 0.06 160);
+    --forest-pale: oklch(92% 0.03 160);
+
+    --sky: oklch(55% 0.08 240);
+    --sky-light: oklch(90% 0.03 240);
+
+    --danger: oklch(55% 0.15 25);
+    --danger-bg: oklch(93% 0.03 25);
+
+    --success-bg: oklch(93% 0.04 155);
+
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--stone-50);
+    color: var(--stone-900);
+    line-height: 1.65;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ═══════════════════════════════════
+     PROGRESS TRAIL (Left sidebar)
+  ═══════════════════════════════════ */
+  .trail {
+    position: fixed;
+    left: 56px;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .trail-line {
+    position: absolute;
+    left: 50%;
+    top: 80px;
+    bottom: 80px;
+    width: 2px;
+    background: var(--stone-200);
+    transform: translateX(-50%);
+  }
+
+  .trail-progress {
+    position: absolute;
+    left: 50%;
+    top: 80px;
+    width: 3px;
+    height: 0%;
+    background: var(--terra);
+    transform: translateX(-50%);
+    transition: none;
+    max-height: calc(100% - 160px);
+  }
+
+  .trail-camp {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--stone-50);
+    border: 2px solid var(--stone-300);
+    transition: all 0.5s var(--ease-out-expo);
+    z-index: 2;
+  }
+
+  .trail-camp.active {
+    background: var(--terra);
+    border-color: var(--terra);
+    transform: translateX(-50%) scale(1.3);
+    box-shadow: 0 0 0 4px oklch(58% 0.14 38 / 0.2);
+  }
+
+  .trail-camp-label {
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    white-space: nowrap;
+    transition: color 0.5s var(--ease-out-expo);
+  }
+
+  .trail-camp.active .trail-camp-label {
+    color: var(--terra);
+  }
+
+  .trail-camp:nth-child(2) { top: 15%; }
+  .trail-camp:nth-child(3) { top: 30%; }
+  .trail-camp:nth-child(4) { top: 47%; }
+  .trail-camp:nth-child(5) { top: 63%; }
+  .trail-camp:nth-child(6) { top: 78%; }
+
+  /* YOU ARE HERE marker */
+  .you-are-here {
+    position: absolute;
+    left: 50%;
+    top: 22.5%;
+    transform: translateX(-50%);
+    z-index: 3;
+  }
+
+  .you-are-here-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--danger);
+    animation: pulse-marker 2s ease-in-out infinite;
+  }
+
+  .you-are-here-label {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--danger);
+    white-space: nowrap;
+  }
+
+  @keyframes pulse-marker {
+    0%, 100% { box-shadow: 0 0 0 0 oklch(55% 0.15 25 / 0.4); }
+    50% { box-shadow: 0 0 0 8px oklch(55% 0.15 25 / 0); }
+  }
+
+  /* ═══════════════════════════════════
+     CONTOUR DECORATIONS
+  ═══════════════════════════════════ */
+  .contour-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.04;
+  }
+
+  .contour-bg svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ═══════════════════════════════════
+     HERO
+  ═══════════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 160px 80px 240px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--stone-900);
+    max-width: 900px;
+    margin-bottom: 40px;
+    font-optical-sizing: auto;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--terra);
+  }
+
+  .hero-sub {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--stone-500);
+    max-width: 600px;
+    margin-bottom: 64px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 48px;
+    font-size: 0.8125rem;
+    color: var(--stone-400);
+  }
+
+  .hero-meta dt {
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+    color: var(--stone-300);
+    margin-bottom: 4px;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 240px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+  }
+
+  .hero-scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--stone-300);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-scroll-line::after {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--terra);
+    animation: scroll-hint 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-hint {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* ═══════════════════════════════════
+     ELEVATION BADGE
+  ═══════════════════════════════════ */
+  .elevation-badge {
+    position: fixed;
+    right: 48px;
+    top: 48px;
+    z-index: 100;
+    text-align: right;
+  }
+
+  .elevation-badge .altitude {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--stone-300);
+    line-height: 1;
+    transition: color 0.6s var(--ease-out-expo);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .elevation-badge .unit {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-300);
+  }
+
+  /* ═══════════════════════════════════
+     CAMP SECTIONS
+  ═══════════════════════════════════ */
+  .camp {
+    min-height: 100vh;
+    padding: 160px 160px 120px 240px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .camp-header {
+    margin-bottom: 64px;
+  }
+
+  .camp-number {
+    font-family: var(--font-display);
+    font-size: 8rem;
+    font-weight: 300;
+    color: var(--stone-100);
+    line-height: 0.85;
+    margin-bottom: -20px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .camp-layer-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .camp h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    max-width: 700px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .camp-subtitle {
+    font-size: 1.0625rem;
+    color: var(--stone-500);
+    max-width: 580px;
+    margin-top: 16px;
+  }
+
+  /* Today vs Tomorrow panels */
+  .camp-panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 1100px;
+  }
+
+  .panel {
+    padding: 40px;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .panel-today {
+    background: var(--danger-bg);
+    border-left: 3px solid var(--danger);
+  }
+
+  .panel-tomorrow {
+    background: var(--success-bg);
+    border-left: 3px solid var(--forest);
+  }
+
+  .panel-label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .panel-today .panel-label { color: var(--danger); }
+  .panel-tomorrow .panel-label { color: var(--forest); }
+
+  .panel h3 {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .panel p, .panel li {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--stone-700);
+  }
+
+  .panel ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .panel ul li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .panel-today ul li::before {
+    content: '✕';
+    position: absolute;
+    left: 0;
+    color: var(--danger);
+    font-size: 0.75rem;
+    font-weight: 700;
+    top: 3px;
+  }
+
+  .panel-tomorrow ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--forest);
+    font-weight: 700;
+    top: 0;
+  }
+
+  .code-block {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    background: oklch(18% 0.01 160 / 0.9);
+    color: oklch(90% 0.02 160);
+    padding: 20px 24px;
+    border-radius: 4px;
+    margin-top: 16px;
+    overflow-x: auto;
+  }
+
+  .code-block .comment { color: oklch(55% 0.03 160); }
+  .code-block .cmd { color: oklch(75% 0.1 38); }
+
+  /* Key insight callouts */
+  .insight {
+    margin-top: 40px;
+    padding: 24px 28px;
+    background: oklch(96% 0.015 240);
+    border-left: 3px solid var(--sky);
+    max-width: 1100px;
+  }
+
+  .insight-label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 8px;
+  }
+
+  .insight p {
+    font-size: 0.9375rem;
+    color: var(--stone-700);
+    line-height: 1.7;
+  }
+
+  /* ═══════════════════════════════════
+     DIVIDERS
+  ═══════════════════════════════════ */
+  .contour-divider {
+    height: 120px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .contour-divider svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ═══════════════════════════════════
+     SUMMIT SECTION
+  ═══════════════════════════════════ */
+  .summit {
+    min-height: 100vh;
+    padding: 160px 160px 120px 240px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .summit h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 64px;
+    max-width: 700px;
+  }
+
+  .summit h2 em {
+    font-style: italic;
+    color: var(--terra);
+  }
+
+  /* Tooling Stack */
+  .stack {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 80px;
+    max-width: 1100px;
+  }
+
+  .stack-layer {
+    flex: 1;
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.4s var(--ease-out-expo), background 0.4s var(--ease-out-expo);
+  }
+
+  .stack-layer:hover {
+    transform: translateY(-4px);
+  }
+
+  .stack-layer:nth-child(1) { background: oklch(30% 0.05 38); }
+  .stack-layer:nth-child(2) { background: oklch(36% 0.06 38); }
+  .stack-layer:nth-child(3) { background: oklch(42% 0.07 38); }
+  .stack-layer:nth-child(4) { background: oklch(48% 0.08 38); }
+  .stack-layer:nth-child(5) { background: oklch(54% 0.09 38); }
+  .stack-layer:nth-child(6) { background: oklch(60% 0.1 38); }
+
+  .stack-num {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 300;
+    color: oklch(100% 0 0 / 0.3);
+    margin-bottom: 8px;
+  }
+
+  .stack-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: oklch(98% 0.01 65);
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+  }
+
+  .stack-desc {
+    font-size: 0.6875rem;
+    color: oklch(85% 0.02 65);
+    line-height: 1.5;
+  }
+
+  /* Roadmap */
+  .roadmap {
+    max-width: 1100px;
+  }
+
+  .roadmap-title {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 32px;
+  }
+
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+  }
+
+  .roadmap-phase {
+    padding: 36px;
+    border: 1px solid var(--stone-200);
+    position: relative;
+  }
+
+  .roadmap-phase-label {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .roadmap-phase-time {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--stone-400);
+    margin-bottom: 20px;
+  }
+
+  .roadmap-phase ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .roadmap-phase li {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--stone-700);
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  .roadmap-phase li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--stone-300);
+  }
+
+  .roadmap-phase:first-child {
+    border-color: var(--terra);
+  }
+
+  .roadmap-phase:first-child li::before {
+    background: var(--terra);
+  }
+
+  /* ═══════════════════════════════════
+     OPEN QUESTIONS
+  ═══════════════════════════════════ */
+  .questions {
+    padding: 120px 160px 120px 240px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .questions h2 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 48px;
+  }
+
+  .questions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1100px;
+  }
+
+  .question-card {
+    padding: 32px;
+    background: var(--stone-100);
+    position: relative;
+  }
+
+  .question-num {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--stone-200);
+    position: absolute;
+    right: 24px;
+    top: 20px;
+  }
+
+  .question-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .question-card p {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--stone-500);
+  }
+
+  /* ═══════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════ */
+  .footer {
+    padding: 80px 160px 80px 240px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer p {
+    font-size: 0.8125rem;
+    color: var(--stone-400);
+  }
+
+  .footer .sig {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.125rem;
+    color: var(--stone-500);
+    margin-bottom: 8px;
+  }
+
+  /* ═══════════════════════════════════
+     ANIMATION STATES
+  ═══════════════════════════════════ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+
+  /* ═══════════════════════════════════
+     WHAT EXPORT MISSES (Layer 1)
+  ═══════════════════════════════════ */
+  .missing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+    max-width: 1100px;
+  }
+
+  .missing-item {
+    padding: 20px;
+    background: var(--stone-100);
+    border-top: 2px solid var(--stone-200);
+  }
+
+  .missing-item h4 {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .missing-item p {
+    font-size: 0.8125rem;
+    color: var(--stone-500);
+    line-height: 1.5;
+  }
+
+  /* ═══════════════════════════════════
+     TERRAFORM COMPARISON (Layer 4)
+  ═══════════════════════════════════ */
+  .tf-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 32px;
+    max-width: 1100px;
+    background: var(--stone-200);
+  }
+
+  .tf-col {
+    padding: 28px;
+    background: var(--stone-50);
+  }
+
+  .tf-col h4 {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .tf-col:first-child h4 { color: var(--forest); }
+  .tf-col:last-child h4 { color: var(--terra); }
+
+  .tf-col li {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--stone-700);
+    list-style: none;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .tf-col li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    font-weight: 900;
+  }
+
+  /* ═══════════════════════════════════
+     TRAFFIC DIAGRAM (Layer 5)
+  ═══════════════════════════════════ */
+  .traffic-diagram {
+    margin-top: 32px;
+    max-width: 1100px;
+  }
+
+  .traffic-bars {
+    display: flex;
+    gap: 4px;
+    height: 56px;
+    margin-bottom: 16px;
+    align-items: stretch;
+  }
+
+  .traffic-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: oklch(98% 0.01 65);
+    border-radius: 2px;
+    transition: flex 0.8s var(--ease-out-expo);
+  }
+
+  .traffic-v1 {
+    flex: 99;
+    background: var(--forest);
+  }
+
+  .traffic-v2 {
+    flex: 1;
+    background: var(--terra);
+    min-width: 48px;
+  }
+
+  .traffic-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--stone-400);
+  }
+
+  .traffic-ramp {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    font-size: 0.8125rem;
+    color: var(--stone-500);
+  }
+
+  .traffic-step {
+    padding: 6px 14px;
+    background: var(--stone-100);
+    border-radius: 2px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .traffic-arrow {
+    color: var(--stone-300);
+  }
+
+  .traffic-step.active {
+    background: var(--terra);
+    color: oklch(98% 0.01 65);
+  }
+
+  /* ═══════════════════════════════════
+     REDUCED MOTION
+  ═══════════════════════════════════ */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-left, .reveal-right {
+      opacity: 1;
+      transform: none;
+    }
+    .hero-scroll-line::after {
+      animation: none;
+    }
+    .you-are-here-dot {
+      animation: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Fixed contour background -->
+<div class="contour-bg">
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="none">
+    <g fill="none" stroke="currentColor" stroke-width="1">
+      <ellipse cx="800" cy="300" rx="600" ry="200"/>
+      <ellipse cx="800" cy="300" rx="520" ry="170"/>
+      <ellipse cx="800" cy="300" rx="440" ry="140"/>
+      <ellipse cx="800" cy="300" rx="360" ry="110"/>
+      <ellipse cx="800" cy="300" rx="280" ry="80"/>
+      <ellipse cx="800" cy="300" rx="200" ry="55"/>
+      <ellipse cx="800" cy="300" rx="130" ry="35"/>
+      <ellipse cx="350" cy="650" rx="300" ry="120"/>
+      <ellipse cx="350" cy="650" rx="230" ry="90"/>
+      <ellipse cx="350" cy="650" rx="160" ry="60"/>
+      <ellipse cx="1200" cy="700" rx="250" ry="100"/>
+      <ellipse cx="1200" cy="700" rx="180" ry="70"/>
+    </g>
+  </svg>
+</div>
+
+<!-- Progress trail -->
+<nav class="trail" aria-hidden="true">
+  <div class="trail-line"></div>
+  <div class="trail-progress" id="trailProgress"></div>
+  <div class="trail-camp" data-camp="1">
+    <span class="trail-camp-label">Code Sync</span>
+  </div>
+  <div class="trail-camp" data-camp="2">
+    <span class="trail-camp-label">Validation</span>
+  </div>
+  <div class="trail-camp" data-camp="3">
+    <span class="trail-camp-label">Hill Climbing</span>
+  </div>
+  <div class="trail-camp" data-camp="4">
+    <span class="trail-camp-label">CI/CD</span>
+  </div>
+  <div class="trail-camp" data-camp="5">
+    <span class="trail-camp-label">Deploy</span>
+  </div>
+  <div class="you-are-here">
+    <div class="you-are-here-dot"></div>
+    <span class="you-are-here-label">You are here</span>
+  </div>
+</nav>
+
+<!-- Elevation badge -->
+<div class="elevation-badge" aria-hidden="true">
+  <div class="altitude" id="altitude">0</div>
+  <div class="unit">meters</div>
+</div>
+
+<!-- ════════════════════════════════════
+     HERO
+════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-eyebrow reveal">CXAS Developer Experience Roadmap</div>
+  <h1 class="reveal">Zero to <em>Deployed</em></h1>
+  <p class="hero-sub reveal">The developer journey from first line of code to production deployment is held together with zip files and prayer. This is the map out.</p>
+  <dl class="hero-meta reveal">
+    <div>
+      <dt>Author</dt>
+      <dd>Barron Roth</dd>
+    </div>
+    <div>
+      <dt>Role</dt>
+      <dd>Senior PM, Applied AI</dd>
+    </div>
+    <div>
+      <dt>Audience</dt>
+      <dd>PMs & Tech Leads</dd>
+    </div>
+    <div>
+      <dt>Layers</dt>
+      <dd>5</dd>
+    </div>
+  </dl>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    Begin ascent
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CAMP 1: CODE SYNC
+════════════════════════════════════ -->
+<section class="camp" id="camp1" data-altitude="1200">
+  <div class="camp-header">
+    <div class="camp-number reveal">01</div>
+    <div class="camp-layer-label reveal">Layer 1</div>
+    <h2 class="reveal">Code Sync</h2>
+    <p class="camp-subtitle reveal">Get the agent into Git. The foundation everything else depends on.</p>
+  </div>
+
+  <div class="camp-panels">
+    <div class="panel panel-today reveal-left">
+      <div class="panel-label">Today</div>
+      <h3>Zip files & prayer</h3>
+      <ul>
+        <li>Export from console → download zip → unzip → edit</li>
+        <li>Re-zip → import → creates a new app every time</li>
+        <li>No .gitignore, no project structure, no lineage tracking</li>
+        <li>Branching = export + import as new app + manually rename</li>
+      </ul>
+    </div>
+    <div class="panel panel-tomorrow reveal-right">
+      <div class="panel-label">Tomorrow</div>
+      <h3>Pull, edit, push</h3>
+      <div class="code-block">
+        <span class="comment"># Clone agent to local files</span><br>
+        <span class="cmd">cxas pull</span> my-agent --project my-gcp-project<br><br>
+        <span class="comment"># Edit locally in your IDE</span><br>
+        <span class="cmd">vim</span> agents/concierge/instruction.txt<br><br>
+        <span class="comment"># Push changes back</span><br>
+        <span class="cmd">cxas push</span> ./my-agent/<br><br>
+        <span class="comment"># Branch with lineage tracking</span><br>
+        <span class="cmd">cxas branch</span> my-agent --name experiment-1
+      </div>
+    </div>
+  </div>
+
+  <div class="missing-grid">
+    <div class="missing-item reveal">
+      <h4>Deployment configs</h4>
+      <p>Channel settings, widget customizations, deployment parameters — all console-only.</p>
+    </div>
+    <div class="missing-item reveal">
+      <h4>Callback hooks</h4>
+      <p>Before/after agent, model, and tool callbacks don't round-trip through export/import.</p>
+    </div>
+    <div class="missing-item reveal">
+      <h4>Guardrail assignments</h4>
+      <p>Active guardrails and their ordering relative to the app are absent from exports.</p>
+    </div>
+    <div class="missing-item reveal">
+      <h4>Console-only toggles</h4>
+      <p>Advanced model params, logging settings, session TTL — invisible in exported files.</p>
+    </div>
+    <div class="missing-item reveal">
+      <h4>Resource lineage</h4>
+      <p>No tracking of which GCP project, app ID, or branch a folder came from.</p>
+    </div>
+    <div class="missing-item reveal">
+      <h4>Environment bindings</h4>
+      <p>environment.json is generated on export, must be manually edited per target.</p>
+    </div>
+  </div>
+
+  <div class="insight reveal">
+    <div class="insight-label">Key insight</div>
+    <p>A developer can't <code>git clone</code> a repo and have a complete, deployable agent. There's always a gap that requires going back to the console.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CAMP 2: VALIDATION
+════════════════════════════════════ -->
+<section class="camp" id="camp2" data-altitude="2400">
+  <div class="camp-header">
+    <div class="camp-number reveal">02</div>
+    <div class="camp-layer-label reveal">Layer 2</div>
+    <h2 class="reveal">Validation</h2>
+    <p class="camp-subtitle reveal">Know it works before you push. Not after the console explodes.</p>
+  </div>
+
+  <div class="camp-panels">
+    <div class="panel panel-today reveal-left">
+      <div class="panel-label">Today</div>
+      <h3>Import and pray</h3>
+      <ul>
+        <li>Edit a Python tool → import to console → discover forbidden import</li>
+        <li>Edit OpenAPI spec → import → discover invalid schema</li>
+        <li>Write callback hook → import → discover broken agent reference</li>
+        <li>Every error requires a full round-trip to surface</li>
+      </ul>
+    </div>
+    <div class="panel panel-tomorrow reveal-right">
+      <div class="panel-label">Tomorrow</div>
+      <h3>Validate locally, fail fast</h3>
+      <ul>
+        <li>File structure: directories exist, naming conventions match</li>
+        <li>Python tools: valid syntax, stdlib-only imports, signature matching</li>
+        <li>OpenAPI toolsets: valid schema, well-formed endpoints</li>
+        <li>Cross-file references: tool/agent refs resolve to real files</li>
+        <li>Instruction XML: valid structure, valid {@AGENT} and {@TOOL} refs</li>
+        <li>Environment config: placeholders have corresponding values</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="insight reveal">
+    <div class="insight-label">Next step</div>
+    <p>VS Code extension with real-time linting. Red squiggles on forbidden imports, autocomplete for agent/tool references, syntax highlighting for instruction XML. The CLI validation logic, packaged for the IDE.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CAMP 3: HILL CLIMBING
+════════════════════════════════════ -->
+<section class="camp" id="camp3" data-altitude="3600">
+  <div class="camp-header">
+    <div class="camp-number reveal">03</div>
+    <div class="camp-layer-label reveal">Layer 3</div>
+    <h2 class="reveal">Hill Climbing</h2>
+    <p class="camp-subtitle reveal">Iterate fast. Edit, eval, compare, improve. The inner loop that makes agents better.</p>
+  </div>
+
+  <div class="camp-panels">
+    <div class="panel panel-today reveal-left">
+      <div class="panel-label">Today</div>
+      <h3>Fragmented iteration</h3>
+      <ul>
+        <li>Evals run manually in the console UI</li>
+        <li>Evals tied to a specific agent instance — they don't travel with code</li>
+        <li>Comparing versions = create second agent, replicate eval set, eyeball results</li>
+        <li>Can't branch an agent and its evals together</li>
+      </ul>
+    </div>
+    <div class="panel panel-tomorrow reveal-right">
+      <div class="panel-label">Tomorrow</div>
+      <h3>Two paths to faster iteration</h3>
+      <div class="code-block">
+        <span class="comment"># Path A: Eval-driven hill climbing</span><br>
+        <span class="cmd">cxas branch</span> my-app --name experiment-1<br>
+        <span class="cmd">cxas push</span> ./experiment-1/<br>
+        <span class="cmd">cxas eval run</span> --agent experiment-1 --evals ./evals/<br>
+        <span class="cmd">cxas eval run</span> --agent my-app --evals ./evals/ \<br>
+        &nbsp;&nbsp;--compare experiment-1<br><br>
+        <span class="comment"># Path B: Conversational testing</span><br>
+        <span class="comment"># VS Code chat panel → sessions API</span><br>
+        <span class="comment"># Edit one pane, chat in another</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight reveal">
+    <div class="insight-label">Key insight</div>
+    <p>Evals should be their own set of code, decoupled from the agent. When evals live as files in Git, you can run the same eval set against multiple agent versions without replication, track eval changes in PRs, and never manually clone an eval configuration again.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CAMP 4: CI/CD
+════════════════════════════════════ -->
+<section class="camp" id="camp4" data-altitude="4800">
+  <div class="camp-header">
+    <div class="camp-number reveal">04</div>
+    <div class="camp-layer-label reveal">Layer 4</div>
+    <h2 class="reveal">CI/CD</h2>
+    <p class="camp-subtitle reveal">Evals on every PR. Promotion on merge. The automation layer.</p>
+  </div>
+
+  <div class="camp-panels">
+    <div class="panel panel-today reveal-left">
+      <div class="panel-label">Today</div>
+      <h3>Manual everything</h3>
+      <ul>
+        <li>Evals run by hand in the console — no connection to PRs</li>
+        <li>Promotion = export zip from dev, edit environment.json, import to prod</li>
+        <li>Config swap is manual — one mistake routes prod to dev endpoints</li>
+        <li>No automated gate between code review and eval results</li>
+      </ul>
+    </div>
+    <div class="panel panel-tomorrow reveal-right">
+      <div class="panel-label">Tomorrow</div>
+      <h3>PR opens → evals run → results posted</h3>
+      <ul>
+        <li>GitHub Action pushes to temp branch agent via CLI</li>
+        <li>Eval suite runs automatically against the branch</li>
+        <li>Results appear as PR comment: pass/fail, metric deltas</li>
+        <li>Merge requires evals passing (branch protection)</li>
+        <li>CLI promote: automated export → env swap → import</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tf-compare reveal">
+    <div class="tf-col">
+      <h4>Terraform's job</h4>
+      <ul>
+        <li>Create GCP projects</li>
+        <li>Enable CXAS APIs</li>
+        <li>Create app resources</li>
+        <li>Set up IAM bindings</li>
+        <li>Configure service accounts</li>
+        <li>Provision data stores</li>
+      </ul>
+    </div>
+    <div class="tf-col">
+      <h4>CLI's job</h4>
+      <ul>
+        <li>Pull/push agent code</li>
+        <li>Edit instructions and tools</li>
+        <li>Run evals</li>
+        <li>Promote agent content</li>
+        <li>Deploy versions</li>
+        <li>Manage traffic</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="insight reveal">
+    <div class="insight-label">Key insight</div>
+    <p>Terraform sets up the empty house. The CLI furnishes it. They're complementary, not competing. A GitHub Action is just "install CLI, run CLI commands, format output." The hard work is in the CLI; the CI integration is cheap.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CAMP 5: DEPLOYMENT & TRAFFIC
+════════════════════════════════════ -->
+<section class="camp" id="camp5" data-altitude="5800">
+  <div class="camp-header">
+    <div class="camp-number reveal">05</div>
+    <div class="camp-layer-label reveal">Layer 5</div>
+    <h2 class="reveal">Deployment & Traffic</h2>
+    <p class="camp-subtitle reveal">Ship safely. Canary deploys. Traffic splitting. Insights-gated rollouts.</p>
+  </div>
+
+  <div class="camp-panels">
+    <div class="panel panel-today reveal-left">
+      <div class="panel-label">Today</div>
+      <h3>All or nothing</h3>
+      <ul>
+        <li>Deploying a new version sends 100% of traffic immediately</li>
+        <li>No concept of percentage-based routing</li>
+        <li>No integration with live monitoring for auto-rollback</li>
+        <li>Versions and deployments exist — but no gradual rollout</li>
+      </ul>
+    </div>
+    <div class="panel panel-tomorrow reveal-right">
+      <div class="panel-label">Tomorrow</div>
+      <h3>Progressive delivery</h3>
+      <ul>
+        <li>Phase 1: Traffic splitting between versions by percentage</li>
+        <li>Phase 2: Automated ramp schedule with Insights gates</li>
+        <li>Auto-rollback when session quality or error rates breach thresholds</li>
+        <li>Real user conversations as the signal source, not synthetic evals</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="traffic-diagram reveal">
+    <div class="traffic-bars" id="trafficBars">
+      <div class="traffic-bar traffic-v1">v1 — 99%</div>
+      <div class="traffic-bar traffic-v2">v2</div>
+    </div>
+    <div class="traffic-labels">
+      <span>Current (stable)</span>
+      <span>Canary (monitoring)</span>
+    </div>
+    <div class="traffic-ramp">
+      <span class="traffic-step active">1%</span>
+      <span class="traffic-arrow">→</span>
+      <span class="traffic-step">10%</span>
+      <span class="traffic-arrow">→</span>
+      <span class="traffic-step">50%</span>
+      <span class="traffic-arrow">→</span>
+      <span class="traffic-step">100%</span>
+      <span style="margin-left: 12px; font-size: 0.75rem; color: var(--stone-400);">Gated on Insights: session quality, task completion, error rates</span>
+    </div>
+  </div>
+
+  <div class="insight reveal">
+    <div class="insight-label">Why Insights, not evals?</div>
+    <p>Evals validate the agent before deployment. Once traffic is flowing, what matters is real-world performance — actual user conversations, actual task completions, actual error rates. Insights is the signal source for ramp decisions. Evals don't change during a rollout; live data does.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SUMMIT: TOOLING STACK & ROADMAP
+════════════════════════════════════ -->
+<section class="summit" id="summit" data-altitude="6200">
+  <h2 class="reveal">The <em>summit</em></h2>
+
+  <div class="roadmap-title reveal">Tooling Stack</div>
+  <div class="stack reveal">
+    <div class="stack-layer">
+      <div class="stack-num">1</div>
+      <div class="stack-name">MCP Server</div>
+      <div class="stack-desc">60+ tools, API layer</div>
+    </div>
+    <div class="stack-layer">
+      <div class="stack-num">2</div>
+      <div class="stack-name">SCRAPI</div>
+      <div class="stack-desc">Python SDK</div>
+    </div>
+    <div class="stack-layer">
+      <div class="stack-num">3</div>
+      <div class="stack-name">CLI</div>
+      <div class="stack-desc">Developer workflows</div>
+    </div>
+    <div class="stack-layer">
+      <div class="stack-num">4</div>
+      <div class="stack-name">VS Code</div>
+      <div class="stack-desc">Linting, chat, evals</div>
+    </div>
+    <div class="stack-layer">
+      <div class="stack-num">5</div>
+      <div class="stack-name">GitHub Actions</div>
+      <div class="stack-desc">CI/CD integration</div>
+    </div>
+    <div class="stack-layer">
+      <div class="stack-num">6</div>
+      <div class="stack-name">Terraform</div>
+      <div class="stack-desc">Infrastructure as code</div>
+    </div>
+  </div>
+
+  <div class="roadmap reveal">
+    <div class="roadmap-title">Prioritized Roadmap</div>
+    <div class="roadmap-grid">
+      <div class="roadmap-phase">
+        <div class="roadmap-phase-label">Now</div>
+        <div class="roadmap-phase-time">Q1–Q2 2026</div>
+        <ul>
+          <li>Official CLI: pull, push, branch, validate</li>
+          <li>Evals as code — standalone files, decoupled</li>
+          <li>CLI eval commands with comparison mode</li>
+          <li>Richer export format — all state as files</li>
+        </ul>
+      </div>
+      <div class="roadmap-phase">
+        <div class="roadmap-phase-label">Next</div>
+        <div class="roadmap-phase-time">Q3 2026</div>
+        <ul>
+          <li>GitHub Action: evals on PR</li>
+          <li>CLI promote: cross-project with env swap</li>
+          <li>VS Code extension: linting + chat panel</li>
+          <li>MCP chat tool for coding agents</li>
+        </ul>
+      </div>
+      <div class="roadmap-phase">
+        <div class="roadmap-phase-label">Later</div>
+        <div class="roadmap-phase-time">Q4 2026+</div>
+        <ul>
+          <li>Traffic splitting: canary with % routing</li>
+          <li>Automated ramp: Insights-gated rollout</li>
+          <li>Local sandbox: restricted Python env</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     OPEN QUESTIONS
+════════════════════════════════════ -->
+<section class="questions" id="questions">
+  <h2 class="reveal">Open questions</h2>
+  <div class="questions-grid">
+    <div class="question-card reveal">
+      <div class="question-num">01</div>
+      <h3>Eval file format</h3>
+      <p>Should the CLI adopt SCRAPI's format directly, or define a simpler YAML-based format that compiles down to it?</p>
+    </div>
+    <div class="question-card reveal">
+      <div class="question-num">02</div>
+      <h3>Branch cleanup</h3>
+      <p>Temporary branch agents from CI should auto-delete. TTL? Explicit cleanup step? Both?</p>
+    </div>
+    <div class="question-card reveal">
+      <div class="question-num">03</div>
+      <h3>Multi-region</h3>
+      <p>Currently US-only. When multi-region ships, every CLI command needs a --location flag. Design for this now.</p>
+    </div>
+    <div class="question-card reveal">
+      <div class="question-num">04</div>
+      <h3>Auth for CI</h3>
+      <p>gcloud ADC tokens expire hourly. Service account key support needed for CI pipelines.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="footer">
+  <p class="sig">Barron Roth — Applied AI, Google Cloud</p>
+  <p>March 2026 · Draft</p>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Reveal animations ──
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.to(el, {
+    opacity: 1,
+    y: 0,
+    duration: 0.9,
+    ease: 'expo.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+gsap.utils.toArray('.reveal-left').forEach(el => {
+  gsap.to(el, {
+    opacity: 1,
+    x: 0,
+    duration: 0.9,
+    ease: 'expo.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+gsap.utils.toArray('.reveal-right').forEach(el => {
+  gsap.to(el, {
+    opacity: 1,
+    x: 0,
+    duration: 0.9,
+    ease: 'expo.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+// ── Trail progress ──
+const trailProgress = document.getElementById('trailProgress');
+const altitudeEl = document.getElementById('altitude');
+const camps = document.querySelectorAll('.trail-camp');
+const sections = document.querySelectorAll('.camp, .summit');
+
+ScrollTrigger.create({
+  trigger: document.body,
+  start: 'top top',
+  end: 'bottom bottom',
+  onUpdate: self => {
+    const p = self.progress;
+    trailProgress.style.height = (p * 100) + '%';
+
+    // Altitude counter
+    const alt = Math.round(p * 6200);
+    altitudeEl.textContent = alt.toLocaleString();
+  }
+});
+
+// ── Camp activation ──
+sections.forEach((section, i) => {
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top 60%',
+    end: 'bottom 40%',
+    onEnter: () => activateCamp(i),
+    onEnterBack: () => activateCamp(i),
+    onLeave: () => {
+      if (i < camps.length) camps[i].classList.remove('active');
+    },
+    onLeaveBack: () => {
+      if (i < camps.length) camps[i].classList.remove('active');
+    }
+  });
+});
+
+function activateCamp(index) {
+  camps.forEach(c => c.classList.remove('active'));
+  if (index < camps.length) {
+    camps[index].classList.add('active');
+  }
+}
+
+// ── Traffic diagram animation ──
+const trafficBars = document.getElementById('trafficBars');
+if (trafficBars) {
+  const steps = [
+    { v1: 99, v2: 1 },
+    { v1: 90, v2: 10 },
+    { v1: 50, v2: 50 },
+    { v1: 0, v2: 100 }
+  ];
+  const rampSteps = document.querySelectorAll('.traffic-step');
+
+  let currentStep = 0;
+  const v1Bar = trafficBars.querySelector('.traffic-v1');
+  const v2Bar = trafficBars.querySelector('.traffic-v2');
+
+  ScrollTrigger.create({
+    trigger: trafficBars,
+    start: 'top 70%',
+    onEnter: () => {
+      let step = 0;
+      const interval = setInterval(() => {
+        step++;
+        if (step >= steps.length) {
+          clearInterval(interval);
+          return;
+        }
+        const s = steps[step];
+        v1Bar.style.flex = s.v1 || '0.001';
+        v2Bar.style.flex = s.v2;
+        v1Bar.textContent = s.v1 > 0 ? `v1 — ${s.v1}%` : '';
+        v2Bar.textContent = `v2 — ${s.v2}%`;
+
+        rampSteps.forEach(r => r.classList.remove('active'));
+        if (rampSteps[step]) rampSteps[step].classList.add('active');
+      }, 1200);
+    },
+    once: true
+  });
+}
+
+// ── Stagger missing-grid items ──
+gsap.utils.toArray('.missing-grid .missing-item').forEach((el, i) => {
+  gsap.to(el, {
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    delay: i * 0.08,
+    ease: 'expo.out',
+    scrollTrigger: {
+      trigger: el.parentElement,
+      start: 'top 80%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+</script>
+
+</body>
+</html>

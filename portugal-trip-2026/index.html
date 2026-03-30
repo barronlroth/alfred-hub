@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portugal — May 2026</title>
+<meta property="og:title" content="Portugal — May 2026">
+<meta property="og:description" content="Algarve, Douro Valley, Lisbon — 12 nights across Portugal">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5F2ED;
+  --surface: #FFFFFF;
+  --ink: #1C1A17;
+  --ink-secondary: #6B6560;
+  --ink-tertiary: #9E9790;
+  --accent: #1E5C8A;
+  --accent-muted: rgba(30,92,138,0.08);
+  --accent-hover: #174A6F;
+  --azulejo: #1E5C8A;
+  --azulejo-muted: rgba(30,92,138,0.07);
+  --terracotta: #B85C38;
+  --terracotta-muted: rgba(184,92,56,0.07);
+  --golden: #C8963E;
+  --golden-muted: rgba(200,150,62,0.07);
+  --olive: #5A6B4A;
+  --olive-muted: rgba(90,107,74,0.07);
+  --port: #7A3B5E;
+  --port-muted: rgba(122,59,94,0.07);
+  --sand: #D4A76A;
+  --sand-muted: rgba(212,167,106,0.07);
+  --border: rgba(28,26,23,0.06);
+  --border-strong: rgba(28,26,23,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 4rem;
+  padding-left: clamp(1rem, 4vw, 6rem);
+}
+
+.hero-tag {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--azulejo);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: slideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.hero h1 {
+  font-family: 'Newsreader', serif;
+  font-weight: 300;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+.hero h1 .accent {
+  color: var(--azulejo);
+  font-style: italic;
+}
+
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  opacity: 0;
+  animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+
+.hero-meta span {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink-secondary);
+  letter-spacing: 0.02em;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding-right: clamp(1rem, 4vw, 4rem);
+  opacity: 0;
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.hero-route-vertical {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.hero-route-vertical::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 1px;
+  background: var(--border-strong);
+}
+
+.route-item {
+  padding: 1.25rem 0;
+  position: relative;
+}
+
+.route-item::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-tertiary);
+  background: var(--bg);
+}
+
+.route-item:first-child::before { border-color: var(--terracotta); background: var(--terracotta); }
+
+.route-item .city {
+  font-family: 'Newsreader', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.route-item .nights {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--ink-tertiary);
+  margin-top: 0.15rem;
+  letter-spacing: 0.04em;
+}
+
+.route-item .dates {
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+  letter-spacing: 0.02em;
+}
+
+/* ═══ NAV ═══ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245,242,237,0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+}
+
+.nav a {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 1rem 1.25rem;
+  color: var(--ink-tertiary);
+  text-decoration: none;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  white-space: nowrap;
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1.25rem;
+  right: 1.25rem;
+  height: 1.5px;
+  background: var(--azulejo);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav a:hover { color: var(--ink); }
+.nav a.active { color: var(--azulejo); }
+.nav a.active::after { transform: scaleX(1); }
+
+/* ═══ SECTION ARCHITECTURE ═══ */
+.stop {
+  padding: 6rem 2rem 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.stop-header {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+  align-items: end;
+}
+
+.stop-number {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(6rem, 12vw, 10rem);
+  font-weight: 300;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  opacity: 0.06;
+}
+
+.stop-title-block h2 {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stop-title-block .tagline {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink-secondary);
+  max-width: 45ch;
+}
+
+.stop-dates-bar {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+/* ═══ DAY BLOCKS ═══ */
+.day {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.day-aside { padding-top: 0.15rem; }
+
+.day-date {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+}
+
+.day-num {
+  font-family: 'Newsreader', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--ink);
+  margin-top: 0.25rem;
+}
+
+.day-content h3 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+
+.day-content p {
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--ink-secondary);
+  max-width: 60ch;
+  margin-bottom: 0.75rem;
+}
+
+.day-content p:last-child { margin-bottom: 0; }
+
+.day-content strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ═══ SPOTS LIST ═══ */
+.spots {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.spot {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--border);
+  align-items: start;
+}
+
+.spot:last-child { border-bottom: 1px solid var(--border); }
+
+.spot-marker {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.1rem;
+}
+
+.spot-marker svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--ink-tertiary);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.spot-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.spot-desc {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+  margin-top: 0.1rem;
+}
+
+/* ═══ HOTEL ═══ */
+.hotel {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  position: relative;
+}
+
+.hotel-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+.hotel h4 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+
+.hotel p {
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink-secondary);
+  max-width: 60ch;
+}
+
+.hotel-details {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.hotel-detail {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--ink-tertiary);
+}
+
+.hotel--tbd {
+  border-style: dashed;
+  border-color: var(--border-strong);
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 10px,
+    rgba(28,26,23,0.015) 10px,
+    rgba(28,26,23,0.015) 20px
+  );
+}
+
+.hotel--tbd .hotel-label { color: var(--golden); }
+
+/* ═══ SECTION PHOTO ═══ */
+.section-photo {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 3rem;
+}
+
+/* ═══ REC GRID ═══ */
+.recs {
+  margin-top: 2rem;
+}
+
+.recs-title {
+  font-family: 'Newsreader', serif;
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+.rec-stack {
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.rec-stack.three-up { grid-template-columns: 1fr; }
+.rec { background: var(--surface); padding: 1.5rem; }
+.rec:first-child { grid-row: span 2; }
+.rec-stack.three-up .rec:first-child { grid-row: span 1; }
+
+.rec-type {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 0.4rem;
+}
+
+.rec h5 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}
+
+.rec p {
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--ink-secondary);
+}
+
+/* ═══ OPTION CARDS ═══ */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.option-card {
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  position: relative;
+}
+
+.option-card--recommended {
+  border-color: var(--azulejo);
+  border-width: 1.5px;
+}
+
+.option-badge {
+  position: absolute;
+  top: -0.6rem;
+  right: 1.5rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--azulejo);
+  color: white;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+
+.option-card h4 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.option-card p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.option-pros {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.option-pro {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--olive);
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.option-pro::before {
+  content: '+';
+  position: absolute;
+  left: 0;
+  font-weight: 600;
+}
+
+.option-con {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--terracotta);
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.option-con::before {
+  content: '–';
+  position: absolute;
+  left: 0.15rem;
+  font-weight: 600;
+}
+
+/* ═══ CALLOUT ═══ */
+.callout {
+  margin: 2rem 0;
+  padding: 1.5rem 2rem;
+  border: 1px solid;
+  border-radius: 12px;
+  border-left: 3px solid;
+}
+
+.callout--azulejo { background: var(--azulejo-muted); border-color: rgba(30,92,138,0.15); border-left-color: var(--azulejo); }
+.callout--golden { background: var(--golden-muted); border-color: rgba(200,150,62,0.15); border-left-color: var(--golden); }
+.callout--olive { background: var(--olive-muted); border-color: rgba(90,107,74,0.15); border-left-color: var(--olive); }
+
+.callout h4 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.callout--azulejo h4 { color: var(--azulejo); }
+.callout--golden h4 { color: var(--golden); }
+.callout--olive h4 { color: var(--olive); }
+
+.callout p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink-secondary);
+}
+
+/* ═══ SECTION DIVIDER ═══ */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.divider .line { flex: 1; height: 1px; background: var(--border-strong); }
+
+.divider .label {
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--ink-tertiary);
+  white-space: nowrap;
+}
+
+/* ═══ PRACTICAL ═══ */
+.practical {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 6rem 2rem;
+}
+
+.practical-inner { max-width: 1000px; margin: 0 auto; }
+
+.practical h2 {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-bottom: 3rem;
+}
+
+.practical-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.practical-item {
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(245,242,237,0.1);
+}
+
+.practical-item:nth-child(odd) { padding-right: 2rem; }
+.practical-item:nth-child(even) { padding-left: 2rem; border-left: 1px solid rgba(245,242,237,0.1); }
+
+.practical-item h4 {
+  font-size: 0.88rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: var(--bg);
+}
+
+.practical-item p {
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(245,242,237,0.55);
+}
+
+/* ═══ WEDDING CALLOUT ═══ */
+.wedding-banner {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--port-muted);
+  border-top: 1px solid rgba(122,59,94,0.1);
+  border-bottom: 1px solid rgba(122,59,94,0.1);
+}
+
+.wedding-banner h3 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--port);
+  margin-bottom: 0.5rem;
+}
+
+.wedding-banner p {
+  font-size: 0.92rem;
+  font-weight: 300;
+  color: var(--ink-secondary);
+}
+
+/* ═══ FOOTER ═══ */
+footer {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.footer-sig {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+}
+
+.footer-sub {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--ink-tertiary);
+  margin-top: 0.25rem;
+  letter-spacing: 0.04em;
+}
+
+/* ═══ COLOR ACCENTS PER STOP ═══ */
+.stop--algarve .stop-number { color: var(--sand); }
+.stop--algarve .stop-title-block h2 { color: var(--terracotta); }
+.stop--algarve .hotel { border-left: 3px solid var(--terracotta); }
+.stop--algarve .rec-type { color: var(--terracotta); }
+
+.stop--douro .stop-number { color: var(--port); }
+.stop--douro .stop-title-block h2 { color: var(--port); }
+.stop--douro .hotel { border-left: 3px solid var(--port); }
+.stop--douro .rec-type { color: var(--port); }
+
+.stop--lisbon .stop-number { color: var(--azulejo); }
+.stop--lisbon .stop-title-block h2 { color: var(--azulejo); }
+.stop--lisbon .hotel { border-left: 3px solid var(--azulejo); }
+.stop--lisbon .rec-type { color: var(--azulejo); }
+
+.stop--depart .stop-number { color: var(--golden); }
+.stop--depart .stop-title-block h2 { color: var(--golden); }
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.vis {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 6rem 1.5rem 3rem;
+    gap: 3rem;
+  }
+  .hero-left { padding-left: 0; padding-bottom: 0; }
+  .hero-right { align-items: flex-start; padding-right: 0; }
+
+  .stop-header {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .stop-number {
+    font-size: 4rem;
+    position: absolute;
+    right: 0;
+    top: -0.5rem;
+  }
+  .stop-header { position: relative; }
+
+  .day {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .day-aside {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+  .day-num { font-size: 1.5rem; margin-top: 0; }
+
+  .options-grid { grid-template-columns: 1fr; }
+  .rec-stack { grid-template-columns: 1fr; }
+  .rec:first-child { grid-row: span 1; }
+  .practical-grid { grid-template-columns: 1fr; }
+  .practical-item:nth-child(even) { padding-left: 0; border-left: none; }
+  .practical-item:nth-child(odd) { padding-right: 0; }
+
+  .nav { padding: 0 1rem; overflow-x: auto; justify-content: flex-start; }
+  .nav a { padding: 0.8rem 0.75rem; font-size: 0.68rem; }
+
+  .stop { padding: 4rem 1.5rem 3rem; }
+  .section-photo { aspect-ratio: 16 / 9; border-radius: 8px; margin-bottom: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="top">
+  <div class="hero-left">
+    <div class="hero-tag">Barron &amp; Nina / May 2026</div>
+    <h1><span class="accent">Portugal</span></h1>
+    <div class="hero-meta">
+      <span>12 nights &middot; 3 regions &middot; 1 wedding</span>
+      <span>Golden cliffs, port wine sunsets &amp; Lisbon nights</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-route-vertical">
+      <div class="route-item">
+        <div class="city">SFO &rarr; Madrid</div>
+        <div class="nights">Transit</div>
+        <div class="dates">Tue, May 13</div>
+      </div>
+      <div class="route-item">
+        <div class="city">Algarve</div>
+        <div class="nights">5 nights &middot; Lagos</div>
+        <div class="dates">May 14 &ndash; 19</div>
+      </div>
+      <div class="route-item">
+        <div class="city">Douro Valley</div>
+        <div class="nights">3 nights &middot; Octant Douro</div>
+        <div class="dates">May 19 &ndash; 22</div>
+      </div>
+      <div class="route-item">
+        <div class="city">Lisbon</div>
+        <div class="nights">3 nights &middot; Torel Palace</div>
+        <div class="dates">May 22 &ndash; 25</div>
+      </div>
+      <div class="route-item">
+        <div class="city">Home</div>
+        <div class="nights">Lisbon &rarr; JFK &rarr; SFO</div>
+        <div class="dates">Sun, May 25</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="nav">
+  <a href="#algarve">Algarve</a>
+  <a href="#douro">Douro Valley</a>
+  <a href="#lisbon">Lisbon</a>
+  <a href="#wedding">Wedding</a>
+  <a href="#depart">Depart</a>
+  <a href="#practical">Practical</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- STOP 1: ALGARVE                                    -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="stop stop--algarve" id="algarve">
+  <div class="stop-header reveal">
+    <div class="stop-number">01</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">May 14 &ndash; 19 &middot; 5 Nights</div>
+      <h2>The Algarve</h2>
+      <div class="tagline">Golden sea cliffs, hidden grottoes, and the best seafood in Europe &mdash; before anyone else shows up for summer.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Ponta_da_Piedade%2C_Lagos%2C_Portugal_%2842041512944%29.jpg/1920px-Ponta_da_Piedade%2C_Lagos%2C_Portugal_%2842041512944%29.jpg" alt="Ponta da Piedade golden sea cliffs in Lagos, Algarve" loading="lazy">
+
+  <div class="callout callout--golden reveal">
+    <h4>Getting to the Algarve</h4>
+    <p>Your Iberia flight lands in <strong>Madrid at 4:15 AM</strong> on May 14. Catch a morning connection to <strong>Faro (FAO)</strong> &mdash; Ryanair, TAP, and Iberia all fly it. Flight is ~1.5 hours, fares typically $30&ndash;50/person. You&rsquo;ll be on Algarve soil by lunchtime. Rent a car at Faro Airport for the drive to Lagos (~1 hour west along the coast).</p>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Wednesday</div>
+      <div class="day-num">14</div>
+    </div>
+    <div class="day-content">
+      <h3>Arrive &amp; Decompress</h3>
+      <p>You&rsquo;ve been travelling since yesterday evening. Check into your hotel in <strong>Lagos</strong>, shower off the plane, and ease into Portugal mode. Walk into the <strong>Old Town</strong> &mdash; cobblestoned streets, whitewashed buildings, bougainvillea everywhere. Find a terrace, order a cold <em>imperial</em> (that&rsquo;s what they call a draught beer here), and let the jet lag wash away in the sun.</p>
+      <p>For dinner, keep it simple and local. <strong>Casinha do Petisco</strong> does excellent petiscos (Portuguese tapas) &mdash; or walk to the marina and pick a waterfront spot. You&rsquo;re on holiday time now.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Thursday</div>
+      <div class="day-num">15</div>
+    </div>
+    <div class="day-content">
+      <h3>Ponta da Piedade &amp; Beach Day</h3>
+      <p>Morning: walk to <strong>Ponta da Piedade</strong>, the Algarve&rsquo;s crown jewel. Towering golden limestone stacks, arches, and sea caves &mdash; all within a 15-minute stroll from Lagos. Descend the wooden staircase to the water and book a <strong>boat or kayak tour</strong> through the grottoes. The light inside the caves is otherworldly.</p>
+      <p>Afternoon: pick your beach. <strong>Praia do Camilo</strong> (intimate cove, 200 stairs down, spectacular) or <strong>Praia da Dona Ana</strong> (easier access, consistently rated one of Europe&rsquo;s best). May means warm enough to swim, empty enough to breathe.</p>
+      <div class="spots">
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Ponta da Piedade Boat Tour</div>
+            <div class="spot-desc">~1 hour through arches and grottoes. ~€20/person from Lagos marina. Morning light is best.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Kayak Tour</div>
+            <div class="spot-desc">Paddle into the caves yourselves. More intimate, more adventurous. Book a guided 2-hr tour ~€35/person.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Friday</div>
+      <div class="day-num">16</div>
+    </div>
+    <div class="day-content">
+      <h3>Benagil Cave &amp; Seven Hanging Valleys</h3>
+      <p>Day trip east along the coast (~30 min drive). Morning: <strong>Benagil Cave</strong> &mdash; that cathedral-like sea cave with the hole in the ceiling you&rsquo;ve seen on every travel Instagram. Access by boat tour or SUP from Benagil beach. Go early before the tour boats stack up.</p>
+      <p>Afternoon: the <strong>Seven Hanging Valleys Trail</strong> (Percurso dos Sete Vales Suspensos). A 6km cliff-top walk from Praia da Marinha to Benagil with jaw-dropping views the entire way &mdash; sea stacks, sinkholes, hidden beaches below. Widely considered the best hike in the Algarve. Bring water and good shoes.</p>
+      <p>Evening: dinner in <strong>Carvoeiro</strong> on the way back &mdash; charming small town built into a cliff cove.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Saturday</div>
+      <div class="day-num">17</div>
+    </div>
+    <div class="day-content">
+      <h3>Sagres &amp; the End of the World</h3>
+      <p>Drive 30 minutes west to <strong>Sagres</strong> &mdash; the windswept southwestern tip of Europe. The Portuguese called it <em>o fim do mundo</em> (the end of the world), and standing on the cliffs of <strong>Cabo de São Vicente</strong>, you&rsquo;ll understand why. This is where Prince Henry the Navigator launched the Age of Discovery.</p>
+      <p>Explore the <strong>Fortaleza de Sagres</strong> (clifftop fortress), watch surfers tackle the Atlantic breaks, and grab lunch at a clifftop restaurant. <strong>A Tasca</strong> in Sagres is excellent &mdash; fresh-caught fish, no fuss.</p>
+      <p>Back in Lagos for a lazy afternoon. Sunset drinks at <strong>Bon Vivant</strong> (rooftop bar overlooking the marina) or along the waterfront.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Sunday</div>
+      <div class="day-num">18</div>
+    </div>
+    <div class="day-content">
+      <h3>Slow Day &mdash; Lagos &amp; Tavira</h3>
+      <p>Morning: sleep in, wander the <strong>Lagos farmers market</strong> (Mercado Municipal), grab pastéis de nata from a bakery, and just soak in the town you&rsquo;ve been too busy adventuring to fully explore.</p>
+      <p>Or, if you want one more adventure: drive east to <strong>Tavira</strong> (~1 hour). The most romantic town in the Algarve &mdash; Renaissance churches, a Roman bridge, castle ruins, and island beaches accessible by boat. Famous for its €1 oysters at the market. Worth it.</p>
+      <p>This is also the day to decide how you&rsquo;re getting to Porto tomorrow &mdash; see the options below.</p>
+    </div>
+  </div>
+
+  <div class="recs reveal">
+    <div class="recs-title">Where to Eat in Lagos</div>
+    <div class="rec-stack">
+      <div class="rec">
+        <div class="rec-type">Don&rsquo;t Miss</div>
+        <h5>Casa Chico Zé</h5>
+        <p>A 5-minute drive from Lagos in Torre. Portuguese BBQ at its finest &mdash; grilled sardines, whole dourada, piri piri chicken, carafes of vinho verde. Lunch only (12&ndash;3 PM), closed Sundays. Popular with locals and tourists in the know. Cash only.</p>
+      </div>
+      <div class="rec">
+        <div class="rec-type">Seafood</div>
+        <h5>O Camilo</h5>
+        <p>Perched above Praia do Camilo. Cataplana (traditional copper-pot seafood stew) with views of the sea stacks.</p>
+      </div>
+      <div class="rec">
+        <div class="rec-type">Wine Bar</div>
+        <h5>Artistas</h5>
+        <p>Hidden courtyard in Old Town. Natural wines, creative petiscos, and a gorgeous atmosphere after dark.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hotel hotel--tbd reveal">
+    <div class="hotel-label">Accommodation &mdash; To Be Booked</div>
+    <h4>Lagos Hotel</h4>
+    <p>5 nights in Lagos. Looking for a boutique hotel or well-located apartment in or near Old Town &mdash; walking distance to restaurants and the marina, with Ponta da Piedade accessible on foot.</p>
+    <div class="hotel-details">
+      <span class="hotel-detail">May 14 &ndash; 19</span>
+      <span class="hotel-detail">5 nights</span>
+      <span class="hotel-detail">Lagos, Algarve</span>
+    </div>
+  </div>
+
+  <!-- ═══ GETTING TO PORTO ═══ -->
+  <div style="margin-top: 3rem;" class="reveal">
+    <h3 style="font-family: 'Newsreader', serif; font-size: 1.5rem; font-weight: 300; margin-bottom: 0.5rem; letter-spacing: -0.01em;">Getting to Porto (May 19)</h3>
+    <p style="font-size: 0.92rem; font-weight: 300; line-height: 1.75; color: var(--ink-secondary); margin-bottom: 1.5rem; max-width: 60ch;">Zach &amp; Lauren land at Porto Airport at 10 AM on May 19. Two ways to make the rendezvous:</p>
+
+    <div class="options-grid">
+      <div class="option-card option-card--recommended">
+        <div class="option-badge">Recommended</div>
+        <h4>Option A: Fly</h4>
+        <p>Early morning flight <strong>Faro &rarr; Porto</strong> (~1h 10min, Ryanair operates daily). Land by 8&ndash;9 AM, rent car at Porto Airport, meet Zach &amp; Lauren when they land at 10.</p>
+        <div class="option-pros">
+          <div class="option-pro">Clean and fast &mdash; door to door in ~3 hours</div>
+          <div class="option-pro">Cheap flights (~€25/person)</div>
+          <div class="option-pro">Maximum time in the Algarve (full Day 5)</div>
+          <div class="option-con">Requires early airport morning after 5 days of vacation</div>
+        </div>
+      </div>
+      <div class="option-card">
+        <h4>Option B: Drive via Porto</h4>
+        <p>Leave Lagos afternoon of May 18. Drive to Porto (~4.5 hrs via A2/A1). Enjoy an evening in Porto &mdash; <strong>port wine cellars in Vila Nova de Gaia</strong>, dinner along the Ribeira &mdash; sleep in Porto. Pick up Zach &amp; Lauren at the airport next morning.</p>
+        <div class="option-pros">
+          <div class="option-pro">Bonus night in Porto (spectacular city)</div>
+          <div class="option-pro">Port wine tasting at the source</div>
+          <div class="option-pro">No early flight stress</div>
+          <div class="option-con">Lose the last Algarve afternoon</div>
+          <div class="option-con">Long drive after a week of relaxing</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="line"></div><div class="label">🍷</div><div class="line"></div></div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- STOP 2: DOURO VALLEY                               -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="stop stop--douro" id="douro">
+  <div class="stop-header reveal">
+    <div class="stop-number">02</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">May 19 &ndash; 22 &middot; 3 Nights</div>
+      <h2>Douro Valley</h2>
+      <div class="tagline">Terraced vineyards, river cruises, and port wine &mdash; with Zach &amp; Lauren along for the ride.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Porto_vinridge.jpg/1920px-Porto_vinridge.jpg" alt="Terraced vineyards along the Douro River" loading="lazy">
+
+  <div class="callout callout--olive reveal">
+    <h4>The Crew Assembles</h4>
+    <p>Pick up <strong>Zach &amp; Lauren</strong> at Porto Airport (OPO) at 10 AM. Grab the rental car and drive ~1.5 hours east into the Douro Valley. Winding roads through increasingly dramatic terraced hillsides. Stop for lunch along the way &mdash; there are excellent riverside spots around Peso da Régua.</p>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Monday</div>
+      <div class="day-num">19</div>
+    </div>
+    <div class="day-content">
+      <h3>Arrive at Octant Douro</h3>
+      <p>Check in to <strong>Octant Douro</strong> in Castelo de Paiva. Settle into the rooms, explore the property, and ease into wine country pace. The hotel sits above the river with sweeping valley views &mdash; the kind of place where you immediately stop caring what time it is.</p>
+      <p>Evening: dinner at the hotel restaurant or explore nearby. The property has its own restaurant with local cuisine and an excellent wine list. After two planes and a drive, let someone else cook.</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Tuesday</div>
+      <div class="day-num">20</div>
+    </div>
+    <div class="day-content">
+      <h3>Wine, River &amp; Sunset Cruise</h3>
+      <p>Morning: visit a <strong>quinta</strong> (wine estate) for a tasting and tour. The Douro is Portugal&rsquo;s most famous wine region &mdash; port wine, obviously, but also stunning reds and whites. <strong>Quinta da Pacheca</strong> and <strong>Quinta do Crasto</strong> are both excellent and within driving distance.</p>
+      <p>Afternoon: recharge at the hotel pool.</p>
+      <p>Evening: the highlight &mdash; your <strong>private Rabelo boat cruise</strong> at 6 PM. Two hours on a traditional flat-bottomed wine boat with cocktails, wine, beer, and a Bluetooth speaker. The sunset over the terraced valley from the river is genuinely one of the most beautiful things in Portugal.</p>
+
+      <div class="callout callout--azulejo" style="margin-top: 1.5rem;">
+        <h4>🚣 Rabelo Boat Cruise &mdash; Confirmed</h4>
+        <p><strong>6:00 PM, May 20.</strong> 4 guests, 2-hour cruise. Drinks on board (cocktails, wine, beer, soft drinks). Optional picnic cooler add-on &mdash; select on arrival with Front Office. Cost: €500. Octant offered an optional professional photographer (extra cost TBD).</p>
+        <p style="margin-top: 0.5rem;">Contact: Lourenço Guimarães (Guest Relations) &mdash; guestrelations-douro@octanthotels.com / +351 255 690 160</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Wednesday</div>
+      <div class="day-num">21</div>
+    </div>
+    <div class="day-content">
+      <h3>Explore the Valley</h3>
+      <p>Flexible day &mdash; follow your mood. Some ideas:</p>
+      <div class="spots">
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">More Quintas</div>
+            <div class="spot-desc">Visit another winery or two. Quinta do Vallado and Quinta Nova are beautiful. Each has its own character.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Pinhão</div>
+            <div class="spot-desc">Tiny riverside village, azulejo-covered train station, heart of port country. Walk the bridge, sit by the river.</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Miradouro de São Leonardo de Galafura</div>
+            <div class="spot-desc">The viewpoint. Panoramic view of the entire valley. Miguel Torga called it &ldquo;the most beautiful landscape the human eye can behold.&rdquo;</div>
+          </div>
+        </div>
+        <div class="spot">
+          <div class="spot-marker"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></div>
+          <div>
+            <div class="spot-name">Hike the Vineyards</div>
+            <div class="spot-desc">Walk the terraced paths between quintas. No trail needed &mdash; just follow the stone walls between vines.</div>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top: 1.25rem;">Last dinner together with Zach &amp; Lauren. Make it count.</p>
+    </div>
+  </div>
+
+  <div class="hotel reveal">
+    <div class="hotel-label">Booked</div>
+    <h4>Octant Douro</h4>
+    <p>Modern design hotel set into the Douro hillside with panoramic river views, infinity pool, spa, and on-site restaurant. Deluxe room, king bed, breakfast included.</p>
+    <div class="hotel-details">
+      <span class="hotel-detail">EN 222, km 41, Castelo de Paiva</span>
+      <span class="hotel-detail">Agoda #968232442</span>
+      <span class="hotel-detail">Non-refundable</span>
+      <span class="hotel-detail">Breakfast &middot; WiFi &middot; Parking</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="line"></div><div class="label">🇵🇹</div><div class="line"></div></div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- STOP 3: LISBON                                     -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="stop stop--lisbon" id="lisbon">
+  <div class="stop-header reveal">
+    <div class="stop-number">03</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">May 22 &ndash; 25 &middot; 3 Nights</div>
+      <h2>Lisbon</h2>
+      <div class="tagline">The city of seven hills, azulejo tiles, and pastéis de nata &mdash; plus a wedding.</div>
+    </div>
+  </div>
+
+  <img class="section-photo reveal" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Lisbon_%2836831596786%29_%28cropped%29.jpg/1920px-Lisbon_%2836831596786%29_%28cropped%29.jpg" alt="Lisbon rooftops and the Tagus River at sunset" loading="lazy">
+
+  <div class="callout callout--azulejo reveal">
+    <h4>Getting to Lisbon</h4>
+    <p>Say goodbye to Zach &amp; Lauren at checkout on May 22 (they head back from Porto). Drive from the Douro to Lisbon &mdash; ~3.5&ndash;4 hours via the A1 motorway. Drop the rental car in Lisbon (you won&rsquo;t need it in the city &mdash; everything is walkable, tram, or cheap Uber).</p>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Thursday</div>
+      <div class="day-num">22</div>
+    </div>
+    <div class="day-content">
+      <h3>Arrive &amp; Explore</h3>
+      <p>Check in to <strong>Torel Palace</strong> and get your bearings. The hotel is in a gorgeous 19th-century palace in the Jardim Torel neighbourhood &mdash; central, elevated, with city views from the garden.</p>
+      <p>Afternoon: wander <strong>Alfama</strong> &mdash; Lisbon&rsquo;s oldest district. A labyrinth of narrow alleys, tiled facades, and unexpected viewpoints. Get deliberately lost. End up at <strong>Miradouro da Graça</strong> or <strong>Miradouro da Senhora do Monte</strong> for sunset over the city.</p>
+      <p>Dinner: <strong>JNcQUOI Avenida</strong> on Av. da Liberdade &mdash; upscale Portuguese with a beautiful interior. Alfred is monitoring booking availability and will auto-reserve when it opens (~2 months out).</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Friday</div>
+      <div class="day-num">23</div>
+    </div>
+    <div class="day-content">
+      <h3>Belém, Nata &amp; Nightlife</h3>
+      <p>Morning: tram or Uber to <strong>Belém</strong>. Visit the <strong>Jerónimos Monastery</strong> (Manueline masterpiece, UNESCO World Heritage), the <strong>Tower of Belém</strong>, and &mdash; most importantly &mdash; <strong>Pastéis de Belém</strong> for the original custard tart. Accept no substitutes.</p>
+      <p>Afternoon: back to the city centre. Browse the shops on <strong>Rua Augusta</strong>, ride <strong>Tram 28</strong> through the hills (touristy but genuinely fun), or pop into the <strong>National Tile Museum</strong> (Museu do Azulejo) &mdash; because after two weeks of seeing those blue tiles everywhere, you&rsquo;ll want to understand them.</p>
+      <p>Night: <strong>Bairro Alto</strong>. Lisbon&rsquo;s nightlife district. Dozens of tiny bars crammed into narrow streets. Start with dinner, let the night evolve. <strong>Cervejaria Ramiro</strong> for legendary seafood if you haven&rsquo;t had your fill yet (spoiler: you haven&rsquo;t).</p>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Saturday</div>
+      <div class="day-num">24</div>
+    </div>
+    <div class="day-content">
+      <h3>Wedding Day 💒</h3>
+      <p><strong>Kylie &amp; Zayn&rsquo;s wedding</strong> &mdash; the whole reason you&rsquo;re here (well, one of them). Details TBD &mdash; check WithJoy for venue, dress code, and schedule as they&rsquo;re announced. Keep the day clear. Maybe a slow morning and a long lunch before getting ready.</p>
+    </div>
+  </div>
+
+  <div class="recs reveal">
+    <div class="recs-title">Lisbon Essentials</div>
+    <div class="rec-stack">
+      <div class="rec">
+        <div class="rec-type">Restaurant</div>
+        <h5>JNcQUOI Avenida</h5>
+        <p>Av. da Liberdade 182-184. Upscale Portuguese dining in a stunning Art Deco space. Interior seating preferred. ~€55/person. 2-hour max, 15-min tolerance. Booking opens ~2 months out on TheFork.</p>
+      </div>
+      <div class="rec">
+        <div class="rec-type">Seafood</div>
+        <h5>Cervejaria Ramiro</h5>
+        <p>Legendary since 1956. Tiger prawns, percebes (goose barnacles), and a steak sandwich chaser. Queue is worth it.</p>
+      </div>
+      <div class="rec">
+        <div class="rec-type">Pastéis</div>
+        <h5>Pastéis de Belém</h5>
+        <p>The original since 1837. Warm, flaky, custard-filled perfection. Dust with cinnamon and powdered sugar. Accept no imitations.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hotel reveal">
+    <div class="hotel-label">Booked</div>
+    <h4>Torel Palace Lisbon</h4>
+    <p>Boutique palace hotel in a restored 19th-century manor with garden terrace and city views. Central location near Av. da Liberdade and the Jardim Torel viewpoint.</p>
+    <div class="hotel-details">
+      <span class="hotel-detail">Jardim Torel, Lisbon</span>
+      <span class="hotel-detail">May 22 &ndash; 25</span>
+      <span class="hotel-detail">3 nights</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WEDDING BANNER ═══ -->
+<div class="wedding-banner" id="wedding">
+  <h3>Kylie &amp; Zayn</h3>
+  <p>Sunday, May 24, 2026 &middot; Lisbon, Portugal</p>
+</div>
+
+<div class="divider"><div class="line"></div><div class="label">✈️</div><div class="line"></div></div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- DEPARTURE                                          -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="stop stop--depart" id="depart">
+  <div class="stop-header reveal">
+    <div class="stop-number">04</div>
+    <div class="stop-title-block">
+      <div class="stop-dates-bar">Sunday, May 25</div>
+      <h2>Homeward</h2>
+      <div class="tagline">One last pastel de nata, then back to reality. Via JFK, because direct would be too easy.</div>
+    </div>
+  </div>
+
+  <div class="day reveal">
+    <div class="day-aside">
+      <div class="day-date">Sunday</div>
+      <div class="day-num">25</div>
+    </div>
+    <div class="day-content">
+      <h3>Early Morning Departure</h3>
+      <p>Flight <strong>DL 273</strong> departs Lisbon at 5:00 AM &mdash; which means a ~2:30 AM airport arrival. Not glamorous, but you&rsquo;ll sleep on the plane. Land at <strong>JFK at 12:54 PM</strong>, then connect on <strong>DL 679</strong> departing 2:59 PM, arriving SFO at 9:39 PM.</p>
+      <p>You&rsquo;ll be home by 10 PM, 12 days of Portugal behind you, and probably already planning the next one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRACTICAL ═══ -->
+<section class="practical" id="practical">
+  <div class="practical-inner">
+    <h2 class="reveal">Practical Notes</h2>
+    <div class="practical-grid">
+      <div class="practical-item reveal">
+        <h4>Flights</h4>
+        <p><strong>Out:</strong> IB 326, SFO &rarr; Madrid, May 13, 8:40 PM. Then Madrid &rarr; Faro (book separately). <strong>Back:</strong> DL 273 Lisbon &rarr; JFK, then DL 679 JFK &rarr; SFO, May 25.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Rental Car</h4>
+        <p>Pick up at Faro Airport (May 14). Keep through Algarve &amp; Douro. Drop off in Lisbon (May 22). You won&rsquo;t need a car in Lisbon &mdash; everything is walkable or a cheap Uber.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>May Weather</h4>
+        <p>Algarve: 20&ndash;25°C (68&ndash;77°F), sunny, low chance of rain. Douro: similar, slightly cooler evenings in the valley. Lisbon: 18&ndash;24°C (64&ndash;75°F), pleasant. Pack layers for evenings.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Currency &amp; Cards</h4>
+        <p>Euro (€). Cards accepted almost everywhere. ATMs (Multibanco) are reliable. Avoid airport exchange &mdash; terrible rates. Some small restaurants are cash-preferred.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Language</h4>
+        <p>Portuguese. English is widely spoken in tourist areas. Learn &ldquo;obrigado/obrigada&rdquo; (thank you) and &ldquo;uma imperial, por favor&rdquo; (a beer, please) and you&rsquo;re set.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Tolls</h4>
+        <p>Portuguese highways (autoestradas) have electronic tolls. Rent a Via Verde transponder with the car or register your plate online. Do NOT skip this &mdash; fines are annoying.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>Power</h4>
+        <p>Type F outlets (European two-pin round). Bring a universal adapter or buy one at the airport. Voltage is 230V.</p>
+      </div>
+      <div class="practical-item reveal">
+        <h4>SIM / Data</h4>
+        <p>Buy a local SIM at Faro Airport (Vodafone or MEO, ~€15&ndash;20 for 10GB). Or check if your US carrier has a good EU roaming plan. You&rsquo;ll want data for maps in the Algarve and Douro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-sig">Planned by Alfred 🦉</div>
+  <div class="footer-sub">Boa viagem.</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('vis');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  const r = el.getBoundingClientRect();
+  if (r.top < window.innerHeight + 50) {
+    el.style.transitionDelay = (i * 0.04) + 's';
+    requestAnimationFrame(() => el.classList.add('vis'));
+  } else {
+    obs.observe(el);
+  }
+});
+
+// Nav active state
+const nav = document.getElementById('nav');
+const links = nav.querySelectorAll('a');
+const ids = Array.from(links).map(a => a.getAttribute('href').slice(1));
+
+window.addEventListener('scroll', () => {
+  let cur = '';
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 200) cur = id;
+  });
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}, { passive: true });
+</script>
+</body>
+</html>

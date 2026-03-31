@@ -964,7 +964,7 @@ h3 {
 <div class="scene" id="scene-2">
   <div class="beat-content">
     <img src="/memory-talk/sprites/owl-alarmed.jpg" class="owl-sprite owl-small" alt="Alarmed owl">
-    <h2>THE HOOK</h2>
+    <h2>MY STORY</h2>
     <div class="dialogue-box" style="max-width: 1100px;">
       <div style="font-size: 28px; line-height: 1.8;">
         Deep in a <span class="text-green">Cubby</span> coding session one weekend — building a new feature, making architectural decisions, debugging edge cases. Real flow state.
@@ -1021,14 +1021,24 @@ h3 {
 <!-- ==================== BEAT 8: LAYER 1 — BOOTSTRAP FILES ==================== -->
 <div class="scene" id="scene-6">
   <div class="beat-content">
-    <h2>THE 4 LAYERS</h2>
-    <div class="layer-stack" id="layer-stack-1">
-      <div class="layer-item visible">
-        <div class="layer-icon">✅</div>
-        <div>
-          <div class="layer-label">LAYER 1: BOOTSTRAP FILES</div>
-          <div class="layer-desc">SOUL.md, AGENTS.md, MEMORY.md — loaded from disk every turn</div>
-        </div>
+    <h2>LAYER 1: BOOTSTRAP FILES</h2>
+    <div style="font-size: 20px; color: var(--green); margin-bottom: 20px; font-family: 'Press Start 2P'; font-size: 11px;">✅ LOADED FROM DISK EVERY TURN — SURVIVE COMPACTION</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 1100px;">
+      <div style="background: var(--surface); border: 2px solid var(--gold); border-radius: 8px; padding: 16px;">
+        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--gold); margin-bottom: 8px;">📕 MEMORY.md</div>
+        <div style="font-size: 22px; color: #ccc;">Curated long-term memory. Decisions, project status, vendor contacts, lessons learned. Main session only.</div>
+      </div>
+      <div style="background: var(--surface); border: 2px solid var(--teal); border-radius: 8px; padding: 16px;">
+        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--teal); margin-bottom: 8px;">📜 AGENTS.md</div>
+        <div style="font-size: 22px; color: #ccc;">Operating instructions. "Search memory before acting." Rules, workflows, safety constraints.</div>
+      </div>
+      <div style="background: var(--surface); border: 2px solid var(--purple); border-radius: 8px; padding: 16px;">
+        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--purple); margin-bottom: 8px;">📅 memory/YYYY-MM-DD.md</div>
+        <div style="font-size: 22px; color: #ccc;">Daily logs. Append-only. Today + yesterday loaded at session start. Raw context, not curated.</div>
+      </div>
+      <div style="background: var(--surface); border: 2px solid var(--green); border-radius: 8px; padding: 16px;">
+        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--green); margin-bottom: 8px;">🔧 SOUL / USER / TOOLS.md</div>
+        <div style="font-size: 22px; color: #ccc;">Personality, human profile, tool configs. Stable reference files. Also loaded every turn.</div>
       </div>
     </div>
   </div>
@@ -1087,7 +1097,7 @@ h3 {
         <div class="layer-icon" style="color: var(--gold);">⚠️</div>
         <div>
           <div class="layer-label" style="color: var(--gold);">LAYER 4: RETRIEVAL INDEX</div>
-          <div class="layer-desc">Only works if the agent <em>knows</em> to search</div>
+          <div class="layer-desc">Stock: auto-selects OpenAI → Gemini → Voyage → local embeddings. <span class="text-red">No API key = no search.</span> Only indexes MEMORY.md by default.</div>
         </div>
       </div>
     </div>
@@ -1204,18 +1214,42 @@ h3 {
 <div class="scene" id="scene-14">
   <div class="beat-content" style="text-align: center;">
     <h2>PER-TOPIC SYSTEM PROMPTS</h2>
-    <div style="display: flex; flex-direction: column; gap: 16px; max-width: 900px; width: 100%; margin-top: 16px;">
-      <div style="display: flex; align-items: center; gap: 16px; background: var(--surface); border: 2px solid var(--border); padding: 16px 24px; box-shadow: 4px 4px 0 rgba(0,0,0,0.3);">
-        <span style="font-size: 28px;">📱</span>
-        <span style="font-family: 'Press Start 2P'; font-size: 11px; color: var(--teal);">cubby topic</span>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 1100px; width: 100%; margin-top: 16px;">
+      <div style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--border); padding: 14px 20px; box-shadow: 4px 4px 0 rgba(0,0,0,0.3);">
+        <span style="font-size: 26px;">📱</span>
+        <span style="font-family: 'Press Start 2P'; font-size: 10px; color: var(--teal);">cubby</span>
         <span style="color: var(--dim);">→</span>
-        <span style="font-size: 22px;">reads <span class="text-teal">cubby.md</span></span>
+        <span style="font-size: 20px;">reads <span class="text-teal">cubby.md</span></span>
       </div>
-      <div style="display: flex; align-items: center; gap: 16px; background: var(--surface); border: 2px solid var(--border); padding: 16px 24px; box-shadow: 4px 4px 0 rgba(0,0,0,0.3);">
-        <span style="font-size: 28px;">💒</span>
-        <span style="font-family: 'Press Start 2P'; font-size: 11px; color: var(--teal);">wedding topic</span>
+      <div style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--border); padding: 14px 20px; box-shadow: 4px 4px 0 rgba(0,0,0,0.3);">
+        <span style="font-size: 26px;">💒</span>
+        <span style="font-family: 'Press Start 2P'; font-size: 10px; color: var(--teal);">wedding</span>
         <span style="color: var(--dim);">→</span>
-        <span style="font-size: 22px;">reads <span class="text-teal">wedding section of MEMORY.md</span></span>
+        <span style="font-size: 20px;">reads <span class="text-teal">wedding.md</span></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--border); padding: 14px 20px; box-shadow: 4px 4px 0 rgba(0,0,0,0.3);">
+        <span style="font-size: 26px;">🍽️</span>
+        <span style="font-family: 'Press Start 2P'; font-size: 10px; color: var(--teal);">maître d</span>
+        <span style="color: var(--dim);">→</span>
+        <span style="font-size: 20px;">reads <span class="text-teal">maitred.md</span></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--border); padding: 14px 20px; box-shadow: 4px 4px 0 rgba(0,0,0,0.3);">
+        <span style="font-size: 26px;">✈️</span>
+        <span style="font-family: 'Press Start 2P'; font-size: 10px; color: var(--teal);">travel</span>
+        <span style="color: var(--dim);">→</span>
+        <span style="font-size: 20px;">reads <span class="text-teal">travel/*.md</span></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--border); padding: 14px 20px; box-shadow: 4px 4px 0 rgba(0,0,0,0.3);">
+        <span style="font-size: 26px;">💳</span>
+        <span style="font-family: 'Press Start 2P'; font-size: 10px; color: var(--teal);">credit cards</span>
+        <span style="color: var(--dim);">→</span>
+        <span style="font-size: 20px;">reads <span class="text-teal">credit-cards.md</span></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--border); padding: 14px 20px; box-shadow: 4px 4px 0 rgba(0,0,0,0.3);">
+        <span style="font-size: 26px;">💰</span>
+        <span style="font-family: 'Press Start 2P'; font-size: 10px; color: var(--teal);">finances</span>
+        <span style="color: var(--dim);">→</span>
+        <span style="font-size: 20px;">reads <span class="text-teal">budget.md</span></span>
       </div>
     </div>
     <div class="config-block" style="margin-top: 28px;">

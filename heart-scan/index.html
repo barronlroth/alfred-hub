@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heart Scan Results — Mark Roth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8f7f4;
+  --surface:#ffffff;
+  --navy:#1e3a5f;
+  --navy-light:#2d5a8a;
+  --text:#374151;
+  --text-light:#6b7280;
+  --green:#22c55e;
+  --green-bg:#f0fdf4;
+  --green-border:#bbf7d0;
+  --amber:#f59e0b;
+  --amber-bg:#fffbeb;
+  --amber-border:#fde68a;
+  --red:#ef4444;
+  --red-bg:#fef2f2;
+  --red-border:#fecaca;
+  --shadow:0 1px 3px rgba(30,58,95,0.06),0 4px 12px rgba(30,58,95,0.04);
+  --shadow-lg:0 4px 6px rgba(30,58,95,0.05),0 10px 30px rgba(30,58,95,0.08);
+  --radius:16px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,h5{font-family:'Outfit',sans-serif;color:var(--navy);line-height:1.2}
+
+/* PASSWORD OVERLAY */
+#password-overlay{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity 0.5s ease,visibility 0.5s ease;
+}
+#password-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.pw-card{
+  background:var(--surface);
+  border-radius:24px;
+  padding:48px 40px;
+  box-shadow:var(--shadow-lg);
+  text-align:center;
+  max-width:400px;
+  width:90%;
+  animation:pw-float 0.6s ease-out;
+}
+@keyframes pw-float{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.pw-card svg{margin:0 auto 20px;display:block}
+.pw-card h2{font-size:1.5rem;margin-bottom:6px;font-weight:700}
+.pw-card p{color:var(--text-light);font-size:0.95rem;margin-bottom:24px}
+.pw-input-wrap{position:relative;margin-bottom:16px}
+.pw-input{
+  width:100%;padding:14px 18px;
+  border:2px solid #e5e7eb;border-radius:12px;
+  font-size:1.05rem;font-family:'Source Sans 3',sans-serif;
+  outline:none;transition:border-color 0.2s;
+  background:#fafafa;
+  letter-spacing:4px;
+  text-align:center;
+}
+.pw-input:focus{border-color:var(--navy-light);background:#fff}
+.pw-input.error{border-color:var(--red);animation:shake 0.4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pw-btn{
+  width:100%;padding:14px;
+  background:var(--navy);color:#fff;
+  border:none;border-radius:12px;
+  font-size:1.05rem;font-weight:600;
+  font-family:'Outfit',sans-serif;
+  cursor:pointer;transition:all 0.2s;
+}
+.pw-btn:hover{background:var(--navy-light);transform:translateY(-1px)}
+.pw-btn:active{transform:scale(0.98)}
+.pw-error{color:var(--red);font-size:0.875rem;margin-top:8px;min-height:20px}
+
+/* MAIN CONTENT */
+#main-content{display:none;opacity:0;transition:opacity 0.6s ease}
+#main-content.visible{display:block;opacity:1}
+
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+
+/* HEADER */
+.page-header{
+  padding:40px 0 32px;
+  border-bottom:1px solid #e8e6e1;
+  margin-bottom:0;
+}
+.patient-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--text-light);margin-bottom:12px;
+}
+.page-header h1{font-size:clamp(1.75rem,4vw,2.5rem);font-weight:800;margin-bottom:8px;letter-spacing:-0.5px}
+.page-header .subtitle{font-size:1.1rem;color:var(--text-light);max-width:600px}
+
+/* BADGE ROW */
+.badge-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:100px;
+  font-size:0.85rem;font-weight:600;
+  font-family:'Outfit',sans-serif;
+}
+.badge-green{background:var(--green-bg);color:#15803d;border:1px solid var(--green-border)}
+.badge-amber{background:var(--amber-bg);color:#92400e;border:1px solid var(--amber-border)}
+.badge-navy{background:#eef2f7;color:var(--navy);border:1px solid #cbd5e1}
+
+/* SECTIONS */
+section{padding:48px 0}
+.section-label{
+  font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;
+  color:var(--amber);margin-bottom:8px;
+}
+.section-title{font-size:clamp(1.3rem,3vw,1.75rem);font-weight:700;margin-bottom:8px}
+.section-desc{color:var(--text-light);max-width:600px;margin-bottom:32px}
+
+/* HEART SVG SECTION */
+.heart-section{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+@media(max-width:700px){.heart-section{grid-template-columns:1fr;text-align:center}}
+.heart-wrap{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.heart-svg-container{
+  position:relative;
+  width:100%;max-width:340px;
+  animation:heartbeat 1.2s ease-in-out infinite;
+}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+.heart-svg-container svg{width:100%;height:auto;display:block}
+
+/* Artery paths */
+.artery{cursor:pointer;transition:all 0.3s ease;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.artery:hover{filter:brightness(1.2);stroke-width:6}
+.artery-clean{stroke:var(--green);stroke-width:4}
+.artery-mild{stroke:var(--amber);stroke-width:4}
+
+/* Tooltip */
+.heart-tooltip{
+  position:absolute;
+  background:var(--navy);color:#fff;
+  padding:10px 14px;border-radius:10px;
+  font-size:0.82rem;line-height:1.4;
+  max-width:220px;
+  pointer-events:none;
+  opacity:0;transition:opacity 0.2s;
+  z-index:10;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+.heart-tooltip.show{opacity:1}
+.heart-tooltip::after{
+  content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
+  border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--navy);
+}
+
+.artery-legend{list-style:none;display:flex;flex-direction:column;gap:12px}
+.artery-legend li{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px;border-radius:12px;
+  background:var(--surface);
+  box-shadow:var(--shadow);
+  cursor:pointer;transition:all 0.2s;
+  font-size:0.95rem;
+}
+.artery-legend li:hover{transform:translateX(4px);box-shadow:var(--shadow-lg)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.legend-dot.clean{background:var(--green)}
+.legend-dot.mild{background:var(--amber)}
+.legend-name{font-weight:600;color:var(--navy);font-family:'Outfit',sans-serif}
+.legend-status{font-size:0.82rem;color:var(--text-light)}
+
+/* CALCIUM GAUGE */
+.gauge-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:32px;
+  align-items:start;
+}
+@media(max-width:700px){.gauge-grid{grid-template-columns:1fr}}
+
+.gauge-card{
+  background:var(--surface);
+  border-radius:var(--radius);
+  padding:32px;
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+.gauge-svg-wrap{width:220px;height:130px;margin:0 auto 16px;position:relative}
+.gauge-value{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  font-family:'Outfit',sans-serif;font-size:2.5rem;font-weight:800;color:var(--navy);
+}
+.gauge-label{font-size:0.85rem;color:var(--text-light);margin-bottom:4px}
+.gauge-sublabel{
+  display:inline-block;
+  padding:4px 12px;border-radius:100px;
+  font-size:0.8rem;font-weight:600;
+  background:var(--amber-bg);color:#92400e;border:1px solid var(--amber-border);
+}
+.gauge-ranges{
+  display:flex;justify-content:space-between;
+  margin-top:16px;padding-top:16px;border-top:1px solid #f0eeea;
+  font-size:0.78rem;color:var(--text-light);
+}
+.gauge-range{text-align:center}
+.gauge-range strong{display:block;font-size:0.85rem;color:var(--text)}
+
+.percentile-card{
+  background:var(--surface);
+  border-radius:var(--radius);
+  padding:32px;
+  box-shadow:var(--shadow);
+}
+.percentile-card h4{font-size:1.1rem;margin-bottom:16px}
+.percentile-bar-wrap{
+  background:#f0eeea;border-radius:100px;height:32px;position:relative;
+  overflow:hidden;margin-bottom:12px;
+}
+.percentile-fill{
+  height:100%;border-radius:100px;
+  background:linear-gradient(90deg,var(--green) 0%,var(--amber) 60%,var(--red) 100%);
+  width:0;transition:width 1.5s cubic-bezier(0.16,1,0.3,1);
+}
+.percentile-marker{
+  position:absolute;top:-4px;
+  width:3px;height:40px;background:var(--navy);border-radius:2px;
+  transform:translateX(-50%);
+  transition:left 1.5s cubic-bezier(0.16,1,0.3,1);
+}
+.percentile-label{
+  font-size:0.9rem;color:var(--text-light);
+  display:flex;justify-content:space-between;
+}
+.percentile-label strong{color:var(--navy)}
+.percentile-note{
+  margin-top:16px;padding:12px 16px;
+  background:#faf9f7;border-radius:10px;border-left:3px solid var(--amber);
+  font-size:0.88rem;color:var(--text);
+}
+
+/* CALCIUM BREAKDOWN */
+.bar-chart{display:flex;flex-direction:column;gap:16px}
+.bar-row{display:flex;align-items:center;gap:12px}
+.bar-label{width:100px;font-weight:600;font-size:0.9rem;text-align:right;flex-shrink:0;color:var(--navy);font-family:'Outfit',sans-serif}
+.bar-track{flex:1;height:36px;background:#f0eeea;border-radius:10px;position:relative;overflow:hidden}
+.bar-fill{
+  height:100%;border-radius:10px;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:12px;
+  font-size:0.82rem;font-weight:700;color:#fff;
+  width:0;transition:width 1.2s cubic-bezier(0.16,1,0.3,1);
+  min-width:0;
+}
+.bar-fill.amber{background:linear-gradient(90deg,#fbbf24,var(--amber))}
+.bar-fill.green{background:var(--green)}
+.bar-value-outside{
+  font-size:0.85rem;font-weight:600;color:var(--text-light);
+  width:60px;flex-shrink:0;
+}
+
+/* VESSEL DETAIL CARDS */
+.vessel-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:600px){.vessel-grid{grid-template-columns:1fr}}
+.vessel-card{
+  background:var(--surface);border-radius:var(--radius);
+  padding:24px;box-shadow:var(--shadow);
+  border-top:3px solid transparent;
+  transition:all 0.3s ease;
+}
+.vessel-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.vessel-card.status-clean{border-top-color:var(--green)}
+.vessel-card.status-mild{border-top-color:var(--amber)}
+.vessel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.vessel-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.1rem;color:var(--navy)}
+.vessel-badge{
+  padding:4px 10px;border-radius:100px;font-size:0.75rem;font-weight:700;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.vessel-badge.clean{background:var(--green-bg);color:#15803d;border:1px solid var(--green-border)}
+.vessel-badge.mild{background:var(--amber-bg);color:#92400e;border:1px solid var(--amber-border)}
+.vessel-finding{font-size:0.92rem;color:var(--text);margin-bottom:10px;line-height:1.5}
+.vessel-calcium{
+  font-family:'Outfit',sans-serif;font-size:0.85rem;color:var(--text-light);
+  padding-top:10px;border-top:1px solid #f0eeea;
+}
+.vessel-calcium strong{color:var(--navy);font-size:1.1rem}
+
+/* NON-CORONARY GRID */
+.nc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:600px){.nc-grid{grid-template-columns:repeat(2,1fr)}}
+.nc-card{
+  background:var(--surface);border-radius:14px;
+  padding:20px;box-shadow:var(--shadow);
+  text-align:center;transition:all 0.3s;
+}
+.nc-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.nc-card.warn{border:1.5px solid var(--amber-border);background:var(--amber-bg)}
+.nc-icon{font-size:1.5rem;margin-bottom:8px}
+.nc-title{font-family:'Outfit',sans-serif;font-weight:600;font-size:0.95rem;color:var(--navy);margin-bottom:4px}
+.nc-detail{font-size:0.82rem;color:var(--text-light);line-height:1.4}
+.nc-card.warn .nc-detail{color:#92400e}
+
+/* KEY TAKEAWAYS */
+.takeaway-stack{display:flex;flex-direction:column;gap:20px}
+.takeaway{
+  background:var(--surface);border-radius:var(--radius);
+  padding:24px 28px;box-shadow:var(--shadow);
+  border-left:4px solid var(--navy);
+  transition:all 0.3s;
+}
+.takeaway:hover{box-shadow:var(--shadow-lg);transform:translateX(4px)}
+.takeaway.takeaway-amber{border-left-color:var(--amber)}
+.takeaway.takeaway-green{border-left-color:var(--green)}
+.takeaway.takeaway-red{border-left-color:var(--red)}
+.takeaway h4{font-size:1.05rem;margin-bottom:8px;font-weight:700}
+.takeaway p{font-size:0.92rem;color:var(--text);line-height:1.6}
+
+/* RECOMMENDATIONS */
+.recs-card{
+  background:linear-gradient(135deg,#1e3a5f 0%,#2d5a8a 100%);
+  border-radius:var(--radius);
+  padding:36px;color:#fff;
+  box-shadow:0 8px 30px rgba(30,58,95,0.25);
+}
+.recs-card h3{color:#fff;font-size:1.3rem;margin-bottom:20px}
+.recs-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+.recs-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:0.95rem;line-height:1.5;
+}
+.rec-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:0.85rem;margin-top:2px;
+}
+
+/* FOOTER */
+.page-footer{
+  text-align:center;padding:40px 20px;
+  color:var(--text-light);font-size:0.82rem;
+  border-top:1px solid #e8e6e1;
+}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD OVERLAY -->
+<div id="password-overlay">
+  <div class="pw-card">
+    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+      <rect width="56" height="56" rx="16" fill="#eef2f7"/>
+      <path d="M28 16c-5.5 0-10 4.5-10 10v4h-1c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h22c1.1 0 2-.9 2-2V32c0-1.1-.9-2-2-2h-1v-4c0-5.5-4.5-10-10-10zm6 14H22v-4c0-3.3 2.7-6 6-6s6 2.7 6 6v4zm-6 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z" fill="#1e3a5f"/>
+    </svg>
+    <h2>Protected Report</h2>
+    <p>Enter the access code to view cardiac scan results.</p>
+    <div class="pw-input-wrap">
+      <input type="password" id="pw-input" class="pw-input" placeholder="Access code" maxlength="10" autocomplete="off" inputmode="numeric">
+    </div>
+    <button class="pw-btn" id="pw-btn">View Results</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main-content">
+
+  <!-- SUMMARY HEADER -->
+  <header class="page-header container fade-up">
+    <div class="patient-tag">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Mark Roth &middot; CT Coronary Angiography
+    </div>
+    <h1>Mild Coronary Artery Disease</h1>
+    <p class="subtitle">Non-obstructive &mdash; no significant blockages found. Manageable with medication and lifestyle adjustments.</p>
+    <div class="badge-row">
+      <span class="badge badge-amber">CAD-RADS 2 / P2</span>
+      <span class="badge badge-navy">Calcium Score: 266</span>
+      <span class="badge badge-green">Non-Obstructive</span>
+    </div>
+  </header>
+
+  <!-- INTERACTIVE HEART -->
+  <section class="container">
+    <div class="fade-up">
+      <span class="section-label">Interactive Map</span>
+      <h2 class="section-title">Your Coronary Arteries</h2>
+      <p class="section-desc">Click on any artery to learn more. Green means clear, amber indicates mild calcified plaque.</p>
+    </div>
+    <div class="heart-section fade-up">
+      <div class="heart-wrap">
+        <div class="heart-svg-container">
+          <div class="heart-tooltip" id="heart-tooltip"></div>
+          <svg viewBox="0 0 340 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Heart shape -->
+            <path d="M170 320 C170 320 30 230 30 130 C30 70 75 40 120 40 C145 40 165 55 170 70 C175 55 195 40 220 40 C265 40 310 70 310 130 C310 230 170 320 170 320Z" fill="#fce4ec" stroke="#e8b4b8" stroke-width="1.5"/>
+            <!-- Inner shading -->
+            <path d="M170 300 C170 300 50 220 50 135 C50 85 85 55 120 55 C142 55 160 67 170 82 C180 67 198 55 220 55 C255 55 290 85 290 135 C290 220 170 300 170 300Z" fill="#f8d7da" opacity="0.5"/>
+
+            <!-- LEFT MAIN — short trunk from top center-left -->
+            <path class="artery artery-clean" id="artery-lm"
+              d="M148 95 C140 110 130 125 125 140"
+              data-vessel="lm"/>
+
+            <!-- LAD — runs down the front (septum) -->
+            <path class="artery artery-mild" id="artery-lad"
+              d="M125 140 C128 160 135 180 142 200 C148 220 155 245 162 270 C165 280 168 290 170 300"
+              data-vessel="lad"/>
+            <!-- LAD diagonal branches -->
+            <path class="artery artery-mild" d="M132 170 C118 180 105 185 92 188" style="stroke-width:2.5;opacity:0.6" data-vessel="lad"/>
+            <path class="artery artery-mild" d="M140 200 C125 210 110 218 95 222" style="stroke-width:2.5;opacity:0.6" data-vessel="lad"/>
+            <path class="artery artery-mild" d="M150 230 C137 240 122 248 108 252" style="stroke-width:2.5;opacity:0.6" data-vessel="lad"/>
+
+            <!-- LCx — goes left/posterior -->
+            <path class="artery artery-mild" id="artery-lcx"
+              d="M125 140 C110 148 95 158 82 172 C70 186 62 205 58 225"
+              data-vessel="lcx"/>
+            <!-- OM branch -->
+            <path class="artery artery-mild" d="M82 172 C72 190 65 210 60 228" style="stroke-width:2.5;opacity:0.6" data-vessel="lcx"/>
+
+            <!-- RCA — goes right and down -->
+            <path class="artery artery-clean" id="artery-rca"
+              d="M215 90 C235 105 255 125 268 150 C280 175 285 200 282 230 C278 255 265 275 245 290"
+              data-vessel="rca"/>
+            <!-- PDA branch -->
+            <path class="artery artery-clean" d="M282 230 C270 248 255 262 238 272" style="stroke-width:2.5;opacity:0.6" data-vessel="rca"/>
+            <!-- PLV branch -->
+            <path class="artery artery-clean" d="M278 245 C268 260 255 270 240 280" style="stroke-width:2.5;opacity:0.6" data-vessel="rca"/>
+
+            <!-- Labels on the heart -->
+            <text x="108" y="92" font-family="Outfit" font-size="11" font-weight="700" fill="#1e3a5f" opacity="0.8">LM</text>
+            <text x="148" y="195" font-family="Outfit" font-size="11" font-weight="700" fill="#92400e" opacity="0.8">LAD</text>
+            <text x="48" y="170" font-family="Outfit" font-size="11" font-weight="700" fill="#92400e" opacity="0.8">LCx</text>
+            <text x="275" y="150" font-family="Outfit" font-size="11" font-weight="700" fill="#15803d" opacity="0.8">RCA</text>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <ul class="artery-legend">
+          <li data-target="vessel-lm">
+            <span class="legend-dot clean"></span>
+            <div><span class="legend-name">Left Main</span><br><span class="legend-status">No plaque &middot; Calcium: 0</span></div>
+          </li>
+          <li data-target="vessel-lad">
+            <span class="legend-dot mild"></span>
+            <div><span class="legend-name">LAD (Left Anterior Descending)</span><br><span class="legend-status">Mild calcified plaque &middot; Calcium: 231</span></div>
+          </li>
+          <li data-target="vessel-lcx">
+            <span class="legend-dot mild"></span>
+            <div><span class="legend-name">LCx (Left Circumflex)</span><br><span class="legend-status">Mild calcified plaque &middot; Calcium: 35</span></div>
+          </li>
+          <li data-target="vessel-rca">
+            <span class="legend-dot clean"></span>
+            <div><span class="legend-name">RCA (Right Coronary Artery)</span><br><span class="legend-status">No plaque &middot; Calcium: 0</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCIUM SCORE -->
+  <section class="container" style="border-top:1px solid #e8e6e1">
+    <div class="fade-up">
+      <span class="section-label">Calcium Assessment</span>
+      <h2 class="section-title">Agatston Calcium Score</h2>
+      <p class="section-desc">A measure of calcified plaque in the coronary arteries. Higher numbers indicate more calcium buildup.</p>
+    </div>
+    <div class="gauge-grid fade-up">
+      <div class="gauge-card">
+        <div class="gauge-svg-wrap">
+          <svg viewBox="0 0 220 130" width="220" height="130">
+            <!-- Background arc -->
+            <path d="M20 120 A90 90 0 0 1 200 120" fill="none" stroke="#f0eeea" stroke-width="18" stroke-linecap="round"/>
+            <!-- Colored arc segments -->
+            <path d="M20 120 A90 90 0 0 1 56 52" fill="none" stroke="#22c55e" stroke-width="18" stroke-linecap="round" opacity="0.8"/>
+            <path d="M56 52 A90 90 0 0 1 110 30" fill="none" stroke="#84cc16" stroke-width="18" opacity="0.8"/>
+            <path d="M110 30 A90 90 0 0 1 164 52" fill="none" stroke="#f59e0b" stroke-width="18" opacity="0.8"/>
+            <path d="M164 52 A90 90 0 0 1 200 120" fill="none" stroke="#ef4444" stroke-width="18" stroke-linecap="round" opacity="0.8"/>
+            <!-- Needle — positioned for 266/800 scale (~60% of arc) -->
+            <line id="gauge-needle" x1="110" y1="120" x2="110" y2="38" stroke="#1e3a5f" stroke-width="3" stroke-linecap="round" transform="rotate(-30, 110, 120)" style="transition:transform 1.5s cubic-bezier(0.16,1,0.3,1)"/>
+            <circle cx="110" cy="120" r="6" fill="#1e3a5f"/>
+          </svg>
+          <div class="gauge-value">266</div>
+        </div>
+        <div class="gauge-label">Total Agatston Score</div>
+        <div class="gauge-sublabel">Moderate</div>
+        <div class="gauge-ranges">
+          <div class="gauge-range"><strong>0</strong>None</div>
+          <div class="gauge-range"><strong>1-100</strong>Mild</div>
+          <div class="gauge-range"><strong>101-400</strong>Moderate</div>
+          <div class="gauge-range"><strong>400+</strong>Severe</div>
+        </div>
+      </div>
+      <div class="percentile-card">
+        <h4>Age &amp; Sex Percentile</h4>
+        <p style="font-size:0.9rem;color:var(--text-light);margin-bottom:20px">For a 63-year-old male, a score of 266 places Mark roughly in the <strong style="color:var(--navy)">60th&ndash;75th percentile</strong>. Elevated, but not extreme for his age group.</p>
+        <div class="percentile-bar-wrap">
+          <div class="percentile-fill" id="percentile-fill"></div>
+          <div class="percentile-marker" id="percentile-marker" style="left:0%"></div>
+        </div>
+        <div class="percentile-label">
+          <span>0th</span>
+          <strong>~67th percentile</strong>
+          <span>100th</span>
+        </div>
+        <div class="percentile-note">
+          If Mark were 45, this score would be alarming. At 63, it reads as "moderate, needs active management" &mdash; not a crisis.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCIUM BREAKDOWN -->
+  <section class="container" style="border-top:1px solid #e8e6e1">
+    <div class="fade-up">
+      <span class="section-label">Breakdown</span>
+      <h2 class="section-title">Calcium by Vessel</h2>
+      <p class="section-desc">The LAD carries 87% of all calcium. The Left Main and RCA are completely clear.</p>
+    </div>
+    <div class="bar-chart fade-up" id="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">LAD</div>
+        <div class="bar-track"><div class="bar-fill amber" data-width="87" id="bar-lad"><span>231</span></div></div>
+        <div class="bar-value-outside">87%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">LCx</div>
+        <div class="bar-track"><div class="bar-fill amber" data-width="13" id="bar-lcx"><span>35</span></div></div>
+        <div class="bar-value-outside">13%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Left Main</div>
+        <div class="bar-track"><div class="bar-fill green" data-width="0" id="bar-lm"></div></div>
+        <div class="bar-value-outside">0</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">RCA</div>
+        <div class="bar-track"><div class="bar-fill green" data-width="0" id="bar-rca"></div></div>
+        <div class="bar-value-outside">0</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VESSEL DETAIL CARDS -->
+  <section class="container" id="vessels-section" style="border-top:1px solid #e8e6e1">
+    <div class="fade-up">
+      <span class="section-label">Vessel Details</span>
+      <h2 class="section-title">Artery-by-Artery Findings</h2>
+      <p class="section-desc">Detailed findings from the CT angiography for each coronary artery.</p>
+    </div>
+    <div class="vessel-grid fade-up">
+      <div class="vessel-card status-clean" id="vessel-lm">
+        <div class="vessel-header">
+          <span class="vessel-name">Left Main</span>
+          <span class="vessel-badge clean">Clean</span>
+        </div>
+        <p class="vessel-finding">No plaque or stenosis. Trifurcates normally into the LAD, LCx, and Ramus Intermedius.</p>
+        <div class="vessel-calcium">Calcium Score: <strong>0</strong></div>
+      </div>
+      <div class="vessel-card status-mild" id="vessel-lad">
+        <div class="vessel-header">
+          <span class="vessel-name">LAD</span>
+          <span class="vessel-badge mild">Mild Stenosis</span>
+        </div>
+        <p class="vessel-finding">Medium amount of calcified plaque with mild stenosis (25&ndash;49%). Wraps around the apex with 3 diagonal branches. This is the "widow-maker" artery &mdash; but the plaque here is calcified (stable), not soft.</p>
+        <div class="vessel-calcium">Calcium Score: <strong>231</strong> <span style="color:var(--text-light)">(87% of total)</span></div>
+      </div>
+      <div class="vessel-card status-mild" id="vessel-lcx">
+        <div class="vessel-header">
+          <span class="vessel-name">LCx (Left Circumflex)</span>
+          <span class="vessel-badge mild">Mild Stenosis</span>
+        </div>
+        <p class="vessel-finding">Small amount of mostly calcified plaque with mild stenosis. Medium-caliber vessel with 1 obtuse marginal (OM) branch.</p>
+        <div class="vessel-calcium">Calcium Score: <strong>35</strong> <span style="color:var(--text-light)">(13% of total)</span></div>
+      </div>
+      <div class="vessel-card status-clean" id="vessel-rca">
+        <div class="vessel-header">
+          <span class="vessel-name">RCA (Right Coronary)</span>
+          <span class="vessel-badge clean">Clean</span>
+        </div>
+        <p class="vessel-finding">No plaque or stenosis. Dominant vessel supplying the posterior descending artery (PDA) and posterolateral ventricular branch (PLV).</p>
+        <div class="vessel-calcium">Calcium Score: <strong>0</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NON-CORONARY FINDINGS -->
+  <section class="container" style="border-top:1px solid #e8e6e1">
+    <div class="fade-up">
+      <span class="section-label">Beyond the Arteries</span>
+      <h2 class="section-title">Non-Coronary Findings</h2>
+      <p class="section-desc">The CT scan also evaluates the heart chambers, valves, and surrounding structures.</p>
+    </div>
+    <div class="nc-grid fade-up">
+      <div class="nc-card">
+        <div class="nc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="nc-title">Chambers</div>
+        <div class="nc-detail">All normal size. Normal LV systolic function, no thrombus.</div>
+      </div>
+      <div class="nc-card">
+        <div class="nc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="nc-title">Myocardium</div>
+        <div class="nc-detail">Normal left ventricular wall thickness throughout.</div>
+      </div>
+      <div class="nc-card">
+        <div class="nc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="nc-title">Valves</div>
+        <div class="nc-detail">Normal trileaflet aortic valve and normal mitral valve.</div>
+      </div>
+      <div class="nc-card">
+        <div class="nc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="nc-title">Pericardium</div>
+        <div class="nc-detail">No effusion, calcification, or thickening.</div>
+      </div>
+      <div class="nc-card warn">
+        <div class="nc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="nc-title">Aortic Root</div>
+        <div class="nc-detail"><strong>4.1 cm</strong> &mdash; borderline dilated (normal: 2.0&ndash;3.7 cm). Needs follow-up imaging.</div>
+      </div>
+      <div class="nc-card">
+        <div class="nc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="nc-title">Pulmonary</div>
+        <div class="nc-detail">Normal pulmonary arteries. No embolism detected.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY TAKEAWAYS -->
+  <section class="container" style="border-top:1px solid #e8e6e1">
+    <div class="fade-up">
+      <span class="section-label">What It All Means</span>
+      <h2 class="section-title">Key Takeaways</h2>
+      <p class="section-desc">Here's what the numbers actually mean in plain English.</p>
+    </div>
+    <div class="takeaway-stack fade-up">
+      <div class="takeaway takeaway-green">
+        <h4>Calcified Plaque Is the "Better" Kind</h4>
+        <p>There are two main types of arterial plaque: <strong>soft (vulnerable)</strong> and <strong>calcified (stable)</strong>. Soft plaque is more dangerous because it can rupture and cause a heart attack. Mark's plaque is primarily calcified &mdash; it's hardened, stable, and significantly less likely to rupture. Think of it as a scar that's healed over versus an open wound.</p>
+      </div>
+      <div class="takeaway takeaway-amber">
+        <h4>CAD-RADS 2 &mdash; Mild, Non-Obstructive Disease</h4>
+        <p>CAD-RADS is a standardized scoring system from 0 (no disease) to 5 (total occlusion). A score of <strong>2</strong> means there's visible plaque narrowing the arteries by 25&ndash;49%, but nothing is close to blocking blood flow. This is the medical equivalent of "we can see something, and we should manage it, but it's not causing problems right now."</p>
+      </div>
+      <div class="takeaway takeaway-amber">
+        <h4>The LAD &amp; the "Widow-Maker" Label</h4>
+        <p>The LAD artery is sometimes called the "widow-maker" because a sudden blockage there can be fatal &mdash; it supplies blood to the largest area of the heart. Mark has 87% of his calcium in the LAD, which sounds alarming, but context matters: the plaque is <strong>calcified (stable)</strong>, the stenosis is <strong>mild (25&ndash;49%)</strong>, and there is <strong>no obstruction</strong>. This needs monitoring and management, not panic.</p>
+      </div>
+      <div class="takeaway">
+        <h4>What the Calcium Score Means at Age 63</h4>
+        <p>A calcium score of 266 at age 63 falls around the <strong>60th&ndash;75th percentile</strong> for men his age. That means roughly 25&ndash;40% of men his age have a higher score. It's elevated and warrants active management (statins, lifestyle optimization), but it's well within the range of "treatable and manageable." If this score were in a 45-year-old, it would be much more concerning.</p>
+      </div>
+      <div class="takeaway takeaway-red">
+        <h4>Dilated Aortic Root: 4.1 cm</h4>
+        <p>The aortic root (where the aorta connects to the heart) measures <strong>4.1 cm</strong>, which is above the normal range of 2.0&ndash;3.7 cm. This is <strong>borderline dilated</strong> &mdash; not an emergency, but it should be monitored with periodic imaging (typically an echocardiogram every 1&ndash;2 years). If it were above 5.0 cm, intervention would be considered. At 4.1 cm, the priority is tracking whether it's stable or slowly growing.</p>
+      </div>
+      <div class="takeaway takeaway-green">
+        <h4>Two Major Arteries Are Completely Clear</h4>
+        <p>The <strong>Right Coronary Artery (RCA)</strong> and the <strong>Left Main</strong> show zero plaque and zero calcium. The RCA is the dominant vessel supplying the back of the heart, and the Left Main is the trunk that feeds the entire left side. Having these clean is genuinely good news &mdash; the disease is localized, not widespread.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDATIONS -->
+  <section class="container" style="padding-bottom:48px">
+    <div class="fade-up">
+      <div class="recs-card">
+        <h3>Recommended Next Steps</h3>
+        <ul class="recs-list">
+          <li>
+            <div class="rec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4l3 3"/></svg></div>
+            <span><strong>Statin therapy</strong> &mdash; discuss with your cardiologist. Statins can slow plaque progression and stabilize existing calcified plaque.</span>
+          </li>
+          <li>
+            <div class="rec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+            <span><strong>Risk factor management</strong> &mdash; blood pressure control, cholesterol optimization, regular exercise, and a heart-healthy diet (Mediterranean-style).</span>
+          </li>
+          <li>
+            <div class="rec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+            <span><strong>Follow-up imaging for aortic root</strong> &mdash; echocardiogram in 12 months to monitor the 4.1 cm measurement and confirm stability.</span>
+          </li>
+          <li>
+            <div class="rec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+            <span><strong>Consider non-atherosclerotic causes</strong> if symptoms persist &mdash; the mild stenosis found may not explain chest symptoms, and other causes should be evaluated.</span>
+          </li>
+          <li>
+            <div class="rec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+            <span><strong>Lifestyle optimization</strong> &mdash; regular cardio exercise, stress management, smoking cessation (if applicable), and maintaining a healthy weight all reduce cardiac risk.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <p>This visualization is based on the CT Coronary Angiography report for educational purposes.<br>Always consult with your physician for medical decisions.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const PASSWORD = '2981939';
+  const overlay = document.getElementById('password-overlay');
+  const mainContent = document.getElementById('main-content');
+  const pwInput = document.getElementById('pw-input');
+  const pwBtn = document.getElementById('pw-btn');
+  const pwError = document.getElementById('pw-error');
+
+  // Check session
+  if(sessionStorage.getItem('heart-scan-auth') === 'true'){
+    overlay.classList.add('hidden');
+    mainContent.classList.add('visible');
+    mainContent.style.display = 'block';
+    mainContent.style.opacity = '1';
+    initPage();
+  }
+
+  function tryAuth(){
+    if(pwInput.value === PASSWORD){
+      sessionStorage.setItem('heart-scan-auth','true');
+      overlay.classList.add('hidden');
+      mainContent.style.display = 'block';
+      requestAnimationFrame(()=>{
+        requestAnimationFrame(()=>{mainContent.classList.add('visible')});
+      });
+      initPage();
+    } else {
+      pwInput.classList.add('error');
+      pwError.textContent = 'Incorrect code. Please try again.';
+      setTimeout(()=>pwInput.classList.remove('error'),400);
+    }
+  }
+
+  pwBtn.addEventListener('click', tryAuth);
+  pwInput.addEventListener('keydown', e=>{ if(e.key==='Enter') tryAuth(); });
+  pwInput.focus();
+
+  // VESSEL DATA
+  const vesselData = {
+    lm: { name:'Left Main', status:'Clean', findings:'No plaque or stenosis. Trifurcates into LAD, LCx, and Ramus Intermedius.', calcium:0 },
+    lad: { name:'LAD', status:'Mild Stenosis', findings:'Calcified plaque, mild stenosis (25–49%). 87% of total calcium. 3 diagonal branches.', calcium:231 },
+    lcx: { name:'LCx', status:'Mild Stenosis', findings:'Mostly calcified plaque, mild stenosis. 1 obtuse marginal branch.', calcium:35 },
+    rca: { name:'RCA', status:'Clean', findings:'No plaque or stenosis. Dominant vessel, supplies PDA and PLV.', calcium:0 }
+  };
+
+  // Heart tooltip
+  const tooltip = document.getElementById('heart-tooltip');
+  const arteries = document.querySelectorAll('.artery');
+  const svgContainer = document.querySelector('.heart-svg-container');
+
+  arteries.forEach(a => {
+    const vessel = a.dataset.vessel;
+    if(!vessel) return;
+
+    a.addEventListener('mouseenter', e => {
+      const d = vesselData[vessel];
+      tooltip.innerHTML = `<strong>${d.name}</strong><br>${d.findings}<br>Calcium: ${d.calcium}`;
+      tooltip.classList.add('show');
+      positionTooltip(e);
+    });
+    a.addEventListener('mousemove', positionTooltip);
+    a.addEventListener('mouseleave', ()=> tooltip.classList.remove('show'));
+    a.addEventListener('click', ()=>{
+      const target = document.getElementById('vessel-' + vessel);
+      if(target) target.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+  });
+
+  function positionTooltip(e){
+    const rect = svgContainer.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top - 80;
+    if(y < 10) y = e.clientY - rect.top + 20;
+    tooltip.style.left = Math.max(10, Math.min(x - 100, rect.width - 230)) + 'px';
+    tooltip.style.top = y + 'px';
+  }
+
+  // Legend click → scroll to vessel
+  document.querySelectorAll('.artery-legend li').forEach(li => {
+    li.addEventListener('click', ()=>{
+      const t = li.dataset.target;
+      const el = document.getElementById(t);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+  });
+
+  function initPage(){
+    // Scroll animations
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    },{threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+    fadeEls.forEach(el=>obs.observe(el));
+
+    // Animate bars
+    setTimeout(()=>{
+      document.querySelectorAll('.bar-fill').forEach(bar=>{
+        const w = bar.dataset.width;
+        bar.style.width = w > 0 ? Math.max(w, 8) + '%' : '0%';
+      });
+    }, 600);
+
+    // Animate percentile
+    setTimeout(()=>{
+      const fill = document.getElementById('percentile-fill');
+      const marker = document.getElementById('percentile-marker');
+      if(fill) fill.style.width = '67%';
+      if(marker) marker.style.left = '67%';
+    }, 800);
+
+    // Animate gauge needle
+    setTimeout(()=>{
+      const needle = document.getElementById('gauge-needle');
+      if(needle) needle.style.transform = 'rotate(18, 110, 120)';
+    }, 500);
+  }
+})();
+</script>
+</body>
+</html>

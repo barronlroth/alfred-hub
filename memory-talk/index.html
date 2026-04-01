@@ -904,12 +904,130 @@ h3 {
 .scene.purple-theme {
   background: linear-gradient(180deg, #12081f 0%, #1a1a2e 100%);
 }
+
+/* ===== DIRECTIONAL SLIDE TRANSITIONS ===== */
+.scene {
+  transition: none;
+}
+.scene.slide-exit-left {
+  animation: slideExitLeft 300ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+.scene.slide-exit-right {
+  animation: slideExitRight 300ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+.scene.slide-enter-left {
+  animation: slideEnterLeft 300ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+.scene.slide-enter-right {
+  animation: slideEnterRight 300ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes slideExitLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-120px); }
+}
+@keyframes slideExitRight {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(120px); }
+}
+@keyframes slideEnterLeft {
+  from { opacity: 0; transform: translateX(-120px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideEnterRight {
+  from { opacity: 0; transform: translateX(120px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+/* Level-up black flash */
+.scene.level-up-flash {
+  animation: levelUpFlash 450ms ease forwards;
+}
+@keyframes levelUpFlash {
+  0% { opacity: 0; }
+  33% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* ===== SCREEN SHAKE + RED FLASH ===== */
+@keyframes shake {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-6px, 3px); }
+  20% { transform: translate(5px, -4px); }
+  30% { transform: translate(-4px, -2px); }
+  40% { transform: translate(6px, 4px); }
+  50% { transform: translate(-3px, -5px); }
+  60% { transform: translate(4px, 2px); }
+  70% { transform: translate(-5px, 3px); }
+  80% { transform: translate(3px, -3px); }
+  90% { transform: translate(-2px, 4px); }
+  100% { transform: translate(0, 0); }
+}
+.shake-active .beat-content {
+  animation: shake 400ms ease;
+}
+.shake-short .beat-content {
+  animation: shake 300ms ease;
+}
+/* Red flash overlay */
+.scene.red-flash::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,50,50,0.35) 0%, rgba(255,0,0,0.15) 60%, transparent 100%);
+  z-index: 100;
+  pointer-events: none;
+  animation: redFlash 300ms ease forwards;
+}
+@keyframes redFlash {
+  0% { opacity: 0; }
+  40% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ===== STAGGERED ENTRANCES ===== */
+.stagger-in {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: staggerFadeIn 400ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes staggerFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== DAG BUILD-UP ===== */
+.dag-build-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+.dag-build-item.dag-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.dag-build-item.dag-glow {
+  opacity: 1;
+  transform: translateY(0);
+  filter: drop-shadow(0 0 12px rgba(0,255,136,0.6));
+}
+
+/* ===== TYPEWRITER ===== */
+.typewriter-cursor {
+  display: inline-block;
+  width: 14px;
+  height: 1.1em;
+  background: currentColor;
+  margin-left: 4px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+.typewriter-hidden { visibility: hidden; }
+.typewriter-container { display: inline; }
 </style>
 </head>
 <body>
 
 <div id="progress-bar" style="width: 0%"></div>
-<div id="slide-counter">1 / 38</div>
+<div id="slide-counter">1 / 28</div>
 <div class="fullscreen-hint">F = fullscreen</div>
 <style>
   .owl-sprite {
@@ -938,30 +1056,24 @@ h3 {
   }
 </style>
 
-<!-- ==================== BEAT 1: PRESS START ==================== -->
+<!-- ==================== BEAT 1: PRESS START + TITLE ==================== -->
 <div class="scene" id="scene-0">
-  <div class="beat-content" style="text-align: center;">
-    <div class="flicker" style="font-family: 'Press Start 2P'; font-size: 32px; color: var(--gold);">
-      PRESS START
-    </div>
-    <img src="/memory-talk/sprites/owl-hero.jpg" class="owl-sprite owl-large" alt="Alfred the owl">
-    <div style="margin-top: 16px; font-family: 'Press Start 2P'; font-size: 11px; color: var(--dim);">
-      → or SPACE to advance
-    </div>
-  </div>
-</div>
-
-<!-- ==================== BEAT 2: TITLE SCREEN ==================== -->
-<div class="scene" id="scene-1">
   <div class="beat-content" style="text-align: center;">
     <h1 class="cascade">OPENCLAW MEMORY:</h1>
     <h1 class="cascade cascade-d1" style="margin-top: 16px;">LEVELS UNLOCKED</h1>
     <div class="subtitle cascade cascade-d2">Barron Roth&ensp;·&ensp;2026</div>
+    <img src="/memory-talk/sprites/owl-hero.jpg" class="owl-sprite owl-large" alt="Alfred the owl">
+    <div class="flicker" style="font-family: 'Press Start 2P'; font-size: 24px; color: var(--gold); margin-top: 16px;">
+      PRESS START
+    </div>
+    <div style="margin-top: 12px; font-family: 'Press Start 2P'; font-size: 11px; color: var(--dim);">
+      &rarr; or SPACE to advance
+    </div>
   </div>
 </div>
 
 <!-- ==================== THE HOOK: CUBBY ANECDOTE ==================== -->
-<div class="scene" id="scene-2">
+<div class="scene" id="scene-1">
   <div class="beat-content">
     <img src="/memory-talk/sprites/owl-alarmed.jpg" class="owl-sprite owl-small" alt="Alarmed owl">
     <h2>MY STORY</h2>
@@ -976,7 +1088,7 @@ h3 {
 </div>
 
 <!-- ==================== THE HOOK: CONTEXT LOST ==================== -->
-<div class="scene" id="scene-3">
+<div class="scene" id="scene-2">
   <div class="beat-content" style="text-align: center;">
     <img src="/memory-talk/sprites/owl-defeated.jpg" class="owl-sprite owl-small" alt="Defeated owl">
     <div style="font-size: 28px; color: #aaa; margin-bottom: 32px;">
@@ -992,144 +1104,8 @@ h3 {
   </div>
 </div>
 
-<!-- ==================== THE HOOK: KEY TAKEAWAY ==================== -->
-<div class="scene" id="scene-4">
-  <div class="beat-content" style="text-align: center;">
-    <div class="dialogue-box gold-box" style="max-width: 900px;">
-      <div class="key-text">
-        "If it's not written to a file,<br>it doesn't exist."
-      </div>
-    </div>
-    <div style="margin-top: 32px; color: #aaa; font-size: 22px;">
-      That magic I felt when I first set up OpenClaw — <span class="text-red">zapped away.</span><br>
-      It's not magic. It still has limitations. <span class="text-gold">Memory might be the biggest one.</span>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== BEAT 7: HOW MEMORY WORKS HEADER ==================== -->
-<div class="scene" id="scene-5">
-  <div class="beat-content" style="text-align: center;">
-    <div class="level-header" style="font-size: 36px;">HOW MEMORY</div>
-    <div class="level-header" style="font-size: 36px; margin-top: 12px;">ACTUALLY WORKS</div>
-    <div style="margin-top: 28px; font-size: 26px; color: #aaa;">
-      "Most people think memory is one thing.<br>It's actually four different systems."
-    </div>
-  </div>
-</div>
-
-<!-- ==================== BEAT 8: LAYER 1 — BOOTSTRAP FILES ==================== -->
-<div class="scene" id="scene-6">
-  <div class="beat-content">
-    <h2>LAYER 1: BOOTSTRAP FILES</h2>
-    <div style="font-size: 20px; color: var(--green); margin-bottom: 20px; font-family: 'Press Start 2P'; font-size: 11px;">✅ LOADED FROM DISK EVERY TURN — SURVIVE COMPACTION</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 1100px;">
-      <div style="background: var(--surface); border: 2px solid var(--gold); border-radius: 8px; padding: 16px;">
-        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--gold); margin-bottom: 8px;">📕 MEMORY.md</div>
-        <div style="font-size: 22px; color: #ccc;">Curated long-term memory. Decisions, project status, vendor contacts, lessons learned. Main session only.</div>
-      </div>
-      <div style="background: var(--surface); border: 2px solid var(--teal); border-radius: 8px; padding: 16px;">
-        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--teal); margin-bottom: 8px;">📜 AGENTS.md</div>
-        <div style="font-size: 22px; color: #ccc;">Operating instructions. "Search memory before acting." Rules, workflows, safety constraints.</div>
-      </div>
-      <div style="background: var(--surface); border: 2px solid var(--purple); border-radius: 8px; padding: 16px;">
-        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--purple); margin-bottom: 8px;">📅 memory/YYYY-MM-DD.md</div>
-        <div style="font-size: 22px; color: #ccc;">Daily logs. Append-only. Today + yesterday loaded at session start. Raw context, not curated.</div>
-      </div>
-      <div style="background: var(--surface); border: 2px solid var(--green); border-radius: 8px; padding: 16px;">
-        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--green); margin-bottom: 8px;">🔧 SOUL / USER / TOOLS.md</div>
-        <div style="font-size: 22px; color: #ccc;">Personality, human profile, tool configs. Stable reference files. Also loaded every turn.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== BEAT 9: LAYER 2 — SESSION TRANSCRIPT ==================== -->
-<div class="scene" id="scene-7">
-  <div class="beat-content">
-    <h2>THE 4 LAYERS</h2>
-    <div class="layer-stack">
-      <div class="layer-item visible">
-        <div class="layer-icon">✅</div>
-        <div>
-          <div class="layer-label">LAYER 1: BOOTSTRAP FILES</div>
-          <div class="layer-desc">SOUL.md, AGENTS.md, MEMORY.md — loaded from disk every turn</div>
-        </div>
-      </div>
-      <div class="layer-item visible">
-        <div class="layer-icon" style="color: var(--red);">❌</div>
-        <div>
-          <div class="layer-label" style="color: var(--red);">LAYER 2: SESSION TRANSCRIPT</div>
-          <div class="layer-desc">Compaction summarizes it. <span class="text-red">Detail evaporates.</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== BEAT 10: LAYERS 3-4 ==================== -->
-<div class="scene" id="scene-8">
-  <div class="beat-content">
-    <h2>THE 4 LAYERS</h2>
-    <div class="layer-stack">
-      <div class="layer-item visible">
-        <div class="layer-icon">✅</div>
-        <div>
-          <div class="layer-label">LAYER 1: BOOTSTRAP FILES</div>
-          <div class="layer-desc">SOUL.md, AGENTS.md, MEMORY.md — loaded from disk every turn</div>
-        </div>
-      </div>
-      <div class="layer-item visible">
-        <div class="layer-icon" style="color: var(--red);">❌</div>
-        <div>
-          <div class="layer-label" style="color: var(--red);">LAYER 2: SESSION TRANSCRIPT</div>
-          <div class="layer-desc">Compaction summarizes it. Detail evaporates.</div>
-        </div>
-      </div>
-      <div class="layer-item visible">
-        <div class="layer-icon" style="color: var(--gold);">⚠️</div>
-        <div>
-          <div class="layer-label" style="color: var(--gold);">LAYER 3: PRE-COMPACTION FLUSH</div>
-          <div class="layer-desc">Safety net — but most people never check if it's working</div>
-        </div>
-      </div>
-      <div class="layer-item visible">
-        <div class="layer-icon" style="color: var(--gold);">⚠️</div>
-        <div>
-          <div class="layer-label" style="color: var(--gold);">LAYER 4: RETRIEVAL INDEX</div>
-          <div class="layer-desc">Stock: auto-selects OpenAI → Gemini → Voyage → local embeddings. <span class="text-red">No API key = no search.</span> Only indexes MEMORY.md by default.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== BEAT 11: NUCLEAR COMPACTION DEMO ==================== -->
-<div class="scene" id="scene-9">
-  <div class="beat-content" style="text-align: center;">
-    <img src="/memory-talk/sprites/owl-cowering.jpg" class="owl-sprite owl-small" alt="Cowering owl">
-    <h2>NUCLEAR COMPACTION</h2>
-    <div class="compaction-demo" id="compaction-demo">
-      <div class="msg-stack">
-        <div class="msg-block visible" style="background: #4ecdc4; width: 280px; animation-delay: 0s;"></div>
-        <div class="msg-block visible" style="background: #ffd700; width: 240px; animation-delay: 0.15s;"></div>
-        <div class="msg-block visible" style="background: #00ff88; width: 300px; animation-delay: 0.3s;"></div>
-        <div class="msg-block visible" style="background: #ff6b6b; width: 220px; animation-delay: 0.45s;"></div>
-        <div class="msg-block visible" style="background: #a855f7; width: 260px; animation-delay: 0.6s;"></div>
-        <div class="msg-block visible" style="background: #4ecdc4; width: 200px; animation-delay: 0.75s;"></div>
-      </div>
-      <div class="bomb-icon visible" style="animation-delay: 1.2s;">💣</div>
-      <div style="font-size: 28px; color: var(--dim);">▼</div>
-      <div class="compressed-block visible" style="animation-delay: 1.8s;"></div>
-      <div style="margin-top: 16px; font-family: 'Press Start 2P'; font-size: 14px; color: var(--red); opacity: 0; animation: fadeIn 0.3s ease 2.2s forwards;">
-        ONE-WAY DOOR. DETAIL GONE FOREVER.
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ==================== QUICK-HIT ANECDOTES ==================== -->
-<div class="scene" id="scene-10">
+<div class="scene" id="scene-3">
   <div class="beat-content">
     <div class="anecdote-list">
       <div class="anecdote-item">
@@ -1156,8 +1132,121 @@ h3 {
   </div>
 </div>
 
+<!-- ==================== BEAT 7: HOW MEMORY WORKS HEADER ==================== -->
+<div class="scene" id="scene-4">
+  <div class="beat-content" style="text-align: center;">
+    <div class="level-header" style="font-size: 36px;">HOW MEMORY</div>
+    <div class="level-header" style="font-size: 36px; margin-top: 12px;">ACTUALLY WORKS</div>
+    <div style="margin-top: 28px; font-size: 26px; color: #aaa;">
+      "Most people think memory is one thing.<br>It's actually four different systems."
+    </div>
+  </div>
+</div>
+
+<!-- ==================== BEAT 8: LAYER 1 — BOOTSTRAP FILES ==================== -->
+<div class="scene" id="scene-5">
+  <div class="beat-content">
+    <h2>LAYER 1: BOOTSTRAP FILES</h2>
+    <div style="font-size: 20px; color: var(--green); margin-bottom: 20px; font-family: 'Press Start 2P'; font-size: 11px;">✅ LOADED FROM DISK EVERY TURN — SURVIVE COMPACTION</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 1100px;">
+      <div style="background: var(--surface); border: 2px solid var(--gold); border-radius: 8px; padding: 16px;">
+        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--gold); margin-bottom: 8px;">📕 MEMORY.md</div>
+        <div style="font-size: 22px; color: #ccc;">Curated long-term memory. Decisions, project status, vendor contacts, lessons learned. Main session only.</div>
+      </div>
+      <div style="background: var(--surface); border: 2px solid var(--teal); border-radius: 8px; padding: 16px;">
+        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--teal); margin-bottom: 8px;">📜 AGENTS.md</div>
+        <div style="font-size: 22px; color: #ccc;">Operating instructions. "Search memory before acting." Rules, workflows, safety constraints.</div>
+      </div>
+      <div style="background: var(--surface); border: 2px solid var(--purple); border-radius: 8px; padding: 16px;">
+        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--purple); margin-bottom: 8px;">📅 memory/YYYY-MM-DD.md</div>
+        <div style="font-size: 22px; color: #ccc;">Daily logs. Append-only. Today + yesterday loaded at session start. Raw context, not curated.</div>
+      </div>
+      <div style="background: var(--surface); border: 2px solid var(--green); border-radius: 8px; padding: 16px;">
+        <div style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--green); margin-bottom: 8px;">🔧 SOUL / USER / TOOLS.md</div>
+        <div style="font-size: 22px; color: #ccc;">Personality, human profile, tool configs. Stable reference files. Also loaded every turn.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== BEAT 10: LAYERS 3-4 ==================== -->
+<div class="scene" id="scene-6">
+  <div class="beat-content">
+    <h2>THE 4 LAYERS</h2>
+    <div class="layer-stack">
+      <div class="layer-item">
+        <div class="layer-icon">✅</div>
+        <div>
+          <div class="layer-label">LAYER 1: BOOTSTRAP FILES</div>
+          <div class="layer-desc">SOUL.md, AGENTS.md, MEMORY.md — loaded from disk every turn</div>
+        </div>
+      </div>
+      <div class="layer-item">
+        <div class="layer-icon" style="color: var(--red);">❌</div>
+        <div>
+          <div class="layer-label" style="color: var(--red);">LAYER 2: SESSION TRANSCRIPT</div>
+          <div class="layer-desc">Compaction summarizes it. Detail evaporates.</div>
+        </div>
+      </div>
+      <div class="layer-item">
+        <div class="layer-icon" style="color: var(--gold);">⚠️</div>
+        <div>
+          <div class="layer-label" style="color: var(--gold);">LAYER 3: PRE-COMPACTION FLUSH</div>
+          <div class="layer-desc">Safety net — but most people never check if it's working</div>
+        </div>
+      </div>
+      <div class="layer-item">
+        <div class="layer-icon" style="color: var(--gold);">⚠️</div>
+        <div>
+          <div class="layer-label" style="color: var(--gold);">LAYER 4: RETRIEVAL INDEX</div>
+          <div class="layer-desc">Stock: auto-selects OpenAI → Gemini → Voyage → local embeddings. <span class="text-red">No API key = no search.</span> Only indexes MEMORY.md by default.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== BEAT 11: NUCLEAR COMPACTION DEMO ==================== -->
+<div class="scene" id="scene-7">
+  <div class="beat-content" style="text-align: center;">
+    <img src="/memory-talk/sprites/owl-cowering.jpg" class="owl-sprite owl-small" alt="Cowering owl">
+    <h2>NUCLEAR COMPACTION</h2>
+    <div class="compaction-demo" id="compaction-demo">
+      <div class="msg-stack">
+        <div class="msg-block visible" style="background: #4ecdc4; width: 280px; animation-delay: 0s;"></div>
+        <div class="msg-block visible" style="background: #ffd700; width: 240px; animation-delay: 0.15s;"></div>
+        <div class="msg-block visible" style="background: #00ff88; width: 300px; animation-delay: 0.3s;"></div>
+        <div class="msg-block visible" style="background: #ff6b6b; width: 220px; animation-delay: 0.45s;"></div>
+        <div class="msg-block visible" style="background: #a855f7; width: 260px; animation-delay: 0.6s;"></div>
+        <div class="msg-block visible" style="background: #4ecdc4; width: 200px; animation-delay: 0.75s;"></div>
+      </div>
+      <div class="bomb-icon visible" style="animation-delay: 1.2s;">💣</div>
+      <div style="font-size: 28px; color: var(--dim);">▼</div>
+      <div class="compressed-block visible" style="animation-delay: 1.8s;"></div>
+      <div style="margin-top: 16px; font-family: 'Press Start 2P'; font-size: 14px; color: var(--red); opacity: 0; animation: fadeIn 0.3s ease 2.2s forwards;">
+        ONE-WAY DOOR. DETAIL GONE FOREVER.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== THE HOOK: KEY TAKEAWAY ==================== -->
+<div class="scene" id="scene-8">
+  <div class="beat-content" style="text-align: center;">
+    <div class="dialogue-box gold-box" style="max-width: 900px;">
+      <div class="key-text">
+        "If it's not written to a file,<br>it doesn't exist."
+      </div>
+    </div>
+    <div style="margin-top: 32px; color: #aaa; font-size: 22px;">
+      That magic I felt when I first set up OpenClaw — <span class="text-red">zapped away.</span><br>
+      It's not magic. It still has limitations. <span class="text-gold">Memory might be the biggest one.</span>
+    </div>
+  </div>
+</div>
+
 <!-- ==================== LEVEL UP → CONTEXT ISOLATION ==================== -->
-<div class="scene" id="scene-11">
+<div class="scene" id="scene-9">
   <div class="beat-content" style="text-align: center;">
     <div class="level-up-text">LEVEL UP!</div>
     <div style="margin-top: 40px; font-family: 'Press Start 2P'; font-size: 28px; color: var(--text);">LEVEL 2</div>
@@ -1167,7 +1256,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 21: ONE CONTEXT WINDOW ==================== -->
-<div class="scene" id="scene-12">
+<div class="scene" id="scene-10">
   <div class="beat-content" style="text-align: center;">
     <h2>THE PROBLEM</h2>
     <div style="font-size: 26px; margin-bottom: 24px; color: #aaa;">One context window doing everything.</div>
@@ -1186,7 +1275,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 22: SPLIT INTO TOPICS ==================== -->
-<div class="scene" id="scene-13">
+<div class="scene" id="scene-11">
   <div class="beat-content" style="text-align: center;">
     <h2>THE UPGRADE: TOPIC ISOLATION</h2>
     <div class="rooms-grid">
@@ -1211,7 +1300,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 23: PER-TOPIC SYSTEM PROMPT ==================== -->
-<div class="scene" id="scene-14">
+<div class="scene" id="scene-12">
   <div class="beat-content" style="text-align: center;">
     <h2>PER-TOPIC SYSTEM PROMPTS</h2>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 1100px; width: 100%; margin-top: 16px;">
@@ -1259,7 +1348,7 @@ h3 {
 </div>
 
 <!-- ==================== LEVEL UP → LEVEL 3: QMD ==================== -->
-<div class="scene" id="scene-15">
+<div class="scene" id="scene-13">
   <div class="beat-content" style="text-align: center;">
     <div class="level-up-text">LEVEL UP!</div>
     <div style="margin-top: 40px; font-family: 'Press Start 2P'; font-size: 28px; color: var(--text);">LEVEL 3</div>
@@ -1268,7 +1357,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 25: WHAT QMD IS ==================== -->
-<div class="scene" id="scene-16">
+<div class="scene" id="scene-14">
   <div class="beat-content" style="text-align: center;">
     <img src="/memory-talk/sprites/owl-detective.jpg" class="owl-sprite owl-small" alt="Detective owl">
     <h2 style="color: var(--teal);">WHAT IS QMD?</h2>
@@ -1294,7 +1383,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 26: CONFIG TOGGLE ==================== -->
-<div class="scene" id="scene-17">
+<div class="scene" id="scene-15">
   <div class="beat-content" style="text-align: center;">
     <h2 style="color: var(--teal);">THE HIDDEN SWITCH</h2>
     <div style="margin: 32px 0;">
@@ -1316,7 +1405,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 27: RAG FLAWS ==================== -->
-<div class="scene" id="scene-18">
+<div class="scene" id="scene-16">
   <div class="beat-content">
     <h2 style="color: var(--teal);">RAG-TYPE FLAWS</h2>
     <div style="display: flex; justify-content: center; gap: 12px; margin: 20px 0; font-size: 36px;">
@@ -1344,7 +1433,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 28: QMD SUMMARY ==================== -->
-<div class="scene" id="scene-19">
+<div class="scene" id="scene-17">
   <div class="beat-content" style="text-align: center;">
     <div class="dialogue-box gold-box" style="max-width: 1000px; border-color: var(--teal); box-shadow: inset 0 0 0 2px var(--surface), inset 0 0 0 4px var(--teal), 8px 8px 0 rgba(78,205,196,0.15);">
       <div style="color: var(--teal); font-family: 'Press Start 2P'; font-size: 18px; line-height: 1.8; text-align: center;">
@@ -1358,7 +1447,7 @@ h3 {
 </div>
 
 <!-- ==================== LEVEL UP → LEVEL 4: LCM ==================== -->
-<div class="scene purple-theme" id="scene-20">
+<div class="scene purple-theme" id="scene-18">
   <div class="beat-content" style="text-align: center;">
     <div class="level-up-text" style="color: var(--purple); text-shadow: 4px 4px 0 rgba(0,0,0,0.5), 0 0 30px rgba(168,85,247,0.4);">LEVEL UP!</div>
     <div style="margin-top: 40px; font-family: 'Press Start 2P'; font-size: 28px; color: var(--text);">LEVEL 4</div>
@@ -1368,7 +1457,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 30: QMD vs LCM ==================== -->
-<div class="scene purple-theme" id="scene-21">
+<div class="scene purple-theme" id="scene-19">
   <div class="beat-content">
     <h2>THE KEY DISTINCTION</h2>
     <div class="two-col">
@@ -1395,7 +1484,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 31: HERO ANIMATION — COMPACTION COMPARISON ==================== -->
-<div class="scene purple-theme" id="scene-22">
+<div class="scene purple-theme" id="scene-20">
   <div class="beat-content">
     <div class="comparison-grid">
       <!-- Stock Compaction -->
@@ -1445,27 +1534,27 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 32: DAG DIAGRAM ==================== -->
-<div class="scene purple-theme" id="scene-23">
+<div class="scene purple-theme" id="scene-21">
   <div class="beat-content">
     <h2 style="color: var(--purple);">THE DAG</h2>
-    <div class="dag-diagram">
-      <div class="dag-level">
+    <div class="dag-diagram" id="dag-diagram">
+      <div class="dag-level dag-build-item" data-dag-delay="2000">
         <div class="dag-node dag-root">Condensed Summaries (Canopy)</div>
         <span class="dag-label text-purple">Navigation layer</span>
       </div>
-      <div class="dag-connector">▲</div>
-      <div class="dag-level">
+      <div class="dag-connector dag-build-item" data-dag-delay="1600">▲</div>
+      <div class="dag-level dag-build-item" data-dag-delay="1200">
         <div class="dag-node dag-branch">Leaf Summary</div>
         <div class="dag-node dag-branch">Leaf Summary</div>
         <div class="dag-node dag-branch">Leaf Summary</div>
         <span class="dag-label text-teal">Micro-compaction</span>
       </div>
-      <div class="dag-connector">▲</div>
-      <div class="dag-level">
+      <div class="dag-connector dag-build-item" data-dag-delay="800">▲</div>
+      <div class="dag-level dag-build-item" data-dag-delay="400">
         <div class="dag-node dag-raw" style="width: 460px;">Raw Messages (never deleted)</div>
         <span class="dag-label text-gold">Ground truth</span>
       </div>
-      <div style="margin-top: 24px; display: flex; align-items: center; gap: 12px;">
+      <div class="dag-build-item dag-lcm-expand" data-dag-delay="2800" style="margin-top: 24px; display: flex; align-items: center; gap: 12px;">
         <span style="font-size: 28px;">⬇️</span>
         <span style="font-family: 'Press Start 2P'; font-size: 13px; color: var(--green);">lcm_expand — drill back down to recover detail anytime</span>
       </div>
@@ -1474,7 +1563,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 33: CHARACTER STATS ==================== -->
-<div class="scene purple-theme" id="scene-24">
+<div class="scene purple-theme" id="scene-22">
   <div class="beat-content">
     <h2 style="color: var(--purple);">CHARACTER STATS</h2>
     <div class="stats-table">
@@ -1508,7 +1597,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 34: QMD + LCM TOGETHER ==================== -->
-<div class="scene purple-theme" id="scene-25">
+<div class="scene purple-theme" id="scene-23">
   <div class="beat-content" style="text-align: center;">
     <h2 style="color: var(--purple);">QMD + LCM TOGETHER</h2>
     <div style="display: flex; align-items: center; justify-content: center; gap: 60px; margin-top: 40px;">
@@ -1536,7 +1625,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 35: LCM QUOTE ==================== -->
-<div class="scene purple-theme" id="scene-26">
+<div class="scene purple-theme" id="scene-24">
   <div class="beat-content" style="text-align: center;">
     <div class="dialogue-box" style="border-color: var(--purple); max-width: 1000px; box-shadow: inset 0 0 0 2px var(--surface), inset 0 0 0 4px var(--purple), 8px 8px 0 rgba(168,85,247,0.15);">
       <div style="color: var(--purple); font-family: 'Press Start 2P'; font-size: 16px; line-height: 2; text-align: center;">
@@ -1548,7 +1637,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 36: STAGE CLEAR ==================== -->
-<div class="scene" id="scene-27">
+<div class="scene" id="scene-25">
   <div class="beat-content" style="text-align: center;">
     <div class="stage-clear">STAGE CLEAR!</div>
     <div style="margin-top: 40px; font-family: 'Press Start 2P'; font-size: 24px; color: var(--gold);">THREE RULES</div>
@@ -1557,7 +1646,7 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 37: THREE TROPHIES ==================== -->
-<div class="scene" id="scene-28">
+<div class="scene" id="scene-26">
   <div class="beat-content">
     <h2>THREE RULES</h2>
     <div style="max-width: 1000px; width: 100%;">
@@ -1587,15 +1676,13 @@ h3 {
 </div>
 
 <!-- ==================== BEAT 38: CLOSING ==================== -->
-<div class="scene" id="scene-29">
+<div class="scene" id="scene-27">
   <div class="beat-content" style="text-align: center;">
     <div class="quote-text" style="margin-bottom: 36px;">
       "The system keeps evolving. My job is to keep raising the bar."
     </div>
     <div class="closing-links">
       <div class="closing-link">alfred.barronroth.com/guide-to-alfred</div>
-      <div class="closing-link">youtu.be/oN__gKJnPls</div>
-      <div class="closing-link">losslesscontext.ai</div>
     </div>
     <div style="margin-top: 48px;">
       <span style="font-family: 'Press Start 2P'; font-size: 32px; color: var(--gold);">GAME OVER</span>
@@ -1608,61 +1695,282 @@ h3 {
 
 <script>
 (function() {
-  const TOTAL_BEATS = 30;
+  const TOTAL_BEATS = 28;
   let currentBeat = 0;
   let transitioning = false;
+  let lastDirection = 1; // 1=forward, -1=back
 
   const progressBar = document.getElementById('progress-bar');
   const slideCounter = document.getElementById('slide-counter');
 
-  function updateUI() {
-    // Update progress bar
-    const pct = ((currentBeat + 1) / TOTAL_BEATS) * 100;
-    progressBar.style.width = pct + '%';
+  // Level-up scene indices (get special black-flash transition)
+  const LEVEL_UP_SCENES = [9, 13, 18];
 
-    // Update counter
-    slideCounter.textContent = (currentBeat + 1) + ' / ' + TOTAL_BEATS;
+  // === TYPEWRITER STATE ===
+  const typewriterDone = {};
+  const TYPEWRITER_SLIDES = {
+    8: { selector: '#scene-8 .key-text', speed: 40 },
+    24: { selector: '#scene-24 .dialogue-box > div', speed: 40 }
+  };
 
-    // Show/hide scenes
-    for (let i = 0; i < TOTAL_BEATS; i++) {
-      const scene = document.getElementById('scene-' + i);
-      if (!scene) continue;
-      if (i === currentBeat) {
-        scene.classList.add('active');
-        // Trigger beat content animation
-        const bc = scene.querySelector('.beat-content');
-        if (bc) {
-          bc.classList.remove('visible');
-          void bc.offsetWidth; // reflow
-          bc.classList.add('visible');
-        }
-        // Trigger comparison animation
-        if (i === 22) {
-          const stockSide = document.getElementById('stock-side');
-          const lcmSide = document.getElementById('lcm-side');
-          stockSide.classList.remove('anim-active');
-          lcmSide.classList.remove('anim-active');
-          void stockSide.offsetWidth;
-          stockSide.classList.add('anim-active');
-          lcmSide.classList.add('anim-active');
-        }
-      } else {
-        scene.classList.remove('active');
-      }
-    }
+  // === DAG BUILD STATE ===
+  let dagBuilt = false;
+
+  // === STAGGER CONFIG ===
+  // scene index → { selector, stagger (ms), extraClass? }
+  const STAGGER_CONFIG = {
+    3:  { selector: '#scene-3 .anecdote-item', stagger: 200 },
+    5:  { selector: '#scene-5 [style*="grid-template-columns"] > div', stagger: 150 },
+    6:  { selector: '#scene-6 .layer-item', stagger: 200, addVisible: true },
+    12: { selector: '#scene-12 [style*="grid-template-columns"] > div', stagger: 100 },
+    16: { selector: '#scene-16 .anecdote-item', stagger: 200 },
+    22: { selector: '#scene-22 .stats-row:not(.header)', stagger: 200 },
+    26: { selector: '#scene-26 .trophy-item', stagger: 300 }
+  };
+
+  function clearTransitionClasses(scene) {
+    scene.classList.remove('slide-exit-left', 'slide-exit-right', 'slide-enter-left', 'slide-enter-right', 'level-up-flash', 'shake-active', 'shake-short', 'red-flash');
   }
 
-  function goTo(beat) {
+  // Remove stagger animations from a scene's children
+  function clearStaggers(sceneIndex) {
+    const cfg = STAGGER_CONFIG[sceneIndex];
+    if (!cfg) return;
+    const items = document.querySelectorAll(cfg.selector);
+    items.forEach(el => {
+      el.classList.remove('stagger-in');
+      el.style.removeProperty('animation-delay');
+      if (cfg.addVisible) {
+        el.classList.remove('visible');
+      }
+    });
+  }
+
+  function triggerStaggers(sceneIndex) {
+    const cfg = STAGGER_CONFIG[sceneIndex];
+    if (!cfg) return;
+    const items = document.querySelectorAll(cfg.selector);
+    items.forEach((el, idx) => {
+      if (cfg.addVisible) {
+        // Use transition-based animation for layer items
+        el.style.transitionDelay = (idx * cfg.stagger) + 'ms';
+        setTimeout(() => el.classList.add('visible'), 10);
+      } else {
+        el.style.animationDelay = (idx * cfg.stagger) + 'ms';
+        el.classList.add('stagger-in');
+      }
+    });
+  }
+
+  // === TYPEWRITER ===
+  // Wraps every text character in a span for reveal; preserves HTML tags
+  function wrapChars(el) {
+    const chars = [];
+    function walk(node) {
+      if (node.nodeType === 3) { // text
+        const frag = document.createDocumentFragment();
+        for (const ch of node.textContent) {
+          if (ch === '\n' || ch === '\r') continue;
+          const span = document.createElement('span');
+          span.textContent = ch;
+          span.style.visibility = 'hidden';
+          chars.push(span);
+          frag.appendChild(span);
+        }
+        node.parentNode.replaceChild(frag, node);
+      } else if (node.nodeType === 1) {
+        // Process child nodes (copy list to avoid mutation issues)
+        Array.from(node.childNodes).forEach(walk);
+      }
+    }
+    Array.from(el.childNodes).forEach(walk);
+    return chars;
+  }
+
+  function triggerTypewriter(sceneIndex) {
+    const config = TYPEWRITER_SLIDES[sceneIndex];
+    if (!config || typewriterDone[sceneIndex]) return;
+    typewriterDone[sceneIndex] = true;
+
+    const scene = document.getElementById('scene-' + sceneIndex);
+    const el = scene.querySelector(config.selector);
+    if (!el) return;
+
+    const chars = wrapChars(el);
+    // Add blinking cursor at end
+    const cursor = document.createElement('span');
+    cursor.className = 'typewriter-cursor';
+    el.appendChild(cursor);
+
+    let i = 0;
+    function typeNext() {
+      if (i < chars.length) {
+        chars[i].style.visibility = 'visible';
+        i++;
+        setTimeout(typeNext, config.speed);
+      }
+    }
+    typeNext();
+  }
+
+  // === DAG BUILD ===
+  function triggerDagBuild() {
+    if (dagBuilt) return;
+    dagBuilt = true;
+    const items = document.querySelectorAll('#dag-diagram .dag-build-item');
+    items.forEach(item => {
+      const delay = parseInt(item.dataset.dagDelay) || 0;
+      setTimeout(() => {
+        if (item.classList.contains('dag-lcm-expand')) {
+          item.classList.add('dag-glow');
+        } else {
+          item.classList.add('dag-visible');
+        }
+      }, delay);
+    });
+  }
+
+  function resetDag() {
+    dagBuilt = false;
+    const items = document.querySelectorAll('#dag-diagram .dag-build-item');
+    items.forEach(item => {
+      item.classList.remove('dag-visible', 'dag-glow');
+    });
+  }
+
+  // === SCREEN SHAKE + RED FLASH ===
+  function triggerShake(scene, type) {
+    scene.classList.add(type);
+    scene.classList.add('red-flash');
+    setTimeout(() => {
+      scene.classList.remove(type, 'red-flash');
+    }, 500);
+  }
+
+  function showBeat(newBeat, direction) {
+    const oldBeat = currentBeat;
+    const oldScene = document.getElementById('scene-' + oldBeat);
+    const newScene = document.getElementById('scene-' + newBeat);
+
+    // Update progress bar + counter
+    const pct = ((newBeat + 1) / TOTAL_BEATS) * 100;
+    progressBar.style.width = pct + '%';
+    slideCounter.textContent = (newBeat + 1) + ' / ' + TOTAL_BEATS;
+
+    // Clear old staggers
+    clearStaggers(oldBeat);
+
+    // Determine transition type
+    const isLevelUp = LEVEL_UP_SCENES.includes(newBeat);
+    const transitionDuration = isLevelUp ? 450 : 300;
+
+    // Animate outgoing scene
+    if (oldScene) {
+      clearTransitionClasses(oldScene);
+      if (isLevelUp) {
+        // Just hide immediately for level-up flash
+        oldScene.classList.remove('active');
+        oldScene.style.opacity = '0';
+        oldScene.style.pointerEvents = 'none';
+      } else {
+        const exitClass = direction > 0 ? 'slide-exit-left' : 'slide-exit-right';
+        oldScene.classList.add(exitClass);
+        setTimeout(() => {
+          oldScene.classList.remove('active', exitClass);
+          oldScene.style.opacity = '0';
+          oldScene.style.pointerEvents = 'none';
+        }, transitionDuration);
+      }
+    }
+
+    // Animate incoming scene
+    if (newScene) {
+      clearTransitionClasses(newScene);
+      newScene.style.opacity = '';
+      newScene.style.pointerEvents = '';
+      newScene.classList.add('active');
+
+      if (isLevelUp) {
+        newScene.classList.add('level-up-flash');
+        setTimeout(() => newScene.classList.remove('level-up-flash'), 500);
+      } else {
+        const enterClass = direction > 0 ? 'slide-enter-right' : 'slide-enter-left';
+        newScene.classList.add(enterClass);
+        setTimeout(() => newScene.classList.remove(enterClass), transitionDuration);
+      }
+
+      // Trigger beat content
+      const bc = newScene.querySelector('.beat-content');
+      if (bc) {
+        bc.classList.remove('visible');
+        void bc.offsetWidth;
+        bc.classList.add('visible');
+      }
+
+      // Trigger comparison animation (slide 22)
+      if (newBeat === 20) {
+        const stockSide = document.getElementById('stock-side');
+        const lcmSide = document.getElementById('lcm-side');
+        stockSide.classList.remove('anim-active');
+        lcmSide.classList.remove('anim-active');
+        void stockSide.offsetWidth;
+        stockSide.classList.add('anim-active');
+        lcmSide.classList.add('anim-active');
+      }
+
+      // Trigger screen shake + red flash
+      if (newBeat === 2) {
+        setTimeout(() => triggerShake(newScene, 'shake-active'), 200);
+      }
+      if (newBeat === 7) {
+        // Shake when bomb drops (~1.2s into the animation)
+        setTimeout(() => triggerShake(newScene, 'shake-short'), 1200);
+      }
+
+      // Trigger staggers
+      if (STAGGER_CONFIG[newBeat]) {
+        setTimeout(() => triggerStaggers(newBeat), 100);
+      }
+
+      // Trigger DAG build
+      if (newBeat === 21) {
+        setTimeout(triggerDagBuild, 200);
+      } else if (oldBeat === 21) {
+        resetDag();
+      }
+
+      // Trigger typewriter
+      if (TYPEWRITER_SLIDES[newBeat]) {
+        setTimeout(() => triggerTypewriter(newBeat), 300);
+      }
+    }
+
+    // Hide all other scenes
+    for (let i = 0; i < TOTAL_BEATS; i++) {
+      if (i === oldBeat || i === newBeat) continue;
+      const s = document.getElementById('scene-' + i);
+      if (s) {
+        s.classList.remove('active');
+        clearTransitionClasses(s);
+        s.style.opacity = '0';
+        s.style.pointerEvents = 'none';
+      }
+    }
+
+    currentBeat = newBeat;
+  }
+
+  function goTo(beat, direction) {
     if (transitioning) return;
     if (beat < 0 || beat >= TOTAL_BEATS) return;
     transitioning = true;
-    currentBeat = beat;
-    updateUI();
-    setTimeout(() => { transitioning = false; }, 200);
+    showBeat(beat, direction);
+    const isLevelUp = LEVEL_UP_SCENES.includes(beat);
+    setTimeout(() => { transitioning = false; }, isLevelUp ? 500 : 320);
   }
 
-  function next() { goTo(currentBeat + 1); }
-  function prev() { goTo(currentBeat - 1); }
+  function next() { goTo(currentBeat + 1, 1); }
+  function prev() { goTo(currentBeat - 1, -1); }
 
   // Keyboard navigation
   document.addEventListener('keydown', function(e) {
@@ -1684,13 +1992,29 @@ h3 {
 
   // Click to advance
   document.addEventListener('click', function(e) {
-    // Don't advance on interactive elements
     if (e.target.closest('a, button, .switch-track')) return;
     next();
   });
 
-  // Initialize
-  updateUI();
+  // Initialize — show first scene without transition
+  (function init() {
+    for (let i = 0; i < TOTAL_BEATS; i++) {
+      const s = document.getElementById('scene-' + i);
+      if (!s) continue;
+      if (i === 0) {
+        s.classList.add('active');
+        s.style.opacity = '';
+        s.style.pointerEvents = '';
+        const bc = s.querySelector('.beat-content');
+        if (bc) bc.classList.add('visible');
+      } else {
+        s.style.opacity = '0';
+        s.style.pointerEvents = 'none';
+      }
+    }
+    progressBar.style.width = ((1) / TOTAL_BEATS * 100) + '%';
+    slideCounter.textContent = '1 / ' + TOTAL_BEATS;
+  })();
 })();
 </script>
 </body>

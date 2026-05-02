@@ -69,7 +69,7 @@
     .slide {
       position: absolute;
       inset: 0;
-      padding: clamp(30px, 5vw, 74px);
+      padding: clamp(26px, 4vw, 58px);
       display: grid;
       grid-template-rows: auto 1fr auto;
       gap: var(--space-lg);
@@ -95,7 +95,7 @@
     .progress { width: min(260px, 28vw); height: 10px; border-radius: 999px; background: color-mix(in oklch, var(--ink) 13%, transparent); overflow: hidden; }
     .progress span { display: block; height: 100%; width: var(--progress, 8%); border-radius: inherit; background: var(--clay); transition: width 300ms ease; }
 
-    .content { align-self: center; display: grid; gap: var(--space-xl); }
+    .content { align-self: center; display: grid; gap: 32px; }
     .grid-2 { display: grid; grid-template-columns: minmax(0, .86fr) minmax(390px, 1fr); gap: var(--space-xl); align-items: center; }
     .grid-even { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
     .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-lg); }
@@ -119,18 +119,18 @@
     .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--clay); box-shadow: 0 0 0 6px color-mix(in oklch, var(--clay) 15%, transparent); }
 
     h1, h2, h3 { font-family: "Gabarito", sans-serif; margin: 0; letter-spacing: -.055em; text-wrap: balance; }
-    h1 { font-size: clamp(58px, 8.4vw, 136px); line-height: .84; max-width: 9.5ch; }
-    h2 { font-size: clamp(52px, 7.2vw, 112px); line-height: .86; max-width: 10.5ch; }
-    h2.medium { font-size: clamp(48px, 6.2vw, 96px); max-width: 12ch; }
-    h3 { font-size: clamp(30px, 3.4vw, 58px); line-height: .94; }
-    p.lede { margin: 20px 0 0; max-width: 700px; color: var(--ink-soft); font-size: clamp(22px, 2.1vw, 34px); line-height: 1.14; font-weight: 700; text-wrap: balance; }
+    h1 { font-size: clamp(48px, 7vw, 112px); line-height: .86; max-width: 9.5ch; }
+    h2 { font-size: clamp(42px, 6.1vw, 92px); line-height: .88; max-width: 10.5ch; }
+    h2.medium { font-size: clamp(40px, 5.4vw, 82px); max-width: 12ch; }
+    h3 { font-size: clamp(26px, 3vw, 48px); line-height: .96; }
+    p.lede { margin: 16px 0 0; max-width: 700px; color: var(--ink-soft); font-size: clamp(18px, 1.8vw, 28px); line-height: 1.15; font-weight: 700; text-wrap: balance; }
 
     .panel, .card {
       border-radius: var(--radius-xl);
       background: color-mix(in oklch, var(--cream) 90%, white);
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
-      padding: clamp(24px, 3vw, 46px);
+      padding: clamp(20px, 2.4vw, 36px);
       position: relative;
       overflow: hidden;
     }
@@ -138,8 +138,8 @@
     .panel.warn, .card.warn { background: color-mix(in oklch, var(--red) 15%, var(--cream)); border-color: color-mix(in oklch, var(--red) 26%, transparent); }
     .panel.gold, .card.gold { background: color-mix(in oklch, var(--gold) 22%, var(--cream)); border-color: color-mix(in oklch, var(--gold) 40%, transparent); }
 
-    .big-number { font-family: "Gabarito", sans-serif; font-size: clamp(62px, 8vw, 132px); font-weight: 900; letter-spacing: -.07em; line-height: .82; }
-    .number { font-family: "Gabarito", sans-serif; font-size: clamp(38px, 4.8vw, 78px); font-weight: 900; letter-spacing: -.055em; line-height: .9; white-space: nowrap; }
+    .big-number { font-family: "Gabarito", sans-serif; font-size: clamp(52px, 6.6vw, 104px); font-weight: 900; letter-spacing: -.07em; line-height: .82; }
+    .number { font-family: "Gabarito", sans-serif; font-size: clamp(32px, 4vw, 64px); font-weight: 900; letter-spacing: -.055em; line-height: .9; white-space: nowrap; }
     .label { font-weight: 900; font-size: clamp(15px, 1.2vw, 20px); color: var(--ink-soft); text-transform: uppercase; letter-spacing: .06em; }
     .plain { color: var(--ink-soft); font-weight: 700; font-size: clamp(18px, 1.55vw, 25px); line-height: 1.16; }
     .green { color: var(--sage-dark); }
@@ -178,8 +178,12 @@
     .meter-line { height: 28px; border-radius: 999px; background: color-mix(in oklch, var(--ink) 10%, transparent); overflow: hidden; }
     .meter-fill { height: 100%; width: var(--w); border-radius: inherit; background: var(--red); }
 
-    .bridge-chart { border-radius: var(--radius-xl); background: color-mix(in oklch, var(--cream) 90%, white); border: 1px solid var(--line); box-shadow: var(--shadow); padding: clamp(24px, 3vw, 42px); display: grid; gap: 18px; }
-    .bridge-graph { width: 100%; min-height: 390px; overflow: visible; }
+    .bridge-layout { grid-template-columns: minmax(0, .62fr) minmax(520px, 1.12fr); }
+    .bridge-summary { display: grid; gap: 16px; align-content: start; }
+    .bridge-cost-card { border-radius: 28px; background: color-mix(in oklch, var(--red) 13%, var(--cream)); border: 1px solid color-mix(in oklch, var(--red) 25%, transparent); padding: 22px 24px; display: grid; gap: 8px; }
+    .bridge-total-card { background: color-mix(in oklch, var(--gold) 22%, var(--cream)); border-color: color-mix(in oklch, var(--gold) 40%, transparent); }
+    .bridge-chart { border-radius: var(--radius-xl); background: color-mix(in oklch, var(--cream) 90%, white); border: 1px solid var(--line); box-shadow: var(--shadow); padding: clamp(20px, 2.2vw, 34px); display: grid; gap: 10px; }
+    .bridge-graph { width: 100%; height: min(46vh, 390px); min-height: 280px; overflow: visible; }
     .axis-label { fill: var(--ink-soft); font-family: "Atkinson Hyperlegible", sans-serif; font-size: 15px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
     .graph-value { fill: var(--red); font-family: "Gabarito", sans-serif; font-size: 40px; font-weight: 900; letter-spacing: -.05em; }
     .graph-value.small { font-size: 30px; fill: var(--ink-soft); }
@@ -221,22 +225,22 @@
     .counter { min-width: 82px; text-align: center; font-weight: 900; color: var(--ink-soft); }
 
     @media (max-height: 760px) and (min-width: 901px) {
-      .slide { padding: 42px 54px 28px; gap: 14px; }
-      .topbar, .footer { font-size: 12px; }
-      .progress { height: 8px; width: 210px; }
-      .content { gap: 18px; }
-      .grid-2 { gap: 30px; grid-template-columns: minmax(0, .78fr) minmax(360px, 1fr); }
+      .slide { padding: 32px 46px 24px; gap: 12px; }
+      .topbar, .footer { font-size: 11px; }
+      .progress { height: 7px; width: 190px; }
+      .content { gap: 14px; }
+      .grid-2 { gap: 24px; grid-template-columns: minmax(0, .72fr) minmax(340px, 1fr); }
       .grid-even, .grid-3, .decision { gap: 16px; }
       .kicker { margin-bottom: 10px; padding: 7px 12px; font-size: 12px; }
       .dot { width: 8px; height: 8px; box-shadow: 0 0 0 4px color-mix(in oklch, var(--clay) 15%, transparent); }
-      h1 { font-size: clamp(48px, 6vw, 82px); line-height: .86; }
-      h2 { font-size: clamp(42px, 5.2vw, 72px); line-height: .88; }
-      h2.medium { font-size: clamp(40px, 5vw, 68px); }
-      h3 { font-size: clamp(24px, 2.5vw, 40px); line-height: .96; }
-      p.lede { margin-top: 10px; font-size: clamp(18px, 1.55vw, 24px); line-height: 1.12; max-width: 560px; }
-      .panel, .card, .path { padding: 18px 22px; border-radius: 24px; }
-      .big-number { font-size: clamp(54px, 6vw, 82px); }
-      .number { font-size: clamp(30px, 3.6vw, 52px); }
+      h1 { font-size: clamp(42px, 5vw, 68px); line-height: .88; }
+      h2 { font-size: clamp(36px, 4.4vw, 58px); line-height: .9; }
+      h2.medium { font-size: clamp(34px, 4.2vw, 56px); }
+      h3 { font-size: clamp(22px, 2.1vw, 32px); line-height: .98; }
+      p.lede { margin-top: 8px; font-size: clamp(16px, 1.3vw, 20px); line-height: 1.14; max-width: 520px; }
+      .panel, .card, .path { padding: 14px 18px; border-radius: 22px; }
+      .big-number { font-size: clamp(42px, 5vw, 64px); }
+      .number { font-size: clamp(26px, 3vw, 44px); }
       .label { font-size: 12px; }
       .plain { font-size: clamp(15px, 1.25vw, 19px); }
       .bar-chart { gap: 13px; }
@@ -256,11 +260,13 @@
       .support-meter { gap: 12px; }
       .meter-face { padding: 16px; gap: 10px; border-radius: 22px; }
       .meter-line { height: 20px; }
-      .bridge-chart { padding: 16px 18px; gap: 10px; border-radius: 24px; }
-      .bridge-graph { min-height: 0; height: 230px; }
+      .bridge-chart { padding: 12px 14px; gap: 8px; border-radius: 22px; }
+      .bridge-graph { min-height: 0; height: 300px; }
+      .bridge-cost-card { padding: 14px 16px; border-radius: 22px; }
+      .bridge-summary { gap: 12px; }
       .axis-label { font-size: 13px; }
-      .graph-value { font-size: 32px; }
-      .graph-value.small { font-size: 24px; }
+      .graph-value { font-size: 30px; }
+      .graph-value.small { font-size: 22px; }
       .bridge-line { stroke-width: 7; }
       .bridge-dot { r: 10px; stroke-width: 5; }
       .bridge-callout { padding: 14px 18px; border-radius: 20px; }
@@ -268,7 +274,7 @@
       .slide:nth-of-type(9) h2 { max-width: 16ch; }
       .slide:nth-of-type(9) p.lede { margin-top: 8px; max-width: 760px; }
       .slide:nth-of-type(9) .bridge-chart { padding: 14px 16px; gap: 8px; }
-      .slide:nth-of-type(9) .bridge-graph { height: 188px; }
+      .slide:nth-of-type(9) .bridge-graph { height: 300px; }
       .slide:nth-of-type(9) .bridge-callout { padding: 10px 16px; }
       .slide:nth-of-type(9) .bridge-callout .plain { font-size: 14px; }
       .gauge { height: 28px; margin: 44px 28px 62px; }
@@ -428,8 +434,20 @@
 
     <section class="slide" data-note="The February move-in is a separate bridge cost and risk, especially if the current monthly shortfall continues.">
       <div class="topbar"><span>Move-in delay</span><div class="progress"><span></span></div></div>
-      <div class="content">
-        <div><div class="kicker"><span class="dot"></span>Timing</div><h2>February bridge</h2><p class="lede">Waiting in the current house keeps the current monthly gap alive.</p></div>
+      <div class="content grid-2 bridge-layout">
+        <div class="bridge-summary">
+          <div><div class="kicker"><span class="dot"></span>Timing</div><h2>February bridge</h2><p class="lede">Waiting in the current house keeps the monthly gap alive.</p></div>
+          <div class="bridge-cost-card">
+            <div class="label">Bridge cost while waiting</div>
+            <div class="number red">+$2.25k/mo</div>
+            <div class="plain">Before deposits or further builder delays.</div>
+          </div>
+          <div class="bridge-cost-card bridge-total-card">
+            <div class="label">By February</div>
+            <div class="number red">$20k–$23k</div>
+            <div class="plain">Before the new home closes.</div>
+          </div>
+        </div>
         <div class="bridge-chart">
           <svg class="bridge-graph" viewBox="0 0 1040 420" role="img" aria-label="Bridge cost line graph rising from zero now to about twenty to twenty three thousand dollars by February">
             <line class="gridline" x1="90" y1="70" x2="960" y2="70" />
@@ -454,13 +472,9 @@
             <text class="graph-value small" x="500" y="150">$13.5k</text>
             <text class="graph-value" x="730" y="48">$20k–$23k</text>
           </svg>
-          <div class="bridge-callout">
-            <div><div class="label">Bridge cost while waiting</div><div class="plain">If the current monthly gap continues until February, the family may need to cover this before the new home even closes.</div></div>
-            <div class="number red">+$2.25k/mo</div>
-          </div>
         </div>
       </div>
-      <div class="footer"><span>Before deposits or further builder delays</span><span></span></div>
+      <div class="footer"><span></span><span></span></div>
     </section>
 
     <section class="slide" data-note="Pivot to the positive target: a safer home budget is under $500k all-in.">

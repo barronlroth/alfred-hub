@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Retirement Home Budget — Working Model</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Gabarito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: oklch(22% 0.025 65);
+      --ink-soft: oklch(38% 0.035 65);
+      --paper: oklch(96% 0.026 79);
+      --paper-2: oklch(91% 0.035 78);
+      --cream: oklch(98% 0.022 82);
+      --clay: oklch(56% 0.12 44);
+      --clay-dark: oklch(42% 0.12 38);
+      --sage: oklch(57% 0.074 143);
+      --sage-soft: oklch(84% 0.04 142);
+      --gold: oklch(78% 0.13 79);
+      --red: oklch(55% 0.16 29);
+      --blue: oklch(57% 0.07 225);
+      --line: color-mix(in oklch, var(--ink) 18%, transparent);
+      --shadow: 0 26px 80px color-mix(in oklch, var(--ink) 20%, transparent);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --space-xs: 8px;
+      --space-sm: 12px;
+      --space-md: 20px;
+      --space-lg: 32px;
+      --space-xl: 48px;
+      --space-2xl: 72px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: "Atkinson Hyperlegible", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 9% 18%, color-mix(in oklch, var(--gold) 28%, transparent), transparent 28%),
+        radial-gradient(circle at 92% 76%, color-mix(in oklch, var(--sage) 25%, transparent), transparent 32%),
+        linear-gradient(135deg, color-mix(in oklch, var(--paper) 88%, white), var(--paper-2));
+      z-index: -3;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .28;
+      background-image:
+        linear-gradient(color-mix(in oklch, var(--ink) 7%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in oklch, var(--ink) 7%, transparent) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at center, black, transparent 82%);
+      z-index: -2;
+    }
+
+    .deck {
+      height: 100svh;
+      width: 100vw;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: clamp(28px, 5.2vw, 78px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: var(--space-lg);
+      opacity: 0;
+      transform: translateX(28px) scale(.985);
+      pointer-events: none;
+      transition: opacity 420ms cubic-bezier(.16, 1, .3, 1), transform 420ms cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .slide.leaving-left { transform: translateX(-28px) scale(.985); }
+
+    .topbar, .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+      color: var(--ink-soft);
+      font-size: clamp(13px, 1.05vw, 17px);
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .progress {
+      width: min(260px, 28vw);
+      height: 10px;
+      border-radius: 999px;
+      background: color-mix(in oklch, var(--ink) 13%, transparent);
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: var(--progress, 8%);
+      border-radius: inherit;
+      background: var(--clay);
+      transition: width 300ms ease;
+    }
+
+    .content {
+      align-self: center;
+      display: grid;
+      gap: var(--space-xl);
+    }
+
+    .kicker {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 10px;
+      font-size: clamp(13px, 1.1vw, 18px);
+      font-weight: 900;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--clay-dark);
+      background: color-mix(in oklch, var(--clay) 12%, white);
+      border: 1px solid color-mix(in oklch, var(--clay) 22%, transparent);
+      border-radius: 999px;
+      padding: 10px 16px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--clay);
+      box-shadow: 0 0 0 6px color-mix(in oklch, var(--clay) 15%, transparent);
+    }
+
+    h1, h2 {
+      font-family: "Gabarito", sans-serif;
+      margin: 0;
+      letter-spacing: -.055em;
+      text-wrap: balance;
+    }
+
+    h1 {
+      font-size: clamp(52px, 8.3vw, 132px);
+      line-height: .86;
+      max-width: 10.5ch;
+    }
+
+    h2 {
+      font-size: clamp(42px, 6.7vw, 104px);
+      line-height: .9;
+      max-width: 12.5ch;
+    }
+
+    .wide-title { max-width: 15ch; }
+    .long-title { font-size: clamp(40px, 5.9vw, 88px); max-width: 17ch; }
+
+    p.lede {
+      margin: 0;
+      max-width: 760px;
+      color: var(--ink-soft);
+      font-size: clamp(22px, 2.3vw, 36px);
+      line-height: 1.12;
+      font-weight: 700;
+      text-wrap: balance;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .92fr);
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    .panel {
+      border-radius: var(--radius-xl);
+      background: color-mix(in oklch, var(--cream) 88%, white);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: clamp(24px, 3.2vw, 48px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel.dark {
+      background: oklch(25% 0.035 62);
+      color: var(--cream);
+      border-color: color-mix(in oklch, var(--cream) 16%, transparent);
+    }
+
+    .panel.warn {
+      background: color-mix(in oklch, var(--red) 16%, var(--cream));
+      border-color: color-mix(in oklch, var(--red) 25%, transparent);
+    }
+
+    .panel.good {
+      background: color-mix(in oklch, var(--sage) 18%, var(--cream));
+      border-color: color-mix(in oklch, var(--sage) 25%, transparent);
+    }
+
+    .metric-stack { display: grid; gap: var(--space-md); }
+
+    .metric {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-md);
+      align-items: end;
+      padding: 20px 0;
+      border-top: 1px solid var(--line);
+    }
+    .metric:first-child { border-top: 0; padding-top: 0; }
+    .metric-label {
+      font-size: clamp(18px, 1.5vw, 24px);
+      font-weight: 900;
+    }
+    .metric-note {
+      margin-top: 4px;
+      font-size: clamp(14px, 1.05vw, 17px);
+      color: var(--ink-soft);
+      font-weight: 700;
+    }
+    .metric-value {
+      font-family: "Gabarito", sans-serif;
+      font-size: clamp(35px, 4.8vw, 74px);
+      font-weight: 900;
+      letter-spacing: -.045em;
+      white-space: nowrap;
+    }
+    .red { color: var(--red); }
+    .green { color: oklch(43% 0.10 143); }
+    .blue { color: var(--blue); }
+    .clay { color: var(--clay-dark); }
+
+    .equation {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: var(--space-md);
+      align-items: stretch;
+    }
+
+    .equation .box {
+      min-height: 152px;
+      border-radius: var(--radius-lg);
+      background: color-mix(in oklch, var(--cream) 75%, white);
+      border: 1px solid var(--line);
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .math-symbol {
+      align-self: center;
+      font-family: "Gabarito", sans-serif;
+      font-size: clamp(32px, 4vw, 68px);
+      font-weight: 900;
+      color: var(--ink-soft);
+    }
+
+    .box .small { font-weight: 900; color: var(--ink-soft); }
+    .box .big {
+      font-family: "Gabarito", sans-serif;
+      font-size: clamp(34px, 4.4vw, 68px);
+      font-weight: 900;
+      letter-spacing: -.05em;
+    }
+
+    .callout {
+      border-radius: var(--radius-lg);
+      padding: clamp(22px, 2.4vw, 34px);
+      background: color-mix(in oklch, var(--gold) 24%, var(--cream));
+      border: 1px solid color-mix(in oklch, var(--gold) 45%, transparent);
+      font-size: clamp(22px, 2.1vw, 34px);
+      line-height: 1.12;
+      font-weight: 900;
+      text-wrap: balance;
+    }
+
+    .ruler {
+      height: 28px;
+      border-radius: 999px;
+      background: linear-gradient(90deg,
+        oklch(60% 0.12 142) 0 62%,
+        oklch(75% 0.14 78) 62% 72%,
+        oklch(64% 0.15 47) 72% 100%);
+      position: relative;
+      box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--ink) 20%, transparent);
+    }
+    .ruler-mark {
+      position: absolute;
+      top: 42px;
+      transform: translateX(-50%);
+      display: grid;
+      gap: 6px;
+      justify-items: center;
+      font-weight: 900;
+      color: var(--ink-soft);
+      min-width: 120px;
+      font-size: clamp(13px, 1vw, 16px);
+    }
+    .ruler-mark::before {
+      content: "";
+      width: 2px;
+      height: 18px;
+      background: var(--ink);
+      opacity: .34;
+      position: absolute;
+      top: -32px;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .scenario-card {
+      display: grid;
+      gap: var(--space-md);
+      border-radius: var(--radius-xl);
+      background: var(--cream);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: clamp(24px, 3vw, 42px);
+    }
+    .scenario-card h3 {
+      margin: 0;
+      font-family: "Gabarito", sans-serif;
+      font-size: clamp(28px, 3vw, 48px);
+      line-height: .95;
+      letter-spacing: -.035em;
+    }
+    .pill {
+      width: fit-content;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--ink);
+      background: color-mix(in oklch, var(--sage) 25%, white);
+    }
+    .pill.bad { background: color-mix(in oklch, var(--red) 18%, white); }
+    .pill.neutral { background: color-mix(in oklch, var(--gold) 22%, white); }
+
+    .list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: clamp(18px, 1.6vw, 25px);
+      line-height: 1.15;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+    .list li strong { color: var(--ink); }
+    .check {
+      flex: 0 0 auto;
+      width: 26px;
+      height: 26px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: var(--sage);
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      margin-top: 1px;
+    }
+    .xmark { background: var(--red); }
+
+    .house-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-md);
+      align-items: center;
+      padding: 22px;
+      border-radius: var(--radius-lg);
+      background: color-mix(in oklch, var(--cream) 88%, white);
+      border: 1px solid var(--line);
+    }
+    .house-card .address {
+      font-size: clamp(22px, 2vw, 34px);
+      font-weight: 900;
+      line-height: 1.02;
+    }
+    .house-card .meta {
+      margin-top: 7px;
+      color: var(--ink-soft);
+      font-weight: 700;
+      font-size: clamp(15px, 1.2vw, 20px);
+    }
+    .house-card .price {
+      font-family: "Gabarito", sans-serif;
+      font-size: clamp(34px, 3.4vw, 58px);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      color: var(--sage);
+      white-space: nowrap;
+    }
+
+    .notes {
+      display: none;
+      position: fixed;
+      right: 22px;
+      bottom: 72px;
+      width: min(460px, calc(100vw - 44px));
+      max-height: 48vh;
+      overflow: auto;
+      border-radius: 20px;
+      background: oklch(22% 0.025 65 / .94);
+      color: var(--cream);
+      padding: 20px;
+      box-shadow: 0 18px 70px rgb(0 0 0 / .32);
+      z-index: 5;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+    .notes.open { display: block; }
+    .notes h4 { margin: 0 0 10px; font-family: "Gabarito", sans-serif; font-size: 18px; }
+
+    .controls {
+      position: fixed;
+      left: 50%;
+      top: 14px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      z-index: 6;
+      background: oklch(100% 0 0 / .70);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px;
+      box-shadow: 0 16px 60px rgb(0 0 0 / .12);
+    }
+    button {
+      border: 0;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--cream);
+      font: inherit;
+      font-weight: 900;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+    .counter { min-width: 82px; text-align: center; font-weight: 900; color: var(--ink-soft); }
+
+    .speaker-note { display: none; }
+
+    .watermark-number {
+      position: absolute;
+      right: clamp(26px, 5vw, 76px);
+      bottom: clamp(80px, 8vw, 150px);
+      font-family: "Gabarito", sans-serif;
+      font-weight: 900;
+      font-size: clamp(92px, 18vw, 260px);
+      line-height: .75;
+      letter-spacing: -.08em;
+      color: color-mix(in oklch, var(--ink) 6%, transparent);
+      z-index: -1;
+      user-select: none;
+    }
+
+    .mini-source {
+      color: var(--ink-soft);
+      font-size: clamp(12px, .9vw, 15px);
+      font-weight: 700;
+    }
+
+    @media (max-width: 860px) {
+      body { overflow: hidden; }
+      .slide { padding: 22px; gap: 16px; }
+      .grid-2, .comparison { grid-template-columns: 1fr; gap: 18px; }
+      .equation { grid-template-columns: 1fr; }
+      .math-symbol { display: none; }
+      .panel { padding: 22px; }
+      h1 { font-size: clamp(48px, 16vw, 82px); }
+      h2, .long-title { font-size: clamp(42px, 13vw, 70px); }
+      .content { gap: 22px; align-self: start; padding-top: 12px; }
+      .footer { padding-bottom: 60px; }
+      .controls { width: calc(100vw - 24px); justify-content: center; right: auto; left: 50%; top: auto; bottom: 12px; transform: translateX(-50%); }
+      .house-card { grid-template-columns: 1fr; }
+      .house-card .price { white-space: normal; }
+    }
+
+    @media print {
+      body { overflow: visible; background: white; }
+      body::before, body::after, .controls, .notes { display: none !important; }
+      .deck { height: auto; width: auto; }
+      .slide {
+        position: relative;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always;
+        height: 100vh;
+        pointer-events: auto;
+      }
+      .speaker-note {
+        display: block;
+        margin-top: 18px;
+        padding: 12px 16px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-label="Retirement home budget slideshow">
+    <section class="slide active" data-note="Open warmly. This is not about rejecting a nice home. It is about avoiding a house that creates stress every month.">
+      <div class="topbar"><span>Retirement home budget</span><div class="progress"><span></span></div></div>
+      <div class="content grid-2">
+        <div>
+          <div class="kicker"><span class="dot"></span>Working model</div>
+          <h1>Can this home fit retirement?</h1>
+          <p class="lede">The goal is a comfortable home that creates peace of mind — not a monthly shortfall.</p>
+        </div>
+        <div class="panel good">
+          <div class="metric-stack">
+            <div class="metric"><div><div class="metric-label">Main question</div><div class="metric-note">Can the new home be carried on retirement income?</div></div><div class="metric-value">?</div></div>
+            <div class="metric"><div><div class="metric-label">Good outcome</div><div class="metric-note">Mortgage-free or almost mortgage-free</div></div><div class="metric-value green">Stable</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>Simple English • round numbers</span><span>Slide 1</span></div>
+    </section>
+
+    <section class="slide" data-note="Establish the constraint. Retirement income is the box everything has to fit inside.">
+      <div class="topbar"><span>Step 1</span><div class="progress"><span></span></div></div>
+      <div class="content grid-2">
+        <div>
+          <div class="kicker"><span class="dot"></span>Monthly income</div>
+          <h2>Retirement has to fit inside about $3,600/month.</h2>
+          <p class="lede">This is the income we should protect. Every housing choice needs to work inside this number.</p>
+        </div>
+        <div class="panel">
+          <div class="metric-stack">
+            <div class="metric"><div><div class="metric-label">Parent 1 income</div><div class="metric-note">CPP/OAS confirmed from deposits</div></div><div class="metric-value">$1.1k</div></div>
+            <div class="metric"><div><div class="metric-label">Parent 2 income</div><div class="metric-note">estimated until pension docs are checked</div></div><div class="metric-value">$2.5k</div></div>
+            <div class="metric"><div><div class="metric-label">Total retirement income</div><div class="metric-note">working number</div></div><div class="metric-value green">$3.6k</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>Working estimate, but good enough for direction</span><span>Slide 2</span></div>
+    </section>
+
+    <section class="slide" data-note="Show the current problem. The current house does not work because the mortgage is too large.">
+      <div class="topbar"><span>Current house</span><div class="progress"><span></span></div></div>
+      <div class="content grid-2">
+        <div>
+          <div class="kicker"><span class="dot"></span>Current budget</div>
+          <h2>The current house already creates a $2,250 monthly gap.</h2>
+          <p class="lede">This is why the next home has to reduce monthly pressure — not just look better.</p>
+        </div>
+        <div class="panel warn">
+          <div class="metric-stack">
+            <div class="metric"><div><div class="metric-label">Retirement income</div><div class="metric-note">monthly</div></div><div class="metric-value green">$3.6k</div></div>
+            <div class="metric"><div><div class="metric-label">Current monthly spend</div><div class="metric-note">including mortgage, food, gas, insurance</div></div><div class="metric-value">$5.85k</div></div>
+            <div class="metric"><div><div class="metric-label">Monthly shortfall</div><div class="metric-note">before surprises</div></div><div class="metric-value red">$2.25k</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>The next move must fix this gap</span><span>Slide 3</span></div>
+    </section>
+
+    <section class="slide" data-note="Make the key insight memorable: the mortgage is the villain, not groceries.">
+      <div class="topbar"><span>The key insight</span><div class="progress"><span></span></div></div>
+      <div class="content">
+        <div>
+          <div class="kicker"><span class="dot"></span>Main rule</div>
+          <h2 class="wide-title">The mortgage is the part that breaks retirement.</h2>
+        </div>
+        <div class="comparison">
+          <div class="scenario-card">
+            <div class="pill bad">With mortgage</div>
+            <h3>About $5,850/month</h3>
+            <ul class="list"><li><span class="check xmark">×</span><span>More than retirement income by about <strong>$2,250/month</strong>.</span></li></ul>
+          </div>
+          <div class="scenario-card">
+            <div class="pill">No mortgage</div>
+            <h3>About $3,300/month</h3>
+            <ul class="list"><li><span class="check">✓</span><span>Close to workable, with careful spending and a reserve.</span></li></ul>
+          </div>
+        </div>
+        <div class="callout">The safest retirement plan is not “new home.” It is “new home with little or no mortgage.”</div>
+      </div>
+      <div class="footer"><span>Same family • different housing cost</span><span>Slide 4</span></div>
+    </section>
+
+    <section class="slide" data-note="Address the misunderstanding directly but gently: they may be thinking the mortgage is only $50k. That only works if the true all-in purchase price is around $510k, not $700k+.">
+      <div class="topbar"><span>The misunderstanding</span><div class="progress"><span></span></div></div>
+      <div class="content grid-2">
+        <div>
+          <div class="kicker"><span class="dot"></span>$50k vs reality</div>
+          <h2 class="long-title">A $50k mortgage only works if the home is around $500k all-in.</h2>
+          <p class="lede">That is why the $700k prebuild does not fit the same budget.</p>
+        </div>
+        <div class="panel">
+          <div class="metric-stack">
+            <div class="metric"><div><div class="metric-label">Expected cash after selling</div><div class="metric-note">rough net equity</div></div><div class="metric-value">$460k</div></div>
+            <div class="metric"><div><div class="metric-label">If mortgage is only</div><div class="metric-note">their mental model</div></div><div class="metric-value green">$50k</div></div>
+            <div class="metric"><div><div class="metric-label">Then all-in budget is about</div><div class="metric-note">cash + small mortgage</div></div><div class="metric-value clay">$510k</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>$50k mortgage ≠ $700k home</span><span>Slide 5</span></div>
+    </section>
+
+    <section class="slide" data-note="Round numbers. Avoid getting bogged down in exact pennies. The prebuild is not $698k in cash needed; it is more like $720k-$760k all-in.">
+      <div class="topbar"><span>The prebuild cost</span><div class="progress"><span></span></div></div>
+      <div class="content">
+        <div>
+          <div class="kicker"><span class="dot"></span>Sticker price is not all-in</div>
+          <h2 class="wide-title">The $698k home is really more like $720k–$760k all-in.</h2>
+        </div>
+        <div class="equation">
+          <div class="box"><div class="small">Home price</div><div class="big">$700k</div></div>
+          <div class="math-symbol">+</div>
+          <div class="box"><div class="small">Land transfer + closing</div><div class="big">$20k–$40k</div></div>
+          <div class="math-symbol">=</div>
+          <div class="box"><div class="small">Likely cash needed</div><div class="big red">$720k–$760k</div></div>
+        </div>
+        <div class="callout">New builds can also have deposits, adjustments, upgrades, and delay risk. The exact number needs lawyer review — but it is not $500k.</div>
+      </div>
+      <div class="footer"><span>Round planning range</span><span>Slide 6</span></div>
+    </section>
+
+    <section class="slide" data-note="This is the core arithmetic slide. Cash from sale minus all-in cost equals the real mortgage. It is not $50k; it is roughly $250k-$300k.">
+      <div class="topbar"><span>Cash needed</span><div class="progress"><span></span></div></div>
+      <div class="content">
+        <div>
+          <div class="kicker"><span class="dot"></span>The actual gap</div>
+          <h2 class="wide-title">The missing money is closer to $250k–$300k.</h2>
+        </div>
+        <div class="equation">
+          <div class="box"><div class="small">Likely all-in cost</div><div class="big">$720k–$760k</div></div>
+          <div class="math-symbol">−</div>
+          <div class="box"><div class="small">Cash after selling</div><div class="big">$460k</div></div>
+          <div class="math-symbol">=</div>
+          <div class="box"><div class="small">New mortgage / help needed</div><div class="big red">$260k–$300k</div></div>
+        </div>
+        <div class="callout">This is the budgeting problem: the new home does not leave a $50k mortgage. It likely leaves a quarter-million-dollar mortgage.</div>
+      </div>
+      <div class="footer"><span>The math gap, in one line</span><span>Slide 7</span></div>
+    </section>
+
+    <section class="slide" data-note="Translate the mortgage gap into monthly support from kids. This is the emotional decision: is the family choosing to pay $1.7k-$2k/month?">
+      <div class="topbar"><span>Monthly impact</span><div class="progress"><span></span></div></div>
+      <div class="content">
+        <div>
+          <div class="kicker"><span class="dot"></span>What the kids would cover</div>
+          <h2 class="long-title">The bigger mortgage turns into about $1,700–$2,000/month of support.</h2>
+        </div>
+        <div class="comparison">
+          <div class="scenario-card">
+            <div class="pill">If mortgage were $50k</div>
+            <h3>Payment: about $300/month</h3>
+            <ul class="list">
+              <li><span class="check">✓</span><span>Total budget gap might be around <strong>$500/month</strong>.</span></li>
+              <li><span class="check">✓</span><span>This is why the idea feels affordable.</span></li>
+            </ul>
+          </div>
+          <div class="scenario-card">
+            <div class="pill bad">If mortgage is $250k–$300k</div>
+            <h3>Payment: about $1,500–$1,750/month</h3>
+            <ul class="list">
+              <li><span class="check xmark">×</span><span>Total budget gap becomes about <strong>$1,700–$2,000/month</strong>.</span></li>
+              <li><span class="check xmark">×</span><span>That is <strong>$20k–$24k/year</strong> from the kids.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>The monthly support question</span><span>Slide 8</span></div>
+    </section>
+
+    <section class="slide" data-note="Discuss February move-in. This is not the biggest issue, but it adds cash-flow risk before they even move.">
+      <div class="topbar"><span>Timing risk</span><div class="progress"><span></span></div></div>
+      <div class="content grid-2">
+        <div>
+          <div class="kicker"><span class="dot"></span>Move-in next February</div>
+          <h2 class="long-title">The delay adds another $20k–$23k bridge problem.</h2>
+          <p class="lede">If they stay in the current house until then, the current monthly shortfall continues.</p>
+        </div>
+        <div class="panel warn">
+          <div class="metric-stack">
+            <div class="metric"><div><div class="metric-label">Current monthly gap</div><div class="metric-note">while waiting</div></div><div class="metric-value red">$2.25k</div></div>
+            <div class="metric"><div><div class="metric-label">9–10 month wait</div><div class="metric-note">until next February</div></div><div class="metric-value">$20k–$23k</div></div>
+            <div class="metric"><div><div class="metric-label">If delayed again</div><div class="metric-note">common prebuild risk</div></div><div class="metric-value red">more</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>Before deposits and builder delays</span><span>Slide 9</span></div>
+    </section>
+
+    <section class="slide" data-note="Now pivot from no to yes: the right budget. We are not saying they cannot move. We are saying the house budget has to protect retirement.">
+      <div class="topbar"><span>Better target</span><div class="progress"><span></span></div></div>
+      <div class="content">
+        <div>
+          <div class="kicker"><span class="dot"></span>The home budget</div>
+          <h2 class="wide-title">A safer home budget is up to $500k all-in.</h2>
+          <p class="lede">This keeps the mortgage tiny or zero, which is what makes retirement stable.</p>
+        </div>
+        <div class="panel">
+          <div style="height: 118px; padding: 28px 16px 0;">
+            <div class="ruler">
+              <div class="ruler-mark" style="left: 0%;"><span>$0</span></div>
+              <div class="ruler-mark" style="left: 62%;"><span>Safe<br>$450k</span></div>
+              <div class="ruler-mark" style="left: 72%;"><span>Stretch<br>$500k</span></div>
+              <div class="ruler-mark" style="left: 100%;"><span>Too high<br>$700k</span></div>
+            </div>
+          </div>
+          <div class="comparison" style="margin-top: 20px;">
+            <div class="scenario-card" style="box-shadow:none;"><div class="pill">$500k all-in</div><h3>About $40k mortgage</h3><ul class="list"><li><span class="check">✓</span><span>Payment roughly <strong>$235/month</strong>.</span></li></ul></div>
+            <div class="scenario-card" style="box-shadow:none;"><div class="pill bad">$700k+ all-in</div><h3>About $250k+ mortgage</h3><ul class="list"><li><span class="check xmark">×</span><span>Payment roughly <strong>$1,500+/month</strong>.</span></li></ul></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>Budget is about monthly peace, not sticker price</span><span>Slide 10</span></div>
+    </section>
+
+    <section class="slide" data-note="Use Barron's example. Be careful: not recommending this exact property. It simply proves the market has better-fit options under $500k.">
+      <div class="topbar"><span>Realistic alternatives</span><div class="progress"><span></span></div></div>
+      <div class="content grid-2">
+        <div>
+          <div class="kicker"><span class="dot"></span>There are good options</div>
+          <h2 class="long-title">Homes under $500k exist in the area.</h2>
+          <p class="lede">This is not about settling for nothing. It is about choosing a home that protects monthly life.</p>
+        </div>
+        <div class="panel good">
+          <div class="house-card">
+            <div><div class="address">99 Roger St #45, Waterloo</div><div class="meta">Example listing • 2 bed • 2 bath • ~1,124 sq ft townhouse</div></div>
+            <div class="price">$482k</div>
+          </div>
+          <div class="metric-stack" style="margin-top: 18px;">
+            <div class="metric"><div><div class="metric-label">Rough all-in cost</div><div class="metric-note">price + land transfer tax + closing costs</div></div><div class="metric-value">$491k</div></div>
+            <div class="metric"><div><div class="metric-label">Mortgage needed after $460k equity</div><div class="metric-note">plus maintenance/taxes to verify</div></div><div class="metric-value green">~$30k</div></div>
+          </div>
+          <p class="mini-source">Not a recommendation to buy this exact home. Just proof that better-fit options exist below $500k.</p>
+        </div>
+      </div>
+      <div class="footer"><span>Example only • verify fees/taxes</span><span>Slide 11</span></div>
+    </section>
+
+    <section class="slide" data-note="End with a firm but gentle recommendation. If they love the $698k home, the only way it works is with an explicit family capital contribution, not a hidden monthly subsidy.">
+      <div class="topbar"><span>Recommendation</span><div class="progress"><span></span></div></div>
+      <div class="content">
+        <div>
+          <div class="kicker"><span class="dot"></span>Gentle recommendation</div>
+          <h2 class="long-title">Do not choose the $700k prebuild unless it can be made almost mortgage-free.</h2>
+          <p class="lede">Otherwise it likely creates a monthly support need for the kids.</p>
+        </div>
+        <div class="comparison">
+          <div class="scenario-card">
+            <div class="pill bad">The $700k prebuild works only if…</div>
+            <ul class="list">
+              <li><span class="check">✓</span><span>The family contributes or loans roughly <strong>$250k–$300k</strong>.</span></li>
+              <li><span class="check">✓</span><span>The remaining mortgage is tiny.</span></li>
+              <li><span class="check">✓</span><span>Delay risk and builder costs are understood.</span></li>
+            </ul>
+          </div>
+          <div class="scenario-card">
+            <div class="pill">The safer plan</div>
+            <ul class="list">
+              <li><span class="check">✓</span><span>Keep looking under <strong>$500k all-in</strong>.</span></li>
+              <li><span class="check">✓</span><span>Prefer mortgage-free or almost mortgage-free.</span></li>
+              <li><span class="check">✓</span><span>Use the move to make retirement simpler, not tighter.</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">The right home is the one that lets retirement feel safe every month.</div>
+      </div>
+      <div class="footer"><span>Protect the retirement, then pick the house</span><span>Slide 12</span></div>
+    </section>
+
+    <section class="slide" data-note="Appendix for Barron/Nina: if challenged on assumptions, this slide shows where the numbers come from.">
+      <div class="topbar"><span>Appendix</span><div class="progress"><span></span></div></div>
+      <div class="content grid-2">
+        <div>
+          <div class="kicker"><span class="dot"></span>Assumptions</div>
+          <h2 class="long-title">Numbers are rounded so the decision is easier to see.</h2>
+          <p class="lede">Exact mortgage, tax, builder, and pension documents should be checked before any final decision.</p>
+        </div>
+        <div class="panel">
+          <ul class="list">
+            <li><span class="check">✓</span><span>Retirement income: <strong>~$3,600/month</strong>.</span></li>
+            <li><span class="check">✓</span><span>Current monthly spend: <strong>~$5,850/month</strong>.</span></li>
+            <li><span class="check">✓</span><span>Current home net equity after sale: <strong>~$460k</strong>.</span></li>
+            <li><span class="check">✓</span><span>$700k prebuild all-in: <strong>~$720k–$760k</strong>.</span></li>
+            <li><span class="check">✓</span><span>Mortgage math assumes roughly <strong>5%</strong> over 25 years.</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Working model • not legal/financial advice</span><span>Appendix</span></div>
+    </section>
+  </main>
+
+  <aside class="notes" id="notes" aria-live="polite"></aside>
+  <nav class="controls" aria-label="Slideshow controls">
+    <button class="secondary" id="prev" type="button">←</button>
+    <div class="counter" id="counter">1 / 13</div>
+    <button id="next" type="button">Next →</button>
+    <button class="secondary" id="notesBtn" type="button">Notes</button>
+  </nav>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const progress = Array.from(document.querySelectorAll('.progress span'));
+    const counter = document.getElementById('counter');
+    const notes = document.getElementById('notes');
+    const notesBtn = document.getElementById('notesBtn');
+    let index = 0;
+
+    function render() {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        slide.classList.toggle('leaving-left', i < index);
+      });
+      progress.forEach((bar) => bar.style.setProperty('--progress', `${((index + 1) / slides.length) * 100}%`));
+      counter.textContent = `${index + 1} / ${slides.length}`;
+      notes.innerHTML = `<h4>Speaker note</h4><div>${slides[index].dataset.note || ''}</div>`;
+    }
+
+    function go(nextIndex) {
+      index = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      render();
+    }
+
+    document.getElementById('next').addEventListener('click', () => go(index + 1));
+    document.getElementById('prev').addEventListener('click', () => go(index - 1));
+    notesBtn.addEventListener('click', () => notes.classList.toggle('open'));
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === ' ') go(index + 1);
+      if (event.key === 'ArrowLeft') go(index - 1);
+      if (event.key.toLowerCase() === 'n') notes.classList.toggle('open');
+      if (event.key === 'Home') go(0);
+      if (event.key === 'End') go(slides.length - 1);
+    });
+    render();
+  </script>
+</body>
+</html>

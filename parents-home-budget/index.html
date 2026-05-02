@@ -220,6 +220,71 @@
     button.secondary { background: transparent; color: var(--ink); border: 1px solid var(--line); }
     .counter { min-width: 82px; text-align: center; font-weight: 900; color: var(--ink-soft); }
 
+    @media (max-height: 760px) and (min-width: 901px) {
+      .slide { padding: 42px 54px 28px; gap: 14px; }
+      .topbar, .footer { font-size: 12px; }
+      .progress { height: 8px; width: 210px; }
+      .content { gap: 18px; }
+      .grid-2 { gap: 30px; grid-template-columns: minmax(0, .78fr) minmax(360px, 1fr); }
+      .grid-even, .grid-3, .decision { gap: 16px; }
+      .kicker { margin-bottom: 10px; padding: 7px 12px; font-size: 12px; }
+      .dot { width: 8px; height: 8px; box-shadow: 0 0 0 4px color-mix(in oklch, var(--clay) 15%, transparent); }
+      h1 { font-size: clamp(48px, 6vw, 82px); line-height: .86; }
+      h2 { font-size: clamp(42px, 5.2vw, 72px); line-height: .88; }
+      h2.medium { font-size: clamp(40px, 5vw, 68px); }
+      h3 { font-size: clamp(24px, 2.5vw, 40px); line-height: .96; }
+      p.lede { margin-top: 10px; font-size: clamp(18px, 1.55vw, 24px); line-height: 1.12; max-width: 560px; }
+      .panel, .card, .path { padding: 18px 22px; border-radius: 24px; }
+      .big-number { font-size: clamp(54px, 6vw, 82px); }
+      .number { font-size: clamp(30px, 3.6vw, 52px); }
+      .label { font-size: 12px; }
+      .plain { font-size: clamp(15px, 1.25vw, 19px); }
+      .bar-chart { gap: 13px; }
+      .bar-item { gap: 6px; }
+      .bar-label { font-size: clamp(16px, 1.25vw, 20px); }
+      .bar-value { font-size: clamp(25px, 2.8vw, 42px); }
+      .bar-track { height: 26px; }
+      .metric-row { padding: 10px 0; }
+      .equation { gap: 12px; }
+      .eq-box { min-height: 104px; padding: 18px; border-radius: 20px; }
+      .eq-sign { font-size: 44px; }
+      .waterfall { gap: 10px; }
+      .water-row { grid-template-columns: 160px 1fr 130px; gap: 14px; }
+      .water-label { font-size: 15px; }
+      .water-line { height: 32px; }
+      .water-value { font-size: clamp(26px, 2.8vw, 42px); }
+      .support-meter { gap: 12px; }
+      .meter-face { padding: 16px; gap: 10px; border-radius: 22px; }
+      .meter-line { height: 20px; }
+      .bridge-chart { padding: 16px 18px; gap: 10px; border-radius: 24px; }
+      .bridge-graph { min-height: 0; height: 230px; }
+      .axis-label { font-size: 13px; }
+      .graph-value { font-size: 32px; }
+      .graph-value.small { font-size: 24px; }
+      .bridge-line { stroke-width: 7; }
+      .bridge-dot { r: 10px; stroke-width: 5; }
+      .bridge-callout { padding: 14px 18px; border-radius: 20px; }
+      .slide:nth-of-type(9) .content { gap: 12px; }
+      .slide:nth-of-type(9) h2 { max-width: 16ch; }
+      .slide:nth-of-type(9) p.lede { margin-top: 8px; max-width: 760px; }
+      .slide:nth-of-type(9) .bridge-chart { padding: 14px 16px; gap: 8px; }
+      .slide:nth-of-type(9) .bridge-graph { height: 188px; }
+      .slide:nth-of-type(9) .bridge-callout { padding: 10px 16px; }
+      .slide:nth-of-type(9) .bridge-callout .plain { font-size: 14px; }
+      .gauge { height: 28px; margin: 44px 28px 62px; }
+      .gauge-mark { top: 40px; gap: 3px; min-width: 110px; font-size: 13px; }
+      .gauge-mark::before { height: 16px; top: -28px; }
+      .gauge-mark strong { font-size: 28px; }
+      .path { min-height: 270px; gap: 16px; }
+      .path li { font-size: clamp(15px, 1.25vw, 19px); }
+      .badge { width: 22px; height: 22px; border-radius: 7px; }
+      .house-card { gap: 12px; }
+      .house-top { padding: 16px; border-radius: 20px; }
+      .address { font-size: clamp(21px, 1.8vw, 30px); }
+      .meta, .mini-note { font-size: 13px; }
+      .price { font-size: clamp(34px, 3.5vw, 58px); }
+    }
+
     @media (max-width: 900px) {
       body { overflow: hidden; }
       .slide { padding: 22px; gap: 16px; }

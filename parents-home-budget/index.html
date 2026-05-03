@@ -294,6 +294,17 @@
       .slide.bridge-slide .bridge-graph { height: 300px; }
       .slide.bridge-slide .bridge-callout { padding: 10px 16px; }
       .slide.bridge-slide .bridge-callout .plain { font-size: 14px; }
+      .tfsa-slide .content { gap: 10px; }
+      .tfsa-slide h2 { font-size: clamp(34px, 4vw, 54px); max-width: 13ch; }
+      .tfsa-slide p.lede { max-width: 500px; }
+      .tfsa-slide .float-card { padding: 9px 12px; border-radius: 18px; gap: 3px; }
+      .tfsa-slide .plain { font-size: 13px; line-height: 1.12; }
+      .tfsa-slide .bar-chart { gap: 8px; }
+      .tfsa-slide .bar-item { gap: 4px; }
+      .tfsa-slide .bar-track { height: 20px; }
+      .tfsa-slide .metric-row { padding: 5px 0; }
+      .tfsa-slide .number { font-size: clamp(24px, 2.8vw, 38px); }
+      .tfsa-slide .bar-value { font-size: clamp(23px, 2.5vw, 36px); }
       .gauge { height: 28px; margin: 44px 28px 62px; }
       .gauge-mark { top: 40px; gap: 3px; min-width: 110px; font-size: 13px; }
       .gauge-mark::before { height: 16px; top: -28px; }
@@ -495,6 +506,28 @@
       <div class="footer"><span>Estimated monthly float from kids</span><span></span></div>
     </section>
 
+    <section class="slide tfsa-slide" data-note="This is the clean strategic point: if help is needed, the kids' gift should cover the shortfall so the parents' seller-note payments can stay invested in TFSAs. Confirm gift/account treatment with the CPA.">
+      <div class="topbar"><span>Protect the note</span><div class="progress"><span></span></div></div>
+      <div class="content grid-2 float-layout">
+        <div class="float-summary">
+          <div><div class="kicker"><span class="dot"></span>Pizza sale cash flow</div><h2>Protect the $5.5k</h2><p class="lede">The seller note is most valuable when it becomes retirement capital, not monthly float.</p></div>
+          <div class="float-card good"><div class="label">If invested in TFSA</div><div class="number green">$66k → ~$174k</div><div class="plain">At 5% over 20 years, tax-free growth.</div></div>
+          <div class="float-card warn"><div class="label">If used to float bills</div><div class="number red">$0 invested</div><div class="plain">The note delays the problem instead of building assets.</div></div>
+          <div class="float-card"><div class="label">Better family structure</div><div class="number clay">Kids gift shortfall</div><div class="plain">Parents preserve the TFSA contribution stream.</div></div>
+        </div>
+        <div class="panel">
+          <div class="bar-chart">
+            <div class="bar-item"><div class="bar-top"><span class="bar-label">Seller note total</span><span class="bar-value">$66k</span></div><div class="bar-track"><div class="bar-fill clayfill" style="--w:38%"></div></div></div>
+            <div class="bar-item"><div class="bar-top"><span class="bar-label">Invested in TFSA, 10 years</span><span class="bar-value green">~$106k</span></div><div class="bar-track"><div class="bar-fill" style="--w:61%"></div></div></div>
+            <div class="bar-item"><div class="bar-top"><span class="bar-label">Invested in TFSA, 20 years</span><span class="bar-value green">~$174k</span></div><div class="bar-track"><div class="bar-fill" style="--w:100%"></div></div></div>
+            <div class="metric-row"><div><div class="label">Every $1k/mo spent instead</div><div class="plain">Costs roughly future retirement value</div></div><div class="number red">~$32k</div></div>
+            <div class="metric-row"><div><div class="label">$1.35k/mo support gap</div><div class="plain">If paid from the note instead of gifted</div></div><div class="number red">~$43k</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>Gift support can preserve tax-advantaged growth</span><span>CPA to confirm</span></div>
+    </section>
+
     <section class="slide bridge-slide" data-note="The February move-in is a separate bridge cost and risk, especially if the current monthly shortfall continues.">
       <div class="topbar"><span>Move-in delay</span><div class="progress"><span></span></div></div>
       <div class="content grid-2 bridge-layout">
@@ -606,7 +639,7 @@
 
   <nav class="controls" aria-label="Slideshow controls">
     <button class="secondary" id="prev" type="button">←</button>
-    <div class="counter" id="counter">1 / 14</div>
+    <div class="counter" id="counter">1 / 15</div>
     <button id="next" type="button">Next →</button>
   </nav>
 

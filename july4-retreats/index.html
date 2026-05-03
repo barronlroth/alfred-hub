@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>July 4 Retreat Shortlist</title>
+<title>July 4 Retreat Options</title>
 <style>
   * { box-sizing: border-box; }
   :root { --bg:#f7f5ef; --ink:#151515; --muted:#6d6a62; --line:#d8d2c5; --soft:#ebe6da; --white:#fffdf8; }
   html { scroll-behavior: smooth; }
-  body { margin:0; font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--bg); color:var(--ink); }
+  body { margin:0; font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--bg); color:var(--ink); max-width:100%; overflow-x:hidden; }
   a { color: inherit; }
   .wrap { width:min(1440px, calc(100vw - 56px)); margin:0 auto; }
   header { padding:42px 0 22px; border-bottom:1px solid var(--line); position:sticky; top:0; background:color-mix(in srgb, var(--bg) 94%, white); backdrop-filter:blur(8px); z-index:5; }
@@ -17,6 +17,7 @@
   .sub { margin:0; max-width:820px; color:#38352f; font-size:16px; line-height:1.45; }
   nav { display:flex; gap:6px; flex-wrap:wrap; margin-top:22px; }
   nav a { text-decoration:none; border:1px solid var(--line); padding:7px 9px; border-radius:999px; font-size:12px; color:#34312c; background:rgba(255,255,255,.35); }
+  .mobile-nav { display:none; }
   main { padding:28px 0 80px; }
   .summary { display:grid; grid-template-columns:1.2fr .8fr; gap:24px; margin-bottom:30px; }
   .panel { border:1px solid var(--line); background:rgba(255,255,255,.28); padding:18px; }
@@ -39,7 +40,7 @@
   li { margin-bottom:7px; font-size:13px; line-height:1.32; }
   .carousel { border:1px solid var(--line); background:var(--soft); padding:10px; }
   .stage { height:395px; position:relative; overflow:hidden; background:#ddd; }
-  .slide { position:absolute; inset:0; opacity:0; transition:opacity .35s ease; background-size:300% 100%; background-repeat:no-repeat; }
+  .slide { position:absolute; inset:0; opacity:0; transition:opacity .35s ease; background-size:cover; background-repeat:no-repeat; }
   .slide.active { opacity:1; }
   .slide.s1 { background-position:left center; }
   .slide.s2 { background-position:center center; }
@@ -51,24 +52,53 @@
   .caption { font-size:12px; color:var(--muted); }
   .questions { margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
   .footer { margin-top:48px; border-top:1px solid var(--line); padding-top:18px; color:var(--muted); font-size:12px; }
-  @media (max-width:980px) { .summary,.destination,.questions { grid-template-columns:1fr; } .matrix { grid-template-columns:1fr 1fr; } h1 { font-size:38px; } .stage { height:310px; } }
+  @media (max-width:980px) {
+    html, body { width:100%; max-width:100%; overflow-x:hidden; }
+    .wrap { width:100%; max-width:100%; padding-left:14px; padding-right:14px; overflow:hidden; }
+    header { position:static; padding:26px 0 14px; backdrop-filter:none; }
+    h1 { font-size:36px; }
+    .desktop-nav { display:none; }
+    .mobile-nav { display:block; width:100%; margin-top:16px; border:1px solid var(--line); background:var(--white); color:var(--ink); padding:11px 10px; font:inherit; font-size:14px; border-radius:0; }
+    .summary,.destination,.questions { grid-template-columns:1fr; }
+    .panel,.destination,.carousel,.stage { min-width:0; max-width:100%; }
+    .sub,.verdict,.fact,li,.cell { overflow-wrap:anywhere; word-break:normal; }
+    .comparison-panel { display:none; }
+    .matrix { display:block; border-left:0; }
+    .cell { border-left:1px solid var(--line); min-height:auto; width:100%; }
+    .cols,.facts { grid-template-columns:1fr; }
+    .stage { height:260px; }
+    .controls { align-items:flex-start; }
+    .caption { line-height:1.25; }
+  }
 </style>
 </head>
 <body>
 <header>
   <div class="wrap">
     <div class="eyebrow">Barron + Nina · July 4, 2026 · 4BR natural-swim retreat</div>
-    <h1>Retreat shortlist</h1>
-    <p class="sub">A deliberately bare comparison site: fast to scan, useful for group review, with generated mood carousels for how each place is expected to feel. Current bias: natural swimming, fun/cute town energy, countryside/farmhouse where possible, and mixed activity levels.</p>
-    <nav><a href="#west-sonoma">01 Sebastopol</a><a href="#russian-river">02 Russian River</a><a href="#bass-lake">03 Bass Lake + Yosemite</a><a href="#pine-mountain">04 Pine Mountain Lake</a><a href="#tahoe">05 Tahoe</a><a href="#murphys">06 Murphys</a><a href="#anderson-valley">07 Philo</a><a href="#nevada-city">08 Nevada City</a><a href="#point-reyes">09 Point Reyes</a></nav>
+    <h1>July 4 retreat options</h1>
+    <p class="sub">Nine Northern California options for a long weekend built around natural swimming, cute-town energy, countryside/farmhouse feel where possible, and enough variety for mixed activity levels.</p>
+    <nav class="desktop-nav"><a href="#west-sonoma">01 Sebastopol</a><a href="#russian-river">02 Russian River</a><a href="#bass-lake">03 Bass Lake + Yosemite</a><a href="#pine-mountain">04 Pine Mountain Lake</a><a href="#tahoe">05 Tahoe</a><a href="#murphys">06 Murphys</a><a href="#anderson-valley">07 Philo</a><a href="#nevada-city">08 Nevada City</a><a href="#point-reyes">09 Point Reyes</a></nav>
+    <select class="mobile-nav" aria-label="Jump to a destination">
+      <option value="">Jump to a destination</option>
+      <option value="#west-sonoma">01 Sebastopol / Forestville</option>
+      <option value="#russian-river">02 Russian River</option>
+      <option value="#bass-lake">03 Bass Lake + Yosemite</option>
+      <option value="#pine-mountain">04 Pine Mountain Lake</option>
+      <option value="#tahoe">05 Tahoe / Truckee / Donner</option>
+      <option value="#murphys">06 Murphys / Arnold</option>
+      <option value="#anderson-valley">07 Philo / Anderson Valley</option>
+      <option value="#nevada-city">08 Nevada City</option>
+      <option value="#point-reyes">09 Point Reyes</option>
+    </select>
   </div>
 </header>
 <main class="wrap">
   <section class="summary">
     <div class="panel"><h2>Working recommendation</h2><p class="sub"><b>Sebastopol / Forestville / West Sonoma</b> is the current best fit if farmhouse + cute-town + river access matters most. <b>Bass Lake</b> wins if Yosemite/lake swimming becomes the stronger priority. <b>Tahoe</b> is viable and iconic, but July 4 friction is the main tax.</p></div>
-    <div class="panel"><h2>Assumptions</h2><p class="sub">Fri Jul 3 → Mon Jul 6, 2026; 4BR minimum; natural swim preferred over pool; desktop group review; no actual rental availability checked yet.</p></div>
+    <div class="panel"><h2>Trip shape</h2><p class="sub">Fri Jul 3 → Mon Jul 6, 2026; 4BR minimum; natural swimming preferred over pool; house should work for both lounge people and activity people.</p></div>
   </section>
-  <section class="panel" style="margin-bottom:30px;"><h2>Quick comparison</h2><div class="matrix"><div class="cell head">Place</div><div class="cell head">Best at</div><div class="cell head">Swim</div><div class="cell head">Town</div><div class="cell head">Main catch</div><div class="cell"><b>01. Sebastopol / Forestville / West Sonoma</b></div><div class="cell">Best all-around farmhouse + town + river option.</div><div class="cell">Russian River beaches nearby</div><div class="cell">Sebastopol / The Barlow / Healdsburg</div><div class="cell">Not lakefront unless you choose Forestville/Riverfront</div><div class="cell"><b>02. Russian River / Guerneville / Healdsburg</b></div><div class="cell">Most social and easiest natural-swim weekend.</div><div class="cell">River swimming / floating</div><div class="cell">Guerneville + Healdsburg nearby</div><div class="cell">More crowded / party-ish on July 4</div><div class="cell"><b>03. Bass Lake + Yosemite / Oakhurst</b></div><div class="cell">Best lake swimming + Yosemite access.</div><div class="cell">Warm lake swimming, docks, boats</div><div class="cell">Oakhurst / small Bass Lake resort pockets</div><div class="cell">Less of a cute town scene</div><div class="cell"><b>04. Pine Mountain Lake / Groveland</b></div><div class="cell">Most practical Yosemite-adjacent 4BR option.</div><div class="cell">Private lake beaches</div><div class="cell">Groveland / Iron Door Saloon</div><div class="cell">Less magical than Bass Lake</div><div class="cell"><b>05. Tahoe / Truckee / Donner Lake</b></div><div class="cell">Best iconic lake + town, worst July 4 friction.</div><div class="cell">Cold-clear alpine lake / Donner slightly easier</div><div class="cell">Truckee / Tahoe City / Kings Beach</div><div class="cell">July 4 traffic/crowds/pricing are brutal</div><div class="cell"><b>06. Murphys / Arnold</b></div><div class="cell">Dark horse: cute town + mountain swimming + less obvious.</div><div class="cell">White Pines Lake / Stanislaus River</div><div class="cell">Murphys Main Street</div><div class="cell">Swimming spots may require driving</div><div class="cell"><b>07. Philo / Boonville / Anderson Valley</b></div><div class="cell">Best quiet countryside retreat.</div><div class="cell">Navarro River / Hendy Woods holes</div><div class="cell">Boonville / Philo</div><div class="cell">Tiny town scene; not “fun” in a nightlife sense</div><div class="cell"><b>08. Nevada City / Grass Valley</b></div><div class="cell">Best cute town + beautiful river swimming.</div><div class="cell">South Yuba River emerald pools</div><div class="cell">Nevada City / Grass Valley</div><div class="cell">River access can involve scrambling/parking</div><div class="cell"><b>09. Point Reyes / West Marin</b></div><div class="cell">Best aesthetic, weakest warm-swim fit.</div><div class="cell">Tomales Bay / Heart’s Desire calm water</div><div class="cell">Point Reyes Station</div><div class="cell">Fog/cool weather risk on July 4</div></div></section>
+  <section class="panel comparison-panel" style="margin-bottom:30px;"><h2>Quick comparison</h2><div class="matrix"><div class="cell head">Place</div><div class="cell head">Best at</div><div class="cell head">Swim</div><div class="cell head">Town</div><div class="cell head">Main catch</div><div class="cell"><b>01. Sebastopol / Forestville / West Sonoma</b></div><div class="cell">Best all-around farmhouse + town + river option.</div><div class="cell">Russian River beaches nearby</div><div class="cell">Sebastopol / The Barlow / Healdsburg</div><div class="cell">Not lakefront unless you choose Forestville/Riverfront</div><div class="cell"><b>02. Russian River / Guerneville / Healdsburg</b></div><div class="cell">Most social and easiest natural-swim weekend.</div><div class="cell">River swimming / floating</div><div class="cell">Guerneville + Healdsburg nearby</div><div class="cell">More crowded / party-ish on July 4</div><div class="cell"><b>03. Bass Lake + Yosemite / Oakhurst</b></div><div class="cell">Best lake swimming + Yosemite access.</div><div class="cell">Warm lake swimming, docks, boats</div><div class="cell">Oakhurst / small Bass Lake resort pockets</div><div class="cell">Less of a cute town scene</div><div class="cell"><b>04. Pine Mountain Lake / Groveland</b></div><div class="cell">Most practical Yosemite-adjacent 4BR option.</div><div class="cell">Private lake beaches</div><div class="cell">Groveland / Iron Door Saloon</div><div class="cell">Less magical than Bass Lake</div><div class="cell"><b>05. Tahoe / Truckee / Donner Lake</b></div><div class="cell">Best iconic lake + town, worst July 4 friction.</div><div class="cell">Cold-clear alpine lake / Donner slightly easier</div><div class="cell">Truckee / Tahoe City / Kings Beach</div><div class="cell">July 4 traffic/crowds/pricing are brutal</div><div class="cell"><b>06. Murphys / Arnold</b></div><div class="cell">Dark horse: cute town + mountain swimming + less obvious.</div><div class="cell">White Pines Lake / Stanislaus River</div><div class="cell">Murphys Main Street</div><div class="cell">Swimming spots may require driving</div><div class="cell"><b>07. Philo / Boonville / Anderson Valley</b></div><div class="cell">Best quiet countryside retreat.</div><div class="cell">Navarro River / Hendy Woods holes</div><div class="cell">Boonville / Philo</div><div class="cell">Tiny town scene; not “fun” in a nightlife sense</div><div class="cell"><b>08. Nevada City / Grass Valley</b></div><div class="cell">Best cute town + beautiful river swimming.</div><div class="cell">South Yuba River emerald pools</div><div class="cell">Nevada City / Grass Valley</div><div class="cell">River access can involve scrambling/parking</div><div class="cell"><b>09. Point Reyes / West Marin</b></div><div class="cell">Best aesthetic, weakest warm-swim fit.</div><div class="cell">Tomales Bay / Heart’s Desire calm water</div><div class="cell">Point Reyes Station</div><div class="cell">Fog/cool weather risk on July 4</div></div></section>
   
   <section class="destination" id="west-sonoma">
     <div>
@@ -332,12 +362,13 @@
     </div>
   </section>
   <section class="questions">
-    <div class="panel"><h2>Questions for the group</h2><ul><li>Is Yosemite access a must-have or just a nice-to-have?</li><li>Do we want walkable town energy, or is a beautiful house + short drives fine?</li><li>Is cold-clear iconic swimming acceptable, or do we want warm/lazy swimming?</li><li>Are we optimizing for easiest logistics or most memorable setting?</li></ul></div>
-    <div class="panel"><h2>Next step</h2><p class="sub">Pick 3 regions and I’ll do the real availability pass: 4BR+ homes, Fri–Mon or Thu–Mon, natural swim proximity, total cost, cancellation terms, and house vibe ranking.</p></div>
+    <div class="panel"><h2>Decision lens</h2><ul><li><b>Most balanced:</b> Sebastopol / Forestville / West Sonoma</li><li><b>Best lake + Yosemite:</b> Bass Lake</li><li><b>Most iconic:</b> Tahoe / Truckee / Donner, with holiday friction</li><li><b>Most underrated:</b> Murphys / Arnold</li></ul></div>
+    <div class="panel"><h2>Tradeoff to settle</h2><p class="sub">The main fork is countryside/farmhouse with river access versus bigger lake/Yosemite energy. Tahoe remains the scenic heavyweight, but asks the most in traffic, price, and crowd tolerance.</p></div>
   </section>
-  <div class="footer">Generated mood imagery is directional, not listing photography. Built as a minimal static review artifact.</div>
+  <div class="footer">Mood images are illustrative, not property listing photography.</div>
 </main>
 <script>
+  document.querySelector('.mobile-nav')?.addEventListener('change', (event) => { if (event.target.value) window.location.hash = event.target.value; });
   document.querySelectorAll('[data-carousel]').forEach((carousel) => {
     const slides = [...carousel.querySelectorAll('.slide')];
     carousel.querySelectorAll('button').forEach(btn => {

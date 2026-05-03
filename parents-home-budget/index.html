@@ -193,6 +193,18 @@
     .bridge-dot { fill: var(--cream); stroke: var(--red); stroke-width: 7; }
     .bridge-callout { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: end; border-radius: 26px; background: color-mix(in oklch, var(--red) 13%, var(--cream)); border: 1px solid color-mix(in oklch, var(--red) 25%, transparent); padding: 22px 26px; }
 
+    .float-layout { grid-template-columns: minmax(0, .58fr) minmax(560px, 1.16fr); }
+    .float-summary { display: grid; gap: 14px; align-content: start; }
+    .float-card { border-radius: 24px; background: color-mix(in oklch, var(--cream) 88%, white); border: 1px solid var(--line); padding: 16px 18px; display: grid; gap: 7px; }
+    .float-card.good { background: color-mix(in oklch, var(--sage) 16%, var(--cream)); }
+    .float-card.warn { background: color-mix(in oklch, var(--red) 13%, var(--cream)); }
+    .float-chart { border-radius: var(--radius-xl); background: color-mix(in oklch, var(--cream) 90%, white); border: 1px solid var(--line); box-shadow: var(--shadow); padding: clamp(18px, 2vw, 30px); }
+    .float-graph { width: 100%; height: min(48vh, 400px); min-height: 300px; overflow: visible; }
+    .float-area { fill: color-mix(in oklch, var(--red) 14%, transparent); }
+    .float-line { fill: none; stroke: var(--red); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+    .float-dot { fill: var(--cream); stroke: var(--red); stroke-width: 7; }
+    .float-safe-line { stroke: var(--sage-dark); stroke-width: 3; stroke-dasharray: 10 10; }
+
     .gauge { height: 38px; border-radius: 999px; background: linear-gradient(90deg, var(--sage) 0 64%, var(--gold) 64% 74%, var(--red) 74% 100%); box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--ink) 20%, transparent); position: relative; margin: 72px 32px 96px; }
     .gauge-mark { position: absolute; top: 58px; transform: translateX(-50%); display: grid; justify-items: center; gap: 8px; min-width: 140px; color: var(--ink-soft); font-weight: 900; text-align: center; }
     .gauge-mark::before { content: ""; width: 2px; height: 22px; background: color-mix(in oklch, var(--ink) 35%, transparent); position: absolute; top: -42px; }
@@ -270,13 +282,18 @@
       .bridge-line { stroke-width: 7; }
       .bridge-dot { r: 10px; stroke-width: 5; }
       .bridge-callout { padding: 14px 18px; border-radius: 20px; }
-      .slide:nth-of-type(9) .content { gap: 12px; }
-      .slide:nth-of-type(9) h2 { max-width: 16ch; }
-      .slide:nth-of-type(9) p.lede { margin-top: 8px; max-width: 760px; }
-      .slide:nth-of-type(9) .bridge-chart { padding: 14px 16px; gap: 8px; }
-      .slide:nth-of-type(9) .bridge-graph { height: 300px; }
-      .slide:nth-of-type(9) .bridge-callout { padding: 10px 16px; }
-      .slide:nth-of-type(9) .bridge-callout .plain { font-size: 14px; }
+      .float-layout { grid-template-columns: minmax(0, .56fr) minmax(500px, 1.18fr); }
+      .float-summary { gap: 10px; }
+      .float-card { padding: 12px 14px; border-radius: 20px; gap: 4px; }
+      .float-chart { padding: 12px 14px; border-radius: 22px; }
+      .float-graph { min-height: 0; height: 310px; }
+      .slide.bridge-slide .content { gap: 12px; }
+      .slide.bridge-slide h2 { max-width: 16ch; }
+      .slide.bridge-slide p.lede { margin-top: 8px; max-width: 760px; }
+      .slide.bridge-slide .bridge-chart { padding: 14px 16px; gap: 8px; }
+      .slide.bridge-slide .bridge-graph { height: 300px; }
+      .slide.bridge-slide .bridge-callout { padding: 10px 16px; }
+      .slide.bridge-slide .bridge-callout .plain { font-size: 14px; }
       .gauge { height: 28px; margin: 44px 28px 62px; }
       .gauge-mark { top: 40px; gap: 3px; min-width: 110px; font-size: 13px; }
       .gauge-mark::before { height: 16px; top: -28px; }
@@ -298,6 +315,9 @@
       .equation { grid-template-columns: 1fr; }
       .eq-sign { display: none; }
       .bridge-callout { grid-template-columns: 1fr; }
+      .float-layout { grid-template-columns: 1fr; }
+      .float-graph { height: 310px; min-height: 0; }
+      .float-summary { gap: 12px; }
       .water-row { grid-template-columns: 1fr; gap: 8px; }
       .water-value { text-align: left; }
       .content { gap: 22px; align-self: start; padding-top: 22px; }
@@ -432,7 +452,50 @@
       <div class="footer"><span>This is the family-support decision</span><span></span></div>
     </section>
 
-    <section class="slide" data-note="The February move-in is a separate bridge cost and risk, especially if the current monthly shortfall continues.">
+    <section class="slide" data-note="Show that the support burden rises quickly with price. The safe zone is near $500k all-in; $600k and $650k still likely need meaningful monthly help.">
+      <div class="topbar"><span>Support curve</span><div class="progress"><span></span></div></div>
+      <div class="content grid-2 float-layout">
+        <div class="float-summary">
+          <div><div class="kicker"><span class="dot"></span>Home price</div><h2>Support curve</h2><p class="lede">Every extra $50k of home price increases the monthly float.</p></div>
+          <div class="float-card good"><div class="label">Around $500k</div><div class="number green">~$300/mo</div><div class="plain">Tiny enough to manage or absorb.</div></div>
+          <div class="float-card"><div class="label">Around $600k</div><div class="number red">~$1k/mo</div><div class="plain">Now the kids are part of the plan.</div></div>
+          <div class="float-card warn"><div class="label">Around $650k+</div><div class="number red">$1.35k+/mo</div><div class="plain">Ongoing family subsidy territory.</div></div>
+        </div>
+        <div class="float-chart">
+          <svg class="float-graph" viewBox="0 0 1040 420" role="img" aria-label="Line graph of home price from four hundred thousand to seven hundred fifty thousand and estimated monthly support from kids">
+            <line class="gridline" x1="90" y1="95" x2="960" y2="95" />
+            <line class="gridline" x1="90" y1="159" x2="960" y2="159" />
+            <line class="gridline" x1="90" y1="223" x2="960" y2="223" />
+            <line class="gridline" x1="90" y1="286" x2="960" y2="286" />
+            <line class="gridline" x1="90" y1="350" x2="960" y2="350" />
+            <line class="float-safe-line" x1="347" y1="60" x2="347" y2="358" />
+            <text class="axis-label" x="28" y="101">$2k</text>
+            <text class="axis-label" x="18" y="165">$1.5k</text>
+            <text class="axis-label" x="28" y="229">$1k</text>
+            <text class="axis-label" x="18" y="292">$500</text>
+            <text class="axis-label" x="50" y="356">$0</text>
+            <polygon class="float-area" points="110,350 229,350 347,311 466,267 584,223 703,178 821,134 940,90 940,350" />
+            <path class="float-line" d="M110 350 L229 350 L347 311 L466 267 L584 223 L703 178 L821 134 L940 90" />
+            <circle class="float-dot" cx="347" cy="311" r="13" />
+            <circle class="float-dot" cx="584" cy="223" r="13" />
+            <circle class="float-dot" cx="703" cy="178" r="13" />
+            <circle class="float-dot" cx="940" cy="90" r="13" />
+            <text class="axis-label" x="86" y="395">$400k</text>
+            <text class="axis-label" x="323" y="395">$500k</text>
+            <text class="axis-label" x="559" y="395">$600k</text>
+            <text class="axis-label" x="678" y="395">$650k</text>
+            <text class="axis-label" x="913" y="395">$750k</text>
+            <text class="graph-value small" x="278" y="292">~$300</text>
+            <text class="graph-value small" x="526" y="204">~$1k</text>
+            <text class="graph-value small" x="646" y="160">~$1.35k</text>
+            <text class="graph-value" x="785" y="70">~$2k/mo</text>
+          </svg>
+        </div>
+      </div>
+      <div class="footer"><span>Estimated monthly float from kids</span><span></span></div>
+    </section>
+
+    <section class="slide bridge-slide" data-note="The February move-in is a separate bridge cost and risk, especially if the current monthly shortfall continues.">
       <div class="topbar"><span>Move-in delay</span><div class="progress"><span></span></div></div>
       <div class="content grid-2 bridge-layout">
         <div class="bridge-summary">

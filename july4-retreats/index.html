@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>July 4 Retreat Shortlist</title>
+<style>
+  * { box-sizing: border-box; }
+  :root { --bg:#f7f5ef; --ink:#151515; --muted:#6d6a62; --line:#d8d2c5; --soft:#ebe6da; --white:#fffdf8; }
+  html { scroll-behavior: smooth; }
+  body { margin:0; font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--bg); color:var(--ink); }
+  a { color: inherit; }
+  .wrap { width:min(1440px, calc(100vw - 56px)); margin:0 auto; }
+  header { padding:42px 0 22px; border-bottom:1px solid var(--line); position:sticky; top:0; background:color-mix(in srgb, var(--bg) 94%, white); backdrop-filter:blur(8px); z-index:5; }
+  .eyebrow { font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); }
+  h1 { margin:10px 0 8px; font-size:48px; line-height:.96; letter-spacing:-.04em; font-weight:520; }
+  .sub { margin:0; max-width:820px; color:#38352f; font-size:16px; line-height:1.45; }
+  nav { display:flex; gap:6px; flex-wrap:wrap; margin-top:22px; }
+  nav a { text-decoration:none; border:1px solid var(--line); padding:7px 9px; border-radius:999px; font-size:12px; color:#34312c; background:rgba(255,255,255,.35); }
+  main { padding:28px 0 80px; }
+  .summary { display:grid; grid-template-columns:1.2fr .8fr; gap:24px; margin-bottom:30px; }
+  .panel { border:1px solid var(--line); background:rgba(255,255,255,.28); padding:18px; }
+  h2 { margin:0 0 10px; font-size:16px; letter-spacing:-.01em; }
+  .matrix { display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line); }
+  .cell { border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:10px; min-height:56px; font-size:12px; }
+  .head { color:var(--muted); text-transform:uppercase; letter-spacing:.08em; font-size:10px; }
+  .destination { display:grid; grid-template-columns:1fr 1.04fr; gap:28px; padding:34px 0; border-top:1px solid var(--line); scroll-margin-top:150px; }
+  .meta { display:flex; align-items:baseline; gap:12px; margin-bottom:8px; }
+  .rank { font-size:12px; color:var(--muted); }
+  .score { margin-left:auto; border:1px solid var(--ink); padding:3px 7px; font-size:12px; }
+  h3 { font-size:31px; line-height:1.02; letter-spacing:-.035em; margin:0 0 8px; font-weight:520; }
+  .verdict { font-size:15px; margin:0 0 16px; color:#302d27; }
+  .facts { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin:14px 0 18px; }
+  .fact { border-top:1px solid var(--line); padding-top:8px; font-size:12px; }
+  .fact b { display:block; color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:.07em; font-size:10px; margin-bottom:3px; }
+  .cols { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .cols h4 { margin:0 0 8px; font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:560; }
+  ul { margin:0; padding-left:17px; }
+  li { margin-bottom:7px; font-size:13px; line-height:1.32; }
+  .carousel { border:1px solid var(--line); background:var(--soft); padding:10px; }
+  .stage { height:395px; position:relative; overflow:hidden; background:#ddd; }
+  .slide { position:absolute; inset:0; opacity:0; transition:opacity .35s ease; background-size:300% 100%; background-repeat:no-repeat; }
+  .slide.active { opacity:1; }
+  .slide.s1 { background-position:left center; }
+  .slide.s2 { background-position:center center; }
+  .slide.s3 { background-position:right center; }
+  .controls { display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:10px; }
+  .buttons { display:flex; gap:6px; }
+  button { appearance:none; border:1px solid var(--line); background:var(--white); padding:6px 9px; cursor:pointer; font:inherit; font-size:12px; }
+  button:hover { border-color:var(--ink); }
+  .caption { font-size:12px; color:var(--muted); }
+  .questions { margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .footer { margin-top:48px; border-top:1px solid var(--line); padding-top:18px; color:var(--muted); font-size:12px; }
+  @media (max-width:980px) { .summary,.destination,.questions { grid-template-columns:1fr; } .matrix { grid-template-columns:1fr 1fr; } h1 { font-size:38px; } .stage { height:310px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Barron + Nina · July 4, 2026 · 4BR natural-swim retreat</div>
+    <h1>Retreat shortlist</h1>
+    <p class="sub">A deliberately bare comparison site: fast to scan, useful for group review, with generated mood carousels for how each place is expected to feel. Current bias: natural swimming, fun/cute town energy, countryside/farmhouse where possible, and mixed activity levels.</p>
+    <nav><a href="#west-sonoma">01 Sebastopol</a><a href="#russian-river">02 Russian River</a><a href="#bass-lake">03 Bass Lake + Yosemite</a><a href="#pine-mountain">04 Pine Mountain Lake</a><a href="#tahoe">05 Tahoe</a><a href="#murphys">06 Murphys</a><a href="#anderson-valley">07 Philo</a><a href="#nevada-city">08 Nevada City</a><a href="#point-reyes">09 Point Reyes</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <section class="summary">
+    <div class="panel"><h2>Working recommendation</h2><p class="sub"><b>Sebastopol / Forestville / West Sonoma</b> is the current best fit if farmhouse + cute-town + river access matters most. <b>Bass Lake</b> wins if Yosemite/lake swimming becomes the stronger priority. <b>Tahoe</b> is viable and iconic, but July 4 friction is the main tax.</p></div>
+    <div class="panel"><h2>Assumptions</h2><p class="sub">Fri Jul 3 → Mon Jul 6, 2026; 4BR minimum; natural swim preferred over pool; desktop group review; no actual rental availability checked yet.</p></div>
+  </section>
+  <section class="panel" style="margin-bottom:30px;"><h2>Quick comparison</h2><div class="matrix"><div class="cell head">Place</div><div class="cell head">Best at</div><div class="cell head">Swim</div><div class="cell head">Town</div><div class="cell head">Main catch</div><div class="cell"><b>01. Sebastopol / Forestville / West Sonoma</b></div><div class="cell">Best all-around farmhouse + town + river option.</div><div class="cell">Russian River beaches nearby</div><div class="cell">Sebastopol / The Barlow / Healdsburg</div><div class="cell">Not lakefront unless you choose Forestville/Riverfront</div><div class="cell"><b>02. Russian River / Guerneville / Healdsburg</b></div><div class="cell">Most social and easiest natural-swim weekend.</div><div class="cell">River swimming / floating</div><div class="cell">Guerneville + Healdsburg nearby</div><div class="cell">More crowded / party-ish on July 4</div><div class="cell"><b>03. Bass Lake + Yosemite / Oakhurst</b></div><div class="cell">Best lake swimming + Yosemite access.</div><div class="cell">Warm lake swimming, docks, boats</div><div class="cell">Oakhurst / small Bass Lake resort pockets</div><div class="cell">Less of a cute town scene</div><div class="cell"><b>04. Pine Mountain Lake / Groveland</b></div><div class="cell">Most practical Yosemite-adjacent 4BR option.</div><div class="cell">Private lake beaches</div><div class="cell">Groveland / Iron Door Saloon</div><div class="cell">Less magical than Bass Lake</div><div class="cell"><b>05. Tahoe / Truckee / Donner Lake</b></div><div class="cell">Best iconic lake + town, worst July 4 friction.</div><div class="cell">Cold-clear alpine lake / Donner slightly easier</div><div class="cell">Truckee / Tahoe City / Kings Beach</div><div class="cell">July 4 traffic/crowds/pricing are brutal</div><div class="cell"><b>06. Murphys / Arnold</b></div><div class="cell">Dark horse: cute town + mountain swimming + less obvious.</div><div class="cell">White Pines Lake / Stanislaus River</div><div class="cell">Murphys Main Street</div><div class="cell">Swimming spots may require driving</div><div class="cell"><b>07. Philo / Boonville / Anderson Valley</b></div><div class="cell">Best quiet countryside retreat.</div><div class="cell">Navarro River / Hendy Woods holes</div><div class="cell">Boonville / Philo</div><div class="cell">Tiny town scene; not “fun” in a nightlife sense</div><div class="cell"><b>08. Nevada City / Grass Valley</b></div><div class="cell">Best cute town + beautiful river swimming.</div><div class="cell">South Yuba River emerald pools</div><div class="cell">Nevada City / Grass Valley</div><div class="cell">River access can involve scrambling/parking</div><div class="cell"><b>09. Point Reyes / West Marin</b></div><div class="cell">Best aesthetic, weakest warm-swim fit.</div><div class="cell">Tomales Bay / Heart’s Desire calm water</div><div class="cell">Point Reyes Station</div><div class="cell">Fog/cool weather risk on July 4</div></div></section>
+  
+  <section class="destination" id="west-sonoma">
+    <div>
+      <div class="meta"><span class="rank">01</span><span class="score">fit 9.2/10</span></div>
+      <h3>Sebastopol / Forestville / West Sonoma</h3>
+      <p class="verdict">Best all-around farmhouse + town + river option.</p>
+      <div class="facts">
+        <div class="fact"><b>Drive</b>1.25–2h</div>
+        <div class="fact"><b>Swimming</b>Russian River beaches nearby</div>
+        <div class="fact"><b>Town</b>Sebastopol / The Barlow / Healdsburg</div>
+        <div class="fact"><b>Rental fit</b>Renovated farmhouses, orchard homes, modern ranches</div>
+      </div>
+      <div class="cols">
+        <div><h4>Pros</h4><ul><li>Best match for farmhouse/countryside brief</li><li>Easy logistics from SF</li><li>River swimming plus wine/cider/food</li><li>Can scale from lazy house weekend to active day trips</li></ul></div>
+        <div><h4>Cons</h4><ul><li>Not lakefront unless you choose Forestville/Riverfront</li><li>Russian River can be busy July 4</li><li>A few drives needed between house, river, dinner</li></ul></div>
+        <div><h4>Fun parts</h4><ul><li>River float or Steelhead/Sunset Beach</li><li>The Barlow for cider, wine, food, shopping</li><li>Healdsburg dinner</li><li>Armstrong Redwoods or Sonoma Coast detour</li></ul></div>
+      </div>
+    </div>
+    <div class="carousel" data-carousel>
+      <div class="stage">
+        <div class="slide s1 active" style="background-image:url('assets/west-sonoma.png')"></div>
+        <div class="slide s2" style="background-image:url('assets/west-sonoma.png')"></div>
+        <div class="slide s3" style="background-image:url('assets/west-sonoma.png')"></div>
+      </div>
+      <div class="controls">
+        <span class="caption">Mood: orchards, dry grass, renovated farmhouse, river dip, cider courtyard</span>
+        <span class="buttons"><button data-goto="0">1</button><button data-goto="1">2</button><button data-goto="2">3</button></span>
+      </div>
+    </div>
+  </section>
+  <section class="destination" id="russian-river">
+    <div>
+      <div class="meta"><span class="rank">02</span><span class="score">fit 9.0/10</span></div>
+      <h3>Russian River / Guerneville / Healdsburg</h3>
+      <p class="verdict">Most social and easiest natural-swim weekend.</p>
+      <div class="facts">
+        <div class="fact"><b>Drive</b>1.5–2h</div>
+        <div class="fact"><b>Swimming</b>River swimming / floating</div>
+        <div class="fact"><b>Town</b>Guerneville + Healdsburg nearby</div>
+        <div class="fact"><b>Rental fit</b>Riverfront cabins, redwood houses, casual compounds</div>
+      </div>
+      <div class="cols">
+        <div><h4>Pros</h4><ul><li>Very inclusive for mixed activity levels</li><li>Shortest drive with real swim/floating</li><li>Quirky fun town plus polished Healdsburg nearby</li><li>Good 4BR inventory</li></ul></div>
+        <div><h4>Cons</h4><ul><li>More crowded / party-ish on July 4</li><li>Less polished farmhouse than West Sonoma</li><li>Riverfront places book quickly</li></ul></div>
+        <div><h4>Fun parts</h4><ul><li>Johnson’s Beach</li><li>Lazy river float</li><li>Korbel / nearby wineries</li><li>Healdsburg Plaza dinner</li></ul></div>
+      </div>
+    </div>
+    <div class="carousel" data-carousel>
+      <div class="stage">
+        <div class="slide s1 active" style="background-image:url('assets/russian-river.png')"></div>
+        <div class="slide s2" style="background-image:url('assets/russian-river.png')"></div>
+        <div class="slide s3" style="background-image:url('assets/russian-river.png')"></div>
+      </div>
+      <div class="controls">
+        <span class="caption">Mood: redwoods, inner tubes, vintage town, vineyard dinner</span>
+        <span class="buttons"><button data-goto="0">1</button><button data-goto="1">2</button><button data-goto="2">3</button></span>
+      </div>
+    </div>
+  </section>
+  <section class="destination" id="bass-lake">
+    <div>
+      <div class="meta"><span class="rank">03</span><span class="score">fit 8.8/10</span></div>
+      <h3>Bass Lake + Yosemite / Oakhurst</h3>
+      <p class="verdict">Best lake swimming + Yosemite access.</p>
+      <div class="facts">
+        <div class="fact"><b>Drive</b>3.5–4h</div>
+        <div class="fact"><b>Swimming</b>Warm lake swimming, docks, boats</div>
+        <div class="fact"><b>Town</b>Oakhurst / small Bass Lake resort pockets</div>
+        <div class="fact"><b>Rental fit</b>Lake houses, pine decks, dock-adjacent cabins</div>
+      </div>
+      <div class="cols">
+        <div><h4>Pros</h4><ul><li>Strongest true lake-swim answer</li><li>Yosemite south entrance access</li><li>Feels like a real summer vacation</li><li>Great for boat day + optional Yosemite</li></ul></div>
+        <div><h4>Cons</h4><ul><li>Less of a cute town scene</li><li>Holiday inventory/boat rentals go fast</li><li>Longer drive</li></ul></div>
+        <div><h4>Fun parts</h4><ul><li>Pontoon / boat rental</li><li>Dock swimming</li><li>Mariposa Grove / Yosemite day</li><li>Lake BBQ night</li></ul></div>
+      </div>
+    </div>
+    <div class="carousel" data-carousel>
+      <div class="stage">
+        <div class="slide s1 active" style="background-image:url('assets/bass-lake.png')"></div>
+        <div class="slide s2" style="background-image:url('assets/bass-lake.png')"></div>
+        <div class="slide s3" style="background-image:url('assets/bass-lake.png')"></div>
+      </div>
+      <div class="controls">
+        <span class="caption">Mood: pine lake, dock swims, wood decks, Yosemite side quest</span>
+        <span class="buttons"><button data-goto="0">1</button><button data-goto="1">2</button><button data-goto="2">3</button></span>
+      </div>
+    </div>
+  </section>
+  <section class="destination" id="pine-mountain">
+    <div>
+      <div class="meta"><span class="rank">04</span><span class="score">fit 8.1/10</span></div>
+      <h3>Pine Mountain Lake / Groveland</h3>
+      <p class="verdict">Most practical Yosemite-adjacent 4BR option.</p>
+      <div class="facts">
+        <div class="fact"><b>Drive</b>3h</div>
+        <div class="fact"><b>Swimming</b>Private lake beaches</div>
+        <div class="fact"><b>Town</b>Groveland / Iron Door Saloon</div>
+        <div class="fact"><b>Rental fit</b>Large vacation homes in gated lake community</div>
+      </div>
+      <div class="cols">
+        <div><h4>Pros</h4><ul><li>Good 4BR inventory</li><li>Private lake infrastructure</li><li>Closest practical Yosemite access</li><li>Golf/stables/beaches for mixed group</li></ul></div>
+        <div><h4>Cons</h4><ul><li>Less magical than Bass Lake</li><li>Gated-community feel</li><li>Town is tiny</li></ul></div>
+        <div><h4>Fun parts</h4><ul><li>Lake beach day</li><li>Iron Door Saloon</li><li>Yosemite Big Oak Flat entrance</li><li>Horseback/golf</li></ul></div>
+      </div>
+    </div>
+    <div class="carousel" data-carousel>
+      <div class="stage">
+        <div class="slide s1 active" style="background-image:url('assets/pine-mountain.png')"></div>
+        <div class="slide s2" style="background-image:url('assets/pine-mountain.png')"></div>
+        <div class="slide s3" style="background-image:url('assets/pine-mountain.png')"></div>
+      </div>
+      <div class="controls">
+        <span class="caption">Mood: private lake, Gold Rush main street, forest cabin</span>
+        <span class="buttons"><button data-goto="0">1</button><button data-goto="1">2</button><button data-goto="2">3</button></span>
+      </div>
+    </div>
+  </section>
+  <section class="destination" id="tahoe">
+    <div>
+      <div class="meta"><span class="rank">05</span><span class="score">fit 8.0/10</span></div>
+      <h3>Tahoe / Truckee / Donner Lake</h3>
+      <p class="verdict">Best iconic lake + town, worst July 4 friction.</p>
+      <div class="facts">
+        <div class="fact"><b>Drive</b>4h+ holiday variable</div>
+        <div class="fact"><b>Swimming</b>Cold-clear alpine lake / Donner slightly easier</div>
+        <div class="fact"><b>Town</b>Truckee / Tahoe City / Kings Beach</div>
+        <div class="fact"><b>Rental fit</b>Modern mountain cabins, lake houses, ski homes</div>
+      </div>
+      <div class="cols">
+        <div><h4>Pros</h4><ul><li>Most dramatic scenery</li><li>Real fun towns and restaurants</li><li>Lots of 4BR inventory</li><li>Great for active group</li></ul></div>
+        <div><h4>Cons</h4><ul><li>July 4 traffic/crowds/pricing are brutal</li><li>Lake is still cold</li><li>Parking/logistics can dominate the trip</li></ul></div>
+        <div><h4>Fun parts</h4><ul><li>Donner Lake swim</li><li>Truckee dinner</li><li>Paddleboard / boat</li><li>Tahoe beach day</li></ul></div>
+      </div>
+    </div>
+    <div class="carousel" data-carousel>
+      <div class="stage">
+        <div class="slide s1 active" style="background-image:url('assets/tahoe.png')"></div>
+        <div class="slide s2" style="background-image:url('assets/tahoe.png')"></div>
+        <div class="slide s3" style="background-image:url('assets/tahoe.png')"></div>
+      </div>
+      <div class="controls">
+        <span class="caption">Mood: alpine lake, historic town, pine-deck cabin</span>
+        <span class="buttons"><button data-goto="0">1</button><button data-goto="1">2</button><button data-goto="2">3</button></span>
+      </div>
+    </div>
+  </section>
+  <section class="destination" id="murphys">
+    <div>
+      <div class="meta"><span class="rank">06</span><span class="score">fit 7.8/10</span></div>
+      <h3>Murphys / Arnold</h3>
+      <p class="verdict">Dark horse: cute town + mountain swimming + less obvious.</p>
+      <div class="facts">
+        <div class="fact"><b>Drive</b>2.5–3h</div>
+        <div class="fact"><b>Swimming</b>White Pines Lake / Stanislaus River</div>
+        <div class="fact"><b>Town</b>Murphys Main Street</div>
+        <div class="fact"><b>Rental fit</b>Cabin-chic homes, foothill retreats</div>
+      </div>
+      <div class="cols">
+        <div><h4>Pros</h4><ul><li>Murphys is genuinely charming</li><li>Good wine tasting without Napa stiffness</li><li>Swimming + Big Trees nature</li><li>More novel than the usual Tahoe/River choice</li></ul></div>
+        <div><h4>Cons</h4><ul><li>Swimming spots may require driving</li><li>More cabin than farmhouse</li><li>Hot inland July afternoons</li></ul></div>
+        <div><h4>Fun parts</h4><ul><li>Murphys tasting rooms</li><li>White Pines Lake</li><li>Calaveras Big Trees</li><li>Cabin dinner</li></ul></div>
+      </div>
+    </div>
+    <div class="carousel" data-carousel>
+      <div class="stage">
+        <div class="slide s1 active" style="background-image:url('assets/murphys.png')"></div>
+        <div class="slide s2" style="background-image:url('assets/murphys.png')"></div>
+        <div class="slide s3" style="background-image:url('assets/murphys.png')"></div>
+      </div>
+      <div class="controls">
+        <span class="caption">Mood: gold rush main street, pine lake, cabin dinner</span>
+        <span class="buttons"><button data-goto="0">1</button><button data-goto="1">2</button><button data-goto="2">3</button></span>
+      </div>
+    </div>
+  </section>
+  <section class="destination" id="anderson-valley">
+    <div>
+      <div class="meta"><span class="rank">07</span><span class="score">fit 7.6/10</span></div>
+      <h3>Philo / Boonville / Anderson Valley</h3>
+      <p class="verdict">Best quiet countryside retreat.</p>
+      <div class="facts">
+        <div class="fact"><b>Drive</b>2.5–3h</div>
+        <div class="fact"><b>Swimming</b>Navarro River / Hendy Woods holes</div>
+        <div class="fact"><b>Town</b>Boonville / Philo</div>
+        <div class="fact"><b>Rental fit</b>Vineyard farmhouses, orchard homes, rustic retreats</div>
+      </div>
+      <div class="cols">
+        <div><h4>Pros</h4><ul><li>Most true “escape to a farmhouse” feeling</li><li>Excellent wine and food without crowd energy</li><li>Gorgeous, quiet, grown-up</li><li>Good for cooking and lingering</li></ul></div>
+        <div><h4>Cons</h4><ul><li>Tiny town scene; not “fun” in a nightlife sense</li><li>Smaller 4BR inventory</li><li>Swimming less turnkey than a lake</li></ul></div>
+        <div><h4>Fun parts</h4><ul><li>Pennyroyal Farm</li><li>Anderson Valley pinot</li><li>Hendy Woods</li><li>Navarro River dip</li></ul></div>
+      </div>
+    </div>
+    <div class="carousel" data-carousel>
+      <div class="stage">
+        <div class="slide s1 active" style="background-image:url('assets/anderson-valley.png')"></div>
+        <div class="slide s2" style="background-image:url('assets/anderson-valley.png')"></div>
+        <div class="slide s3" style="background-image:url('assets/anderson-valley.png')"></div>
+      </div>
+      <div class="controls">
+        <span class="caption">Mood: vineyard farmhouse, redwood river, tiny farm town</span>
+        <span class="buttons"><button data-goto="0">1</button><button data-goto="1">2</button><button data-goto="2">3</button></span>
+      </div>
+    </div>
+  </section>
+  <section class="destination" id="nevada-city">
+    <div>
+      <div class="meta"><span class="rank">08</span><span class="score">fit 7.5/10</span></div>
+      <h3>Nevada City / Grass Valley</h3>
+      <p class="verdict">Best cute town + beautiful river swimming.</p>
+      <div class="facts">
+        <div class="fact"><b>Drive</b>2.5–3h</div>
+        <div class="fact"><b>Swimming</b>South Yuba River emerald pools</div>
+        <div class="fact"><b>Town</b>Nevada City / Grass Valley</div>
+        <div class="fact"><b>Rental fit</b>Victorians, forest houses, countryside retreats</div>
+      </div>
+      <div class="cols">
+        <div><h4>Pros</h4><ul><li>Possibly cutest town on list</li><li>South Yuba is spectacular</li><li>Good restaurants/bookstores/music</li><li>Feels different from wine country</li></ul></div>
+        <div><h4>Cons</h4><ul><li>River access can involve scrambling/parking</li><li>Hot July afternoons</li><li>Not as lazy/swim-house as lake options</li></ul></div>
+        <div><h4>Fun parts</h4><ul><li>South Yuba swimming holes</li><li>Nevada City wandering</li><li>Live music</li><li>Historic bars/cafes</li></ul></div>
+      </div>
+    </div>
+    <div class="carousel" data-carousel>
+      <div class="stage">
+        <div class="slide s1 active" style="background-image:url('assets/nevada-city.png')"></div>
+        <div class="slide s2" style="background-image:url('assets/nevada-city.png')"></div>
+        <div class="slide s3" style="background-image:url('assets/nevada-city.png')"></div>
+      </div>
+      <div class="controls">
+        <span class="caption">Mood: Victorian town, emerald river, forest porch</span>
+        <span class="buttons"><button data-goto="0">1</button><button data-goto="1">2</button><button data-goto="2">3</button></span>
+      </div>
+    </div>
+  </section>
+  <section class="destination" id="point-reyes">
+    <div>
+      <div class="meta"><span class="rank">09</span><span class="score">fit 7.1/10</span></div>
+      <h3>Point Reyes / West Marin</h3>
+      <p class="verdict">Best aesthetic, weakest warm-swim fit.</p>
+      <div class="facts">
+        <div class="fact"><b>Drive</b>1–1.5h</div>
+        <div class="fact"><b>Swimming</b>Tomales Bay / Heart’s Desire calm water</div>
+        <div class="fact"><b>Town</b>Point Reyes Station</div>
+        <div class="fact"><b>Rental fit</b>Coastal barns, ranch houses, bay-view homes</div>
+      </div>
+      <div class="cols">
+        <div><h4>Pros</h4><ul><li>Most beautiful farmhouse/coastal ranch aesthetic</li><li>Oysters/cheese/farmstand heaven</li><li>Short drive</li><li>Great for calm scenic weekend</li></ul></div>
+        <div><h4>Cons</h4><ul><li>Fog/cool weather risk on July 4</li><li>Not a warm lake/river swim vibe</li><li>4BR homes can be pricey/tight</li></ul></div>
+        <div><h4>Fun parts</h4><ul><li>Tomales Bay kayak/swim</li><li>Oysters</li><li>Point Reyes Station</li><li>Coastal hikes/beaches</li></ul></div>
+      </div>
+    </div>
+    <div class="carousel" data-carousel>
+      <div class="stage">
+        <div class="slide s1 active" style="background-image:url('assets/point-reyes.png')"></div>
+        <div class="slide s2" style="background-image:url('assets/point-reyes.png')"></div>
+        <div class="slide s3" style="background-image:url('assets/point-reyes.png')"></div>
+      </div>
+      <div class="controls">
+        <span class="caption">Mood: coastal barn, Tomales Bay, oysters and fog</span>
+        <span class="buttons"><button data-goto="0">1</button><button data-goto="1">2</button><button data-goto="2">3</button></span>
+      </div>
+    </div>
+  </section>
+  <section class="questions">
+    <div class="panel"><h2>Questions for the group</h2><ul><li>Is Yosemite access a must-have or just a nice-to-have?</li><li>Do we want walkable town energy, or is a beautiful house + short drives fine?</li><li>Is cold-clear iconic swimming acceptable, or do we want warm/lazy swimming?</li><li>Are we optimizing for easiest logistics or most memorable setting?</li></ul></div>
+    <div class="panel"><h2>Next step</h2><p class="sub">Pick 3 regions and I’ll do the real availability pass: 4BR+ homes, Fri–Mon or Thu–Mon, natural swim proximity, total cost, cancellation terms, and house vibe ranking.</p></div>
+  </section>
+  <div class="footer">Generated mood imagery is directional, not listing photography. Built as a minimal static review artifact.</div>
+</main>
+<script>
+  document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+    const slides = [...carousel.querySelectorAll('.slide')];
+    carousel.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => { slides.forEach(s => s.classList.remove('active')); slides[Number(btn.dataset.goto)].classList.add('active'); });
+    });
+  });
+</script>
+</body>
+</html>

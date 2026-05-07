@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CXAS Skill Architecture Philosophies</title>
+  <meta name="description" content="A comparison of many small skills versus one router skill with reference files for CX Agent Studio agent development." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f5f5f5;
+      --paper-2: #ffffff;
+      --ink: #2d3142;
+      --muted: #4f5d75;
+      --soft: #7a8399;
+      --rule: rgba(45,49,66,0.12);
+      --rule-solid: #bfc0c0;
+      --accent: #eb6c36;
+      --accent-tint: rgba(235,108,54,0.08);
+      --link: #2e5aa8;
+      --max: 1280px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: min(var(--max), calc(100vw - 48px));
+      margin: 0 auto;
+      padding: 56px 0 40px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 920px;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(44px, 7vw, 84px);
+      font-weight: 400;
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      margin: 24px 0 0;
+      max-width: 780px;
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .surface {
+      margin-top: 44px;
+      padding: 32px;
+      background: var(--paper);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .panel {
+      min-width: 0;
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel h2 {
+      margin: 0;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .tag {
+      flex: 0 0 auto;
+      border: 1px solid var(--rule-solid);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+
+    .panel p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1.12fr 0.92fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .card {
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin: 8px 0 8px;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .card p, .card li {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .card p { margin: 0; }
+    .card ul { margin: 0; padding-left: 18px; }
+
+    .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--soft);
+      font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      main { width: min(100vw - 28px, var(--max)); padding-top: 32px; }
+      .surface { padding: 20px 0; }
+      .comparison, .cards { grid-template-columns: 1fr; }
+      .panel { padding: 18px; }
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">CX Agent Studio · skill architecture</p>
+    <h1>Two competing philosophies for agent-builder skills.</h1>
+    <p class="subtitle">The question is not whether CXAS needs procedural knowledge. It does. The decision is whether that knowledge should appear to coding agents as many independent top-level skills, or as one compact router skill that loads focused reference files on demand.</p>
+
+    <section class="surface" aria-label="Skill architecture comparison">
+      <div class="comparison">
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Many small skills</h2>
+            <span class="tag">school A</span>
+          </div>
+          <p>Each phase of the customer-service agent lifecycle becomes a separate discoverable skill. Useful when tasks are sharply bounded; noisy when every platform capability becomes another item in the global skill list.</p>
+
+          <svg viewBox="0 0 552 440" role="img" aria-label="Many small skills diagram">
+            <defs>
+              <marker id="arrowA" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+              <marker id="arrowAccentA" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+            </defs>
+            <rect width="552" height="440" fill="#ffffff"/>
+
+            <!-- arrows behind boxes -->
+            <path d="M 112 92 L 228 92" fill="none" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrowAccentA)"/>
+            <path d="M 332 92 C 384 92 392 72 428 72" fill="none" stroke="#4f5d75" stroke-width="1" marker-end="url(#arrowA)"/>
+            <path d="M 332 92 C 384 92 392 132 428 132" fill="none" stroke="#4f5d75" stroke-width="1" marker-end="url(#arrowA)"/>
+            <path d="M 332 92 C 384 92 392 192 428 192" fill="none" stroke="#4f5d75" stroke-width="1" marker-end="url(#arrowA)"/>
+            <path d="M 332 92 C 384 92 392 252 428 252" fill="none" stroke="#4f5d75" stroke-width="1" marker-end="url(#arrowA)"/>
+            <path d="M 332 92 C 384 92 392 324 428 324" fill="none" stroke="rgba(45,49,66,0.28)" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrowA)"/>
+
+            <!-- user query -->
+            <rect x="24" y="48" width="88" height="88" rx="6" fill="#ffffff"/>
+            <rect x="24" y="48" width="88" height="88" rx="6" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1"/>
+            <rect x="32" y="56" width="36" height="12" rx="2" fill="transparent" stroke="rgba(122,131,153,0.45)" stroke-width="0.8"/>
+            <text x="50" y="65" fill="#7a8399" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ASK</text>
+            <text x="68" y="92" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">User prompt</text>
+            <text x="68" y="108" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">build / eval / fix</text>
+
+            <!-- global skill index -->
+            <rect x="228" y="44" width="104" height="96" rx="6" fill="#ffffff"/>
+            <rect x="228" y="44" width="104" height="96" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.2"/>
+            <rect x="236" y="52" width="44" height="12" rx="2" fill="transparent" stroke="rgba(235,108,54,0.45)" stroke-width="0.8"/>
+            <text x="258" y="61" fill="#eb6c36" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">INDEX</text>
+            <text x="280" y="88" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Skill list</text>
+            <text x="280" y="104" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">top-level names</text>
+
+            <!-- skill boxes -->
+            <g>
+              <rect x="428" y="44" width="100" height="56" rx="6" fill="#ffffff"/>
+              <rect x="428" y="44" width="100" height="56" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+              <text x="478" y="68" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Agent Foundry</text>
+              <text x="478" y="84" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">0→1 builds</text>
+            </g>
+            <g>
+              <rect x="428" y="104" width="100" height="56" rx="6" fill="#ffffff"/>
+              <rect x="428" y="104" width="100" height="56" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+              <text x="478" y="128" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Hill Climb</text>
+              <text x="478" y="144" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">iterate evals</text>
+            </g>
+            <g>
+              <rect x="428" y="164" width="100" height="56" rx="6" fill="#ffffff"/>
+              <rect x="428" y="164" width="100" height="56" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+              <text x="478" y="188" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Agent Review</text>
+              <text x="478" y="204" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">QA / critique</text>
+            </g>
+            <g>
+              <rect x="428" y="224" width="100" height="56" rx="6" fill="#ffffff"/>
+              <rect x="428" y="224" width="100" height="56" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+              <text x="478" y="248" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Tool Author</text>
+              <text x="478" y="264" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">OpenAPI / py</text>
+            </g>
+            <g>
+              <rect x="428" y="296" width="100" height="88" rx="6" fill="#ffffff"/>
+              <rect x="428" y="296" width="100" height="88" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.22)" stroke-width="1" stroke-dasharray="4,3"/>
+              <text x="478" y="324" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Future skills</text>
+              <text x="478" y="344" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">voice tuning</text>
+              <text x="478" y="360" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">deploy gates</text>
+            </g>
+
+            <text x="24" y="416" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">COST</text>
+            <text x="76" y="416" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace">skill list grows with every lifecycle phase</text>
+          </svg>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>One router skill</h2>
+            <span class="tag">school B</span>
+          </div>
+          <p>One visible CXAS skill owns the platform surface. The top-level file acts like a router: detect intent, then load only the narrow markdown references needed for the task.</p>
+
+          <svg viewBox="0 0 552 440" role="img" aria-label="One router skill with references diagram">
+            <defs>
+              <marker id="arrowB" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+              <marker id="arrowLinkB" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+              <marker id="arrowAccentB" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+            </defs>
+            <rect width="552" height="440" fill="#ffffff"/>
+
+            <!-- arrows behind boxes -->
+            <path d="M 112 92 L 212 92" fill="none" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrowAccentB)"/>
+            <path d="M 316 92 C 360 92 372 72 404 72" fill="none" stroke="#2e5aa8" stroke-width="1" marker-end="url(#arrowLinkB)"/>
+            <path d="M 316 92 C 360 92 372 124 404 124" fill="none" stroke="#2e5aa8" stroke-width="1" marker-end="url(#arrowLinkB)"/>
+            <path d="M 316 92 C 360 92 372 176 404 176" fill="none" stroke="#2e5aa8" stroke-width="1" marker-end="url(#arrowLinkB)"/>
+            <path d="M 316 92 C 360 92 372 228 404 228" fill="none" stroke="#2e5aa8" stroke-width="1" marker-end="url(#arrowLinkB)"/>
+            <path d="M 316 92 C 360 92 372 280 404 280" fill="none" stroke="#2e5aa8" stroke-width="1" marker-end="url(#arrowLinkB)"/>
+            <path d="M 264 140 C 264 236 196 272 152 320" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrowB)"/>
+
+            <!-- user query -->
+            <rect x="24" y="48" width="88" height="88" rx="6" fill="#ffffff"/>
+            <rect x="24" y="48" width="88" height="88" rx="6" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1"/>
+            <rect x="32" y="56" width="36" height="12" rx="2" fill="transparent" stroke="rgba(122,131,153,0.45)" stroke-width="0.8"/>
+            <text x="50" y="65" fill="#7a8399" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ASK</text>
+            <text x="68" y="92" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">User prompt</text>
+            <text x="68" y="108" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">"improve evals"</text>
+
+            <!-- router skill -->
+            <rect x="212" y="44" width="104" height="96" rx="6" fill="#ffffff"/>
+            <rect x="212" y="44" width="104" height="96" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.2"/>
+            <rect x="220" y="52" width="48" height="12" rx="2" fill="transparent" stroke="rgba(235,108,54,0.45)" stroke-width="0.8"/>
+            <text x="244" y="61" fill="#eb6c36" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ROUTER</text>
+            <text x="264" y="88" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">CX Agent</text>
+            <text x="264" y="104" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Studio</text>
+            <text x="264" y="120" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">SKILL.md routes</text>
+
+            <!-- reference stack -->
+            <rect x="404" y="44" width="124" height="264" rx="8" fill="#ffffff"/>
+            <rect x="404" y="44" width="124" height="264" rx="8" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.28)" stroke-width="1"/>
+            <rect x="420" y="60" width="92" height="28" rx="6" fill="#ffffff" stroke="#2e5aa8" stroke-width="1"/>
+            <text x="466" y="78" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">build.md</text>
+            <rect x="420" y="112" width="92" height="28" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+            <text x="466" y="130" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">evals.md</text>
+            <rect x="420" y="164" width="92" height="28" rx="6" fill="#ffffff" stroke="#2e5aa8" stroke-width="1"/>
+            <text x="466" y="182" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">review.md</text>
+            <rect x="420" y="216" width="92" height="28" rx="6" fill="#ffffff" stroke="#2e5aa8" stroke-width="1"/>
+            <text x="466" y="234" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">tools.md</text>
+            <rect x="420" y="268" width="92" height="28" rx="6" fill="#ffffff" stroke="#2e5aa8" stroke-width="1"/>
+            <text x="466" y="286" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">deploy.md</text>
+
+            <!-- loaded context -->
+            <rect x="64" y="300" width="176" height="72" rx="6" fill="#ffffff"/>
+            <rect x="64" y="300" width="176" height="72" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+            <rect x="76" y="312" width="52" height="12" rx="2" fill="transparent" stroke="rgba(79,93,117,0.45)" stroke-width="0.8"/>
+            <text x="102" y="321" fill="#4f5d75" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CONTEXT</text>
+            <text x="152" y="344" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Only relevant docs</text>
+            <text x="152" y="360" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">evals + current app state</text>
+
+            <text x="528" y="24" fill="#eb6c36" font-size="14" font-style="italic" font-family="'Instrument Serif', serif" text-anchor="end">top-level index stays small</text>
+            <path d="M 416 32 Q 348 48 300 72" fill="none" stroke="rgba(235,108,54,0.50)" stroke-width="1" stroke-dasharray="4,3"/>
+            <circle cx="300" cy="72" r="2" fill="#eb6c36"/>
+
+            <text x="24" y="416" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">BENEFIT</text>
+            <text x="96" y="416" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace">intent routes to references; unused platform knowledge stays unloaded</text>
+          </svg>
+        </article>
+      </div>
+
+      <div class="cards">
+        <section class="card">
+          <span class="dot"></span>
+          <h3>The tension</h3>
+          <p>Small skills feel modular today, but every new capability competes for attention in a global agent skill index. That becomes painful when enterprise developers have dozens of tools beyond CXAS.</p>
+        </section>
+        <section class="card">
+          <span class="dot" style="background:#2e5aa8"></span>
+          <h3>The router bet</h3>
+          <p>A single CXAS skill can behave like a table of contents: cheap to discover, explicit about when to load detail, and hard to overflow.</p>
+        </section>
+        <section class="card">
+          <span class="dot" style="background:#4f5d75"></span>
+          <h3>What still splits out</h3>
+          <ul>
+            <li>Reusable cross-platform procedures</li>
+            <li>Heavy scripts or toolchains</li>
+            <li>Standalone skills useful outside CXAS</li>
+          </ul>
+        </section>
+      </div>
+    </section>
+
+    <footer>
+      <span>source: GoogleCloudPlatform/cxas-scrapi skill strategy discussion</span>
+      <span>alfred.barronroth.com/cxas-skill-philosophies</span>
+    </footer>
+  </main>
+</body>
+</html>

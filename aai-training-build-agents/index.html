@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AAI Training — How to Build Agents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Audiowide&family=Major+Mono+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f5f0e8;
+  --paper: #ede8dc;
+  --warm-white: #faf8f3;
+  --navy: #1a2744;
+  --navy-light: #2a3d66;
+  --teal: #1a6b5a;
+  --teal-light: #48a892;
+  --rust: #c44d2b;
+  --rust-light: #e67a58;
+  --ink: #1f1f2e;
+  --ink-muted: #5a5a72;
+  --ink-dim: #8a8a9e;
+  --border: #d4cfc3;
+  --stripe: #c44d2b;
+  --silver: #cdd3d6;
+  --silver-dark: #79848a;
+  --shadow: rgba(26, 39, 68, 0.14);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: clamp(13px, 1.08vw, 18px); background: var(--cream); }
+body {
+  min-height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  font-family: 'Archivo', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 12%, rgba(196,77,43,0.08), transparent 28rem),
+    radial-gradient(circle at 92% 80%, rgba(26,107,90,0.08), transparent 27rem),
+    linear-gradient(135deg, var(--cream), var(--paper));
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(26,39,68,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,39,68,0.025) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(circle at center, black, transparent 78%);
+  z-index: 0;
+}
+.deck { position: relative; width: 100vw; height: 100dvh; z-index: 1; }
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(2rem, 4.2vw, 5.1rem) clamp(2.25rem, 6vw, 6.1rem);
+  opacity: 0;
+  transform: translateX(18px) scale(0.996);
+  pointer-events: none;
+  transition: opacity 0.42s ease, transform 0.42s ease;
+  overflow: hidden;
+}
+.slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
+.slide::after {
+  content: attr(data-label);
+  position: absolute;
+  top: 1.4rem;
+  right: 2rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  color: rgba(90,90,114,0.45);
+  text-transform: uppercase;
+}
+.slide.cover::after, .slide.dark::after { color: rgba(245,240,232,0.22); }
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rust), var(--teal-light));
+  z-index: 30;
+  transition: width 0.36s ease;
+  box-shadow: 0 0 14px rgba(196,77,43,0.45);
+}
+.slide-num, .nav-hint {
+  position: fixed;
+  bottom: 1.15rem;
+  z-index: 30;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+  opacity: 0.68;
+}
+.slide-num { right: 2rem; }
+.nav-hint { left: 2rem; }
+.slide-num.on-dark, .nav-hint.on-dark { color: rgba(245,240,232,0.38); }
+h1, h2 {
+  font-family: 'Orbitron', 'Audiowide', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  color: var(--navy);
+}
+h1 { font-size: clamp(3.35rem, 7.6vw, 7.3rem); line-height: 0.94; margin-bottom: 1.2rem; }
+h2 { font-size: clamp(2.1rem, 4.25vw, 4.25rem); line-height: 1.02; margin-bottom: 1.1rem; max-width: 1120px; }
+h1 em, h2 em { font-style: normal; color: var(--rust); }
+h3 {
+  font-family: 'Audiowide', 'Orbitron', sans-serif;
+  font-size: 1.02rem;
+  font-weight: 400;
+  color: var(--navy);
+  line-height: 1.25;
+}
+p { font-size: 1.08rem; line-height: 1.58; color: var(--ink-muted); max-width: 880px; margin: 0.65rem 0; }
+strong { color: var(--navy); }
+code {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.87em;
+  background: rgba(26,39,68,0.07);
+  color: var(--navy);
+  border: 1px solid rgba(26,39,68,0.08);
+  padding: 0.12em 0.35em;
+  border-radius: 4px;
+}
+.label {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.8rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rust);
+}
+.label::before { content: ''; width: 34px; height: 2px; background: currentColor; }
+.center .label, .cover .label { align-self: center; justify-content: center; }
+.cover .label::before, .center .label::before { width: 42px; }
+.mission-badge {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.42rem 0.9rem;
+  border: 1.6px solid var(--navy);
+  border-radius: 2px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: rgba(250,248,243,0.55);
+  box-shadow: 5px 5px 0 rgba(26,39,68,0.07);
+}
+.hero-grid {
+  width: min(1180px, 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.hero-copy p { max-width: 690px; font-size: 1.12rem; }
+.meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1.45rem;
+  max-width: 800px;
+}
+.meta-tag, .mini-card {
+  background: rgba(250,248,243,0.68);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--rust);
+  padding: 0.8rem 0.75rem;
+  min-height: 72px;
+  box-shadow: 0 12px 34px rgba(26,39,68,0.06);
+}
+.meta-tag strong, .mini-card strong {
+  display: block;
+  margin-bottom: 0.28rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.meta-tag span, .mini-card span {
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--navy);
+}
+.patch-wrap { display: grid; place-items: center; }
+.mission-patch {
+  width: clamp(250px, 26vw, 340px);
+  aspect-ratio: 1;
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 4px solid var(--navy);
+  background:
+    radial-gradient(circle, var(--warm-white) 0 28%, transparent 29%),
+    repeating-conic-gradient(from -18deg, rgba(26,39,68,0.12) 0 5deg, transparent 5deg 12deg),
+    radial-gradient(circle, var(--paper) 0 57%, var(--navy) 58% 66%, var(--cream) 67% 70%, var(--rust) 71% 73%, var(--navy) 74%);
+  box-shadow: 0 16px 50px var(--shadow), 0 0 0 8px var(--cream), 0 0 0 10px var(--border);
+  overflow: hidden;
+}
+.mission-patch::before {
+  content: 'AAI TRAINING · CX AGENT STUDIO ·';
+  position: absolute;
+  inset: 17px;
+  border-radius: 999px;
+  display: grid;
+  place-items: start center;
+  padding-top: 17px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.53rem;
+  letter-spacing: 0.18em;
+  color: var(--cream);
+  text-align: center;
+}
+.mission-patch::after {
+  content: '';
+  position: absolute;
+  inset: 25%;
+  background:
+    linear-gradient(90deg, transparent 47%, var(--silver) 47% 53%, transparent 53%),
+    linear-gradient(30deg, transparent 47%, var(--silver) 47% 53%, transparent 53%),
+    linear-gradient(150deg, transparent 47%, var(--silver) 47% 53%, transparent 53%);
+  filter: drop-shadow(0 0 7px rgba(72,168,146,0.42));
+}
+.patch-center {
+  position: relative;
+  z-index: 2;
+  width: 47%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  border: 2px solid var(--teal-light);
+  background: radial-gradient(circle, rgba(250,248,243,0.88), rgba(205,211,214,0.35));
+  display: grid;
+  place-items: center;
+  font-family: 'Major Mono Display', monospace;
+  font-size: 2.1rem;
+  color: var(--navy);
+}
+.patch-orbit {
+  position: absolute;
+  inset: 15%;
+  border: 1px dashed rgba(26,107,90,0.62);
+  border-radius: 999px;
+  animation: spin 26s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.deck-card, .callout, .skill-file, .mission-log, .arch-box, .quote-card {
+  box-shadow: 0 16px 45px rgba(26,39,68,0.08);
+}
+.card-grid {
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.72rem;
+  margin-top: 1.35rem;
+}
+.deck-card {
+  position: relative;
+  background: rgba(250,248,243,0.74);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  min-height: 175px;
+  overflow: hidden;
+}
+.deck-card::before {
+  content: attr(data-num);
+  position: absolute;
+  top: 0.72rem;
+  right: 0.72rem;
+  font-family: 'Major Mono Display', monospace;
+  font-size: 1.45rem;
+  color: rgba(196,77,43,0.16);
+}
+.deck-card h3 { margin-bottom: 0.6rem; padding-right: 1.75rem; }
+.deck-card p { font-size: 0.82rem; line-height: 1.45; margin: 0; }
+.deck-card.featured { border: 2px solid var(--rust); background: var(--warm-white); }
+.deck-card.featured h3 { color: var(--rust); }
+.messy-map {
+  position: absolute;
+  inset: auto 0 0 auto;
+  width: 48%;
+  height: 50%;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.messy-map span {
+  position: absolute;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.64rem;
+  color: var(--navy);
+  border: 1px solid var(--navy);
+  border-radius: 999px;
+  padding: 0.25rem 0.55rem;
+}
+.messy-map span:nth-child(1) { left: 8%; top: 10%; }
+.messy-map span:nth-child(2) { left: 48%; top: 20%; }
+.messy-map span:nth-child(3) { left: 25%; top: 54%; }
+.messy-map span:nth-child(4) { left: 62%; top: 68%; }
+.messy-map span:nth-child(5) { left: 5%; top: 76%; }
+.loop-panel {
+  width: min(1140px, 100%);
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.2rem;
+  align-items: stretch;
+  margin-top: 1.2rem;
+}
+.pipeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  background: rgba(250,248,243,0.68);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+.pipeline::before {
+  content: '';
+  position: absolute;
+  inset: 50% 4rem auto 4rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--navy), var(--rust), var(--teal));
+  opacity: 0.22;
+}
+.node {
+  position: relative;
+  z-index: 1;
+  min-height: 108px;
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.node .glyph {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--paper);
+  font-family: 'Space Mono', monospace;
+  color: var(--rust);
+  font-weight: 700;
+}
+.node strong {
+  display: block;
+  font-family: 'Audiowide', sans-serif;
+  font-weight: 400;
+  font-size: 0.86rem;
+}
+.node span { font-size: 0.72rem; color: var(--ink-muted); line-height: 1.35; }
+.node.hot { border: 2px solid var(--rust); }
+.control-plane {
+  background: var(--navy);
+  color: var(--cream);
+  border-radius: 16px;
+  padding: 1.25rem;
+  border: 1px solid rgba(245,240,232,0.13);
+}
+.control-plane h3 { color: var(--cream); margin-bottom: 0.85rem; }
+.control-plane ul { list-style: none; display: grid; gap: 0.72rem; }
+.control-plane li {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.74rem;
+  color: rgba(245,240,232,0.74);
+  padding-left: 1rem;
+  border-left: 2px solid var(--teal-light);
+}
+.skill-file {
+  width: min(940px, 100%);
+  background: #1e1e2e;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 1.2rem 0;
+}
+.skill-file-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.58rem 1rem;
+  background: #2a2a3e;
+  border-bottom: 1px solid #3a3a50;
+}
+.skill-file-bar .dot { width: 10px; height: 10px; border-radius: 50%; }
+.skill-file-bar .r { background: #ff5f57; }
+.skill-file-bar .y { background: #febc2e; }
+.skill-file-bar .g { background: #28c840; }
+.skill-file-bar .fname {
+  margin-left: 0.45rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: #a6adc8;
+  letter-spacing: 0.04em;
+}
+.skill-file pre {
+  padding: 1.1rem 1.35rem;
+  margin: 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: #cdd6f4;
+  white-space: pre-wrap;
+}
+.ln { color: #585b70; user-select: none; display: inline-block; width: 2.1ch; text-align: right; margin-right: 0.9rem; }
+.yl { color: #f9e2af; } .gr { color: #a6e3a1; } .bl { color: #89b4fa; } .gy { color: #6c7086; } .pk { color: #f38ba8; } .tl { color: #94e2d5; } .or { color: #fab387; }
+.callout {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--rust);
+  border-radius: 0 12px 12px 0;
+  padding: 1rem 1.1rem;
+}
+.callout p { margin: 0; font-size: 0.95rem; }
+.doc-layout, .split-layout, .eval-layout, .demo-layout, .recipe-layout {
+  width: min(1120px, 100%);
+  display: grid;
+  gap: 1rem;
+  align-items: stretch;
+}
+.doc-layout { grid-template-columns: 1.05fr 0.95fr; }
+.file-preview {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  overflow: hidden;
+}
+.file-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0.9rem;
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+}
+.file-body { padding: 1rem 1.05rem; font-family: 'Space Mono', monospace; font-size: 0.78rem; line-height: 1.65; color: var(--ink-muted); }
+.file-body .section { color: var(--navy); font-weight: 700; }
+.file-body .hit { color: var(--rust); font-weight: 700; }
+.file-body .teal { color: var(--teal); font-weight: 700; }
+.stamp {
+  display: inline-flex;
+  transform: rotate(-4deg);
+  border: 2px solid var(--rust);
+  color: var(--rust);
+  padding: 0.35rem 0.7rem;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+.gate-list {
+  width: min(950px, 100%);
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 1.25rem 0;
+}
+.gate {
+  min-height: 170px;
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 999px 999px 12px 12px;
+  padding: 1rem 0.68rem 0.8rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.6rem;
+}
+.gate-num {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--cream);
+  font-family: 'Major Mono Display', monospace;
+  font-size: 1.3rem;
+}
+.gate strong { font-size: 0.78rem; line-height: 1.2; }
+.gate.hot { border: 2px solid var(--rust); box-shadow: 0 0 0 4px rgba(196,77,43,0.07); }
+.gate.hot .gate-num { background: var(--rust); }
+.warning {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--rust);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(196,77,43,0.08);
+  border: 1px solid rgba(196,77,43,0.24);
+  padding: 0.55rem 0.8rem;
+  border-radius: 7px;
+}
+.bento {
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(132px, auto);
+  gap: 0.72rem;
+  margin-top: 1.2rem;
+}
+.bento .deck-card { min-height: unset; }
+.bento .wide { grid-column: span 3; }
+.bento .small { grid-column: span 2; }
+.bento .feature { grid-column: span 4; border: 2px solid var(--rust); }
+.glyph-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-bottom: 0.55rem;
+  background: var(--paper);
+  color: var(--rust);
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+}
+.split-layout { grid-template-columns: 1fr 1fr; }
+.own-card {
+  min-height: 405px;
+  border-radius: 16px;
+  padding: 1.4rem;
+  border: 1px solid var(--border);
+  background: var(--warm-white);
+}
+.own-card.dark { background: var(--navy); border-color: var(--navy-light); color: var(--cream); }
+.own-card.dark h3 { color: var(--cream); }
+.own-card ul { margin-top: 1rem; list-style: none; display: grid; gap: 0.72rem; }
+.own-card li { position: relative; padding-left: 1.2rem; color: var(--ink-muted); line-height: 1.35; }
+.own-card.dark li { color: rgba(245,240,232,0.72); }
+.own-card li::before { content: '→'; position: absolute; left: 0; color: var(--rust); }
+.trace {
+  grid-column: 1 / -1;
+  background: var(--paper);
+  border: 1px dashed var(--navy-light);
+  border-radius: 12px;
+  padding: 0.82rem 1rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--navy);
+  text-align: center;
+}
+.eval-layout { grid-template-columns: 1fr 340px; }
+.eval-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.72rem;
+}
+.eval-card {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem;
+}
+.eval-card h3 { display: flex; align-items: center; gap: 0.45rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.65rem 0; }
+.chip {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.45rem;
+  border-radius: 4px;
+  color: var(--teal);
+  background: rgba(26,107,90,0.09);
+  border: 1px solid rgba(26,107,90,0.16);
+}
+.eval-card p { font-size: 0.82rem; margin: 0; }
+.decision {
+  background: var(--navy);
+  color: var(--cream);
+  border-radius: 16px;
+  padding: 1.2rem;
+}
+.decision h3 { color: var(--cream); }
+.decision .fork {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+}
+.fork div { padding: 0.75rem; border-radius: 8px; background: rgba(250,248,243,0.08); border: 1px solid rgba(245,240,232,0.1); }
+.cover, .dark {
+  background:
+    radial-gradient(circle at 20% 18%, rgba(72,168,146,0.16), transparent 26rem),
+    radial-gradient(circle at 80% 74%, rgba(196,77,43,0.17), transparent 25rem),
+    linear-gradient(135deg, var(--navy), #111a31);
+  color: var(--cream);
+}
+.cover h2, .dark h2 { color: var(--cream); text-align: center; }
+.cover p, .dark p { color: rgba(245,240,232,0.69); text-align: center; }
+.cover .mission-badge { color: var(--cream); border-color: rgba(245,240,232,0.34); background: rgba(245,240,232,0.05); box-shadow: none; }
+.telemetry {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background:
+    repeating-linear-gradient(100deg, transparent 0 26px, rgba(245,240,232,0.16) 26px 27px),
+    repeating-linear-gradient(0deg, transparent 0 44px, rgba(72,168,146,0.18) 44px 45px);
+  mask-image: linear-gradient(90deg, transparent, black 18%, black 82%, transparent);
+}
+.arch-box {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 1.1rem;
+  font-family: 'Space Mono', monospace;
+}
+.arch-node {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.33rem 0.58rem;
+  border-radius: 5px;
+  margin: 0.16rem;
+  font-size: 0.72rem;
+}
+.arch-node.root { background: var(--navy); color: var(--cream); font-weight: 700; }
+.arch-node.agent { background: var(--teal); color: white; }
+.arch-node.tool { background: var(--paper); color: var(--ink-muted); border: 1px solid var(--border); }
+.arch-row { margin: 0.65rem 0 0.65rem 1rem; padding-left: 1rem; border-left: 1px solid var(--border); }
+.demo-layout { grid-template-columns: 1fr 0.9fr; }
+.mission-log {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.ml-header { display: flex; align-items: center; justify-content: space-between; padding: 0.62rem 1rem; background: var(--paper); border-bottom: 1px solid var(--border); }
+.ml-dots { display: flex; gap: 6px; }
+.ml-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+.ml-title, .ml-status { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; color: var(--ink-dim); text-transform: uppercase; }
+.ml-status { color: var(--rust); display: flex; align-items: center; gap: 0.4rem; }
+.ml-status::before { content: ''; width: 6px; height: 6px; background: var(--rust); border-radius: 50%; animation: pulse 1.6s infinite; }
+@keyframes pulse { 50% { opacity: 0.25; } }
+.ml-body { padding: 1.05rem 1.2rem; display: grid; gap: 0.55rem; }
+.log-row {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  gap: 0.75rem;
+  align-items: start;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+.log-row .idx { font-family: 'Major Mono Display', monospace; color: var(--rust); }
+.log-row .artifact { font-family: 'Space Mono', monospace; font-size: 0.66rem; color: var(--teal); }
+.recipe-layout { grid-template-columns: 1fr 0.82fr; }
+.checklist {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+.check-box {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+.check-box h3 { margin-bottom: 0.65rem; }
+.check-box ul { list-style: none; display: grid; gap: 0.4rem; }
+.check-box li { font-size: 0.82rem; color: var(--ink-muted); }
+.check-box li::before { content: '✓'; color: var(--teal); font-weight: 800; margin-right: 0.45rem; }
+.closing-line {
+  margin-top: 1rem;
+  padding: 1rem 1.15rem;
+  background: var(--navy);
+  color: var(--cream);
+  border-left: 5px solid var(--rust);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.3rem;
+  line-height: 1.18;
+  text-transform: uppercase;
+}
+@media (max-width: 980px) {
+  body { overflow: auto; }
+  .slide { overflow-y: auto; align-items: stretch; justify-content: flex-start; padding-top: 3.4rem; }
+  .hero-grid, .loop-panel, .doc-layout, .split-layout, .eval-layout, .demo-layout, .recipe-layout { grid-template-columns: 1fr; }
+  .hero-grid { text-align: left; }
+  .patch-wrap { display: none; }
+  .meta { grid-template-columns: 1fr 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
+  .pipeline { grid-template-columns: 1fr 1fr; }
+  .gate-list { grid-template-columns: 1fr 1fr; }
+  .bento { grid-template-columns: 1fr; }
+  .bento .wide, .bento .small, .bento .feature { grid-column: auto; }
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="slide-num" id="slideNum"></div>
+<div class="nav-hint" id="navHint">← → / space / click</div>
+
+<div class="deck" id="deck">
+  <section class="slide active" data-label="AAI TRAINING · MISSION BRIEF">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="mission-badge">FIELD GUIDE — AGENT ENGINEERING</div>
+        <div class="label">AAI Training · Mission Brief</div>
+        <h1>How to Build<br><em>Agents</em></h1>
+        <p>A practical walkthrough of the SCRAPI skill workflow for going from requirements to a CX Agent Studio app with evals, reports, and a repeatable debug loop.</p>
+        <div class="meta">
+          <div class="meta-tag"><strong>Platform</strong><span>CX Agent Studio</span></div>
+          <div class="meta-tag"><strong>Skill</strong><span>cx-agent-studio</span></div>
+          <div class="meta-tag"><strong>Demo</strong><span>Mercedes F1 Fan Agent</span></div>
+          <div class="meta-tag"><strong>Mode</strong><span>PRD → TDD → Build → Evals</span></div>
+        </div>
+      </div>
+      <div class="patch-wrap">
+        <div class="mission-patch" aria-label="CSS mission patch: AAI Training CX Agent Studio">
+          <div class="patch-orbit"></div>
+          <div class="patch-center">CX</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-label="THE PROBLEM">
+    <div class="label">The Problem</div>
+    <h2>Agent demos are easy.<br>Reliable agents need a lifecycle.</h2>
+    <p>The first version of an agent can look impressive after a few prompt edits. The hard part is making behavior stable, testable, reviewable, and safe to change as the agent grows.</p>
+    <div class="card-grid">
+      <div class="deck-card" data-num="01"><h3>Prompt drift</h3><p>Instructions accrete contradictions and hidden assumptions.</p></div>
+      <div class="deck-card" data-num="02"><h3>Tool ambiguity</h3><p>The model sees tools but cannot reliably choose or parameterize them.</p></div>
+      <div class="deck-card featured" data-num="03"><h3>Eval afterthoughts</h3><p>Tests get written after behavior exists, so they codify accidents.</p></div>
+      <div class="deck-card" data-num="04"><h3>Local/platform drift</h3><p>Nobody knows whether source of truth is UI, local files, or last push.</p></div>
+      <div class="deck-card" data-num="05"><h3>Debug by vibes</h3><p>Teams change prompts until one example passes, then regress another flow.</p></div>
+    </div>
+    <div class="messy-map" aria-hidden="true"><span>prompt</span><span>tools</span><span>UI</span><span>evals</span><span>prod</span></div>
+  </section>
+
+  <section class="slide" data-label="THE BUILD LOOP">
+    <div class="label">The Build Loop</div>
+    <h2>The skill turns agent building into a controlled loop.</h2>
+    <p><code>cx-agent-studio</code> is the router skill for this lifecycle. It loads the right workflow — build, run, debug, or simulation-eval conversion — and keeps the agent on the rails.</p>
+    <div class="loop-panel">
+      <div class="pipeline">
+        <div class="node"><div class="glyph">01</div><strong>PRD + artifacts</strong><span>requirements, samples, data, constraints</span></div>
+        <div class="node hot"><div class="glyph">02</div><strong>TDD contract</strong><span>architecture + coverage map before code</span></div>
+        <div class="node"><div class="glyph">03</div><strong>Scaffold</strong><span>app files from approved design</span></div>
+        <div class="node"><div class="glyph">04</div><strong>Lint</strong><span>clean local working surface</span></div>
+        <div class="node"><div class="glyph">05</div><strong>Evals</strong><span>goldens, sims, tools, callbacks</span></div>
+        <div class="node"><div class="glyph">06</div><strong>Push + gates</strong><span>safe sync and verification</span></div>
+        <div class="node"><div class="glyph">07</div><strong>Run report</strong><span>evidence, transcripts, clusters</span></div>
+        <div class="node"><div class="glyph">08</div><strong>Debug loop</strong><span>fix from signal, not vibes</span></div>
+      </div>
+      <aside class="control-plane">
+        <h3>Control Plane</h3>
+        <ul>
+          <li><strong>Skill</strong> = process memory</li>
+          <li><strong>TDD</strong> = product + test contract</li>
+          <li><strong>Evals</strong> = regression signal</li>
+          <li><strong>Reports</strong> = iteration history</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="slide" data-label="CX-AGENT-STUDIO ROUTER">
+    <div class="label">CX-Agent-Studio Router</div>
+    <h2>One skill routes the full CXAS lifecycle.</h2>
+    <div class="skill-file">
+      <div class="skill-file-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fname">.agents/skills/cx-agent-studio/SKILL.md</span></div>
+      <pre><span class="ln">1</span><span class="gy"># Router commands</span>
+<span class="ln">2</span><span class="yl">setup</span>       <span class="gy">first-time environment / project connection</span>
+<span class="ln">3</span><span class="yl">build</span>       <span class="gy">PRD-to-agent, TDDs, scaffolding, eval authoring, edits</span>
+<span class="ln">4</span><span class="yl">run</span>         <span class="gy">goldens, simulations, tool tests, callback tests, reports</span>
+<span class="ln">5</span><span class="yl">debug</span>       <span class="gy">failing evals, regressions, pass-rate recovery</span>
+<span class="ln">6</span><span class="yl">sim-eval</span>    <span class="gy">convert CXAS goldens into SCRAPI simulation evals</span>
+<span class="ln">7</span>
+<span class="ln">8</span><span class="pk">Use cx-agent-studio build</span> to create a Mercedes F1 fan agent from this PRD.
+<span class="ln">9</span>Generate the <span class="tl">TDD first</span> and wait for approval before scaffolding.</pre>
+    </div>
+    <div class="callout" style="width:min(940px,100%)"><p><strong>Invocation pattern:</strong> describe the task in natural language, and the router loads the right workflow — <code>build</code>, <code>run</code>, <code>debug</code>, or <code>sim-eval</code>.</p></div>
+  </section>
+
+  <section class="slide" data-label="TDD CONTRACT">
+    <div class="label">TDD Contract</div>
+    <h2>Before the agent exists, define how it should behave.</h2>
+    <p>The build workflow is test-driven. The skill first turns the PRD and source artifacts into a TDD: architecture, tools, routing, variables, callbacks, test data, and eval coverage.</p>
+    <div class="doc-layout">
+      <div class="file-preview">
+        <div class="file-head"><span>tdd.md</span><span>APPROVAL REQUIRED</span></div>
+        <div class="file-body">
+          <div><span class="section">1. Agent Design</span></div>
+          <div>&nbsp;&nbsp;• Architecture</div>
+          <div>&nbsp;&nbsp;• Tools</div>
+          <div>&nbsp;&nbsp;• Routing Logic</div>
+          <div>&nbsp;&nbsp;• Variables</div>
+          <div>&nbsp;&nbsp;• Callbacks</div>
+          <br>
+          <div><span class="section">2. Eval Design</span></div>
+          <div>&nbsp;&nbsp;• <span class="hit">Coverage Map</span></div>
+          <div>&nbsp;&nbsp;• <span class="teal">Test Data</span></div>
+          <br>
+          <div><span class="section">3. Tracking</span></div>
+          <div>&nbsp;&nbsp;• Pass Rate History</div>
+          <div>&nbsp;&nbsp;• Known Issues</div>
+          <div>&nbsp;&nbsp;• Changelog</div>
+        </div>
+      </div>
+      <div>
+        <div class="callout"><p><strong>Key nuance:</strong> the coverage map is created before scaffolding. Executable eval files usually come after scaffolding, because they need concrete tool, callback, and app structure.</p></div>
+        <div class="stamp">Approval Required</div>
+        <div class="arch-box" style="margin-top:1rem">
+          <span class="arch-node root">TDD</span>
+          <div class="arch-row"><span class="arch-node agent">Agent files</span><span class="arch-node tool">cxas_app/</span></div>
+          <div class="arch-row"><span class="arch-node agent">Eval files</span><span class="arch-node tool">evals/</span><span class="arch-node tool">reports/</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-label="BUILD GATES">
+    <div class="label">Build Gates</div>
+    <h2>Skipping steps is a deviation,<br>not an optimization.</h2>
+    <p>The checklist exists because long agent builds tend to skip verification under pressure. The skill treats the checklist as an execution contract.</p>
+    <div class="gate-list">
+      <div class="gate"><div class="gate-num">0</div><strong>Initialize todo.md</strong></div>
+      <div class="gate"><div class="gate-num">1</div><strong>Gather requirements</strong></div>
+      <div class="gate hot"><div class="gate-num">2</div><strong>Generate TDD + get approval</strong><span style="font-size:.65rem;color:var(--rust)">TDD before build</span></div>
+      <div class="gate"><div class="gate-num">3</div><strong>Scaffold app from approved TDD</strong></div>
+      <div class="gate"><div class="gate-num">4</div><strong>Lint clean</strong></div>
+      <div class="gate hot"><div class="gate-num">5</div><strong>Generate evals from coverage map</strong><span style="font-size:.65rem;color:var(--rust)">Evals from coverage</span></div>
+      <div class="gate"><div class="gate-num">6</div><strong>Push + gate-check</strong></div>
+    </div>
+    <div class="warning">Do not claim deployed / linted / passed unless verified.</div>
+  </section>
+
+  <section class="slide" data-label="BEST PRACTICES">
+    <div class="label">Best Practices</div>
+    <h2>The skill encodes the practices we want builders to repeat.</h2>
+    <div class="bento">
+      <div class="deck-card wide"><span class="glyph-mark">01</span><h3>Agents as code</h3><p>Pull, edit, lint, push, review, and keep local files as the working surface.</p></div>
+      <div class="deck-card feature"><span class="glyph-mark">02</span><h3>TDD as source of truth</h3><p>The TDD defines intended behavior and eval coverage before implementation.</p></div>
+      <div class="deck-card small"><span class="glyph-mark">03</span><h3>Structured instructions</h3><p>Use XML-like sections, clear triggers, scoped taskflows, and positive rules.</p></div>
+      <div class="deck-card small"><span class="glyph-mark">04</span><h3>Tools are model-facing UX</h3><p>Tool names, docstrings, args, and return schemas are instructions to the model.</p></div>
+      <div class="deck-card small"><span class="glyph-mark">05</span><h3>Evidence-driven iteration</h3><p>Run evals, read failure clusters, diagnose causes, then fix.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" data-label="DETERMINISM PATTERN">
+    <div class="label">Determinism Pattern</div>
+    <h2>Let the LLM understand language.<br>Let code enforce control flow.</h2>
+    <div class="split-layout">
+      <div class="own-card">
+        <h3>LLM owns</h3>
+        <ul>
+          <li>Understanding user intent</li>
+          <li>Interpreting natural language</li>
+          <li>Choosing conversational wording</li>
+          <li>Detecting frustration, escalation, issue category</li>
+        </ul>
+      </div>
+      <div class="own-card dark">
+        <h3>Callbacks / tools own</h3>
+        <ul>
+          <li>Auth/profile derivation</li>
+          <li>Deterministic escalation</li>
+          <li>Session ending</li>
+          <li>Tool-call execution</li>
+          <li>Slot filling and retry bounds</li>
+          <li>Text-before-end-session guarantees</li>
+        </ul>
+      </div>
+      <div class="trace">User intent → state trigger → before_model_callback → deterministic tool/action</div>
+    </div>
+    <p style="text-align:center;font-weight:800;color:var(--navy);margin-top:1rem">Instructions tell the model what to detect. Callbacks decide what must happen.</p>
+  </section>
+
+  <section class="slide" data-label="EVAL CONTRACT">
+    <div class="label">Eval Contract</div>
+    <h2>Use the right eval for the behavior you need to trust.</h2>
+    <div class="eval-layout">
+      <div class="eval-grid">
+        <div class="eval-card"><h3><span class="glyph-mark">A</span>Callback tests</h3><div class="chips"><span class="chip">Local</span><span class="chip">Fastest</span></div><p>Pure Python. Validate deterministic callback behavior locally.</p></div>
+        <div class="eval-card"><h3><span class="glyph-mark">B</span>Tool tests</h3><div class="chips"><span class="chip">Isolated</span><span class="chip">Schemas</span></div><p>Validate tool behavior, outputs, and failure modes.</p></div>
+        <div class="eval-card"><h3><span class="glyph-mark">C</span>Platform goldens</h3><div class="chips"><span class="chip">Live</span><span class="chip">Deterministic</span></div><p>Turn-by-turn ideal conversations for fixed routing and callback-enforced paths.</p></div>
+        <div class="eval-card"><h3><span class="glyph-mark">D</span>Local simulations</h3><div class="chips"><span class="chip">Open-ended</span><span class="chip">Goal-based</span></div><p>Variable flows and real-world behavioral checks where conversations can legitimately vary.</p></div>
+      </div>
+      <aside class="decision">
+        <h3>Golden vs Sim</h3>
+        <div class="fork">
+          <div><strong>Same path every time?</strong><br>→ Golden</div>
+          <div><strong>Outcome matters, path varies?</strong><br>→ Simulation</div>
+        </div>
+        <p style="text-align:left;margin-top:1rem">Goldens test known deterministic paths. Sims test flexible goals.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="slide cover" data-label="LIVE DEMO TARGET">
+    <div class="telemetry"></div>
+    <div class="mission-badge">LIVE DEMO TARGET</div>
+    <div class="label">Mercedes F1 Fan Agent</div>
+    <h2>Mercedes F1 is interesting —<br>and it uses real public data.</h2>
+    <p>For the live build, we’ll use a Mercedes F1 Fan Agent. It gives us a compelling voice-first agent with public OpenF1-style data integrations, official-link guidance, brand/personality constraints, and enough variability to show why eval design matters.</p>
+    <div class="arch-box" style="width:min(780px,100%);margin-top:1.35rem;text-align:left">
+      <span class="arch-node root">Totto, Mercedes F1 Fan Agent</span>
+      <div class="arch-row"><span class="arch-node agent">Race Data / Schedule</span><span class="arch-node tool">OpenF1-style APIs</span></div>
+      <div class="arch-row"><span class="arch-node agent">Mercedes Performance</span><span class="arch-node tool">recent results</span><span class="arch-node tool">standings</span></div>
+      <div class="arch-row"><span class="arch-node agent">F1 History + Education</span><span class="arch-node tool">context</span></div>
+      <div class="arch-row"><span class="arch-node agent">Official Links</span><span class="arch-node tool">ticketing</span><span class="arch-node tool">merch</span></div>
+      <div class="arch-row"><span class="arch-node agent">Mock Merch Support</span><span class="arch-node tool">optional</span></div>
+    </div>
+    <p style="font-size:.78rem;color:rgba(245,240,232,.55)">Abstract telemetry only; no official Mercedes trademark artwork is used.</p>
+  </section>
+
+  <section class="slide" data-label="DEMO RUNBOOK">
+    <div class="label">Demo Runbook</div>
+    <h2>The live build will follow the same gates.</h2>
+    <div class="demo-layout">
+      <div class="mission-log">
+        <div class="ml-header"><div class="ml-dots"><span class="ml-dot"></span><span class="ml-dot"></span><span class="ml-dot"></span></div><div class="ml-title">Mission Log — Live Build Sequence</div><div class="ml-status">CHECKPOINTS READY</div></div>
+        <div class="ml-body">
+          <div class="log-row"><span class="idx">1</span><span>Start with the Mercedes PRD and source artifacts</span><span class="artifact">prd.md</span></div>
+          <div class="log-row"><span class="idx">2</span><span>Ask <code>cx-agent-studio</code> to build from the PRD</span><span class="artifact">prompt</span></div>
+          <div class="log-row"><span class="idx">3</span><span>Review the generated TDD</span><span class="artifact">tdd.md</span></div>
+          <div class="log-row"><span class="idx">4</span><span>Approve the architecture + coverage map</span><span class="artifact">approval</span></div>
+          <div class="log-row"><span class="idx">5</span><span>Scaffold the app files</span><span class="artifact">cxas_app/</span></div>
+          <div class="log-row"><span class="idx">6</span><span>Generate evals</span><span class="artifact">evals/</span></div>
+          <div class="log-row"><span class="idx">7</span><span>Lint + gate-check</span><span class="artifact">gate-check.json</span></div>
+          <div class="log-row"><span class="idx">8</span><span>Run a baseline report</span><span class="artifact">eval-reports/</span></div>
+          <div class="log-row"><span class="idx">9</span><span>Debug one failure or inspect one report</span><span class="artifact">debug loop</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="callout"><p><strong>Expected source artifacts:</strong> <code>examples/mercedes-f1-fan-agent/prd.md</code>, sample conversations, OpenF1 tool requirements, official-link policy, optional mock merch fixture.</p></div>
+        <div class="callout" style="margin-top:1rem;border-left-color:var(--teal)"><p>We’ll have checkpoints ready so we can jump forward if live generation or platform calls take too long.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-label="FIELD RECIPE">
+    <div class="label">Field Recipe</div>
+    <h2>Bring artifacts. Ask for a TDD.<br>Build from the contract.</h2>
+    <div class="recipe-layout">
+      <div class="skill-file" style="margin:0">
+        <div class="skill-file-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fname">prompt-template.txt</span></div>
+        <pre>Use <span class="tl">cx-agent-studio build</span> to create a CX Agent Studio agent from these requirements.
+
+Inputs:
+- PRD: &lt;path or link&gt;
+- Sample conversations: &lt;path&gt;
+- Mock/test data: &lt;path&gt;
+- Policy or integration notes: &lt;path&gt;
+
+Generate the <span class="pk">TDD first</span> and wait for my approval before scaffolding.
+Make sure the coverage map includes goldens, simulations, tool tests, and callback tests where appropriate.</pre>
+      </div>
+      <div>
+        <div class="checklist">
+          <div class="check-box"><h3>Before build</h3><ul><li>PRD / requirements</li><li>Sample conversations</li><li>Mock data / test profiles</li><li>Known integrations and constraints</li></ul></div>
+          <div class="check-box"><h3>During build</h3><ul><li>Approve TDD</li><li>Verify scaffold manifest</li><li>Lint clean</li><li>Generate evals</li><li>Push + gate-check</li><li>Run baseline report</li></ul></div>
+        </div>
+        <div class="closing-line">Build agents like software, not like prompts.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const numEl = document.getElementById('slideNum');
+const progEl = document.getElementById('progress');
+const navEl = document.getElementById('navHint');
+let current = 0;
+
+function setHash(index) {
+  const target = '#slide-' + (index + 1);
+  if (window.location.hash !== target) history.replaceState(null, '', target);
+}
+
+function goTo(n, updateHash = true) {
+  if (Number.isNaN(n)) return;
+  n = Math.max(0, Math.min(slides.length - 1, n));
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  numEl.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+  progEl.style.width = (((current + 1) / slides.length) * 100) + '%';
+  const isDark = slides[current].classList.contains('cover') || slides[current].classList.contains('dark');
+  numEl.className = 'slide-num' + (isDark ? ' on-dark' : '');
+  navEl.className = 'nav-hint' + (isDark ? ' on-dark' : '');
+  if (updateHash) setHash(current);
+}
+
+function indexFromHash() {
+  const match = window.location.hash.match(/slide-(\d+)/);
+  return match ? parseInt(match[1], 10) - 1 : 0;
+}
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'ArrowRight' || event.key === ' ' || event.key === 'PageDown') { event.preventDefault(); goTo(current + 1); }
+  if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); goTo(current - 1); }
+  if (event.key === 'Home') { event.preventDefault(); goTo(0); }
+  if (event.key === 'End') { event.preventDefault(); goTo(slides.length - 1); }
+});
+
+document.addEventListener('click', event => {
+  if (event.target.closest('a, button, code, pre, .skill-file, .mission-log')) return;
+  if (event.clientX > window.innerWidth / 2) goTo(current + 1);
+  else goTo(current - 1);
+});
+
+window.addEventListener('hashchange', () => goTo(indexFromHash(), false));
+goTo(indexFromHash(), false);
+</script>
+</body>
+</html>

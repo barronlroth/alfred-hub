@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mission Control Countdown</title>
+  <meta name="description" content="An interactive rocket launch countdown timer with millisecond precision and space control room styling." />
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: oklch(94% 0.018 110);
+      --muted: oklch(70% 0.035 115);
+      --dim: oklch(51% 0.034 118);
+      --panel: oklch(18% 0.025 126);
+      --panel-2: oklch(13% 0.022 134);
+      --field: oklch(10% 0.025 138);
+      --line: oklch(34% 0.045 128);
+      --line-bright: oklch(62% 0.12 132);
+      --accent: oklch(78% 0.18 132);
+      --amber: oklch(82% 0.18 78);
+      --red: oklch(65% 0.2 30);
+      --blue: oklch(72% 0.14 225);
+      --shadow: 0 28px 90px oklch(5% 0.02 135 / 0.62);
+      --mono: "SFMono-Regular", "Cascadia Code", "Roboto Mono", ui-monospace, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 18%, oklch(40% 0.12 145 / 0.2), transparent 28rem),
+        radial-gradient(circle at 82% 12%, oklch(47% 0.12 225 / 0.18), transparent 32rem),
+        linear-gradient(135deg, oklch(8% 0.026 142), oklch(13% 0.028 232) 55%, oklch(7% 0.02 142));
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      background-image:
+        radial-gradient(circle, oklch(92% 0.02 110 / 0.78) 0 1px, transparent 1.6px),
+        radial-gradient(circle, oklch(80% 0.09 190 / 0.56) 0 1px, transparent 1.7px);
+      background-position: 0 0, 28px 42px;
+      background-size: 112px 112px, 168px 168px;
+      animation: drift 34s linear infinite;
+      opacity: 0.42;
+    }
+
+    body::after {
+      background: repeating-linear-gradient(
+        to bottom,
+        oklch(100% 0.005 110 / 0.035) 0,
+        oklch(100% 0.005 110 / 0.035) 1px,
+        transparent 1px,
+        transparent 5px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.32;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 26px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 20px;
+    }
+
+    .topbar,
+    .footer {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, oklch(18% 0.026 130 / 0.92), oklch(12% 0.023 136 / 0.92));
+      box-shadow: var(--shadow);
+    }
+
+    .topbar {
+      min-height: 74px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 20px;
+      padding: 14px 18px;
+      clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+    }
+
+    .mission-mark {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .mission-badge {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-bright);
+      background: oklch(11% 0.03 136);
+      box-shadow: inset 0 0 24px oklch(76% 0.18 132 / 0.12), 0 0 26px oklch(76% 0.18 132 / 0.12);
+      font-size: 22px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 760;
+    }
+
+    .subtitle {
+      margin-top: 5px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .status-light {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+      animation: pulse 1.7s ease-out infinite;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: minmax(270px, 340px) minmax(0, 1fr) minmax(240px, 300px);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, oklch(19% 0.025 132 / 0.96), oklch(12% 0.022 138 / 0.96)),
+        linear-gradient(135deg, transparent, oklch(78% 0.18 132 / 0.08));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, oklch(90% 0.02 110 / 0.08), transparent 28%, transparent 74%, oklch(78% 0.18 132 / 0.08));
+    }
+
+    .panel-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      min-height: 48px;
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--mono);
+      letter-spacing: 0.13em;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .panel-body {
+      position: relative;
+      z-index: 1;
+      padding: 16px;
+    }
+
+    .control-panel {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .mode-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .seg,
+    .button,
+    .preset {
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: oklch(14% 0.023 136);
+      min-height: 42px;
+      cursor: pointer;
+      transition: transform 180ms cubic-bezier(.16, 1, .3, 1), border-color 180ms ease, background 180ms ease, color 180ms ease;
+    }
+
+    .seg:hover,
+    .button:hover,
+    .preset:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-bright);
+      background: oklch(20% 0.035 135);
+    }
+
+    .seg:focus-visible,
+    .button:focus-visible,
+    .preset:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .seg.active {
+      background: oklch(29% 0.09 132);
+      color: oklch(97% 0.02 120);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 22px oklch(80% 0.18 132 / 0.16);
+    }
+
+    .field-stack {
+      display: grid;
+      gap: 13px;
+      min-width: 0;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      min-width: 0;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      background: var(--field);
+      color: var(--ink);
+      padding: 10px 11px;
+      font-family: var(--mono);
+      font-size: 16px;
+      border-radius: 0;
+    }
+
+    input[type="number"] { appearance: textfield; }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button { appearance: none; margin: 0; }
+
+    .target-input { display: none; }
+    .target-mode .duration-input { display: none; }
+    .target-mode .target-input { display: grid; }
+
+    .presets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .preset {
+      min-height: 36px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .action-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .button {
+      min-height: 48px;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 740;
+    }
+
+    .primary {
+      background: oklch(37% 0.13 132);
+      border-color: var(--accent);
+      color: oklch(97% 0.02 120);
+      box-shadow: 0 0 24px oklch(78% 0.18 132 / 0.16);
+    }
+
+    .abort {
+      border-color: oklch(52% 0.16 30);
+      color: oklch(82% 0.13 36);
+      background: oklch(17% 0.05 32);
+    }
+
+    .small-note {
+      margin: 16px 0 0;
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .countdown-stage {
+      min-height: 620px;
+      display: grid;
+      grid-template-rows: auto minmax(300px, 1fr) auto;
+      background:
+        radial-gradient(circle at 50% 22%, oklch(45% 0.11 132 / 0.2), transparent 18rem),
+        linear-gradient(180deg, oklch(12% 0.025 136 / 0.98), oklch(7% 0.023 146 / 0.98));
+    }
+
+    .phase-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      border-bottom: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .phase {
+      min-height: 58px;
+      padding: 12px;
+      background: oklch(13% 0.024 136);
+      font-family: var(--mono);
+      color: var(--dim);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: grid;
+      gap: 5px;
+    }
+
+    .phase strong {
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.02em;
+    }
+
+    .phase.live {
+      background: oklch(22% 0.057 132);
+      color: var(--accent);
+    }
+
+    .phase.live strong { color: var(--ink); }
+
+    .display-zone {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      overflow: hidden;
+    }
+
+    .orbital-ring {
+      position: absolute;
+      width: min(78vw, 760px);
+      aspect-ratio: 1;
+      border: 1px solid oklch(74% 0.12 132 / 0.2);
+      border-radius: 50%;
+      animation: rotate 24s linear infinite;
+    }
+
+    .orbital-ring::before,
+    .orbital-ring::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 1px dashed oklch(74% 0.12 132 / 0.18);
+      border-radius: 50%;
+    }
+
+    .orbital-ring::after {
+      inset: 30%;
+      border-style: solid;
+      border-color: oklch(72% 0.14 225 / 0.16);
+    }
+
+    .sweep {
+      position: absolute;
+      width: min(72vw, 680px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent 0 72%, oklch(78% 0.18 132 / 0.17), transparent 82% 100%);
+      animation: rotate 5.5s linear infinite;
+      filter: blur(0.2px);
+    }
+
+    .timer-block {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: min(100%, 860px);
+      padding: 34px 24px 32px;
+      border: 1px solid oklch(66% 0.09 132 / 0.38);
+      background: oklch(8% 0.022 140 / 0.84);
+      box-shadow: inset 0 0 40px oklch(78% 0.18 132 / 0.08), 0 22px 80px oklch(5% 0.02 135 / 0.72);
+    }
+
+    .timer-label {
+      margin: 0 0 16px;
+      font-family: var(--mono);
+      color: var(--amber);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .timer {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: clamp(6px, 1.3vw, 14px);
+      font-family: var(--mono);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.06em;
+      line-height: 0.95;
+      text-shadow: 0 0 24px oklch(78% 0.18 132 / 0.24);
+      white-space: nowrap;
+    }
+
+    .timer .unit {
+      min-width: 1.52ch;
+      font-size: clamp(42px, 4.8vw, 78px);
+      font-weight: 780;
+    }
+
+    .timer .colon {
+      font-size: clamp(28px, 3.5vw, 52px);
+      color: var(--line-bright);
+      transform: translateY(-0.08em);
+    }
+
+    .timer .millis {
+      min-width: 2.7ch;
+      color: var(--accent);
+      font-size: clamp(28px, 3.5vw, 52px);
+      letter-spacing: -0.08em;
+    }
+
+    .mission-message {
+      margin: 18px auto 0;
+      max-width: 68ch;
+      min-height: 24px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .rocket-bay {
+      position: absolute;
+      z-index: 1;
+      right: clamp(16px, 4vw, 56px);
+      bottom: 0;
+      width: 116px;
+      height: 210px;
+      opacity: 0.86;
+      pointer-events: none;
+    }
+
+    .rocket {
+      position: absolute;
+      left: 50%;
+      bottom: 42px;
+      width: 48px;
+      height: 122px;
+      transform: translateX(-50%);
+      transition: transform 900ms cubic-bezier(.16, 1, .3, 1), opacity 300ms ease;
+    }
+
+    .rocket::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, oklch(84% 0.04 105), oklch(95% 0.03 105), oklch(73% 0.04 105));
+      clip-path: polygon(50% 0, 84% 22%, 84% 78%, 100% 100%, 62% 92%, 38% 92%, 0 100%, 16% 78%, 16% 22%);
+      border: 1px solid oklch(60% 0.05 110);
+    }
+
+    .window {
+      position: absolute;
+      top: 26px;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: var(--blue);
+      border: 3px solid oklch(30% 0.05 130);
+      box-shadow: inset 0 0 8px oklch(95% 0.03 210 / 0.5);
+      z-index: 2;
+    }
+
+    .flame {
+      position: absolute;
+      left: 50%;
+      bottom: 4px;
+      width: 26px;
+      height: 44px;
+      transform: translateX(-50%) scaleY(0.42);
+      transform-origin: 50% 0;
+      opacity: 0.5;
+      background: radial-gradient(ellipse at center top, oklch(96% 0.13 92), oklch(79% 0.19 52) 42%, oklch(62% 0.21 34) 72%, transparent 73%);
+      clip-path: polygon(50% 100%, 82% 54%, 70% 0, 50% 22%, 30% 0, 18% 54%);
+      filter: blur(0.2px);
+      animation: flame 120ms ease-in-out infinite alternate;
+    }
+
+    .pad-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 36px;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .launched .rocket { transform: translate(-50%, -78vh) rotate(2deg); opacity: 0; }
+    .launched .flame { transform: translateX(-50%) scaleY(1.25); opacity: 1; }
+    .launched .timer-block { animation: launchFlash 1000ms ease-out 1; }
+
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      border-top: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .metric {
+      min-height: 74px;
+      padding: 13px 14px;
+      background: oklch(12% 0.022 136);
+      font-family: var(--mono);
+    }
+
+    .metric span {
+      display: block;
+      color: var(--dim);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 680;
+      overflow-wrap: anywhere;
+    }
+
+    .right-stack {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 20px;
+    }
+
+    .checklist {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 34px;
+      color: var(--muted);
+      border-bottom: 1px solid oklch(34% 0.045 128 / 0.45);
+    }
+
+    .check-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: oklch(38% 0.04 128);
+      box-shadow: inset 0 0 0 1px oklch(66% 0.06 128 / 0.3);
+    }
+
+    .checklist li.done .check-dot {
+      background: var(--accent);
+      box-shadow: 0 0 16px var(--accent);
+    }
+
+    .event-log {
+      height: 220px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .log-line {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 8px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid oklch(34% 0.045 128 / 0.38);
+    }
+
+    .log-line code {
+      color: var(--accent);
+      font-family: inherit;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      min-height: 48px;
+      padding: 12px 16px;
+      font-family: var(--mono);
+      color: var(--dim);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+
+    .hidden { display: none !important; }
+
+    @keyframes drift {
+      from { background-position: 0 0, 28px 42px; }
+      to { background-position: 112px 112px, 196px 210px; }
+    }
+
+    @keyframes rotate { to { transform: rotate(360deg); } }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.88; }
+      50% { transform: scale(1.28); opacity: 1; }
+    }
+
+    @keyframes flame {
+      from { clip-path: polygon(50% 100%, 82% 58%, 70% 0, 50% 28%, 30% 0, 18% 58%); }
+      to { clip-path: polygon(50% 100%, 94% 48%, 62% 0, 50% 18%, 38% 0, 6% 48%); }
+    }
+
+    @keyframes launchFlash {
+      0% { box-shadow: inset 0 0 40px oklch(78% 0.18 132 / 0.08), 0 22px 80px oklch(5% 0.02 135 / 0.72); }
+      22% { box-shadow: inset 0 0 90px oklch(89% 0.18 78 / 0.28), 0 0 90px oklch(89% 0.18 78 / 0.34); }
+      100% { box-shadow: inset 0 0 40px oklch(78% 0.18 132 / 0.08), 0 22px 80px oklch(5% 0.02 135 / 0.72); }
+    }
+
+    @media (max-width: 1120px) {
+      .main-grid { grid-template-columns: 340px minmax(0, 1fr); }
+      .right-stack { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .countdown-stage { min-height: 560px; }
+    }
+
+    @media (max-width: 760px) {
+      .app { padding: 14px; gap: 14px; }
+      .topbar { grid-template-columns: 1fr; }
+      .system-status { justify-content: flex-start; }
+      .main-grid,
+      .right-stack { grid-template-columns: 1fr; }
+      .main-grid > * { min-width: 0; }
+      .countdown-stage { min-height: 440px; order: -1; }
+      .mode-switch { grid-template-columns: 1fr; }
+      .input-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .presets { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .action-stack { grid-template-columns: 1fr 1fr; }
+      .phase-strip { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      .phase { min-height: 46px; padding: 8px 4px; text-align: center; font-size: 8px; align-content: center; }
+      .phase strong { font-size: 11px; }
+      .display-zone { padding: 18px; }
+      .timer-block { padding: 24px 8px 22px; }
+      .timer { gap: 1px; }
+      .timer .unit { min-width: 1.36ch; font-size: clamp(26px, 8vw, 34px); }
+      .timer .colon { font-size: clamp(20px, 5.8vw, 26px); }
+      .timer .millis { min-width: 2.35ch; font-size: clamp(20px, 5.8vw, 26px); }
+      .mission-message { max-width: 28ch; font-size: 11px; margin-top: 12px; }
+      .telemetry-grid { grid-template-columns: 1fr 1fr; }
+      .rocket-bay { right: 4px; transform: scale(0.78); transform-origin: bottom right; }
+      .footer { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 1ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar" aria-label="Mission status">
+      <div class="mission-mark">
+        <div class="mission-badge" aria-hidden="true">◈</div>
+        <div>
+          <h1>Mission Control Countdown</h1>
+          <div class="subtitle">Falcon terminal: high precision T-minus sequencer</div>
+        </div>
+      </div>
+      <div class="system-status"><span class="status-light" aria-hidden="true"></span><span id="systemState">Ready for sequence</span></div>
+    </header>
+
+    <main class="main-grid">
+      <section class="panel control-panel" aria-labelledby="controlsTitle" id="controlPanel">
+        <div class="panel-header"><span id="controlsTitle">Launch parameters</span><span>OPS-01</span></div>
+        <div class="panel-body">
+          <div class="mode-switch" role="tablist" aria-label="Countdown mode">
+            <button class="seg active" id="durationMode" type="button" aria-selected="true">Duration</button>
+            <button class="seg" id="targetMode" type="button" aria-selected="false">Clock target</button>
+          </div>
+
+          <div class="field-stack duration-input">
+            <div class="input-row" aria-label="Duration inputs">
+              <label>Hours <input id="hours" type="number" min="0" max="99" inputmode="numeric" value="0" /></label>
+              <label>Minutes <input id="minutes" type="number" min="0" max="59" inputmode="numeric" value="1" /></label>
+              <label>Seconds <input id="seconds" type="number" min="0" max="59" inputmode="numeric" value="0" /></label>
+              <label>Millis <input id="millis" type="number" min="0" max="999" inputmode="numeric" value="0" /></label>
+            </div>
+            <div class="presets" aria-label="Quick presets">
+              <button class="preset" data-ms="10000" type="button">T-10s</button>
+              <button class="preset" data-ms="60000" type="button">T-1m</button>
+              <button class="preset" data-ms="300000" type="button">T-5m</button>
+            </div>
+          </div>
+
+          <div class="field-stack target-input">
+            <label>Launch at local time <input id="targetDate" type="datetime-local" /></label>
+          </div>
+
+          <div class="action-stack">
+            <button class="button primary" id="startPause" type="button">Start</button>
+            <button class="button abort" id="reset" type="button">Reset</button>
+          </div>
+
+          <p class="small-note">Space starts or pauses. R resets. Countdown math uses the browser high resolution clock, then redraws every animation frame.</p>
+        </div>
+      </section>
+
+      <section class="panel countdown-stage" aria-labelledby="timerTitle" id="stage">
+        <div class="phase-strip" aria-label="Launch phases">
+          <div class="phase" data-phase="60000"><strong>05</strong>System arm</div>
+          <div class="phase" data-phase="30000"><strong>04</strong>Guidance</div>
+          <div class="phase" data-phase="10000"><strong>03</strong>Terminal</div>
+          <div class="phase" data-phase="5000"><strong>02</strong>Ignition</div>
+          <div class="phase" data-phase="0"><strong>01</strong>Liftoff</div>
+        </div>
+
+        <div class="display-zone">
+          <div class="orbital-ring" aria-hidden="true"></div>
+          <div class="sweep" aria-hidden="true"></div>
+          <div class="timer-block">
+            <p class="timer-label" id="timerTitle">T-minus</p>
+            <div class="timer" aria-live="polite" aria-atomic="true">
+              <span class="unit" id="hh">00</span><span class="colon">:</span>
+              <span class="unit" id="mm">01</span><span class="colon">:</span>
+              <span class="unit" id="ss">00</span><span class="colon">.</span>
+              <span class="millis" id="ms">000</span>
+            </div>
+            <p class="mission-message" id="missionMessage">Enter a launch window and begin the sequence.</p>
+          </div>
+          <div class="rocket-bay" aria-hidden="true">
+            <div class="rocket"><div class="window"></div></div>
+            <div class="flame"></div>
+            <div class="pad-line"></div>
+          </div>
+        </div>
+
+        <div class="telemetry-grid" aria-label="Telemetry">
+          <div class="metric"><span>Remaining</span><strong id="remainingMetric">60,000 ms</strong></div>
+          <div class="metric"><span>Target</span><strong id="targetMetric">Not set</strong></div>
+          <div class="metric"><span>Frame</span><strong id="frameMetric">Waiting</strong></div>
+          <div class="metric"><span>Clock</span><strong id="clockMetric">perf.now()</strong></div>
+        </div>
+      </section>
+
+      <aside class="right-stack">
+        <section class="panel" aria-labelledby="checklistTitle">
+          <div class="panel-header"><span id="checklistTitle">Go checklist</span><span>LIVE</span></div>
+          <div class="panel-body">
+            <ul class="checklist" id="checklist">
+              <li><span class="check-dot"></span>Range safety clear</li>
+              <li><span class="check-dot"></span>Flight computer armed</li>
+              <li><span class="check-dot"></span>Telemetry uplink stable</li>
+              <li><span class="check-dot"></span>Main engines chill</li>
+              <li><span class="check-dot"></span>Guidance internal</li>
+              <li><span class="check-dot"></span>Launch commit</li>
+            </ul>
+          </div>
+        </section>
+        <section class="panel" aria-labelledby="logTitle">
+          <div class="panel-header"><span id="logTitle">Event log</span><span>UTC</span></div>
+          <div class="panel-body">
+            <div class="event-log" id="eventLog" aria-live="polite"></div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span>Precision note: display updates are frame-limited, countdown value is computed from a monotonic high resolution clock.</span>
+      <span id="localClock">LOCAL --:--:--</span>
+    </footer>
+  </div>
+
+  <script>
+    const refs = {
+      app: document.getElementById('app'),
+      stage: document.getElementById('stage'),
+      controlPanel: document.getElementById('controlPanel'),
+      durationMode: document.getElementById('durationMode'),
+      targetMode: document.getElementById('targetMode'),
+      hours: document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds'),
+      millis: document.getElementById('millis'),
+      targetDate: document.getElementById('targetDate'),
+      startPause: document.getElementById('startPause'),
+      reset: document.getElementById('reset'),
+      hh: document.getElementById('hh'),
+      mm: document.getElementById('mm'),
+      ss: document.getElementById('ss'),
+      ms: document.getElementById('ms'),
+      missionMessage: document.getElementById('missionMessage'),
+      remainingMetric: document.getElementById('remainingMetric'),
+      targetMetric: document.getElementById('targetMetric'),
+      frameMetric: document.getElementById('frameMetric'),
+      clockMetric: document.getElementById('clockMetric'),
+      systemState: document.getElementById('systemState'),
+      localClock: document.getElementById('localClock'),
+      checklist: document.getElementById('checklist'),
+      eventLog: document.getElementById('eventLog')
+    };
+
+    const state = {
+      mode: 'duration',
+      running: false,
+      complete: false,
+      targetPerf: 0,
+      remainingMs: 60000,
+      initialMs: 60000,
+      rafId: 0,
+      lastFrame: 0,
+      lastWholeSecond: null,
+      audio: null
+    };
+
+    const clamp = (value, min, max) => Math.min(Math.max(Number.isFinite(value) ? value : min, min), max);
+    const pad = (value, length = 2) => String(value).padStart(length, '0');
+
+    function durationFromInputs() {
+      const h = clamp(parseInt(refs.hours.value, 10), 0, 99);
+      const m = clamp(parseInt(refs.minutes.value, 10), 0, 59);
+      const s = clamp(parseInt(refs.seconds.value, 10), 0, 59);
+      const ms = clamp(parseInt(refs.millis.value, 10), 0, 999);
+      refs.hours.value = h;
+      refs.minutes.value = m;
+      refs.seconds.value = m === 60 ? 59 : s;
+      refs.millis.value = ms;
+      return ((h * 3600) + (m * 60) + s) * 1000 + ms;
+    }
+
+    function targetFromInputs() {
+      if (state.mode === 'target') {
+        const raw = refs.targetDate.value;
+        if (!raw) return 0;
+        return new Date(raw).getTime() - Date.now();
+      }
+      return durationFromInputs();
+    }
+
+    function splitMs(totalMs) {
+      const total = Math.max(0, Math.ceil(totalMs));
+      const hours = Math.floor(total / 3600000);
+      const minutes = Math.floor((total % 3600000) / 60000);
+      const seconds = Math.floor((total % 60000) / 1000);
+      const millis = total % 1000;
+      return { hours, minutes, seconds, millis };
+    }
+
+    function renderTime(totalMs) {
+      const parts = splitMs(totalMs);
+      refs.hh.textContent = pad(parts.hours);
+      refs.mm.textContent = pad(parts.minutes);
+      refs.ss.textContent = pad(parts.seconds);
+      refs.ms.textContent = pad(parts.millis, 3);
+      refs.remainingMetric.textContent = `${Math.max(0, Math.ceil(totalMs)).toLocaleString()} ms`;
+      updatePhase(totalMs);
+      updateChecklist(totalMs);
+    }
+
+    function updatePhase(totalMs) {
+      const phases = [...document.querySelectorAll('.phase')];
+      phases.forEach(phase => phase.classList.remove('live'));
+      if (!state.running && !state.complete) return;
+      const active = phases.find(phase => totalMs >= Number(phase.dataset.phase)) || phases[phases.length - 1];
+      active.classList.add('live');
+    }
+
+    function updateChecklist(totalMs) {
+      const items = [...refs.checklist.children];
+      const progress = state.initialMs <= 0 ? 0 : 1 - (totalMs / state.initialMs);
+      const doneCount = state.complete ? items.length : Math.floor(progress * items.length);
+      items.forEach((item, index) => item.classList.toggle('done', index < doneCount));
+    }
+
+    function setMode(mode) {
+      state.mode = mode;
+      refs.controlPanel.classList.toggle('target-mode', mode === 'target');
+      refs.durationMode.classList.toggle('active', mode === 'duration');
+      refs.targetMode.classList.toggle('active', mode === 'target');
+      refs.durationMode.setAttribute('aria-selected', mode === 'duration');
+      refs.targetMode.setAttribute('aria-selected', mode === 'target');
+      addLog(mode === 'target' ? 'Clock target mode selected.' : 'Duration mode selected.');
+      if (!state.running) {
+        const candidate = Math.max(0, targetFromInputs());
+        state.remainingMs = candidate || state.remainingMs;
+        renderTime(state.remainingMs);
+        refs.targetMetric.textContent = mode === 'target' && refs.targetDate.value ? new Date(refs.targetDate.value).toLocaleString() : 'Not set';
+      }
+    }
+
+    function setDefaultTargetDate() {
+      const date = new Date(Date.now() + 5 * 60 * 1000);
+      const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+      refs.targetDate.value = local;
+    }
+
+    function addLog(message) {
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      const now = new Date();
+      line.innerHTML = `<code>${now.toISOString().slice(11, 19)}</code><span>${message}</span>`;
+      refs.eventLog.prepend(line);
+      while (refs.eventLog.children.length > 9) refs.eventLog.lastChild.remove();
+    }
+
+    function startAudioPulse(frequency = 720, duration = 0.055) {
+      try {
+        state.audio ||= new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = state.audio.createOscillator();
+        const gain = state.audio.createGain();
+        oscillator.frequency.value = frequency;
+        oscillator.type = 'square';
+        gain.gain.setValueAtTime(0.0001, state.audio.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.04, state.audio.currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, state.audio.currentTime + duration);
+        oscillator.connect(gain).connect(state.audio.destination);
+        oscillator.start();
+        oscillator.stop(state.audio.currentTime + duration + 0.02);
+      } catch (error) {
+        refs.clockMetric.textContent = 'audio blocked';
+      }
+    }
+
+    function begin() {
+      if (state.running) return pause();
+      const next = state.complete ? targetFromInputs() : (state.remainingMs || targetFromInputs());
+      if (next <= 0) {
+        refs.missionMessage.textContent = 'Set a future launch time before starting the sequence.';
+        refs.systemState.textContent = 'Input required';
+        addLog('Launch rejected. No positive countdown value.');
+        return;
+      }
+      state.running = true;
+      state.complete = false;
+      state.initialMs = next;
+      state.remainingMs = next;
+      state.targetPerf = performance.now() + next;
+      state.lastFrame = performance.now();
+      state.lastWholeSecond = null;
+      refs.startPause.textContent = 'Pause';
+      refs.stage.classList.remove('launched');
+      refs.systemState.textContent = 'Sequence running';
+      refs.missionMessage.textContent = 'Autosequence started. Mission control is go.';
+      refs.targetMetric.textContent = new Date(Date.now() + next).toLocaleString();
+      addLog(`Autosequence start. T-${Math.ceil(next).toLocaleString()} ms.`);
+      loop();
+    }
+
+    function pause() {
+      state.running = false;
+      cancelAnimationFrame(state.rafId);
+      state.remainingMs = Math.max(0, state.targetPerf - performance.now());
+      refs.startPause.textContent = 'Resume';
+      refs.systemState.textContent = 'Hold';
+      refs.missionMessage.textContent = 'Countdown hold. Press resume to continue the launch sequence.';
+      addLog(`Hold at T-${Math.ceil(state.remainingMs).toLocaleString()} ms.`);
+      renderTime(state.remainingMs);
+    }
+
+    function reset() {
+      cancelAnimationFrame(state.rafId);
+      state.running = false;
+      state.complete = false;
+      state.remainingMs = Math.max(0, targetFromInputs()) || 60000;
+      state.initialMs = state.remainingMs;
+      state.lastWholeSecond = null;
+      refs.startPause.textContent = 'Start';
+      refs.stage.classList.remove('launched');
+      refs.systemState.textContent = 'Ready for sequence';
+      refs.missionMessage.textContent = 'Enter a launch window and begin the sequence.';
+      refs.targetMetric.textContent = state.mode === 'target' && refs.targetDate.value ? new Date(refs.targetDate.value).toLocaleString() : 'Not set';
+      addLog('Sequence reset.');
+      renderTime(state.remainingMs);
+    }
+
+    function completeLaunch() {
+      state.running = false;
+      state.complete = true;
+      cancelAnimationFrame(state.rafId);
+      state.remainingMs = 0;
+      refs.startPause.textContent = 'Start';
+      refs.systemState.textContent = 'Liftoff confirmed';
+      refs.missionMessage.textContent = 'LIFTOFF. Vehicle has cleared the tower.';
+      refs.stage.classList.add('launched');
+      refs.targetMetric.textContent = 'T+00:00:00.000';
+      addLog('Liftoff confirmed. Vehicle is pitching downrange.');
+      startAudioPulse(110, 0.22);
+      renderTime(0);
+    }
+
+    function loop() {
+      if (!state.running) return;
+      const now = performance.now();
+      const remaining = Math.max(0, state.targetPerf - now);
+      const frameDelta = now - state.lastFrame;
+      state.lastFrame = now;
+      state.remainingMs = remaining;
+      renderTime(remaining);
+      refs.frameMetric.textContent = `${frameDelta.toFixed(2)} ms`;
+      const whole = Math.ceil(remaining / 1000);
+      if (whole !== state.lastWholeSecond) {
+        state.lastWholeSecond = whole;
+        if (whole <= 10 && whole > 0) {
+          refs.missionMessage.textContent = `Terminal count. T-minus ${whole}.`;
+          startAudioPulse(whole <= 3 ? 980 : 680, whole <= 3 ? 0.08 : 0.045);
+          addLog(`Terminal count: ${whole}.`);
+        } else if (whole === 30) {
+          addLog('Guidance is internal.');
+        } else if (whole === 60) {
+          addLog('Final minute. Range is green.');
+        }
+      }
+      if (remaining <= 0) return completeLaunch();
+      state.rafId = requestAnimationFrame(loop);
+    }
+
+    function syncFromDurationInputs() {
+      if (state.running || state.mode !== 'duration') return;
+      state.remainingMs = durationFromInputs() || 0;
+      state.initialMs = state.remainingMs || 1;
+      renderTime(state.remainingMs);
+    }
+
+    function syncFromTargetInput() {
+      if (state.running || state.mode !== 'target') return;
+      state.remainingMs = Math.max(0, targetFromInputs());
+      state.initialMs = state.remainingMs || 1;
+      refs.targetMetric.textContent = refs.targetDate.value ? new Date(refs.targetDate.value).toLocaleString() : 'Not set';
+      renderTime(state.remainingMs);
+    }
+
+    refs.durationMode.addEventListener('click', () => setMode('duration'));
+    refs.targetMode.addEventListener('click', () => setMode('target'));
+    refs.startPause.addEventListener('click', begin);
+    refs.reset.addEventListener('click', reset);
+    [refs.hours, refs.minutes, refs.seconds, refs.millis].forEach(input => input.addEventListener('input', syncFromDurationInputs));
+    refs.targetDate.addEventListener('input', syncFromTargetInput);
+    document.querySelectorAll('.preset').forEach(button => {
+      button.addEventListener('click', () => {
+        const total = Number(button.dataset.ms);
+        refs.hours.value = Math.floor(total / 3600000);
+        refs.minutes.value = Math.floor((total % 3600000) / 60000);
+        refs.seconds.value = Math.floor((total % 60000) / 1000);
+        refs.millis.value = total % 1000;
+        setMode('duration');
+        syncFromDurationInputs();
+        addLog(`Preset loaded: ${button.textContent}.`);
+      });
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.target instanceof HTMLInputElement) return;
+      if (event.code === 'Space') {
+        event.preventDefault();
+        begin();
+      }
+      if (event.key.toLowerCase() === 'r') reset();
+    });
+
+    setInterval(() => {
+      refs.localClock.textContent = `LOCAL ${new Date().toLocaleTimeString()}`;
+    }, 250);
+
+    setDefaultTargetDate();
+    addLog('Mission control terminal online.');
+    renderTime(state.remainingMs);
+  </script>
+</body>
+</html>

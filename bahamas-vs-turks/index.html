@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A post-wedding mini-moon comparison: Bahamas versus Turks & Caicos." />
+  <title>Bahamas vs Turks & Caicos — Post-Wedding Mini-Moon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,760&family=Geist:wght@400;450;520;620;720&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #17130e;
+      --muted: #766f64;
+      --paper: #f7f0e5;
+      --paper-2: #efe5d5;
+      --shell: rgba(255, 255, 255, .42);
+      --deep: #102722;
+      --deep-2: #14372f;
+      --line: rgba(39, 31, 20, .12);
+      --line-light: rgba(255, 255, 255, .22);
+      --bahamas: #c98d45;
+      --turks: #1a9bbb;
+      --sage: #7e9a84;
+      --rose: #d8b39a;
+      --shadow: 0 24px 80px rgba(55, 42, 22, .13);
+      --ease: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 16% 8%, rgba(26, 155, 187, .20), transparent 28rem),
+        radial-gradient(circle at 88% 14%, rgba(201, 141, 69, .22), transparent 30rem),
+        linear-gradient(180deg, #fbf7ef 0%, var(--paper) 52%, #efe3d2 100%);
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 20;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.60);
+      border: 1px solid rgba(255,255,255,.55);
+      box-shadow: 0 18px 50px rgba(27, 20, 10, .10);
+      backdrop-filter: blur(22px);
+      white-space: nowrap;
+    }
+    .nav a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: .04em;
+      color: rgba(23,19,14,.68);
+      transition: transform .7s var(--ease), background .7s var(--ease), color .7s var(--ease);
+    }
+    .nav a:hover { background: rgba(23,19,14,.07); color: var(--ink); transform: translateY(-1px); }
+    .nav .strong { background: var(--ink); color: #fff6e9; }
+
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .hero { padding: 122px 0 70px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.44);
+      color: rgba(23,19,14,.62);
+      font-size: 10px;
+      font-weight: 620;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 999px; background: linear-gradient(135deg, var(--bahamas), var(--turks)); }
+
+    h1, h2, h3 { margin: 0; }
+    h1 {
+      margin-top: 22px;
+      max-width: 1020px;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(48px, 8vw, 112px);
+      line-height: .94;
+      letter-spacing: -.038em;
+      word-spacing: .035em;
+      text-wrap: balance;
+    }
+    .hero-copy {
+      max-width: 760px;
+      margin: 22px 0 0;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.35;
+      color: rgba(23,19,14,.68);
+      letter-spacing: -.025em;
+    }
+
+    .hero-grid {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: 1.06fr .94fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .image-shell, .card-shell {
+      border-radius: 34px;
+      padding: 7px;
+      background: rgba(255,255,255,.38);
+      border: 1px solid rgba(255,255,255,.58);
+      box-shadow: var(--shadow);
+    }
+    .image-core, .card-core {
+      position: relative;
+      min-height: 100%;
+      border-radius: 27px;
+      overflow: hidden;
+      background: #fdf7ec;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.72);
+    }
+    .duel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 520px;
+    }
+    .duel-panel { position: relative; overflow: hidden; }
+    .duel-panel img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.95) contrast(.98); }
+    .duel-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,.52) 100%);
+    }
+    .duel-label {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      z-index: 2;
+      color: white;
+    }
+    .duel-label strong { display: block; font-size: 15px; letter-spacing: -.01em; }
+    .duel-label span { display: block; margin-top: 4px; font-size: 12px; color: rgba(255,255,255,.72); line-height: 1.35; }
+
+    .verdict {
+      padding: clamp(24px, 4vw, 42px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 28px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.68), rgba(255,255,255,.22)),
+        radial-gradient(circle at 80% 8%, rgba(26,155,187,.18), transparent 18rem),
+        radial-gradient(circle at 4% 92%, rgba(201,141,69,.16), transparent 16rem);
+    }
+    .verdict h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(36px, 5vw, 68px);
+      line-height: .92;
+      letter-spacing: -.052em;
+    }
+    .verdict p { color: rgba(23,19,14,.68); font-size: 16px; line-height: 1.55; margin: 16px 0 0; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      border-radius: 999px;
+      padding: 6px 6px 6px 18px;
+      background: var(--ink);
+      color: #fff6e8;
+      font-size: 13px;
+      font-weight: 620;
+      transition: transform .7s var(--ease), background .7s var(--ease);
+    }
+    .btn:hover { transform: translateY(-2px); background: #261e16; }
+    .btn:active { transform: scale(.98); }
+    .btn i {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.12);
+      font-style: normal;
+      transition: transform .7s var(--ease);
+    }
+    .btn:hover i { transform: translateX(2px) translateY(-1px) scale(1.05); }
+    .btn.secondary { background: rgba(23,19,14,.08); color: var(--ink); }
+    .btn.secondary i { background: rgba(23,19,14,.08); }
+
+    section { padding: 78px 0; }
+    .section-head {
+      display: grid;
+      grid-template-columns: .78fr 1fr;
+      gap: 32px;
+      align-items: end;
+      margin-bottom: 26px;
+    }
+    .section-head h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: .92;
+      letter-spacing: -.055em;
+      text-wrap: balance;
+    }
+    .section-head p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.55; max-width: 620px; }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+    .tile { grid-column: span 4; }
+    .tile.large { grid-column: span 7; }
+    .tile.med { grid-column: span 5; }
+    .tile.wide { grid-column: span 12; }
+    .tile .card-core { padding: 28px; min-height: 260px; }
+    .kicker { font-size: 11px; text-transform: uppercase; letter-spacing: .18em; color: rgba(23,19,14,.48); font-weight: 720; }
+    .tile h3 { margin-top: 16px; font-size: 27px; line-height: 1; letter-spacing: -.035em; }
+    .tile p { margin: 14px 0 0; color: rgba(23,19,14,.66); line-height: 1.55; font-size: 15px; }
+    .score {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .score strong { font-family: "Fraunces", Georgia, serif; font-size: 62px; letter-spacing: -.06em; line-height: .85; }
+    .score span { color: rgba(23,19,14,.48); font-size: 12px; text-transform: uppercase; letter-spacing: .16em; font-weight: 620; }
+
+    .split-cost {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .cost-card {
+      border-radius: 26px;
+      padding: 22px;
+      background: rgba(255,255,255,.43);
+      border: 1px solid rgba(39,31,20,.08);
+    }
+    .cost-card h3 { font-size: 20px; }
+    .price { margin-top: 10px; font-family: "Fraunces", Georgia, serif; font-size: clamp(42px, 5vw, 64px); letter-spacing: -.06em; }
+    .sub { color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .bar {
+      margin-top: 16px;
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(23,19,14,.08);
+    }
+    .bar span { display: block; height: 100%; border-radius: 999px; transform-origin: left; }
+    .bar.bahamas span { width: 74%; background: linear-gradient(90deg, #d9a95d, #b87132); }
+    .bar.turks span { width: 61%; background: linear-gradient(90deg, #5cc7d5, #087e9e); }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr;
+      gap: 1px;
+      overflow: hidden;
+      border-radius: 30px;
+      background: rgba(39,31,20,.10);
+      border: 1px solid rgba(255,255,255,.6);
+      box-shadow: var(--shadow);
+    }
+    .matrix > div { background: rgba(255,250,242,.70); padding: 22px; min-height: 90px; }
+    .matrix .head { background: rgba(23,19,14,.90); color: #fff7ec; font-weight: 720; letter-spacing: -.01em; }
+    .matrix .axis { font-weight: 720; color: rgba(23,19,14,.72); }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(23,19,14,.07);
+      font-size: 12px;
+      font-weight: 620;
+      color: rgba(23,19,14,.68);
+      margin-bottom: 10px;
+    }
+    .matrix p { margin: 0; color: var(--muted); line-height: 1.45; font-size: 14px; }
+
+    .image-band {
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+    .photo-card { min-height: 520px; position: relative; overflow: hidden; }
+    .photo-card img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-caption {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 22px;
+      padding: 18px;
+      border-radius: 24px;
+      color: white;
+      background: rgba(0,0,0,.28);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(16px);
+    }
+    .photo-caption strong { display: block; font-size: 20px; letter-spacing: -.02em; }
+    .photo-caption span { display: block; margin-top: 5px; color: rgba(255,255,255,.72); line-height: 1.45; font-size: 13px; }
+
+    .rec {
+      color: #fff7ea;
+      background:
+        radial-gradient(circle at 18% 24%, rgba(26,155,187,.32), transparent 24rem),
+        radial-gradient(circle at 84% 10%, rgba(201,141,69,.32), transparent 28rem),
+        linear-gradient(135deg, var(--deep), #071411);
+      border-radius: 42px;
+      padding: 7px;
+      box-shadow: 0 32px 110px rgba(8, 19, 16, .28);
+    }
+    .rec-inner {
+      padding: clamp(30px, 6vw, 70px);
+      border-radius: 35px;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+    }
+    .rec h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(44px, 7vw, 96px);
+      line-height: .90;
+      letter-spacing: -.06em;
+      max-width: 900px;
+    }
+    .rec p { max-width: 760px; color: rgba(255,247,234,.70); font-size: 18px; line-height: 1.55; }
+    .ranked { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 30px; }
+    .ranked div { padding: 18px; border-radius: 24px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.10); }
+    .ranked strong { display: block; font-size: 15px; }
+    .ranked span { display: block; margin-top: 8px; color: rgba(255,247,234,.62); font-size: 13px; line-height: 1.45; }
+
+    .footnote {
+      padding: 30px 0 54px;
+      color: rgba(23,19,14,.48);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .reveal { opacity: 0; transform: translateY(34px); filter: blur(8px); transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease); }
+    .reveal.in { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+    @media (max-width: 880px) {
+      .nav { left: 13px; right: 13px; transform: none; max-width: none; width: auto; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+      .nav::-webkit-scrollbar { display: none; }
+      .nav a { padding: 10px 13px; flex: 0 0 auto; }
+      .wrap { width: min(280px, calc(100vw - 32px)); margin-left: 16px; margin-right: auto; }
+      .hero { padding-top: 96px; }
+      h1 { font-size: clamp(30px, 8.8vw, 34px); line-height: 1.04; letter-spacing: -.012em; word-spacing: .004em; max-width: 100%; overflow-wrap: normal; }
+      .hero-copy { font-size: 16px; line-height: 1.45; max-width: 100%; overflow-wrap: break-word; }
+      .image-shell, .card-shell, .image-core, .card-core { min-width: 0; max-width: 100%; }
+      .hero-grid, .section-head, .split-cost, .image-band, .ranked { grid-template-columns: 1fr; }
+      .duel { grid-template-columns: 1fr; min-height: auto; }
+      .duel-panel { min-height: 265px; }
+      .bento { grid-template-columns: 1fr; }
+      .tile, .tile.large, .tile.med, .tile.wide { grid-column: 1; }
+      .matrix { grid-template-columns: 1fr; }
+      .matrix .head:nth-child(2), .matrix .head:nth-child(3) { display: none; }
+      .matrix > div { min-height: 0; }
+      .matrix .axis { background: rgba(23,19,14,.90); color: #fff7ec; }
+      .matrix .axis::before { content: "Compare: "; color: rgba(255,247,234,.54); }
+      .photo-card { min-height: 360px; }
+      section { padding: 52px 0; }
+      .tile .card-core { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Page navigation">
+    <a href="#model">The Model</a>
+    <a href="#costs">Costs</a>
+    <a href="#compare">Compare</a>
+    <a class="strong" href="#verdict">Verdict</a>
+  </nav>
+
+  <main>
+    <header class="hero wrap">
+      <span class="eyebrow"><span class="dot"></span> Post-wedding mini-moon decision</span>
+      <h1>Two islands. Two completely different ways to exhale.</h1>
+      <p class="hero-copy">The useful comparison is not “which beach is nicer?” It is whether you want a <strong>resort moon</strong> — maximal convenience, restaurants, energy — or a <strong>beach moon</strong> — quiet water, lower pulse, fewer decisions.</p>
+
+      <div class="hero-grid reveal">
+        <div class="image-shell">
+          <div class="image-core duel" aria-label="Bahamas and Turks & Caicos image comparison">
+            <div class="duel-panel">
+              <img src="assets/bahamas-baha-mar.jpg" alt="Realistic editorial image of a Bahamas luxury resort and beach" />
+              <div class="duel-label"><strong>Bahamas</strong><span>Easy, built-up, polished. A resort ecosystem with a beach attached.</span></div>
+            </div>
+            <div class="duel-panel">
+              <img src="assets/turks-grace-bay.jpg" alt="Realistic editorial image of Turks and Caicos Grace Bay beach" />
+              <div class="duel-label"><strong>Turks & Caicos</strong><span>Quieter, beach-first, honeymoon-coded. The water is the point.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-shell">
+          <div class="card-core verdict">
+            <div>
+              <span class="kicker">Alfred’s framing</span>
+              <h2>Resort gravity vs. beach gravity.</h2>
+              <p><strong>Bahamas pulls you inward</strong> toward Baha Mar: dinner reservations, casino lights, pools, waterpark, golf, menus, movement. <strong>Turks pulls you outward</strong> toward the sand: swim, read, lunch, nap, repeat.</p>
+            </div>
+            <div class="cta-row">
+              <a class="btn" href="#verdict">Skip to verdict <i>↓</i></a>
+              <a class="btn secondary" href="#costs">See cost bands <i>↗</i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="model" class="wrap reveal">
+      <div class="section-head">
+        <h2>The real choice is the recovery style.</h2>
+        <p>After a Miami wedding, the best trip is the one that removes the most decisions. Bahamas removes logistics. Turks removes noise.</p>
+      </div>
+      <div class="bento">
+        <article class="card-shell tile large">
+          <div class="card-core">
+            <span class="kicker">Bahamas / Baha Mar</span>
+            <h3>The Resort Moon</h3>
+            <p>Best if you want the easy button: short flight from Miami, many restaurants, casino, waterpark, golf, high-service hotel options, and a contained campus where nobody has to think very hard.</p>
+            <div class="score"><strong>9</strong><span>logistics ease</span></div>
+          </div>
+        </article>
+        <article class="card-shell tile med">
+          <div class="card-core">
+            <span class="kicker">Turks / Grace Bay</span>
+            <h3>The Beach Moon</h3>
+            <p>Best if you want quiet luxury, prettier water, a more romantic pace, and a trip that feels like you actually left the wedding machine behind.</p>
+            <div class="score"><strong>9</strong><span>decompression</span></div>
+          </div>
+        </article>
+        <article class="card-shell tile">
+          <div class="card-core">
+            <span class="kicker">Hidden tax</span>
+            <h3>Decision fatigue</h3>
+            <p>Baha Mar gives options. Options are great until you are newly married and deciding between 19 restaurants while sunburned.</p>
+          </div>
+        </article>
+        <article class="card-shell tile">
+          <div class="card-core">
+            <span class="kicker">Hidden upside</span>
+            <h3>Flight ease</h3>
+            <p>Nassau is the cleaner flight move from Miami. If Sunday/Monday travel smoothness is the priority, Bahamas wins cleanly.</p>
+          </div>
+        </article>
+        <article class="card-shell tile">
+          <div class="card-core">
+            <span class="kicker">Hidden risk</span>
+            <h3>October weather</h3>
+            <p>Both sit inside hurricane-season logic. Flexible bookings and insurance matter more than squeezing a prepaid discount.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="costs" class="wrap reveal">
+      <div class="section-head">
+        <h2>Cost: closer than it feels.</h2>
+        <p>Bahamas can be cheaper if you choose Grand Hyatt/SLS. But once you choose Rosewood or Ocean Club, Turks becomes competitive — often with a more honeymoon-appropriate feel.</p>
+      </div>
+      <div class="card-shell">
+        <div class="card-core" style="padding:24px;">
+          <div class="split-cost">
+            <div class="cost-card">
+              <span class="pill">Bahamas — Rosewood lane</span>
+              <h3>Estimated 6-night all-in</h3>
+              <div class="price">$12k–$17k</div>
+              <div class="sub">Rosewood Baha Mar-style luxury, flights for two, food, transfers. Baha Mar hotel fees are the sharp object in the suitcase.</div>
+              <div class="bar bahamas"><span></span></div>
+            </div>
+            <div class="cost-card">
+              <span class="pill">Turks — Grace Bay luxury lane</span>
+              <h3>Estimated 6-night all-in</h3>
+              <div class="price">$9k–$14k</div>
+              <div class="sub">Wymara / The Palms / Grace Bay Club / Ritz lane, flights for two, food, transfers. Flights cost more; the stay feels calmer.</div>
+              <div class="bar turks"><span></span></div>
+            </div>
+          </div>
+          <p class="sub" style="margin:18px 4px 0;">Reference bands: Grand Hyatt/SLS Bahamas can drop the trip to roughly $6k–$10k. Ocean Club / Four Seasons Bahamas pushes roughly $15k–$24k. Top-end Turks can also climb past $20k.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" class="wrap reveal">
+      <div class="section-head">
+        <h2>The comparison matrix.</h2>
+        <p>A fast read for the actual tradeoff: which compromises feel acceptable after a wedding?</p>
+      </div>
+      <div class="matrix" role="list" aria-label="Comparison matrix">
+        <div class="head">Dimension</div>
+        <div class="head">Bahamas</div>
+        <div class="head">Turks & Caicos</div>
+
+        <div class="axis">Best version</div>
+        <div><span class="pill">Rosewood Baha Mar</span><p>Luxury cocoon inside a large resort universe.</p></div>
+        <div><span class="pill">Wymara / Grace Bay Club</span><p>Beachfront calm with stronger honeymoon energy.</p></div>
+
+        <div class="axis">Flight friction</div>
+        <div><p>Wins. MIA → NAS is short and frequent; return to SFO still connects.</p></div>
+        <div><p>Fine, but less clean. MIA → PLS is longer/pricier; SFO return connects.</p></div>
+
+        <div class="axis">Daily rhythm</div>
+        <div><p>Restaurants, pools, casino, golf, waterpark. Easy but stimulating.</p></div>
+        <div><p>Beach, swim, lunch, nap, dinner. Fewer stimuli, better decompression.</p></div>
+
+        <div class="axis">Risk of feeling fleeced</div>
+        <div><p>Higher. Resort fees, service charges, and expensive campus dining are very visible.</p></div>
+        <div><p>Still expensive, but the spend maps more cleanly to beach and room quality.</p></div>
+
+        <div class="axis">Best reason to choose it</div>
+        <div><p>You want convenience and options more than intimacy.</p></div>
+        <div><p>You want the trip to feel like an exhale, not another production.</p></div>
+      </div>
+    </section>
+
+    <section class="wrap reveal">
+      <div class="image-band">
+        <div class="image-shell">
+          <div class="image-core photo-card">
+            <img src="assets/bahamas-baha-mar.jpg" alt="Bahamas resort view with beach and pools" loading="lazy" />
+            <div class="photo-caption"><strong>Bahamas: the engineered escape</strong><span>Everything is close, polished, and available. That is the advantage — and the trap.</span></div>
+          </div>
+        </div>
+        <div class="image-shell">
+          <div class="image-core photo-card">
+            <img src="assets/turks-grace-bay.jpg" alt="Turks and Caicos Grace Bay beach view" loading="lazy" />
+            <div class="photo-caption"><strong>Turks: the natural exhale</strong><span>The beach does most of the work. Fewer decisions, softer days, more newlywed silence.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="verdict" class="wrap reveal">
+      <div class="rec">
+        <div class="rec-inner">
+          <span class="eyebrow" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.16); color:rgba(255,247,234,.70);"><span class="dot"></span> Recommendation</span>
+          <h2>Choose Turks unless the Bahamas deal is meaningfully cheaper.</h2>
+          <p>For a post-wedding mini-moon, the best answer is probably <strong>5–6 nights in Turks & Caicos</strong>, ideally <strong>Wymara</strong> if you want stylish/couples energy or <strong>Grace Bay Club</strong> if you want classic service and beach. Fly Monday if possible. Let Sunday be recovery, not customs theatre.</p>
+          <div class="ranked">
+            <div><strong>1. Wymara</strong><span>Best stylish couples pick; modern, quiet, beach-first.</span></div>
+            <div><strong>2. Grace Bay Club</strong><span>Best classic luxury/service pick; polished but not mega-resort.</span></div>
+            <div><strong>3. Rosewood Baha Mar</strong><span>Best Bahamas pick if you want convenience and resort infrastructure.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="wrap footnote">
+      Assumptions: 2 adults, 1 room, roughly 6 nights after the Oct 3, 2026 wedding, departing Miami and returning to San Francisco. Cost bands are planning estimates from public May 2026 hotel/flight research, not bookable quotes. Images are AI-generated realistic editorial visuals for comparison mood only, not official hotel photography.
+    </footer>
+  </main>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>

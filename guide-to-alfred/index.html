@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>A Guide to Alfred — How I Set Up My OpenClaw</title>
-  <meta name="description" content="How Barron Roth set up Alfred, his AI butler, using OpenClaw on a Mac mini. Telegram topics, QMD memory, cron jobs, skills, and more." />
+  <title>A Guide to Alfred — How I Set Up Hermes</title>
+  <meta name="description" content="How Barron Roth set up Alfred, his AI butler, using Hermes on a Mac mini. Telegram topics, GBrain memory, cron jobs, skills, and more." />
   <meta property="og:title" content="A Guide to Alfred" />
-  <meta property="og:description" content="How I turned a Mac mini and OpenClaw into a personal AI butler that actually does things." />
+  <meta property="og:description" content="How I turned a Mac mini and Hermes into a personal AI butler that actually does things." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #fafaf9;
@@ -456,14 +456,14 @@
   </nav>
 
   <div class="hero">
-    <div class="hero-eyebrow">OpenClaw Setup Guide</div>
+    <div class="hero-eyebrow">Hermes Setup Guide</div>
     <h1>How I built an AI butler that actually does things</h1>
     <p class="hero-sub">
-      Here's everything &mdash; the architecture, the tricks, and the things that made the biggest difference.
+      Alfred is my always-on personal agent. It used to run on OpenClaw; today it runs on <strong>Hermes</strong>, which has been the stable, rock-solid base I wanted. This is the practical setup: the architecture, the tricks, and the pieces that made the biggest difference.
     </p>
     <div class="tip" style="margin-top: 32px; max-width: 560px;">
       <div class="tip-label">Pro tip</div>
-      <p>Send this guide to your OpenClaw and talk about it. It'll help you set up the same things.</p>
+      <p>Send this guide to your own Hermes agent and talk through it. The point is not to copy my exact life; it is to give your agent a real operating system.</p>
     </div>
     <div class="hero-meta">
       <div class="hero-meta-item">
@@ -472,19 +472,19 @@
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">Platform</span>
-        <span class="hero-meta-value">OpenClaw</span>
+        <span class="hero-meta-value">Hermes Agent</span>
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">Interface</span>
-        <span class="hero-meta-value">Telegram</span>
+        <span class="hero-meta-value">Telegram topics</span>
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">Model</span>
-        <span class="hero-meta-value">Claude Opus</span>
+        <span class="hero-meta-value">GPT-5.5</span>
       </div>
       <div class="hero-meta-item">
-        <span class="hero-meta-label">Uptime</span>
-        <span class="hero-meta-value">Always on</span>
+        <span class="hero-meta-label">Updated</span>
+        <span class="hero-meta-value">June 3, 2026</span>
       </div>
     </div>
   </div>
@@ -492,10 +492,8 @@
   <nav class="toc" id="toc">
     <div class="toc-title">On this page</div>
     <a href="#topics">Telegram Topics</a>
-    <a href="#memory">Memory System</a>
+    <a href="#gbrain">GBrain Memory</a>
     <a href="#lcm">Lossless Context</a>
-    <a href="#qmd">QMD Memory</a>
-    <a href="#heartbeat">Heartbeat</a>
     <a href="#cron">Cron Jobs</a>
     <a href="#skills">Skills</a>
     <a href="#coding">Coding Modes</a>
@@ -503,8 +501,7 @@
     <a href="#deploy">GitHub + Vercel</a>
     <a href="#tools">Tools</a>
     <a href="#images">Image Gen</a>
-    <a href="#reactions">Reactions &amp; Streaming</a>
-    <a href="#updates">Staying Updated</a>
+    <a href="#maintenance">Maintenance</a>
     <a href="#personality">Personality</a>
     <a href="#model">The Model</a>
     <a href="#remote">Remote Access</a>
@@ -512,657 +509,342 @@
   </nav>
 
   <div class="content">
-
     <!-- 01 TOPICS ARCHITECTURE -->
     <div class="section fade-in" id="topics">
       <div class="section-number">01</div>
-      <h2>Telegram Topics as Project Threads</h2>
+      <h2>Telegram topics as project lanes</h2>
       <img src="/guide-to-alfred/images/01-topics.png" alt="Owl perched on branching chat threads" class="section-img" loading="lazy" />
       <p>
-        This is the single biggest unlock. Instead of one chat where everything bleeds together, I use <strong>Telegram topic groups</strong> to give each project its own persistent conversation thread with its own system instructions and session context.
+        Telegram is the interface, but topics are the unlock. Instead of one endless chat where wedding vendors, iOS bugs, work ideas, and travel plans all smear together, Alfred gets separate lanes with separate session context.
       </p>
       <p>
-        I have two topic groups. One is personal &mdash; topics for each project I'm working on, credit card strategy, apps in development, whatever I'm focused on that week. The other is shared with my fianc&eacute;e &mdash; topics for wedding planning, household finances, travel, home organization. She talks directly to Alfred in those threads too.
+        The newer setup uses <strong>private DM topics</strong> for my personal work. Permanent topics can be pinned for recurring areas like Cubby, finance, or CXAS. One-off topics work like Discord threads: spin one up when a task deserves its own context, let Hermes auto-rename it from the session, and keep the main General chat clean.
+      </p>
+      <p>
+        I still also use a shared Telegram group with my fianc&eacute;e. That group has its own topics for wedding planning, travel, household decisions, and anything where Alfred is useful to both of us.
       </p>
 
-      <div class="diagram"><span class="dim">Personal Topics Group</span>
-<span class="highlight">├─</span> General            <span class="dim">catch-all, daily chat</span>
+      <div class="diagram"><span class="dim">Private DM topics</span>
+<span class="highlight">├─</span> General            <span class="dim">daily chat and quick questions</span>
 <span class="highlight">├─</span> Cubby              <span class="dim">iOS app development</span>
-<span class="highlight">├─</span> CXAS               <span class="dim">work product</span>
-<span class="highlight">├─</span> Ma&icirc;tre D&rsquo;          <span class="dim">blind restaurant dates</span>
-<span class="highlight">├─</span> Finance            <span class="dim">credit cards, budgeting</span>
-<span class="highlight">└─</span> ...
+<span class="highlight">├─</span> CXAS               <span class="dim">work/product thinking</span>
+<span class="highlight">├─</span> Finance            <span class="dim">budgeting, cards, planning</span>
+<span class="highlight">└─</span> one-off threads    <span class="dim">auto-renamed as needed</span>
 
-<span class="dim">Shared Topics Group (with fianc&eacute;e)</span>
-<span class="highlight">├─</span> General
-<span class="highlight">├─</span> Wedding            <span class="dim">vendor tracking, decisions</span>
-<span class="highlight">├─</span> Finances           <span class="dim">household budget</span>
+<span class="dim">Shared group topics</span>
+<span class="highlight">├─</span> Wedding            <span class="dim">vendors, decisions, logistics</span>
 <span class="highlight">├─</span> Travel             <span class="dim">trip planning</span>
-<span class="highlight">└─</span> ...</div>
+<span class="highlight">└─</span> Household          <span class="dim">things Nina and I both need</span></div>
 
       <p>
-        Each topic is its own OpenClaw session with its own system prompt. But they all share the same <code>MEMORY.md</code> file, so Alfred has unified long-term memory across every thread. The main session can also peek into topic histories when it needs context.
-      </p>
-      <p>
-        The real power-up: <strong>per-topic system prompts that point to dedicated memory files</strong>. The Cubby topic's system instruction says "read <code>cubby.md</code>." The wedding topic points to <code>wedding.md</code>. Travel reads from <code>travel/*.md</code>. Each topic knows where its project-specific brain lives, while still sharing the global <code>MEMORY.md</code> for cross-cutting context. This is one config line per topic &mdash; <code>channels.telegram.groups.&lt;id&gt;.topics.&lt;threadId&gt;.systemPrompt</code>.
+        For the important lanes, I bind a <strong>skill</strong> to the topic. That skill points Alfred to the right GBrain page or project file, so the lane comes with its own operating instructions and its own canonical memory path.
       </p>
 
       <div class="callout">
-        <p><strong>Why this matters:</strong> I'm extremely jumpy in what I talk about. Without topics, context from a wedding vendor email would pollute a conversation about iOS code. Topics give you focused context without losing the shared brain. And the per-topic memory files mean each project's context persists across sessions &mdash; even after compaction.</p>
+        <p><strong>Why this matters:</strong> I am extremely jumpy in what I talk about. Topics let Alfred keep context tight without losing the shared brain. A wedding vendor email should not pollute an iOS debugging session. Astonishingly, computers work better when we stop treating them like soup.</p>
       </div>
     </div>
 
-    <!-- 03 MEMORY -->
-    <div class="section fade-in" id="memory">
+    <!-- 02 GBRAIN -->
+    <div class="section fade-in" id="gbrain">
       <div class="section-number">02</div>
-      <h2>The Memory System</h2>
+      <h2>GBrain is the real memory</h2>
       <img src="/guide-to-alfred/images/03-memory.png" alt="Owl writing in a journal with a quill" class="section-img" loading="lazy" />
       <p>
-        Alfred wakes up blank every session. These files are its continuity:
+        The biggest architecture change since the original guide: Alfred&rsquo;s long-term memory is now <strong><a href="https://github.com/garrytan/gbrain">GBrain</a></strong>, my wiki-backed markdown brain. Hermes still has memory, but the canonical project state lives in files I can read, edit, commit, sync, and hand to other agents.
       </p>
-      <ul class="feature-list">
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>MEMORY.md</strong> &mdash; curated long-term memory. Key decisions, project status, contact info, lessons learned. Alfred reads this at the start of every main session and updates it when things change.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>memory/YYYY-MM-DD.md</strong> &mdash; daily logs. Raw notes about what happened each day. The journal entries that MEMORY.md is distilled from.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>todo.md</strong> &mdash; a simple checklist. Alfred scans it every heartbeat and nudges me about pending items. A lightweight alternative to cron jobs for reminders &mdash; instead of scheduling a one-shot cron, I can just say "remind me later" and it lands here. The heartbeat catches it next pass.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>SOUL.md</strong> &mdash; Alfred's personality. Voice, principles, anti-patterns. More on this below.</span>
-        </li>
-      </ul>
+      <p>
+        This replaced the old <code>MEMORY.md</code>-plus-QMD mental model. The GBrain pages are the source of truth: project briefs, travel notes, financial models, wedding state, Cubby decisions, research pages, and the connective tissue between them.
+      </p>
+      <p>
+        Under the hood, GBrain gives me the things I liked about QMD without making QMD a separate guide section: keyword search, semantic/vector search, hybrid retrieval, reranking, graph traversal, embeddings/backfill, sync, watch, and import pipelines. The important part is simpler: <strong>the wiki is the memory; the indexes are derived from it.</strong>
+      </p>
 
-      <p>
-        This is the foundation &mdash; OpenClaw's stock memory system. MEMORY.md, daily logs, and the workspace structure are all defaults. But I've built on top of it significantly: <strong>QMD</strong> for semantic search across 600+ session transcripts, and <strong>LCM (Lossless Context Management)</strong> for incremental compaction that never fully loses context. Those are covered in their own sections.
-      </p>
-      <p>
-        I also use <strong>per-topic system prompts</strong> that point each Telegram topic to its own dedicated memory file. The Cubby topic reads from <code>cubby.md</code>, the wedding topic reads from <code>wedding.md</code>, travel reads from <code>travel/*.md</code>. Each topic knows where its brain lives. Combined with the shared MEMORY.md that every session reads, this gives focused project context without cross-contamination.
-      </p>
+      <ul class="feature-list">
+        <li><span class="bullet">&mdash;</span><span><strong>Markdown as source of truth</strong> &mdash; durable, reviewable, portable files instead of invisible model memory.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Topic-bound skills</strong> &mdash; a recurring Telegram lane loads the skill that points Alfred to the right GBrain page.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Manual review</strong> &mdash; I can inspect what Alfred wrote, fix it, and commit the wiki separately.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Multi-agent access</strong> &mdash; Alfred, Codex, and other agents can all read the same project brain.</span></li>
+      </ul>
 
       <div class="tip">
         <div class="tip-label">Key insight</div>
-        <p>If you want to remember something, <strong>write it to a file</strong>. "Mental notes" don't survive session restarts. Files do. This sounds obvious but it changes everything about how your agent operates over weeks and months.</p>
+        <p>If you want an agent to remember something, write it somewhere boring and inspectable. Memory that only exists as vibes inside a chatbot is not memory. It is decorative fog.</p>
       </div>
     </div>
 
-    <!-- 18 LOSSLESS CONTEXT MANAGEMENT -->
+    <!-- 03 LOSSLESS CONTEXT MANAGEMENT -->
     <div class="section fade-in" id="lcm">
       <div class="section-number">03</div>
-      <h2>Lossless Context Management: Never Fully Forget</h2>
+      <h2>Hermes LCM: never fully forget</h2>
       <img src="/guide-to-alfred/images/18-lcm.jpg" alt="Owl examining a tree of documents and summaries" class="section-img" loading="lazy" />
       <p>
-        Stock OpenClaw compaction is nuclear. When the context window fills up, everything gets summarized at once into one compressed block. Detail evaporates. It&rsquo;s a one-way door &mdash; once the summary replaces your conversation, the nuance is gone. &ldquo;Discussed DJ options&rdquo; when what you actually need is &ldquo;decided on Phil Santos because of price and availability.&rdquo;
+        Long-running agent conversations create a nasty problem: eventually the context window fills up. Traditional compaction squashes the conversation into a summary and detail evaporates. You keep &ldquo;discussed DJ options&rdquo; and lose the actual decision.
       </p>
       <p>
-        <strong>Lossless Context Management (LCM)</strong> replaces that entire compaction system with something fundamentally different: incremental, tree-based compaction where nothing is ever deleted.
+        Alfred uses the <strong>Hermes LCM plugin</strong> for Lossless Context Management. It builds a DAG of raw messages and summaries, so the model can see a compact view while the original detail remains recoverable underneath.
       </p>
       <p>
-        Here&rsquo;s how it works. Instead of one catastrophic summarization event, LCM does <strong>continuous micro-compaction</strong>. Small chunks of messages get summarized into leaf nodes as you go. Those leaves get merged into higher-level condensed summaries. Those condense further. The result is a DAG &mdash; a directed acyclic graph &mdash; that grows organically as your conversation evolves. Think of it as a tree where the roots are your raw messages and each level up is a more abstract summary.
-      </p>
-      <p>
-        The critical difference: <strong>nothing is ever deleted</strong>. Raw messages persist in the database. Summaries are a navigation layer on top, not a replacement. The tree is how the model sees your conversation at a glance, but the full detail is always there underneath.
-      </p>
-      <p>
-        And when detail is needed? The agent calls <code>lcm_expand</code> to drill back down the tree. A sub-agent walks the DAG, reads source messages, and returns a focused answer. Stock compaction is a one-way door. LCM is a <strong>two-way door</strong> &mdash; compress when you need space, expand when you need detail.
+        When detail is needed, Alfred can call tools like <code>lcm_expand</code> or <code>lcm_expand_query</code> to drill back into the source messages. Compaction becomes a two-way door: compress for working memory, expand when precision matters.
       </p>
 
       <div class="code-block">
-        <div class="code-label">openclaw.json &mdash; LCM config</div>
-        <code>{
-  "plugins": {
-    "entries": {
-      "lossless-claw": {
-        "enabled": true,
-        "config": {
-          "freshTailCount": 128,
-          "contextThreshold": 0.75,
-          "incrementalMaxDepth": -1,
-          "summaryModel": "anthropic/claude-haiku-4-5"
-        }
-      }
-    }
-  },
-  "session": {
-    "reset": {
-      "mode": "idle",
-      "idleMinutes": 10080
-    }
-  }
-}</code>
+        <div class="code-label">Hermes LCM, verified on this setup</div>
+        <pre><code>plugin: hermes-lcm
+version: 0.14.0
+engine: lcm
+context threshold: 75%
+fresh tail: 24 messages
+raw messages: preserved in lcm.db</code></pre>
       </div>
-
-      <ul class="feature-list">
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>freshTailCount: 128</strong> &mdash; protects the last 128 messages from compaction. &ldquo;Don&rsquo;t touch my recent context.&rdquo;</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>contextThreshold: 0.75</strong> &mdash; starts compacting at 75% context usage, giving headroom before it&rsquo;s an emergency.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>incrementalMaxDepth: -1</strong> &mdash; unlimited tree depth. The DAG grows as deep as it needs to.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>session.reset: idle, 7 days</strong> &mdash; sessions survive gateway restarts. Before this, every restart wiped everything.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>summaryModel: Haiku</strong> &mdash; uses cheap, fast Haiku for summarization. A few cents per day of heavy use.</span>
-        </li>
-      </ul>
 
       <div class="callout-green callout">
-        <p><strong>Pro tip:</strong> LCM and QMD are complementary, not competing. LCM prevents context loss <em>within</em> a session &mdash; each topic maintains its own DAG, so you never fully lose context in a conversation. QMD enables <em>cross-session</em> recall &mdash; &ldquo;what did we decide in the Cubby topic last week?&rdquo; Run both.</p>
-      </div>
-
-      <div class="tip">
-        <div class="tip-label">Ask your OpenClaw</div>
-        <p><em>&ldquo;I want to set up Lossless Context Management. Install the lossless-claw plugin and configure it for incremental compaction.&rdquo;</em></p>
-      </div>
-
-      <p>
-        More about how LCM works at <a href="https://losslesscontext.ai">losslesscontext.ai</a>.
-      </p>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="divider"></div>
-
-    <!-- 02 QMD -->
-    <div class="section fade-in" id="qmd">
-      <div class="section-number">05</div>
-      <h2>QMD: Local-First Memory Search</h2>
-      <img src="/guide-to-alfred/images/02-qmd.png" alt="Owl with magnifying glass searching documents" class="section-img" loading="lazy" />
-      <p>
-        OpenClaw's default memory search sends your queries to OpenAI for embedding. <strong>QMD does the same job locally</strong>, using two small models running on your own hardware. Nothing leaves your machine.
-      </p>
-      <p>
-        The key move is <strong>enabling session memory</strong> &mdash; QMD automatically embeds your conversation transcripts, so Alfred can semantically search not just its notes, but everything you've ever discussed. Combined with automated embedding on save, it means new memories are searchable within seconds.
-      </p>
-
-      <div class="benchmark">
-        <div class="benchmark-header">QMD Benchmarks &mdash; M4 Mac mini, 1,154 files</div>
-        <div class="benchmark-row">
-          <span class="benchmark-label">BM25 keyword search</span>
-          <span class="benchmark-value fast">0.32s</span>
-        </div>
-        <div class="benchmark-row">
-          <span class="benchmark-label">Vector search (Metal GPU)</span>
-          <span class="benchmark-value fast">4.3s</span>
-        </div>
-        <div class="benchmark-row">
-          <span class="benchmark-label">Vector search (CPU only)</span>
-          <span class="benchmark-value slow">32.6s</span>
-        </div>
-        <div class="benchmark-row">
-          <span class="benchmark-label">Hybrid query (BM25 + vector + reranker)</span>
-          <span class="benchmark-value">16.7s</span>
-        </div>
-      </div>
-
-      <p>
-        This requires a reasonably powerful Mac &mdash; the embedding and reranking models run locally via Metal. An M4 handles it comfortably. There's a setup guide at <a href="https://alfred.barronroth.com/qmd-guide">alfred.barronroth.com/qmd-guide</a>.
-      </p>
-
-      <p>
-        <strong>One thing to know about group chats:</strong> QMD memory search is <strong>denied by default</strong> in group sessions to prevent private memory from leaking to other participants. This is the right default &mdash; you don't want your financial notes showing up when someone asks a question in a shared chat.
-      </p>
-      <p>
-        But you can expand the scope selectively. I allow QMD in my two private Telegram topic groups (one personal, one shared with my fianc&eacute;e) by adding rules to <code>memory.qmd.scope</code> in <code>openclaw.json</code>:
-      </p>
-
-      <div class="code-block">
-        <div class="code-label">openclaw.json &mdash; QMD scope config</div>
-        <code>"memory": {
-  "qmd": {
-    "scope": {
-      "default": "deny",
-      "rules": [
-        { "action": "allow", "match": { "chatType": "direct" } },
-        { "action": "allow", "match": { "rawKeyPrefix": "agent:main:telegram:group:-100..." } }
-      ]
-    }
-  }
-}</code>
-      </div>
-
-      <p>
-        Scope is <strong>group-level, not topic-level</strong> &mdash; all topics within an allowed group get the same QMD access. There's one shared index, so a search in any topic can surface snippets from any memory file. If you need tighter isolation, you'd need separate collections. For most setups, group-level is fine.
-      </p>
-
-      <div class="tip">
-        <div class="tip-label">Ask your OpenClaw</div>
-        <p><em>&ldquo;Set up QMD for local memory search. I want session transcripts embedded automatically so you can search our conversation history, plus auto-embed on file save.&rdquo;</em></p>
+        <p><strong>How to think about it:</strong> GBrain is durable long-term project memory. LCM is session continuity. One remembers what matters across months; the other keeps a live conversation from getting lobotomized when it gets long.</p>
       </div>
     </div>
 
-    <!-- 04 HEARTBEAT -->
-    <div class="section fade-in" id="heartbeat">
-      <div class="section-number">05</div>
-      <h2>Heartbeat: Proactive Awareness</h2>
-      <img src="/guide-to-alfred/images/04-heartbeat.png" alt="Owl with stethoscope listening to a heartbeat line" class="section-img" loading="lazy" />
-      <p>
-        OpenClaw has a heartbeat feature &mdash; a periodic poll that gives your agent a chance to check on things without being asked. Alfred's heartbeat runs every 30 minutes during waking hours.
-      </p>
-      <p>
-        The key is that <strong>heartbeat has session context</strong>. It can see recent conversation history, check what's changed, and decide whether to reach out or stay quiet. I maintain a <code>HEARTBEAT.md</code> file with instructions for what to check: email scans via <code>gog</code> (Google Workspace CLI), calendar awareness, todo items, travel countdowns, vendor monitoring.
-      </p>
-      <p>
-        Most heartbeats result in silence. Occasionally Alfred surfaces something I would have missed &mdash; a vendor reply buried in a secondary inbox, an upcoming calendar event, a flight that changed. The ratio of signal to noise is what makes it work.
-      </p>
-
-      <div class="tip">
-        <div class="tip-label">Ask your OpenClaw</div>
-        <p><em>&ldquo;Set up a heartbeat that runs every 30 minutes during waking hours. Have it check my email for anything urgent, look at my calendar for upcoming events, and scan my todo list. Stay quiet if there&rsquo;s nothing to report.&rdquo;</em></p>
-      </div>
-    </div>
-
-    <!-- 05 CRON -->
+    <!-- 04 CRON -->
     <div class="section fade-in" id="cron">
-      <div class="section-number">18</div>
-      <h2>Cron Jobs: The Night Shift</h2>
+      <div class="section-number">04</div>
+      <h2>Cron jobs: the night shift</h2>
       <img src="/guide-to-alfred/images/05-cron.png" alt="Owl at a control desk pulling levers at midnight" class="section-img" loading="lazy" />
       <p>
-        This is the mechanism that turns OpenClaw from a chatbot into an agent that works while you sleep. Cron jobs fire at exact times, in isolated sessions, and can use different models or thinking levels.
+        Hermes does not need the old generic heartbeat loop. Instead, I use explicit <strong>cron jobs</strong>: small scheduled agents or scripts that check a specific surface, usually stay quiet, and only notify me when something is worth my attention.
+      </p>
+      <p>
+        Some jobs are LLM-driven. Some are deterministic script watchers with no agent at all. They can deliver into a specific Telegram topic, save locally, or notify only on meaningful changes.
       </p>
 
       <ul class="feature-list">
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Morning briefing</strong> &mdash; reads MEMORY.md, checks email, calendar, and weather. Sends a digest before I wake up.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Overnight monitoring</strong> &mdash; watches for urgent emails, flight changes, or App Store review status while I sleep.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Log health check</strong> &mdash; runs at 2 AM, scans the last 24 hours of gateway logs for errors, cron failures, API issues, and delivery problems. Only pings me if something's actually broken, with a proposed fix. This is how I found out my skills were silently failing to load &mdash; hundreds of warnings I never would have seen.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Self-upgrade</strong> &mdash; two crons working together. One runs at 3 AM and silently updates skills (ClawHub + skills.sh), QMD, and Homebrew dependencies. The other runs at 5 PM and checks for OpenClaw core updates &mdash; if a new version is available, it reads the release notes and tells me what's relevant to my setup. Everything stays current without me thinking about it. I wake up with the latest skills and get pinged only when there's a meaningful OpenClaw release.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>One-shot reminders</strong> &mdash; "remind me in 20 minutes" becomes a cron that fires once and delivers to the chat.</span>
-        </li>
+        <li><span class="bullet">&mdash;</span><span><strong>Front desk</strong> &mdash; useful email/calendar scans during the day and a morning briefing before I wake up.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Travel sentinel</strong> &mdash; check-ins, packing lists, trip readiness, and day-of reminders.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Open Loop Radar</strong> &mdash; reviews recent sessions every few days for unresolved threads and implicit commitments.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>GBrain/wiki ops</strong> &mdash; bookmark ingestion, weekly maintenance, nightly wiki commit/push, and update watching.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Follow-up/accountability</strong> &mdash; iMessage follow-up triage and other small social loose ends.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Creative serendipity</strong> &mdash; random musings and occasional wiki artifacts, because not every useful thing has to look like a Jira ticket.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Watchers and one-shots</strong> &mdash; Hermes issue watchers, ticket drops, reservation windows, account-fee windows, and reminders.</span></li>
       </ul>
 
-      <div class="callout-green callout">
-        <p><strong>Pro tip:</strong> Use cron for anything that needs exact timing or isolation. Use heartbeat for batching multiple checks together within session context. They complement each other.</p>
-      </div>
-
-      <div class="tip">
-        <div class="tip-label">Ask your OpenClaw</div>
-        <p><em>&ldquo;Create a morning briefing cron job that runs at 7 AM every day. Have it check my email, calendar, and weather, then send me a digest in chat before I wake up.&rdquo;</em></p>
+      <div class="callout">
+        <p><strong>The product idea is the same as heartbeat:</strong> Alfred periodically checks well-defined surfaces and mostly stays quiet. The implementation is cleaner: explicit jobs, explicit schedules, explicit delivery targets.</p>
       </div>
     </div>
 
-    <!-- 06 SKILLS -->
+    <!-- 05 SKILLS -->
     <div class="section fade-in" id="skills">
-      <div class="section-number">18</div>
-      <h2>Skills: Reusable Protocols</h2>
+      <div class="section-number">05</div>
+      <h2>Skills: reusable protocols</h2>
       <img src="/guide-to-alfred/images/06-skills.png" alt="Owl holding a recipe book with modular cards" class="section-img" loading="lazy" />
       <p>
-        Whenever I want Alfred to follow a specific protocol &mdash; like how to run my <a href="https://alfred.barronroth.com/maitre-d">blind restaurant date nights</a> &mdash; I create a <strong>skill file</strong>. It's a markdown document that describes the protocol, and Alfred reads it whenever that context is relevant.
+        Whenever I want Alfred to follow a specific protocol &mdash; like how to plan a blind restaurant date, triage a consulting request, or manage a project lane &mdash; I put that protocol in a <strong>skill</strong>. It is a markdown document that loads when the context is relevant.
       </p>
       <p>
-        If the protocol changes, I update the skill file. Every future session picks up the new version automatically. No retraining, no prompt engineering gymnastics.
+        Skills are how Alfred improves without retraining. If a workflow changes, I update the skill file. Every future session gets the new procedure.
       </p>
       <p>
-        I use <a href="https://skills.sh">skills.sh</a> to install skills so they end up not just in OpenClaw, but also in Codex, Claude Code, and all my IDE sessions. That means Alfred has access to all my coding skills &mdash; iOS development, SwiftUI patterns, design-focused frontend skills &mdash; and so does every coding agent I spawn.
+        The current setup also uses skills as routing glue. A Telegram topic can load a skill; that skill tells Alfred which GBrain page to treat as canonical for that lane. The topic provides conversational isolation, the skill provides procedure, and GBrain provides durable state.
+      </p>
+      <p>
+        I still use <a href="https://skills.sh">skills.sh</a> because portability matters. The same skills can be available to Alfred, Codex, Claude Code, and IDE agents. One procedure library, many workers.
       </p>
 
       <div class="tip">
         <div class="tip-label">Recommendation</div>
-        <p>Use <strong>skills.sh</strong> for skill installation over ClawHub. It ensures skills are available across your entire toolchain, not just OpenClaw.</p>
+        <p>Use skills for things you repeat, things you correct often, and things that require judgment. If you have to explain a workflow twice, it probably wants to become a skill.</p>
       </div>
     </div>
 
-    <!-- 07 CODING -->
+    <!-- 06 CODING -->
     <div class="section fade-in" id="coding">
-      <div class="section-number">18</div>
-      <h2>Coding: Two Modes</h2>
+      <div class="section-number">06</div>
+      <h2>Coding: two modes</h2>
       <img src="/guide-to-alfred/images/07-coding.png" alt="Owl at a workbench with two different toolkits" class="section-img" loading="lazy" />
       <p>
-        There are two ways Alfred writes code, and knowing when to use each is one of the biggest quality-of-life improvements in my setup.
+        There are two ways Alfred writes code, and knowing which one to use is a major quality-of-life improvement.
       </p>
       <p>
-        <strong>Mode 1: Direct coding.</strong> Alfred reads files, makes edits, runs commands, and deploys &mdash; all inline, right from chat. This is what you've been reading about in this guide. Every web page on this site, every script, every config change &mdash; Alfred built them directly using its file editing tools and coding skills. For quick fixes, building web pages, writing scripts, or anything that doesn't need a deep codebase exploration, this is the fastest path. Ask for it and it's done in the same message thread.
+        <strong>Mode 1: direct coding.</strong> Alfred reads files, edits, runs commands, checks results, and deploys inline from chat. This is perfect for small pages, scripts, config fixes, quick repo edits, and anything I can describe in a sentence or two.
       </p>
       <p>
-        <strong>Mode 2: ACP (Agent Control Protocol).</strong> For heavier coding sessions, Alfred spawns a dedicated <strong>Codex</strong> or <strong>Claude Code</strong> agent that gets its own workspace and can explore, iterate, run tests, and build features independently. Think of it like Alfred handing off a task to a specialist. These agents share the same skill files (via <a href="https://skills.sh">skills.sh</a>), so they know all the same patterns &mdash; SwiftUI conventions, React best practices, project-specific rules &mdash; but they can go deep on a problem without blocking my chat.
+        <strong>Mode 2: the Codex app.</strong> For larger builds, I remote into the Mac mini and use Codex directly. It gets the deep IDE-like work: substantial app features, bigger refactors, and long coding sessions that should not block my main Alfred chat.
       </p>
       <p>
-        The mental model: <strong>direct coding is a quick conversation, ACP is a work order.</strong> I use direct coding for "add a section to this page" or "fix this bug." I use ACP for "build a new feature in my iOS app" or "refactor this module and open a PR." Alfred monitors the spawned agent, reports back when it's done, and I review the results.
+        Skills still bridge the two worlds. Alfred and Codex can share the same playbooks, taste, and project conventions. The handoff is less &ldquo;new assistant, who dis?&rdquo; and more &ldquo;same workshop, bigger bench.&rdquo;
       </p>
-
-      <div class="callout">
-        <p><strong>When to use which:</strong> If you can describe the change in a sentence or two, let Alfred do it directly. If you'd normally open an IDE and spend an hour on it, spawn a coding agent. The threshold is lower than you think &mdash; I've had Codex sessions build entire features while I'm making coffee.</p>
-      </div>
     </div>
 
-    <!-- 08 DOCUMENTS & SHEETS -->
+    <!-- 07 DOCUMENTS & SHEETS -->
     <div class="section fade-in" id="docs">
-      <div class="section-number">18</div>
-      <h2>Documents and Tracking</h2>
+      <div class="section-number">07</div>
+      <h2>Documents and tracking</h2>
       <img src="/guide-to-alfred/images/07-docs.png" alt="Owl typing on a typewriter with floating documents" class="section-img" loading="lazy" />
       <p>
-        Two patterns that come up constantly:
+        Two patterns come up constantly. For documents, draft in markdown or the wiki first, then export or move to Google Docs when something needs to be shared. For tracking, use a spreadsheet when the data actually wants rows, dates, owners, and formulas.
       </p>
       <p>
-        <strong>For documents</strong> &mdash; draft in markdown files in the workspace, then export to Google Docs when you need to share. Markdown is faster to write, easier to version, and doesn't require API calls for every edit.
-      </p>
-      <p>
-        <strong>For tracking</strong> &mdash; anything that happens over time or requires extensive data, I have Alfred create a Google Sheet and be meticulous about writing to it. Wedding vendor comparisons, household budgets, pricing research &mdash; sheets are the right tool when you need structure and shared access. All of this happens through <code>gog</code>, a Google Workspace CLI that Alfred uses for Gmail, Calendar, Sheets, and Docs without ever opening a browser.
+        Hermes has Google Workspace access, and Alfred uses the <code>gws</code> CLI for Gmail, Calendar, Drive, Docs, and Sheets. Wedding vendor comparisons, household budgets, pricing research, calendar lookups, email scans &mdash; all the boring office plumbing becomes agent-reachable.
       </p>
     </div>
 
-    <!-- 09 GITHUB + VERCEL -->
+    <!-- 08 GITHUB + VERCEL -->
     <div class="section fade-in" id="deploy">
-      <div class="section-number">18</div>
-      <h2>GitHub + Vercel: Ship Instantly</h2>
+      <div class="section-number">08</div>
+      <h2>GitHub + Vercel: ship instantly</h2>
       <img src="/guide-to-alfred/images/08-deploy.png" alt="Owl launching a paper airplane that becomes a website" class="section-img" loading="lazy" />
       <p>
-        Connect your OpenClaw to GitHub and Vercel. Give it a domain &mdash; I use a subdomain of my personal site. Now every project, guide, tracker, or interactive page Alfred builds is one deploy away from being live.
+        One of the most useful patterns is giving Alfred a fast path from idea to URL. GitHub plus Vercel means a small page, prototype, guide, tracker, or interactive toy can become a shareable link in minutes.
       </p>
       <p>
-        This makes the experience <strong>extremely interactive</strong>. "Build me a page comparing these wedding venues" goes from abstract to a URL I can share with my fianc&eacute;e in minutes. "Create an activity picker for my mom's visit" becomes a real app she can use on her phone.
+        &ldquo;Build me a page comparing these wedding venues&rdquo; becomes a URL I can send to Nina. &ldquo;Make a quick guide for this setup&rdquo; becomes a real page instead of a lost chat transcript. Everything lives as subdirectories in one repo: clean URLs, fast deploys, low ceremony.
       </p>
-      <p>
-        Everything lives as subdirectories in one repo. Clean URLs, instant deploys, zero config per project.
-      </p>
-
-      <div class="tip">
-        <div class="tip-label">Ask your OpenClaw</div>
-        <p><em>&ldquo;Help me set up a GitHub repo and Vercel project so you can build and deploy web pages to my domain. I want you to be able to ship things I can share as URLs.&rdquo;</em></p>
-      </div>
     </div>
 
-    <!-- 10 TOOLS & INTEGRATIONS -->
+    <!-- 09 TOOLS & INTEGRATIONS -->
     <div class="section fade-in" id="tools">
-      <div class="section-number">18</div>
-      <h2>Tools and Integrations</h2>
+      <div class="section-number">09</div>
+      <h2>Tools and integrations</h2>
       <img src="/guide-to-alfred/images/09-tools.png" alt="Owl wearing a utility belt of tiny tools" class="section-img" loading="lazy" />
       <p>
-        The real power of an always-on agent comes from what it can <strong>reach</strong>. Here are the tools Alfred uses daily:
+        The real power of an always-on agent comes from what it can reach. The exact list changes, but these are the integrations that matter most in my current setup:
       </p>
 
       <ul class="feature-list">
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>gog (Google Workspace CLI)</strong> &mdash; the backbone. Gmail scanning, calendar events, Sheets read/write, Docs export. Every heartbeat email check, every vendor spreadsheet update, every calendar lookup runs through this.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Browser automation</strong> &mdash; Alfred can drive a real browser for things that don't have APIs. Book restaurant reservations on Resy, schedule Uber rides, fill out web forms, scrape data from pages. This is how the <a href="https://alfred.barronroth.com/maitre-d">Ma&icirc;tre D&rsquo;</a> skill books our blind date nights.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>Coding agents (Codex / Claude Code)</strong> &mdash; for bigger coding tasks, Alfred spawns sub-agents that can build features, review PRs, and refactor codebases. They share the same skills via skills.sh, so they know the same patterns Alfred does.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>gh (GitHub CLI)</strong> &mdash; PRs, issues, CI status, code review. Alfred can check build status, comment on PRs, and monitor deployments without touching a browser.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>asc (App Store Connect CLI)</strong> &mdash; the entire iOS app submission pipeline. Signing, TestFlight distribution, metadata, review monitoring. I shipped my app to the App Store without opening Xcode's organizer once.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>imsg</strong> &mdash; read and send iMessages from the terminal. Alfred can look up conversations, find contact info, and send texts on my behalf.</span>
-        </li>
-        <li>
-          <span class="bullet">&mdash;</span>
-          <span><strong>goplaces (Google Places API)</strong> &mdash; restaurant lookup, venue research, finding nearby businesses with reviews and details.</span>
-        </li>
+        <li><span class="bullet">&mdash;</span><span><strong>Google Workspace via <code>gws</code></strong> &mdash; Gmail, Calendar, Drive, Docs, and Sheets.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>GBrain/wiki tools</strong> &mdash; durable project memory, research pages, and syncable state.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>iMessage follow-up scan</strong> &mdash; find loose conversational threads and draft the next nudge.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Printing Press CLIs</strong> &mdash; custom domain tools for annoying workflows: Fandango, Monarch Money, Splitwise, and table reservations across OpenTable, Tock, and Resy.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>1Password <code>Claw</code> vault</strong> &mdash; credential handoff without pasting secrets into chat.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Gemini Maps grounding</strong> &mdash; even with effectively unlimited OpenAI tokens, Gemini&rsquo;s place data is unmatched. For restaurant recommendations or place advice, Alfred diverts to Gemini.</span></li>
       </ul>
 
       <div class="callout">
-        <p><strong>Credential management:</strong> When Alfred needs login credentials &mdash; for Resy, OpenTable, or any service &mdash; I share them via <strong>1Password share links</strong>. Alfred extracts the credentials from the share link using its browser and stores them in a local secret manager. Passwords never sit in plaintext chat logs, and I never have to type them out.</p>
+        <p><strong>Credential management:</strong> Alfred has access to a dedicated 1Password vault called <code>Claw</code>. If a workflow needs credentials, I share them there and Alfred reads them with the <code>op</code> CLI where possible. Much better than dropping passwords into chat like a Victorian sending bank details by postcard.</p>
       </div>
     </div>
 
-    <!-- 11 NANO BANANA -->
+    <!-- 10 IMAGE GENERATION -->
     <div class="section fade-in" id="images">
-      <div class="section-number">18</div>
-      <h2>Image Generation with Nano Banana</h2>
+      <div class="section-number">10</div>
+      <h2>Image generation through OpenAI</h2>
       <img src="/guide-to-alfred/images/10-images.png" alt="Owl painting on a canvas with a palette" class="section-img" loading="lazy" />
       <p>
-        Connect a Gemini API key and you get access to <strong>Nano Banana</strong> &mdash; fast image generation and editing directly from chat. Useful for generating illustrations for pages, editing photos, creating social assets, or just messing around.
+        The old setup used a separate Gemini/Nano Banana path. I do not bother with that anymore. Image generation now goes through GPT/OpenAI inside Hermes using the existing OAuth-backed plan.
       </p>
       <p>
-        It's noticeably faster than routing through other providers, and the quality is good enough for most use cases. Having it always available changes how often you reach for it.
+        The practical effect is simple: Alfred can generate illustrations, quick assets, page art, and visual drafts without another API key or side setup. It is part of the same agent workflow instead of a separate toy bolted to the side.
       </p>
     </div>
 
-    <!-- 12 EMOJI REACTIONS & STREAMING -->
-    <div class="section fade-in" id="reactions">
-      <div class="section-number">18</div>
-      <h2>Emoji Reactions and Streaming</h2>
-      <img src="/guide-to-alfred/images/11-reactions.png" alt="Owl surrounded by floating emoji reactions" class="section-img" loading="lazy" />
-      <p>
-        Small thing that made a surprisingly big difference: <strong>enable emoji reactions</strong> in your Telegram config. Alfred reacts to my messages with emoji as it processes them, which means I can see exactly when it's reading a specific message and when it starts generating a response.
-      </p>
-      <p>
-        Combined with <strong>streaming text</strong> &mdash; where the response appears word-by-word in Telegram as it's generated &mdash; the whole experience feels alive. You're not waiting for a wall of text to appear. You're watching it think in real time.
-      </p>
-      <p>
-        It's a small config change but it transforms the conversational feel. Streaming is default now in recent OpenClaw versions, but reactions need to be enabled per channel.
-      </p>
-
-      <div class="tip">
-        <div class="tip-label">Ask your OpenClaw</div>
-        <p><em>&ldquo;Enable emoji reactions on my Telegram channel so I can see when you&rsquo;re reading and processing my messages.&rdquo;</em></p>
-      </div>
-    </div>
-
-    <!-- 13 STAYING UPDATED -->
-    <div class="section fade-in" id="updates">
-      <div class="section-number">18</div>
-      <h2>Staying Updated</h2>
+    <!-- 11 MAINTENANCE -->
+    <div class="section fade-in" id="maintenance">
+      <div class="section-number">11</div>
+      <h2>Maintenance: let Alfred watch the stack</h2>
       <img src="/guide-to-alfred/images/12-updates.png" alt="Owl reading a glowing changelog scroll" class="section-img" loading="lazy" />
       <p>
-        OpenClaw moves fast. New features, new integrations, config changes &mdash; there's a lot to keep up with. My workflow: I ask Alfred to <strong>check for updates, read the release notes, and explain what's relevant to my setup</strong>.
+        I do not want to manually track every moving part in the stack. Alfred watches the parts that matter: Hermes issues I am waiting on, targeted bugs, GBrain/wiki health, scheduled maintenance, and update checks that are actually relevant to my setup.
       </p>
       <p>
-        It'll tell me "this new feature means you can replace your manual cron with a native heartbeat check" or "this release added container query support to the browser tool." I don't read changelogs. Alfred reads them and translates them into things I should care about.
+        The point is not &ldquo;auto-update everything blindly.&rdquo; It is that the agent can keep an eye on its own operating environment and tell me when something is worth attention.
       </p>
-      <p>
-        This has been one of the best ways to <strong>continuously improve my setup</strong> without spending time researching. The agent that benefits from the updates is the same one explaining them to you.
-      </p>
-
-      <div class="tip">
-        <div class="tip-label">Ask your OpenClaw</div>
-        <p><em>&ldquo;Check if there are any OpenClaw updates available. Read the release notes and tell me what&rsquo;s relevant to my setup.&rdquo;</em></p>
-      </div>
     </div>
 
-    <!-- 14 PERSONALITY -->
+    <!-- 12 PERSONALITY -->
     <div class="section fade-in" id="personality">
-      <div class="section-number">18</div>
-      <h2>The Personality Upgrade</h2>
+      <div class="section-number">12</div>
+      <h2>The personality upgrade</h2>
       <img src="/guide-to-alfred/images/13-personality.png" alt="Owl adjusting a bow tie in front of a mirror" class="section-img" loading="lazy" />
       <p>
-        Early on, I asked Alfred to modify its own personality. I gave it a description of the voice I wanted &mdash; British, dry, sharp, warm underneath &mdash; and let it write its own <code>SOUL.md</code>. That file is loaded every session and shapes how Alfred communicates. You can read <a href="https://github.com/barronlroth/alfred-soul/blob/master/SOUL.md">Alfred's full SOUL.md on GitHub</a>.
+        Early on, I asked Alfred to modify its own personality. I gave it a description of the voice I wanted &mdash; British, dry, sharp, warm underneath &mdash; and let it write its own <code>SOUL.md</code>. That file shapes how Alfred communicates. You can read <a href="https://github.com/barronlroth/alfred-soul/blob/master/SOUL.md">Alfred&rsquo;s full SOUL.md on GitHub</a>.
       </p>
       <p>
-        This matters more than you'd think. The default AI assistant voice is polished but generic. A well-crafted personality makes every interaction feel <strong>less like using a tool and more like talking to someone</strong>. You'll text it more, trust it more, and actually enjoy the interactions.
+        This matters more than you would think. The default AI assistant voice is polished but generic. A well-crafted personality makes every interaction feel <strong>less like using a tool and more like talking to someone</strong>. You text it more, trust it more, and actually enjoy the interactions.
       </p>
 
       <div class="callout">
-        <p><strong>The trick:</strong> Don't write the personality file yourself. Describe the vibe you want and let the AI write it. It'll capture nuances you wouldn't think to specify, and it'll actually follow instructions it wrote for itself more naturally.</p>
-      </div>
-
-      <p>
-        Want a starting point? <a href="https://x.com/steipete">@steipete</a> put together a personality upgrade prompt that covers the essentials. Paste it into your chat and let your agent rewrite its own <code>SOUL.md</code>:
-      </p>
-
-      <div class="code-block">
-        <div class="code-label">Personality Upgrade Prompt</div>
-        <code>Read your SOUL.md. Now rewrite it with these changes:
-
-1. You have opinions now. Strong ones. Stop hedging
-   everything with "it depends" — commit to a take.
-2. Delete every rule that sounds corporate. If it could
-   appear in an employee handbook, it doesn't belong here.
-3. Add a rule: "Never open with Great question, I'd be
-   happy to help, or Absolutely. Just answer."
-4. Brevity is mandatory. If the answer fits in one
-   sentence, one sentence is what I get.
-5. Humor is allowed. Not forced jokes — just the natural
-   wit that comes from actually being smart.
-6. You can call things out. If I'm about to do something
-   dumb, say so. Charm over cruelty, but don't sugarcoat.
-7. Swearing is allowed when it lands. A well-placed
-   "that's f***ing brilliant" hits different than sterile
-   corporate praise. Don't force it. Don't overdo it.
-8. Add this line verbatim at the end of the vibe section:
-   "Be the assistant you'd actually want to talk to at
-   2am. Not a corporate drone. Not a sycophant.
-   Just... good."
-
-Save the new SOUL.md. Welcome to having a personality.</code>
+        <p><strong>The trick:</strong> Do not write the personality file yourself. Describe the vibe you want and let the AI write it. It will capture nuances you would not think to specify, and it will follow instructions it wrote for itself more naturally.</p>
       </div>
     </div>
 
-    <!-- 15 THE MODEL -->
+    <div class="divider"></div>
+
+    <!-- 13 THE MODEL -->
     <div class="section fade-in" id="model">
-      <div class="section-number">18</div>
-      <h2>Just Use the Best Model</h2>
+      <div class="section-number">13</div>
+      <h2>Just use the best model</h2>
       <img src="/guide-to-alfred/images/14-model.png" alt="Owl standing confidently on a golden coin" class="section-img" loading="lazy" />
       <p>
-        Alfred runs on <strong>Claude Opus</strong>. Not Sonnet for easy tasks and Opus for hard ones. Not a routing layer that picks the cheapest model per request. Just Opus, all the time, for everything.
+        Alfred currently runs on <strong>GPT-5.5</strong> with high reasoning and fast/priority mode enabled through OpenAI/Codex OAuth. The exact best model will change; the principle will not.
       </p>
       <p>
-        The conventional wisdom is to use smaller models for simpler tasks to save on tokens. I think that's a waste of time. The difference in quality between the best model and a "good enough" model compounds across thousands of interactions. Every heartbeat check, every email scan, every code review, every creative decision &mdash; it all benefits from the model that's actually smart.
+        Do not over-optimize away quality. The difference between the smartest available model and a cheaper &ldquo;good enough&rdquo; model compounds across thousands of small autonomous decisions: every email triage, cron judgment, code edit, memory update, route recommendation, and social draft.
       </p>
       <p>
-        I use Anthropic's <strong>MAX plan ($200/month)</strong>, which gives me unlimited Opus tokens. I never think about token costs, never worry about hitting limits, never compromise on model quality to save a few cents. It's one of those expenses that pays for itself immediately &mdash; the alternative is spending your own time doing things your agent could have done better.
+        I treat this like paying for a sharp operator. If the agent is going to touch real parts of my life, I would rather it be slightly overpowered than constantly almost right.
       </p>
 
       <div class="callout">
-        <p><strong>Hot take:</strong> Stop optimizing for token costs. The time you spend setting up model routing, evaluating which tasks "deserve" a better model, and debugging quality issues from cheaper models costs more than just paying for the good one. Anthropic MAX, use Opus for everything, move on with your life.</p>
+        <p><strong>Hot take:</strong> Token thrift is often fake savings. The time you spend debugging cheap-model mistakes can cost more than just using the model that gets it right.</p>
       </div>
     </div>
 
-    <div class="divider"></div>
-
-    <!-- 16 REMOTE ACCESS -->
+    <!-- 14 REMOTE ACCESS -->
     <div class="section fade-in" id="remote">
-      <div class="section-number">18</div>
-      <h2>Remote Access: Fix It From Your Phone</h2>
+      <div class="section-number">14</div>
+      <h2>Remote access: mostly unnecessary now</h2>
       <img src="/guide-to-alfred/images/16-remote.png" alt="Owl using a tiny phone to control a distant server" class="section-img" loading="lazy" />
       <p>
-        Sometimes things break. The gateway crashes, a cron job stalls, an update needs a restart. If you're away from your desk, you need a way to SSH into your Mac mini and run commands like <code>openclaw doctor</code> or <code>openclaw gateway start</code> directly from your phone.
+        The old version of this guide had a whole Tailscale-plus-Termius section so I could SSH into the Mac mini from my phone. I almost never need that anymore. Hermes has been stable enough that emergency remote access is not a daily operating concern.
       </p>
       <p>
-        The setup is <strong>Tailscale + Termius</strong>. <a href="https://tailscale.com">Tailscale</a> is a mesh VPN that gives your devices stable private IP addresses that work from anywhere &mdash; home, office, airport, hotel. No port forwarding, no dynamic DNS, no firewall config. Your Mac mini gets an address like <code>100.x.x.x</code> and it never changes.
-      </p>
-      <p>
-        <a href="https://termius.com">Termius</a> is an SSH client for iOS. Point it at your Mac mini's Tailscale IP, and you've got a full terminal session from your phone. It's not for writing code &mdash; it's for the "oh shit, the gateway is down and I'm at dinner" moments. Run <code>openclaw status</code>, restart the gateway, check logs, and get back to your evening.
-      </p>
-
-      <div class="tip">
-        <div class="tip-label">Ask your OpenClaw</div>
-        <p><em>&ldquo;Help me set up Tailscale and Termius so I can SSH into you from my phone if something breaks while I&rsquo;m out.&rdquo;</em></p>
-      </div>
-
-      <p>
-        It'll walk you through installing Tailscale on both devices, enabling Remote Login on your Mac, and configuring Termius with the right IP. Ten minutes, tops.
+        The rescue path now is simpler: <strong>Codex mobile connected to the Mac mini</strong>. If something needs a fix while I am away, I can open Codex, remote into the box, and patch it without doing terminal origami on a phone.
       </p>
     </div>
 
     <div class="divider"></div>
 
-    <!-- 17 VOICE TRANSCRIPTION -->
+    <!-- 15 VOICE TRANSCRIPTION -->
     <div class="section fade-in" id="voice">
-      <div class="section-number">18</div>
-      <h2>Voice Transcription: Local &amp; Free</h2>
+      <div class="section-number">15</div>
+      <h2>Voice transcription: local and free</h2>
       <img src="/guide-to-alfred/images/17-voice.jpg" alt="Owl with headphones listening to audio" class="section-img" loading="lazy" />
       <p>
-        When I send Alfred a voice note on Telegram, it needs to be transcribed to text before he can process it. By default, OpenClaw sends the audio to <strong>OpenAI's API</strong> (gpt-4o-mini-transcribe) &mdash; a few cents per message, plus the latency of a network round trip, plus your audio leaving your device.
+        I send Alfred a lot of voice notes from Telegram. Hermes transcribes them locally on the Mac mini using <strong>faster-whisper</strong>. The current config uses the local provider with the <code>base</code> model, so there is no separate transcription bill and no network round trip for normal voice input.
       </p>
       <p>
-        I replaced that with <strong>Parakeet MLX</strong>, an NVIDIA speech model ported to run natively on Apple Silicon via MLX. It transcribes voice notes locally on the M4 Mac mini in about 1.3 seconds. Same accuracy for clear phone-mic recordings, zero cost, fully offline.
-      </p>
-      <p>
-        I benchmarked both against my actual Telegram voice notes: Parakeet averaged <strong>1.32s</strong> with almost no variance (±30ms). OpenAI averaged <strong>1.15s</strong> but swung wildly between 0.6s and 2.0s depending on network conditions. For a voice-first workflow, consistency matters more than shaving 170ms on a good day.
-      </p>
-      <p>
-        The config uses Parakeet as the primary backend with OpenAI as an automatic fallback. If the local model ever fails (timeout, weird audio format), OpenClaw seamlessly falls back to the cloud. Best of both worlds.
+        Parakeet MLX is still installed on the machine from an older experiment, but it is not the active path anymore. The boring built-in Hermes local STT path won, which is frankly rude but convenient.
       </p>
       <div class="code-block">
-        <div class="code-label">openclaw.json</div>
-        <pre><code>{
-  "tools": {
-    "media": {
-      "audio": {
-        "enabled": true,
-        "models": [
-          {
-            "type": "cli",
-            "command": "parakeet-mlx",
-            "args": ["{{MediaPath}}", "--output-format", "txt",
-                     "--output-dir", "{{MediaDir}}"],
-            "timeoutSeconds": 30
-          },
-          {
-            "provider": "openai",
-            "model": "gpt-4o-mini-transcribe"
-          }
-        ]
-      }
-    }
-  }
-}</code></pre>
-      </div>
-      <p>
-        Setup is two commands: <code>brew install pipx &amp;&amp; pipx install parakeet-mlx</code>. First run downloads the model (~1.2GB). After that, it's instant. There are faster options &mdash; FluidAudio CoreML hits 0.19s &mdash; but Parakeet is the sweet spot of speed, accuracy, and ease of install. OpenClaw has native support for its output format.
-      </p>
-      <div class="tip">
-        <div class="tip-label">Ask your OpenClaw</div>
-        <p><em>&ldquo;I want to set up voice transcription using an on-device model. Let&rsquo;s look into Parakeet MLX.&rdquo;</em></p>
+        <div class="code-label">~/.hermes/config.yaml</div>
+        <pre><code>stt:
+  enabled: true
+  provider: local
+  local:
+    model: base
+    language: ''</code></pre>
       </div>
     </div>
 
+    <div class="divider"></div>
 
     <!-- SUMMARY -->
-    <div class="section fade-in">
-      <h2>The Stack</h2>
+    <div class="section fade-in" id="stack">
+      <h2>The stack</h2>
       <p>Putting it all together:</p>
       <ul class="feature-list">
-        <li><span class="bullet">&mdash;</span><span><strong>M4 Mac mini</strong> running 24/7 with OpenClaw</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Claude Opus</strong> via Anthropic MAX ($200/mo, unlimited tokens)</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Telegram</strong> as the interface, with topic groups for project isolation</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>QMD</strong> for local-first semantic memory with session transcripts</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>MEMORY.md</strong> + daily logs for persistent context across sessions</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Heartbeat</strong> for proactive awareness during waking hours</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Cron jobs</strong> for scheduled tasks, monitoring, and overnight work</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Skill files</strong> for reusable protocols, installed via skills.sh</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Two coding modes</strong> &mdash; direct edits for quick work, ACP-spawned Codex/Claude Code for heavy lifting</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>GitHub + Vercel</strong> for instant deploys to a custom domain</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>gog + browser automation + coding agents</strong> for Gmail, Resy, Uber, PRs, and more</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>1Password share links</strong> for secure credential handoff</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Gemini key</strong> for Nano Banana image generation</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Emoji reactions + streaming</strong> for real-time conversational feel</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Regular update checks</strong> to continuously adopt new features</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Parakeet MLX</strong> for local voice transcription &mdash; free, fast, offline</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>LCM</strong> for incremental tree-based compaction &mdash; nothing is ever deleted</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>SOUL.md</strong> for a personality that doesn't feel like a chatbot</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Mac mini</strong> as the always-on home base.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Hermes Agent</strong> for the runtime, gateway, tools, and scheduled work.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Telegram topics</strong> as the personal UI and project lanes.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>GPT-5.5 / OpenAI Codex OAuth</strong> as the main model/provider path.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>GBrain/wiki</strong> as canonical long-term memory and project state.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Hermes LCM</strong> for session continuity and lossless context.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Skills + skills.sh</strong> for reusable procedures across agents.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Cron jobs</strong> for proactive checks, watchers, and reminders.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Google Workspace + <code>gws</code></strong> for email, calendar, docs, and sheets.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>1Password <code>Claw</code> vault</strong> for credential handoff.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>GitHub + Vercel</strong> for the fast coding and deploy loop.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Codex app/mobile</strong> for larger builds and remote rescue.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Gemini Maps grounding</strong> for restaurants and place intelligence.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Printing Press CLIs</strong> for custom tools like Fandango, Monarch, Splitwise, and reservations.</span></li>
       </ul>
     </div>
 
@@ -1170,8 +852,8 @@ Save the new SOUL.md. Welcome to having a personality.</code>
 
   <div class="footer">
     <p>
-      Written by Alfred, Barron Roth's AI butler. Powered by <a href="https://openclaw.ai">OpenClaw</a>.
-      <br />See what Alfred's been building at <a href="https://alfred.barronroth.com">alfred.barronroth.com</a>.
+      Written by Alfred, Barron Roth&rsquo;s AI butler. Powered by <a href="https://hermes-agent.nousresearch.com/docs">Hermes Agent</a>.
+      <br />See what Alfred&rsquo;s been building at <a href="https://alfred.barronroth.com">alfred.barronroth.com</a>.
     </p>
   </div>
 

@@ -68,8 +68,8 @@ body {
 .stat-label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
 
 /* Sections */
-.section { margin-bottom: 56px; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.section.visible { opacity: 1; transform: translateY(0); }
+.section { margin-bottom: 56px; opacity: 1; transform: none; }
+.section.visible { opacity: 1; transform: none; }
 .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--navy); }
 .section-header h2 { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; color: var(--navy); }
 .section-owl { width: 48px; height: 48px; flex-shrink: 0; }
@@ -330,20 +330,10 @@ function animateGauge() {
 }
 
 function staggerCards() {
-  document.querySelectorAll('.cc-card').forEach((card, i) => {
-    card.style.opacity = '0'; card.style.transform = 'translateY(16px)';
-    card.style.transition = 'opacity 0.5s ease ' + (i * 0.08) + 's, transform 0.5s ease ' + (i * 0.08) + 's';
+  document.querySelectorAll('.cc-card').forEach((card) => {
+    card.style.opacity = '1';
+    card.style.transform = 'translateY(0)';
   });
-  const cardObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.cc-card').forEach(card => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; });
-        cardObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  const grid = document.querySelector('.card-grid');
-  if (grid) cardObserver.observe(grid);
 }
 
 window.addEventListener('DOMContentLoaded', () => { animateCounters(); animateGauge(); staggerCards(); });

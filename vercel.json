@@ -2,6 +2,16 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/cubby/:path*",
+      "destination": "https://cubby.homes/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/cubby",
+      "destination": "https://cubby.homes",
+      "permanent": true
+    },
+    {
       "source": "/maitre-d/:path*",
       "destination": "https://maitred.fun/:path*",
       "permanent": true

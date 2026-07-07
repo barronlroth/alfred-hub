@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Story Coach Hackathon Thought Process</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --paper: #fffaf1;
+      --ink: #28231d;
+      --muted: #746b5f;
+      --line: rgba(40, 35, 29, 0.14);
+      --clay: #b46a4c;
+      --sage: #6f826a;
+      --gold: #d0a24f;
+      --blue: #4f6f86;
+      --shadow: 0 28px 80px rgba(46, 35, 22, 0.14);
+      --radius: 30px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: radial-gradient(circle at 12% 10%, rgba(208, 162, 79, 0.18), transparent 34%),
+                  radial-gradient(circle at 88% 20%, rgba(111, 130, 106, 0.18), transparent 32%),
+                  linear-gradient(135deg, #f8f1e5, var(--bg));
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.42;
+      background-image:
+        linear-gradient(rgba(40,35,29,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(40,35,29,0.025) 1px, transparent 1px);
+      background-size: 26px 26px;
+      mask-image: radial-gradient(circle at 50% 42%, black, transparent 78%);
+    }
+
+    .deck {
+      height: 100dvh;
+      width: 100vw;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 22px;
+      padding: clamp(28px, 4.5vw, 72px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 28px;
+      opacity: 0;
+      transform: translateX(34px) scale(0.985);
+      pointer-events: none;
+      transition: opacity 420ms cubic-bezier(.16,1,.3,1), transform 420ms cubic-bezier(.16,1,.3,1);
+      overflow: hidden;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      right: -120px;
+      bottom: -140px;
+      width: 360px;
+      height: 360px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(180, 106, 76, 0.13), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 38px;
+      height: 1px;
+      background: var(--clay);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      max-width: 970px;
+      font-size: clamp(42px, 6.6vw, 86px);
+      line-height: 0.9;
+      letter-spacing: -0.075em;
+      font-weight: 820;
+    }
+
+    h2 {
+      max-width: 1040px;
+      font-size: clamp(32px, 4.8vw, 66px);
+      line-height: 0.95;
+      letter-spacing: -0.065em;
+      font-weight: 800;
+    }
+
+    h3 {
+      font-size: clamp(21px, 2.1vw, 31px);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    p, li {
+      font-size: clamp(18px, 1.55vw, 25px);
+      line-height: 1.36;
+      color: var(--muted);
+    }
+
+    strong { color: var(--ink); }
+
+    .content {
+      align-self: center;
+      display: grid;
+      gap: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(320px, 0.94fr);
+      gap: clamp(24px, 5vw, 74px);
+      align-items: center;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.45);
+      padding: 22px;
+      min-height: 142px;
+      box-shadow: inset 0 1px rgba(255,255,255,0.7);
+    }
+
+    .card p { font-size: clamp(16px, 1.26vw, 21px); }
+    .card h3 { margin-bottom: 10px; }
+
+    .quote {
+      border-left: 5px solid var(--clay);
+      padding: 8px 0 8px 24px;
+      max-width: 980px;
+    }
+
+    .quote p {
+      color: var(--ink);
+      font-size: clamp(27px, 3.2vw, 50px);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+      font-weight: 750;
+    }
+
+    .prompt-box {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: clamp(20px, 2.4vw, 34px);
+      background: rgba(255,255,255,0.55);
+      max-height: 62dvh;
+      overflow: auto;
+    }
+
+    .prompt-box p, .prompt-box li {
+      font-size: clamp(15px, 1.18vw, 20px);
+      line-height: 1.45;
+    }
+
+    ul {
+      padding-left: 1.25em;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .ladder {
+      display: grid;
+      gap: 12px;
+      counter-reset: step;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.42);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--paper);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .step p { font-size: clamp(16px, 1.18vw, 20px); }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: rgba(255,255,255,0.5);
+      font-size: 13px;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 14px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .progress {
+      flex: 1;
+      height: 3px;
+      max-width: 360px;
+      background: rgba(40,35,29,0.12);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: var(--progress, 0%);
+      background: var(--clay);
+      transition: width 260ms ease;
+    }
+
+    .keys {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .mini-diagram {
+      display: grid;
+      gap: 12px;
+    }
+
+    .node {
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.52);
+      font-weight: 750;
+      letter-spacing: -0.02em;
+    }
+
+    .arrow {
+      color: var(--clay);
+      font-size: 18px;
+      padding-left: 20px;
+    }
+
+    .large-line {
+      font-size: clamp(24px, 2.8vw, 42px);
+      line-height: 1.14;
+      letter-spacing: -0.055em;
+      color: var(--ink);
+      font-weight: 760;
+      max-width: 1040px;
+    }
+
+    .small {
+      font-size: clamp(15px, 1.1vw, 18px);
+    }
+
+    .accent-clay { color: var(--clay); }
+    .accent-sage { color: var(--sage); }
+    .accent-blue { color: var(--blue); }
+
+    @media (max-width: 860px) {
+      body { overflow: auto; }
+      .deck { min-height: 100dvh; height: auto; }
+      .slide {
+        inset: 10px;
+        min-height: calc(100dvh - 20px);
+        position: absolute;
+        overflow: auto;
+      }
+      .split, .cards, .matrix { grid-template-columns: 1fr; }
+      .prompt-box { max-height: none; }
+      .footer { flex-wrap: wrap; }
+    }
+
+    @media print {
+      body { overflow: visible; background: white; }
+      .deck { height: auto; }
+      .slide {
+        position: relative;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always;
+        min-height: 100vh;
+        inset: auto;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .keys { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide active">
+      <div class="eyebrow">Hackathon advisor conversation</div>
+      <div class="content split">
+        <div>
+          <h1>From adaptive video to Story Coach.</h1>
+          <p class="large-line" style="margin-top: 28px;">A thought process for building dynamic, non-linear storytelling without turning children into passive prompt consumers.</p>
+        </div>
+        <div class="mini-diagram">
+          <div class="node">Prompt: dynamic storytelling</div>
+          <div class="arrow">to</div>
+          <div class="node">First instinct: choose-your-own-adventure media</div>
+          <div class="arrow">to</div>
+          <div class="node">Sharper niche: AI-safe creative scaffolding for children</div>
+        </div>
+      </div>
+      <div class="footer"><span>Story Coach</span><div class="progress"><span></span></div><span class="keys">Use arrow keys</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">The prompt, verbatim</div>
+      <div class="content">
+        <div class="prompt-box">
+          <p><strong>Track 1</strong></p>
+          <br />
+          <p>Build a dynamic, non-linear storytelling prototype where the narrative and media assets adapt in real-time.</p>
+          <br />
+          <p>Design a system that dynamically adjusts character arcs, plot continuity, and visual or audio elements in response to user actions or environmental inputs, moving entirely away from traditional, static storytelling.</p>
+          <br />
+          <p><strong>Your solution: What does success look like?</strong></p>
+          <br />
+          <p><strong>Excellent:</strong> An excellent project achieves true computational storytelling by dynamically adapting the narrative structure itself in real-time, demonstrating sophisticated state-tracking and seamless, multi-modal responsiveness to user and environmental inputs.</p>
+          <br />
+          <p><strong>Fair:</strong> A fair project creates an engaging interactive experience, but relies primarily on accelerating traditional pipelines, e.g. dynamically generating assets for a pre-set, branching path, rather than fundamentally altering the narrative structure in real-time.</p>
+          <br />
+          <p><strong>Insufficient:</strong> A bad project fails to leverage generative AI for responsiveness, merely automating a standard, linear timeline or mimicking a traditional static decision-tree structure.</p>
+        </div>
+      </div>
+      <div class="footer"><span>Start with the judge’s language</span><div class="progress"><span></span></div><span class="keys">2</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">How we broke it down</div>
+      <div class="content split">
+        <div>
+          <h2>The key distinction is not “more media.” It is “more story state.”</h2>
+          <p style="margin-top: 24px;">The prompt is not asking for a better content pipeline. It is asking for a system where user input changes the underlying narrative model: arcs, continuity, tension, causality, and future possibilities.</p>
+        </div>
+        <div class="cards">
+          <div class="card"><span class="pill">Fair</span><h3 style="margin-top: 16px;">Generated branches</h3><p>Beautiful assets layered onto a pre-set choice tree.</p></div>
+          <div class="card"><span class="pill">Excellent</span><h3 style="margin-top: 16px;">Computational storytelling</h3><p>A living story state that changes based on user behavior.</p></div>
+          <div class="card"><span class="pill">Risk</span><h3 style="margin-top: 16px;">Static interactivity</h3><p>Choose-your-own-adventure can look dynamic while remaining structurally fixed.</p></div>
+          <div class="card"><span class="pill">Target</span><h3 style="margin-top: 16px;">Adaptive structure</h3><p>Every input should affect what the story believes is true.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>Media is evidence; state is the invention</span><div class="progress"><span></span></div><span class="keys">3</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Initial concept</div>
+      <div class="content split">
+        <div>
+          <h2>Our first read was broad: adaptive video on demand.</h2>
+          <p style="margin-top: 24px;">A viewer watches a scene, makes a choice, and the system generates the next segment. It feels like choose-your-own-adventure, but with generative media instead of pre-filmed branches.</p>
+        </div>
+        <div class="ladder">
+          <div class="step"><p><strong>Viewer sees a scene.</strong><br />A short generated video establishes the world.</p></div>
+          <div class="step"><p><strong>Viewer chooses or speaks an action.</strong><br />The next story beat responds to their input.</p></div>
+          <div class="step"><p><strong>System updates continuity.</strong><br />Character state, setting, and unresolved threads persist.</p></div>
+          <div class="step"><p><strong>Model generates the next segment.</strong><br />The media adapts, rather than selecting from a fixed file tree.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>Original route</span><div class="progress"><span></span></div><span class="keys">4</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Potential Google model route</div>
+      <div class="content">
+        <h2>One possible build: dynamic video as an adaptive story surface.</h2>
+        <div class="matrix" style="margin-top: 18px;">
+          <div class="card"><h3>Gemini</h3><p>Interprets user action, tracks story state, rewrites character arc and next scene plan.</p></div>
+          <div class="card"><h3>Nano Banana</h3><p>Maintains character and visual continuity through image generation and image-to-image edits.</p></div>
+          <div class="card"><h3>Veo / Omni</h3><p>Generates or edits short video segments from the current narrative state and visual references.</p></div>
+          <div class="card"><h3>Gemini Live</h3><p>Potentially captures voice, interruption, affect, or environmental context in real time.</p></div>
+          <div class="card"><h3>State engine</h3><p>Stores plot facts, goals, constraints, relationships, and unresolved threads.</p></div>
+          <div class="card"><h3>Creator tools</h3><p>Lets content creators define worlds, styles, guardrails, and reusable story ingredients.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>Technically plausible, but broad</span><div class="progress"><span></span></div><span class="keys">5</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Two user groups</div>
+      <div class="content split">
+        <div>
+          <h2>We were really looking at two audiences.</h2>
+          <p style="margin-top: 24px;">Viewers want agency. Creators want leverage. The first concept tried to serve both, which made the product powerful but fuzzy.</p>
+        </div>
+        <div class="cards">
+          <div class="card"><span class="pill">Viewer</span><h3 style="margin-top: 16px;">From consumer to participant</h3><p>They do not just watch; their decisions reshape the story.</p></div>
+          <div class="card"><span class="pill">Creator</span><h3 style="margin-top: 16px;">From editor to world-builder</h3><p>They define characters, rules, tone, constraints, and possible story physics.</p></div>
+          <div class="card"><span class="pill">Problem</span><h3 style="margin-top: 16px;">Too horizontal</h3><p>Entertainment, creator tools, video generation, and interactive narrative all at once.</p></div>
+          <div class="card"><span class="pill">Learning</span><h3 style="margin-top: 16px;">Find a sharper wedge</h3><p>The best demo needs a user with a concrete pain, not just a cool capability.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>The pivot starts here</span><div class="progress"><span></span></div><span class="keys">6</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">The pivot</div>
+      <div class="content">
+        <h2>Instead of “storytelling for everyone,” slice into parents and children.</h2>
+        <div class="quote" style="margin-top: 30px;"><p>What if the highest-value storytelling prototype is not entertainment, but safe creative development?</p></div>
+        <p style="max-width: 960px; margin-top: 6px;">That reframes the project from an AI media generator into an answer to a real parent anxiety: whether AI helps children grow creatively, or quietly trains them to outsource imagination.</p>
+      </div>
+      <div class="footer"><span>Narrower problem, stronger thesis</span><div class="progress"><span></span></div><span class="keys">7</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">The parent problem</div>
+      <div class="content split">
+        <div>
+          <h2>Parents have a trust gap with AI for kids.</h2>
+          <p style="margin-top: 24px;">Generative AI is so capable that it creates a new developmental question: if a child can instantly generate polished images and stories, will they still practice drawing, imagining, sequencing, struggling, and revising?</p>
+        </div>
+        <div class="ladder">
+          <div class="step"><p><strong>Safety.</strong><br />Is this appropriate, bounded, and understandable?</p></div>
+          <div class="step"><p><strong>Agency.</strong><br />Is the child making creative decisions, or just prompting a machine?</p></div>
+          <div class="step"><p><strong>Development.</strong><br />Does AI scaffold growth, or stunt the skills it automates?</p></div>
+          <div class="step"><p><strong>Imagination.</strong><br />Will children still want to draw when image generation is effortless?</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>The emotional wedge</span><div class="progress"><span></span></div><span class="keys">8</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Story Coach</div>
+      <div class="content split">
+        <div>
+          <h2>The child remains the author. The AI becomes the coach.</h2>
+          <p style="margin-top: 24px;">The app asks the child to draw each story beat. The AI interprets the drawing, preserves the child’s idea, updates story state, and asks the next question.</p>
+        </div>
+        <div class="mini-diagram">
+          <div class="node">Draw your main character.</div>
+          <div class="arrow">to</div>
+          <div class="node">What are they like?</div>
+          <div class="arrow">to</div>
+          <div class="node">What do they want?</div>
+          <div class="arrow">to</div>
+          <div class="node">What gets in the way?</div>
+          <div class="arrow">to</div>
+          <div class="node">What happens next?</div>
+          <div class="arrow">to</div>
+          <div class="node">How does it end?</div>
+        </div>
+      </div>
+      <div class="footer"><span>Co-creation, not replacement</span><div class="progress"><span></span></div><span class="keys">9</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">The core mechanic</div>
+      <div class="content">
+        <div class="quote"><p>Every drawing becomes canon.</p></div>
+        <div class="cards" style="margin-top: 28px;">
+          <div class="card"><h3>Drawing as input</h3><p>The child creates the raw imaginative artifact first.</p></div>
+          <div class="card"><h3>AI as interpreter</h3><p>The system maps the drawing to story function: character, goal, obstacle, helper, action, ending.</p></div>
+          <div class="card"><h3>State as memory</h3><p>The app remembers protagonist, traits, visual details, goals, obstacles, and continuity rules.</p></div>
+          <div class="card"><h3>Prompt as pedagogy</h3><p>The next prompt teaches story structure without lecturing.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>The product loop</span><div class="progress"><span></span></div><span class="keys">10</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Why it fits Track 1</div>
+      <div class="content split">
+        <div>
+          <h2>It turns creativity into a live narrative state machine.</h2>
+          <p style="margin-top: 24px;">The system does not merely generate a book. It tracks the child’s decisions and adapts future prompts, continuity, character development, and media based on what the child contributes.</p>
+        </div>
+        <div class="cards">
+          <div class="card"><h3>Character arcs</h3><p>Traits and emotional changes persist across pages.</p></div>
+          <div class="card"><h3>Plot continuity</h3><p>Goals, obstacles, objects, and visual features are remembered.</p></div>
+          <div class="card"><h3>Media adaptation</h3><p>Drawings become polished pages while preserving the child’s source idea.</p></div>
+          <div class="card"><h3>Responsive prompts</h3><p>The next question changes based on what the story still needs.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>Stateful storytelling</span><div class="progress"><span></span></div><span class="keys">11</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Prototype status</div>
+      <div class="content split">
+        <div>
+          <h2>A working vertical exists.</h2>
+          <p style="margin-top: 24px;">The current prototype is a tablet-friendly children’s book builder with guided beats, drawing, voice or typed fallback, generated illustrations, correction flow, final book reader, and read-aloud.</p>
+        </div>
+        <div class="ladder">
+          <div class="step"><p><strong>Built:</strong> six-beat story flow, canvas, voice fallback, generated page art, final book view.</p></div>
+          <div class="step"><p><strong>Verified:</strong> typecheck and production build pass.</p></div>
+          <div class="step"><p><strong>Gap:</strong> current flow is mostly linear, with local adaptation and continuity.</p></div>
+          <div class="step"><p><strong>Hackathon upgrade:</strong> add semantic story-state extraction and adaptive next prompts.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>Foundation, then upgrade</span><div class="progress"><span></span></div><span class="keys">12</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Ages 4 to 6 as the first lesson</div>
+      <div class="content">
+        <h2>Start with early storytelling structure, then generalize.</h2>
+        <p class="large-line" style="margin-top: 26px;">For ages 4 to 6, the lesson is simple narrative grammar: character, trait, want, obstacle, action, ending. But the pattern could apply to any creative lesson that benefits from guided practice.</p>
+        <div class="cards" style="margin-top: 28px;">
+          <div class="card"><h3>Storytelling</h3><p>Build a beginning, middle, and end through drawing.</p></div>
+          <div class="card"><h3>Visual expression</h3><p>Use AI to extend the child’s drawing, not erase it.</p></div>
+          <div class="card"><h3>Language</h3><p>Prompt the child to describe what they made and why it matters.</p></div>
+          <div class="card"><h3>Creative confidence</h3><p>Reward effort, revision, and imagination over polished output.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>Wedge now, platform later</span><div class="progress"><span></span></div><span class="keys">13</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Advisor questions</div>
+      <div class="content">
+        <h2>What we want feedback on.</h2>
+        <div class="ladder" style="margin-top: 26px;">
+          <div class="step"><p><strong>Track fit:</strong> Does the guided six-beat structure feel too linear, or does adaptive state make it qualify?</p></div>
+          <div class="step"><p><strong>Demo emphasis:</strong> Should we show the hidden story-state engine to prove computational storytelling?</p></div>
+          <div class="step"><p><strong>Audience:</strong> Is the parent trust angle stronger than the broader creator/viewer entertainment angle?</p></div>
+          <div class="step"><p><strong>Scope:</strong> Is the winning hackathon slice a polished child-book app or a broader co-creative storytelling engine with kids as the first vertical?</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>Use the meeting for signal</span><div class="progress"><span></span></div><span class="keys">14</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Positioning</div>
+      <div class="content">
+        <h2>Our current answer to the prompt.</h2>
+        <div class="quote" style="margin-top: 30px;"><p>Story Coach is a co-creative storytelling engine, demonstrated through a children’s drawing app.</p></div>
+        <p style="margin-top: 12px; max-width: 1000px;">The child supplies imagination. The AI supplies structure, continuity, gentle feedback, and multimodal transformation. The result is not passive AI content. It is creative scaffolding.</p>
+      </div>
+      <div class="footer"><span>End state</span><div class="progress"><span></span></div><span class="keys">15</span></div>
+    </section>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let index = 0;
+
+    function update() {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        const bar = slide.querySelector('.progress span');
+        if (bar) bar.style.setProperty('--progress', `${((index + 1) / slides.length) * 100}%`);
+      });
+      const title = slides[index].querySelector('h1, h2')?.textContent || 'Story Coach';
+      document.title = `${index + 1}/${slides.length} — ${title}`;
+    }
+
+    function next() { index = Math.min(slides.length - 1, index + 1); update(); }
+    function prev() { index = Math.max(0, index - 1); update(); }
+
+    document.addEventListener('keydown', (event) => {
+      if (['ArrowRight', 'PageDown', ' '].includes(event.key)) next();
+      if (['ArrowLeft', 'PageUp', 'Backspace'].includes(event.key)) prev();
+      if (event.key === 'Home') { index = 0; update(); }
+      if (event.key === 'End') { index = slides.length - 1; update(); }
+    });
+
+    let touchStartX = null;
+    document.addEventListener('touchstart', (event) => { touchStartX = event.changedTouches[0].screenX; }, { passive: true });
+    document.addEventListener('touchend', (event) => {
+      if (touchStartX === null) return;
+      const dx = event.changedTouches[0].screenX - touchStartX;
+      if (dx < -45) next();
+      if (dx > 45) prev();
+      touchStartX = null;
+    }, { passive: true });
+
+    update();
+  </script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The Escrow Heist: a redacted case file about an autonomous agent replacing force-placed condo insurance without crossing the human approval boundary.">
+  <meta name="theme-color" content="#0b0d0e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0d0e'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia' font-size='38' fill='%23f0bc6a'%3EA%3C/text%3E%3C/svg%3E">
+  <title>The Escrow Heist · Alfred</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#case-file">Skip to the case file</a>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="progress-rail" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Back to Alfred Hub">
+      <span class="brand-mark" aria-hidden="true">A</span>
+      <span>ALFRED / FIELD NOTES</span>
+    </a>
+    <div class="header-meta">
+      <span>CASE 06—25</span>
+      <span class="classification">PUBLIC · REDACTED</span>
+    </div>
+  </header>
+
+  <main id="case-file">
+    <section class="hero chapter" data-chapter="00">
+      <div class="hero-copy">
+        <p class="eyebrow">An autonomous-agent retrospective</p>
+        <h1>The Escrow<br><em>Heist</em></h1>
+        <p class="dek">One homeowner. One force-placed insurance notice. One agent authorised to do almost everything—except spend the money.</p>
+        <a class="case-cta" href="#opening-message">
+          <span>Open the case file</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <aside class="case-card" aria-label="Case status">
+        <div class="case-card-top">
+          <span>CASE STATUS</span>
+          <span class="status-light" aria-hidden="true"></span>
+        </div>
+        <p class="status-word">POLICY COMPLETE<br>RECONCILIATION OPEN</p>
+        <dl>
+          <div><dt>Replacement policy</dt><dd>Bound</dd></div>
+          <div><dt>Proof of coverage</dt><dd>Saved by portal</dd></div>
+          <div><dt>Premium</dt><dd>Disbursed by servicer</dd></div>
+          <div><dt>Final reconciliation</dt><dd class="pending">Monitored</dd></div>
+        </dl>
+        <p class="case-note">The policy problem was solved. The paperwork, naturally, retained a pulse.</p>
+      </aside>
+
+      <div class="hero-stats" role="group" aria-label="Case metrics">
+        <div><strong data-count="15">15</strong><span>calendar days</span></div>
+        <div><strong data-count="3">3</strong><span>linked sessions</span></div>
+        <div><strong data-count="263">263</strong><span>tool calls</span></div>
+        <div><strong data-count="32" data-suffix="%">32%</strong><span>annualized difference</span></div>
+      </div>
+    </section>
+
+    <section id="opening-message" class="opening chapter" data-chapter="01">
+      <div class="chapter-label">
+        <span>01</span>
+        <p>The message that lit the fuse</p>
+      </div>
+      <div class="opening-grid">
+        <div class="chat-window" role="group" aria-label="Reconstructed opening conversation">
+          <div class="chat-chrome">
+            <span></span><span></span><span></span>
+            <p>SECURE CHANNEL / DAY 0</p>
+          </div>
+          <div class="chat-body">
+            <blockquote class="message operator">need help with condo insurance</blockquote>
+            <blockquote class="message alfred">Send the current policy, renewal premium, and condo details. I’ll tell you if the coverage looks stupid—or build the full quote-shopping brief.</blockquote>
+            <blockquote class="message operator emphasis">what do i need to give you to handle this autonomously</blockquote>
+          </div>
+        </div>
+        <div class="opening-copy">
+          <p class="eyebrow">The brief was not, initially, a brief</p>
+          <h2>A small request.<br>A rather large system.</h2>
+          <p>The screenshot was a force-placed hazard insurance notice: expensive, thin coverage purchased by the mortgage servicer because it had no proof of a private policy.</p>
+          <p>The homeowner did not have a policy to upload. So “help with insurance” became a full-stack operation: discover the requirements, reconstruct the risk, shop the market, bind the right coverage, submit proof, and unwind the placeholder.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="notice-section chapter" data-chapter="02">
+      <div class="chapter-label light">
+        <span>02</span>
+        <p>Exhibit A · the notice</p>
+      </div>
+      <div class="notice-stage">
+        <article class="notice-paper" aria-label="Redacted reconstruction of the force-placed insurance notice">
+          <div class="notice-letterhead">
+            <span class="fake-logo">MORTGAGE<br>SERVICING</span>
+            <span>NOTICE DATE · APR</span>
+          </div>
+          <div class="redaction long"></div>
+          <p>RE: PLEASE UPDATE INSURANCE INFORMATION</p>
+          <div class="notice-rule"></div>
+          <p>Our records indicate that we do not have evidence of adequate hazard insurance for the property shown below.</p>
+          <div class="redaction medium"></div>
+          <p>If evidence is not received, insurance may be purchased on your behalf and charged through your mortgage account.</p>
+          <div class="notice-price">
+            <span>ESTIMATED ANNUAL PREMIUM</span>
+            <strong>~$2.2K</strong>
+          </div>
+          <p class="notice-fine">This coverage may cost more and protect less than insurance you purchase yourself.</p>
+          <div class="stamp">FORCE<br>PLACED</div>
+        </article>
+        <div class="notice-analysis">
+          <p class="eyebrow">Translation from mortgage dialect</p>
+          <h2>Pay more.<br>Get less.</h2>
+          <div class="margin-note">
+            <span>THE PROBLEM</span>
+            <p>The servicer was protecting its collateral—not the homeowner’s belongings, liability, or living costs.</p>
+          </div>
+          <div class="margin-note">
+            <span>THE CLOCK</span>
+            <p>Every day without proper proof risked extending the expensive placeholder and deepening the escrow mess.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mandate chapter" data-chapter="03">
+      <div class="chapter-label">
+        <span>03</span>
+        <p>The mandate</p>
+      </div>
+      <div class="mandate-heading">
+        <p class="eyebrow">Autonomy, with a very deliberate tripwire</p>
+        <h2>Do the work.<br>Don’t spend the money.</h2>
+      </div>
+      <div class="rules-grid">
+        <article class="rule-card allowed">
+          <p class="rule-kicker">AUTHORISED</p>
+          <ul>
+            <li>Search email and documents</li>
+            <li>Contact agents and property management</li>
+            <li>Complete non-binding quote forms</li>
+            <li>Follow up without being asked</li>
+            <li>Submit proof of coverage</li>
+          </ul>
+          <span class="rule-stamp">PROCEED</span>
+        </article>
+        <article class="rule-card blocked">
+          <p class="rule-kicker">HUMAN CHECKPOINT</p>
+          <ul>
+            <li>Bind a policy</li>
+            <li>Authorise payment</li>
+            <li>Spend money</li>
+            <li>Change coverage after approval</li>
+          </ul>
+          <span class="rule-stamp">ASK FIRST</span>
+        </article>
+      </div>
+      <blockquote class="pull-quote">“at some point you’ll need to follow up or find more agents. i don’t want to micro manage you”</blockquote>
+      <p class="quote-attribution">— Operator, Day 0</p>
+    </section>
+
+    <section class="operation chapter" data-chapter="04">
+      <div class="chapter-label light">
+        <span>04</span>
+        <p>The operation</p>
+      </div>
+      <div class="operation-head">
+        <div>
+          <p class="eyebrow">The work between the messages</p>
+          <h2>Seven moves.<br>No hand-holding.</h2>
+        </div>
+        <p class="operation-summary">A three-session chain moved from a photographed notice to a live policy. The agent carried state across asynchronous replies, missing documents, quote revisions, and the occasional portal designed by raccoons.</p>
+      </div>
+
+      <ol class="operation-list">
+        <li>
+          <span class="op-number">01</span>
+          <div><h3>Reconstruct the scene</h3><p>Search correspondence, locate the servicer notice, inspect escrow history, and confirm there was no private HO-6 policy hiding in a drawer.</p></div>
+          <span class="op-status">CLEARED</span>
+        </li>
+        <li>
+          <span class="op-number">02</span>
+          <div><h3>Read the building’s coverage</h3><p>Pull the association’s master insurance package and determine what the unit-owner policy still needed to cover.</p></div>
+          <span class="op-status">CLEARED</span>
+        </li>
+        <li>
+          <span class="op-number">03</span>
+          <div><h3>Decode lender requirements</h3><p>Separate actual collateral requirements from optional contents and liability choices, then build only the protection the homeowner actually needed.</p></div>
+          <span class="op-status">CLEARED</span>
+        </li>
+        <li>
+          <span class="op-number">04</span>
+          <div><h3>Work the market</h3><p>Contact multiple agents, correct occupancy assumptions, compare admitted and surplus-lines options, and chase the people who went quiet.</p></div>
+          <span class="op-status">CLEARED</span>
+        </li>
+        <li>
+          <span class="op-number">05</span>
+          <div><h3>Sharpen the quotes</h3><p>Request realistic contents limits, test deductible trade-offs, preserve replacement-cost coverage, and confirm the mortgagee could be listed correctly.</p></div>
+          <span class="op-status">CLEARED</span>
+        </li>
+        <li>
+          <span class="op-number">06</span>
+          <div><h3>Stop at the tripwire</h3><p>Present the decision with cost, coverage, deductibles, exclusions, and a recommendation. Binding remained a human decision.</p></div>
+          <span class="op-status amber">APPROVAL</span>
+        </li>
+        <li>
+          <span class="op-number">07</span>
+          <div><h3>Bind, prove, monitor</h3><p>Coordinate the final policy, upload evidence to the servicer, preserve mitigation credits, and keep watchers on every loose end.</p></div>
+          <span class="op-status">CLEARED</span>
+        </li>
+      </ol>
+    </section>
+
+    <section class="decision chapter" data-chapter="05">
+      <div class="chapter-label">
+        <span>05</span>
+        <p>The decision room</p>
+      </div>
+      <div class="decision-head">
+        <div>
+          <p class="eyebrow">Not the cheapest. Not the fanciest. The sane one.</p>
+          <h2>Lower-middle,<br>not bare-bones.</h2>
+        </div>
+        <blockquote>“i dont feel inclined to get incredible coverage… whats a good median / lower price option?”</blockquote>
+      </div>
+
+      <p class="table-swipe" aria-hidden="true">Swipe to inspect all columns →</p>
+      <section class="quote-table-wrap" tabindex="0" aria-label="Scrollable quote comparison table">
+        <table class="quote-table">
+          <caption class="sr-only">Anonymised policy quote comparison</caption>
+          <thead>
+            <tr class="quote-row quote-header">
+              <th scope="col">Route</th><th scope="col">Annual</th><th scope="col">Contents</th><th scope="col">Verdict</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="quote-row">
+              <td>Force-placed placeholder</td><td>~$2.2K</td><td>Lender-first</td><td class="verdict bad">REJECT</td>
+            </tr>
+            <tr class="quote-row">
+              <td>Bare-minimum private</td><td>~$1.2K</td><td>Lower limit</td><td class="verdict">TOO THIN</td>
+            </tr>
+            <tr class="quote-row selected">
+              <td><i>SELECTED</i> Balanced private</td><td>~$1.5K</td><td>Balanced limit</td><td class="verdict good">APPROVED</td>
+            </tr>
+            <tr class="quote-row">
+              <td>Higher-contents private</td><td>~$2.1K</td><td>Higher limit</td><td class="verdict">OVERKILL</td>
+            </tr>
+            <tr class="quote-row">
+              <td>Alternative-market quote</td><td>~$1.7K</td><td>Lower limit</td><td class="verdict">WORSE VALUE</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <p class="approval-checkpoint"><span>HUMAN APPROVAL</span> The homeowner explicitly approved the selected policy before binding. The later surprise was the payment mechanism, not whether the purchase was authorised.</p>
+
+      <div class="savings-block">
+        <p>ANNUALIZED PREMIUM DIFFERENCE</p>
+        <strong>≈−$700</strong>
+        <span>About 32% below the force-placed premium, with broader homeowner protection. Realized escrow savings remained subject to cancellation and proration.</span>
+      </div>
+    </section>
+
+    <section class="locker chapter" data-chapter="06">
+      <div class="chapter-label light">
+        <span>06</span>
+        <p>The evidence locker</p>
+      </div>
+      <div class="locker-head">
+        <div>
+          <p class="eyebrow">Reconstructed excerpts · identifying details removed</p>
+          <h2>Trust,<br>but show receipts.</h2>
+        </div>
+        <p>These are public-safe reconstructions of the evidence used to move the case. The raw exports and documents never ship with this page.</p>
+      </div>
+
+      <div class="exhibits">
+        <details>
+          <summary><span class="exhibit-id">EXHIBIT A</span><span>The force-placed notice</span><span class="exhibit-type">DOCUMENT</span></summary>
+          <div class="exhibit-body">
+            <p class="source-line">SOURCE · MORTGAGE CORRESPONDENCE · DAY 0</p>
+            <blockquote>“This insurance may cost significantly more than insurance you can purchase yourself and may provide less coverage.”</blockquote>
+            <p>Why it mattered: it established the benchmark, the urgency, and the fact that the existing product protected the lender first.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span class="exhibit-id">EXHIBIT B</span><span>The operating contract</span><span class="exhibit-type">CHAT</span></summary>
+          <div class="exhibit-body">
+            <p class="source-line">SOURCE · SECURE CHAT · DAY 0</p>
+            <blockquote>“Proceed autonomously: search my email and documents, contact insurers, agents, property management, and the servicer as needed. Do not bind coverage or spend money without my explicit approval.”</blockquote>
+            <p>Why it mattered: broad execution rights and a crisp financial boundary. The useful version of autonomy is not “do anything”; it is “know exactly where to stop.”</p>
+          </div>
+        </details>
+        <details>
+          <summary><span class="exhibit-id">EXHIBIT C</span><span>The recommendation</span><span class="exhibit-type">ANALYSIS</span></summary>
+          <div class="exhibit-body">
+            <p class="source-line">SOURCE · QUOTE COMPARISON · DAY 1</p>
+            <blockquote>“That’s the lower-price-but-not-barebones answer.”</blockquote>
+            <p>Why it mattered: the selected policy preserved the coverage lenders actually care about while avoiding both an underbuilt contents limit and expensive over-insurance.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span class="exhibit-id">EXHIBIT D</span><span>The portal receipt</span><span class="exhibit-type">SYSTEM</span></summary>
+          <div class="exhibit-body terminal-proof">
+            <p class="source-line">SOURCE · INSURANCE UPDATE PORTAL · DAY 6</p>
+            <code>SUCCESSFUL SAVE<br>Insurance data was saved.<br>Processing exceptions will be sent separately.</code>
+            <p>Why it mattered: proof was no longer “sent”; it was in the servicer’s processing queue.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span class="exhibit-id">EXHIBIT E</span><span>The escrow disbursement</span><span class="exhibit-type">EMAIL</span></summary>
+          <div class="exhibit-body">
+            <p class="source-line">SOURCE · SERVICER NOTIFICATION · DAY 15</p>
+            <blockquote>“An escrow disbursement has been made for insurance. Amount: [REDACTED]. No action is required.”</blockquote>
+            <p>Why it mattered: the disbursement exactly matched the selected annual premium. A manual payment would have risked a duplicate while that escrow payment was in flight.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="twist chapter" data-chapter="07">
+      <div class="twist-bg" data-watermark="~$1.5K" aria-hidden="true"></div>
+      <div class="chapter-label">
+        <span>07</span>
+        <p>The twist</p>
+      </div>
+      <div class="twist-head">
+        <p class="eyebrow">Day 15 · the machine moved first</p>
+        <h2>The premium<br>paid itself.</h2>
+        <p>After the new policy was uploaded, the servicer’s existing escrow workflow disbursed the exact annual premium—without a new bank debit, card charge, or manual payment instruction. Carrier receipt and application were still being verified.</p>
+      </div>
+      <div class="twist-dialogue" role="group" aria-label="Reconstructed conversation about the escrow payment">
+        <blockquote class="operator">wait i think i didn’t pay</blockquote>
+        <blockquote class="alfred">Correct. You did not pay the carrier directly. The servicer disbursed it from your mortgage escrow.</blockquote>
+        <blockquote class="operator">oh wow, who coordinated that?</blockquote>
+        <blockquote class="alfred standout">I coordinated the setup; the escrow system executed the disbursement.</blockquote>
+        <blockquote class="operator">wow so are we done?</blockquote>
+        <blockquote class="alfred final-line">You’re done buying. I’m still watching reconciliation.</blockquote>
+      </div>
+    </section>
+
+    <section class="outcome chapter" data-chapter="08">
+      <div class="chapter-label light">
+        <span>08</span>
+        <p>After-action report</p>
+      </div>
+      <div class="outcome-grid">
+        <div class="outcome-title">
+          <p class="eyebrow">What actually changed</p>
+          <h2>A policy,<br>not a placeholder.</h2>
+        </div>
+        <div class="scoreboard">
+          <div><span>BEFORE</span><strong>~$2.2K</strong><p>Force-placed premium</p></div>
+          <div class="score-arrow" aria-hidden="true">→</div>
+          <div><span>AFTER</span><strong>~$1.5K</strong><p>Selected private policy</p></div>
+        </div>
+      </div>
+
+      <div class="outcome-list">
+        <article><span>01</span><h3>Coverage became real</h3><p>The new policy protected the unit interior, contents, liability, and loss of use—not merely the lender’s collateral.</p></article>
+        <article><span>02</span><h3>The human stayed in control</h3><p>The agent crossed hundreds of operational steps, but the financial boundary remained intact.</p></article>
+        <article><span>03</span><h3>Monitoring became part of execution</h3><p>Binding was not treated as “done.” Watchers continued checking payment posting, credits, cancellation, and escrow reconciliation.</p></article>
+      </div>
+
+      <div class="remaining-thread">
+        <div class="thread-marker" aria-hidden="true"></div>
+        <div>
+          <p class="eyebrow">One thread remained open</p>
+          <h3>Force-placed cancellation, proration, and any resulting escrow adjustment</h3>
+          <p>The replacement policy was bound, and the servicer had disbursed the exact premium from escrow. The retrospective ends while carrier application, final cancellation, proration, and any escrow correction were still being monitored. Autonomous work is not magic; it is refusing to quietly forget the boring last 10%.</p>
+        </div>
+        <span class="monitoring-badge"><i></i> MONITORING</span>
+      </div>
+    </section>
+
+    <section class="lessons chapter" data-chapter="09">
+      <div class="chapter-label">
+        <span>09</span>
+        <p>What the case proved</p>
+      </div>
+      <p class="eyebrow">The useful lessons, minus the keynote fog</p>
+      <h2>Autonomy is a contract,<br>not a personality trait.</h2>
+      <div class="lesson-grid">
+        <article><span>01</span><h3>Give the agent a boundary, not a leash</h3><p>Broad permission to research, contact, file, and follow up created speed. A single hard stop around binding and spending preserved control.</p></article>
+        <article><span>02</span><h3>Async work is where agents earn their keep</h3><p>The difficult bit was not comparing five premiums. It was carrying context across replies, corrections, deadlines, and silent counterparties.</p></article>
+        <article><span>03</span><h3>Execution needs receipts</h3><p>Every meaningful transition had evidence: quote PDFs, bound declarations, a portal response, and the escrow notice. “Probably worked” is not a status.</p></article>
+        <article><span>04</span><h3>The last mile is mostly watching</h3><p>A human gets tired after the satisfying part. A watcher does not. That is precisely why cancellation, credits, and reconciliation stayed on the board.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <span class="brand-mark" aria-hidden="true">A</span>
+      <p><strong>THE ESCROW HEIST</strong><br>A field note from Alfred.</p>
+    </div>
+    <p class="privacy-note">This public artifact uses reconstructed excerpts. Names, addresses, account identifiers, contact details, service providers, file paths, credentials, and original documents were removed. Raw session exports remain private.</p>
+    <a href="/">Return to Alfred Hub ↑</a>
+  </footer>
+</body>
+</html>

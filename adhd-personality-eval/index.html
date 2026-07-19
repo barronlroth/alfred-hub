@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Controlled evaluations of Alfred's SOUL identity, ADHD presentation, and concise presentation modes.">
+  <title>Hermes Response Chemistry — Identity × Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="personality-data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#comparison">Skip to comparison</a>
+
+  <header class="masthead">
+    <div class="masthead__mark" aria-label="Hermes response ergonomics evaluation">
+      <span class="masthead__product">HERMES</span>
+      <span class="masthead__slash" aria-hidden="true">×</span>
+      <span>IDENTITY / ERGONOMICS / CHEMISTRY / V4</span>
+    </div>
+    <p class="masthead__run" id="run-label">EVALUATION INSTRUMENT</p>
+  </header>
+
+  <main>
+    <nav class="suite-switch" aria-label="Choose evaluation suite">
+      <button class="suite-tab is-active" type="button" data-suite="task" aria-pressed="true">
+        <span>01</span><strong>Task ergonomics</strong><small>9 technical and planning cases</small>
+      </button>
+      <button class="suite-tab" type="button" data-suite="personality" aria-pressed="false">
+        <span>02</span><strong>Personality &amp; taste</strong><small>6 casual, human cases</small>
+      </button>
+    </nav>
+
+    <section class="overview" aria-labelledby="page-title">
+      <div class="overview__intro">
+        <p class="eyebrow" id="suite-eyebrow">FOUR-CONDITION FACTORIAL COMPARISON</p>
+        <h1 id="page-title">Two levers.<br>Four response surfaces.</h1>
+        <p class="lede" id="suite-lede">Does Alfred’s SOUL change the answer? Does it change what the ADHD overlay adds? Same prompts, same model, both switches tested on and off.</p>
+        <p class="identity-note"><strong>“No custom SOUL” is not no identity.</strong> Hermes falls back to its built-in default identity. Machines do enjoy a technicality.</p>
+      </div>
+
+      <div class="overview__instrument" aria-label="Evaluation summary">
+        <div class="model-strip">
+          <span>MODEL <strong id="model-value">—</strong></span>
+          <span>PROVIDER <strong id="provider-value">—</strong></span>
+          <span>CASES <strong id="case-count">—</strong></span>
+        </div>
+
+        <div class="factor-matrix" aria-labelledby="factor-title">
+          <div class="factor-matrix__head">
+            <h2 id="factor-title">Condition matrix</h2>
+            <span id="matrix-legend">ACCURACY / EFFICIENCY / WORDS</span>
+          </div>
+          <div class="factor-grid" id="factor-grid"></div>
+        </div>
+
+        <div class="interaction" aria-labelledby="interaction-title">
+          <span class="eyebrow" id="interaction-eyebrow">DESCRIPTIVE INTERACTION</span>
+          <h2 id="interaction-title">What changed when both switches moved?</h2>
+          <p id="interaction-copy">Calculating the interaction…</p>
+          <div class="interaction__stats" id="interaction-stats"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="effects" aria-labelledby="effects-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" id="effects-eyebrow">FOUR CONTROLLED CONTRASTS</p>
+          <h2 id="effects-title">Which lever won each case?</h2>
+        </div>
+        <p>A winner needs two of three strict blind-judge verdicts. Ambiguity stays a tie rather than being massaged into a headline.</p>
+      </div>
+      <div class="effect-grid" id="effect-grid"></div>
+    </section>
+
+    <section class="case-deck" aria-labelledby="case-nav-title">
+      <div class="case-deck__head">
+        <div>
+          <p class="eyebrow">SPECIMEN SELECTOR</p>
+          <h2 id="case-nav-title">Evaluation cases</h2>
+        </div>
+        <p><span id="active-index">01</span> / <span id="total-index">—</span></p>
+      </div>
+      <nav class="case-nav" id="case-nav" aria-label="Evaluation cases"></nav>
+    </section>
+
+    <section class="specimen" id="comparison" aria-labelledby="prompt-title">
+      <header class="prompt-panel">
+        <div class="prompt-panel__meta">
+          <span class="eyebrow" id="case-category">—</span>
+          <span class="prompt-panel__id" id="case-id">—</span>
+        </div>
+        <h2 id="prompt-title">User prompt</h2>
+        <blockquote id="prompt-text">Loading evaluation…</blockquote>
+      </header>
+
+      <section class="scenario-picker" aria-labelledby="scenario-picker-title">
+        <div class="scenario-picker__intro">
+          <span class="eyebrow">DIRECT CELL COMPARISON</span>
+          <div>
+            <h2 id="scenario-picker-title">Pick any two scenarios.</h2>
+            <p>Identity and presentation mode can move independently. As nature intended.</p>
+          </div>
+        </div>
+        <div class="scenario-picker__controls">
+          <label class="scenario-select scenario-select--left" for="scenario-left">
+            <span>SCENARIO A</span>
+            <select id="scenario-left" aria-label="Choose scenario A"></select>
+          </label>
+          <button class="scenario-swap" id="swap-scenarios" type="button" aria-label="Swap scenarios A and B">⇄<span>SWAP</span></button>
+          <label class="scenario-select scenario-select--right" for="scenario-right">
+            <span>SCENARIO B</span>
+            <select id="scenario-right" aria-label="Choose scenario B"></select>
+          </label>
+        </div>
+        <div class="mobile-tabs" role="tablist" aria-label="Choose visible scenario">
+          <button class="mobile-tab is-active" type="button" role="tab" aria-selected="true" data-side="left">Scenario A</button>
+          <button class="mobile-tab" type="button" role="tab" aria-selected="false" data-side="right">Scenario B</button>
+        </div>
+      </section>
+
+      <div class="comparison-grid">
+        <article class="response response--baseline" id="baseline-panel" aria-labelledby="baseline-title">
+          <header class="response__head">
+            <div>
+              <span class="condition-code" id="baseline-code">CONDITION 00</span>
+              <h2 id="baseline-title">Scenario A</h2>
+            </div>
+            <span class="condition-note" id="baseline-note">—</span>
+          </header>
+          <dl class="metrics" id="baseline-metrics" aria-label="Baseline answer metrics"></dl>
+          <div class="answer" id="baseline-answer"></div>
+        </article>
+
+        <div class="comparison-seam" aria-hidden="true">
+          <span class="comparison-seam__cap">Δ</span>
+          <div class="comparison-seam__ticks" id="seam-ticks"></div>
+          <span class="comparison-seam__label">SAME INPUT</span>
+        </div>
+
+        <article class="response response--adhd" id="adhd-panel" data-side-panel="right" aria-labelledby="adhd-title" hidden>
+          <header class="response__head">
+            <div>
+              <span class="condition-code" id="adhd-code">CONDITION 01</span>
+              <h2 id="adhd-title">Scenario B</h2>
+            </div>
+            <span class="condition-note" id="adhd-note">—</span>
+          </header>
+          <dl class="metrics" id="adhd-metrics" aria-label="ADHD answer metrics"></dl>
+          <div class="answer" id="adhd-answer"></div>
+        </article>
+      </div>
+
+      <aside class="judge" aria-labelledby="judge-title">
+        <div class="judge__verdict">
+          <span class="eyebrow" id="judge-eyebrow">SELECTED PAIR · 3-PASS BLIND JUDGE</span>
+          <h2 id="judge-title">Verdict: <strong id="judge-winner">—</strong></h2>
+          <small id="decision-basis">—</small>
+        </div>
+        <div class="judge__scores" aria-label="Judge scores">
+          <span><b id="left-score-label">SCENARIO A</b><strong id="baseline-score">—</strong><small id="baseline-accuracy">—</small></span>
+          <span><b id="right-score-label">SCENARIO B</b><strong id="adhd-score">—</strong><small id="adhd-accuracy">—</small></span>
+          <em id="judge-agreement">—</em>
+        </div>
+        <div class="judge__notes" id="judge-notes"></div>
+      </aside>
+
+      <section class="identity-effects" aria-labelledby="identity-effects-title">
+        <div class="identity-effects__head">
+          <span class="eyebrow">SELECTED PAIR · WHOLE SUITE</span>
+          <h2 id="identity-effects-title">How does this matchup perform overall?</h2>
+        </div>
+        <div class="identity-effect-grid" id="identity-effect-grid"></div>
+      </section>
+
+      <div class="case-controls" aria-label="Case controls">
+        <button id="prev-case" type="button" aria-label="Previous evaluation case"><span aria-hidden="true">←</span> Previous</button>
+        <p><span class="key">←</span><span class="key">→</span> to navigate</p>
+        <button id="next-case" type="button" aria-label="Next evaluation case">Next <span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+
+    <section class="methodology" aria-labelledby="method-title">
+      <p class="eyebrow" id="method-eyebrow">METHOD / MATCHED CONDITIONS</p>
+      <h2 id="method-title">One model, controlled instruction layers.</h2>
+      <div class="methodology__grid">
+        <p id="method-cells"><strong>Matched cells</strong>Custom Alfred SOUL or Hermes’ built-in identity crossed with presentation modes.</p>
+        <p id="method-constant"><strong>Held constant</strong>Model, provider, memory, user profile, skills, tools, config, working directory, and prompts.</p>
+        <p id="method-gate"><strong>Gate first</strong>Three blinded judge passes score every answer independently before the focal quality metric.</p>
+        <p><strong>Directional evidence</strong>One generated sample per cell and same-model judges. Useful for mechanism hunting, not statistical scripture.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>HERMES RESPONSE ERGONOMICS</span>
+    <span>SOUL × PRESENTATION CONTROLLED EVALUATION</span>
+  </footer>
+
+  <noscript>This comparison requires JavaScript to switch cases and render the safely escaped evaluation answers.</noscript>
+</body>
+</html>

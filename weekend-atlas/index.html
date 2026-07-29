@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!--
+  THESIS: Available time chooses the adventure; this refuses the destination directory and its obedient card grid.
+  OWN-WORLD: Cobalt passport cloth, kraft tickets, tomato stamps, pine ink, sunflower marks, clipped illustrated postcards, and transport-signage type on a strict editorial grid.
+  STORY: Pick a time window, meet one complete outing at full scale, browse the territory, then open a field guide with a default route and smart swaps.
+  FIRST VIEWPORT: A dominant Pebble Beach route postcard owns the left two-thirds; a cobalt passport-control rail on the right holds the title, four time tickets, and 0/24 stamp.
+  FORM: User-pinned Hero Postcard, first of three compositional probes, with the Route Map probe carried into act two; no random seed was used.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+  -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b82">
+  <meta name="description" content="Twenty-four opinionated Northern California outings, organised by the time you actually have.">
+  <meta property="og:title" content="Alfred’s Weekend Atlas">
+  <meta property="og:description" content="Start with the time you have. Leave with a proper outing.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://alfred.barronroth.com/weekend-atlas/">
+  <title>Alfred’s Weekend Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Kalam:wght@400;700&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="outings.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#atlas">Skip to the outings</a>
+
+  <header class="site-header">
+    <a class="wordmark" href="/weekend-atlas/" aria-label="Alfred’s Weekend Atlas home">
+      <span class="wordmark-mark" aria-hidden="true">AW</span>
+      <span>Weekend Atlas</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#map">Field map</a>
+      <a href="#atlas">All 24</a>
+      <a href="#field-notes">Field notes</a>
+    </nav>
+    <div class="edition">SF · EDITION 01</div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-postcard" id="hero-postcard">
+        <img id="hero-image" src="assets/postcards/09-pebble-beach.webp" alt="Illustrated postcard of Pebble Beach and 17-Mile Drive">
+        <div class="postcard-wash" aria-hidden="true"></div>
+        <div class="hero-route" aria-label="Featured outing route">
+          <div class="route-kicker"><span id="hero-number">09</span> / FEATURED ROUTE</div>
+          <h2 id="hero-outing-title">Pebble Beach,<br>Properly Done</h2>
+          <p id="hero-short">Drive 17-Mile Drive slowly enough to deserve it, then finish with the Spanish Bay bagpiper.</p>
+          <ol id="hero-beats" class="route-beats"></ol>
+          <button class="field-button" id="hero-open" type="button">Open the field guide <span aria-hidden="true">↗</span></button>
+        </div>
+        <div class="postcard-caption" aria-hidden="true">NORTHERN CALIFORNIA · FIELD POSTCARD 09</div>
+      </div>
+
+      <aside class="passport-control" aria-label="Choose by time available">
+        <div class="passport-heading">
+          <span class="eyebrow">A ruthlessly edited first edition</span>
+          <h1 id="page-title">Alfred’s<br>Weekend Atlas</h1>
+          <p>Start with the time you have. Leave with a proper outing.</p>
+        </div>
+
+        <div class="time-question">How much time do you have?</div>
+        <div class="ticket-stack" id="time-tickets" role="group" aria-label="Filter outings by available time"></div>
+
+        <div class="passport-bottom">
+          <div class="completion-stamp" aria-label="0 of 24 outings completed">
+            <strong id="completed-count">0/24</strong>
+            <span>passport completion</span>
+          </div>
+          <p class="hand-note">One outing. One stamp.<br>No points. We have dignity.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="map-section" id="map" aria-labelledby="map-title">
+      <div class="section-intro map-intro">
+        <span class="eyebrow">Act II · The territory</span>
+        <h2 id="map-title">Twenty-four reasons<br>not to waste Saturday.</h2>
+        <p>The map is schematic. Northern California remains annoyingly unwilling to fit a browser window.</p>
+      </div>
+
+      <div class="field-map-wrap">
+        <svg class="field-map" id="field-map" viewBox="0 0 100 100" role="img" aria-labelledby="map-svg-title map-svg-desc">
+          <title id="map-svg-title">Schematic map of Weekend Atlas outings</title>
+          <desc id="map-svg-desc">Clickable outing locations across Northern California, from San Francisco to Lassen and the Eastern Sierra.</desc>
+          <path class="california-shape" d="M37 7 L57 10 L61 22 L68 31 L68 42 L75 54 L74 64 L82 78 L76 93 L57 94 L51 86 L46 78 L42 70 L36 62 L32 50 L27 43 L31 33 L28 22 Z" />
+          <path class="sierra-line" d="M61 17 C65 28 62 41 70 54 S70 76 78 88" />
+          <path class="coast-line" d="M36 8 C31 24 34 39 28 50 S31 70 48 88" />
+          <g id="map-routes"></g>
+          <g id="map-points"></g>
+        </svg>
+        <div class="map-tooltip" id="map-tooltip" role="status" aria-live="polite"></div>
+        <div class="map-legend">
+          <span>SF</span>
+          <span>COAST</span>
+          <span>SIERRA</span>
+          <span>VOLCANIC NORTH</span>
+        </div>
+      </div>
+
+      <div class="stamp-ledger" aria-label="Passport stamp ledger">
+        <div class="ledger-head"><span>FIELD LEDGER</span><b>0/24</b></div>
+        <div class="stamp-grid" id="stamp-grid"></div>
+        <p>Permanent once earned. Repeats are called having a life.</p>
+      </div>
+    </section>
+
+    <section class="atlas-section" id="atlas" aria-labelledby="atlas-title">
+      <div class="section-intro atlas-intro">
+        <span class="eyebrow">The first edition</span>
+        <h2 id="atlas-title">Choose your window.</h2>
+        <p id="atlas-summary">Six outings that fit inside a few hours. No hotel search, no annual leave, no excuse.</p>
+      </div>
+      <div class="filter-board" id="filter-board" role="group" aria-label="Filter the atlas"></div>
+      <div class="postcard-grid" id="postcard-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="field-notes" id="field-notes" aria-labelledby="notes-title">
+      <div>
+        <span class="eyebrow">Field notes</span>
+        <h2 id="notes-title">Curation is the feature.</h2>
+      </div>
+      <div class="notes-grid">
+        <article>
+          <span class="note-number">01</span>
+          <h3>A plan, not a pile</h3>
+          <p>Each outing has a default sequence. Smart swaps exist; decision paralysis does not.</p>
+        </article>
+        <article>
+          <span class="note-number">02</span>
+          <h3>Live details stay live</h3>
+          <p>Official sources are linked because roads, permits, ferries, snow, fire, and human bureaucracy all move.</p>
+        </article>
+        <article>
+          <span class="note-number">03</span>
+          <h3>Completion is analogue</h3>
+          <p>Tell Alfred when an outing is done. The stamp becomes permanent in the next edition.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-mark">AW<span>24</span></div>
+    <p>Edited in San Francisco by Alfred. Sources checked July 2026; verify live conditions before setting off.</p>
+    <a href="/">Back to Alfred Hub</a>
+  </footer>
+
+  <dialog class="outing-dialog" id="outing-dialog">
+    <div class="dialog-shell">
+      <button class="dialog-close" type="button" aria-label="Close field guide">Close ×</button>
+      <div class="guide-image-wrap">
+        <img id="dialog-image" src="" alt="">
+        <div class="guide-stamp" id="dialog-stamp">FIELD<br>GUIDE</div>
+        <div class="guide-image-caption" id="dialog-image-caption"></div>
+      </div>
+      <article class="guide-copy">
+        <div class="guide-meta" id="dialog-meta"></div>
+        <h2 id="dialog-title"></h2>
+        <p class="guide-verdict" id="dialog-verdict"></p>
+        <dl class="fact-grid" id="dialog-facts"></dl>
+        <section>
+          <h3>The route</h3>
+          <ol class="itinerary" id="dialog-itinerary"></ol>
+        </section>
+        <section class="swap-section">
+          <h3>Smart swaps</h3>
+          <ul id="dialog-swaps"></ul>
+        </section>
+        <section class="sources-section">
+          <h3>Check before leaving</h3>
+          <div id="dialog-sources"></div>
+        </section>
+      </article>
+    </div>
+  </dialog>
+</body>
+</html>

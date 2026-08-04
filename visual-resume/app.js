@@ -33,14 +33,71 @@
   };
 
   const COMPANY_PROFILES = [
-    { name: 'Firefox Beta', role: 'Curious user · fifth grade', note: 'I saw tabs, joined the Firefox forums, and started giving product feedback.' },
-    { name: 'Computer Engineering', role: 'Systems foundation', note: 'Built the technical foundation for understanding products from the inside out.' },
-    { name: 'AMD / Xbox', role: 'Engineer', note: 'Engineering work that taught me to build inside complex technical systems.' },
-    { name: 'Blade', role: 'Engineer → Product Manager', note: 'I intentionally used engineering as the bridge into formal product management.' },
-    { name: 'Screenshop', role: 'Founding Technical PM', note: 'Led product for consumer AI and style identification. Screenshop was acquired by Snap and integrated into Snapchat Scan.' },
-    { name: 'The Rotation', role: 'Founder', note: 'Built a subscription menswear company: $350K raised, 300 members, 8,500 registered users, and 300% MRR growth reported by Vogue Business. Acquired in 2021.' },
-    { name: 'Wonder', role: 'Founding team · Product + Growth', note: 'Started with order-routing infrastructure for chefs, then moved into the consumer product and growth.' },
-    { name: 'Shopify', role: 'Frontier-AI builder', note: 'Turning emerging AI capabilities into products people can use—and the portal to what comes next.', nextKind: 'youtube' },
+    {
+      name: 'Firefox Beta',
+      role: 'Curious user · fifth grade',
+      image: 'assets/top8-firefox.svg',
+      imageAlt: 'Firefox-inspired globe and fox mark',
+      hover: 'Broke beta builds. Sent feedback.',
+      note: 'Tabs felt like a magic trick. I joined the beta forums, broke builds, and sent feedback long before I knew product management was a job.',
+    },
+    {
+      name: 'Computer Engineering',
+      role: 'Systems foundation',
+      image: 'assets/top8-computer-engineering.svg',
+      imageAlt: 'Computer chip and circuit board illustration',
+      hover: 'Learned what lives under the interface.',
+      note: 'I wanted to understand what was happening under the interface, so I studied computer engineering and learned to build the machinery.',
+    },
+    {
+      name: 'AMD / Xbox',
+      role: 'Engineer',
+      image: 'assets/top8-amd-xbox.svg',
+      imageAlt: 'AMD and Xbox-inspired engineering graphic',
+      hover: 'Shipped inside serious technical systems.',
+      note: 'This was my first real taste of shipping inside a huge technical system. I liked engineering, but I kept drifting toward the product decisions.',
+    },
+    {
+      name: 'Blade',
+      role: 'Engineer → Product Manager',
+      image: 'assets/top8-blade.svg',
+      imageAlt: 'Blade wordmark on a dark geometric background',
+      hover: 'Used engineering to earn the PM move.',
+      note: 'I took a deliberately awkward hybrid job: part engineer, part PM. It was the cleanest way I knew to earn the transition instead of simply declaring one.',
+    },
+    {
+      name: 'Screenshop',
+      role: 'Founding Technical PM',
+      image: 'assets/top8-screenshop.svg',
+      imageAlt: 'Screenshop-inspired fashion scanning graphic',
+      hover: 'Turned computer vision into a consumer product.',
+      note: 'I joined early and helped turn computer vision into a consumer product people could point at an outfit and use. Snap acquired Screenshop and folded the work into Snapchat Scan.',
+    },
+    {
+      name: 'The Rotation',
+      role: 'Founder',
+      image: 'assets/top8-rotation.svg',
+      imageAlt: 'The Rotation-inspired menswear hanger graphic',
+      hover: 'Built, funded, survived, sold.',
+      note: 'I started a menswear rental company, raised $350K, reached 300 active members and 8,500 signups, survived COVID, and sold it in 2021. A fairly compressed MBA.',
+    },
+    {
+      name: 'Wonder',
+      role: 'Founding team · Product + Growth',
+      image: 'assets/top8-wonder.svg',
+      imageAlt: 'Wonder-inspired plate and route graphic',
+      hover: 'From chef-routing plumbing to consumer growth.',
+      note: 'I started on the ugly plumbing, routing orders to chefs, then moved into the consumer app and growth. Magical experiences usually sit on top of unglamorous systems.',
+    },
+    {
+      name: 'Shopify',
+      role: 'Frontier-AI builder',
+      image: 'assets/top8-shopify.svg',
+      imageAlt: 'Shopify-inspired shopping bag and agent nodes',
+      hover: 'Built with frontier AI before the playbook.',
+      note: 'I joined to work on AI before the job description really existed. We built agentic commerce prototypes, MCPs, and used Claude Code early enough that nobody had a playbook yet.',
+      nextKind: 'youtube',
+    },
   ];
 
   const SHOPIFY_PROJECTS = [
@@ -480,10 +537,12 @@
 
   function getMySpaceProfileMarkup(selectedCompany = 0) {
     const companies = COMPANY_PROFILES.map((company, index) => `
-      <button type="button" class="company-friend${index === selectedCompany ? ' is-selected' : ''}" data-company-index="${index}" aria-expanded="${index === selectedCompany}" aria-controls="company-detail">
-        <span class="company-number">${(index + 1).toString().padStart(2, '0')}</span>
+      <button type="button" class="company-friend${index === selectedCompany ? ' is-selected' : ''}" data-company-index="${index}" aria-expanded="${index === selectedCompany}" aria-controls="company-detail" aria-label="${company.name}: ${company.role}">
+        <span class="company-image">
+          <img src="${company.image}" alt="${company.imageAlt}" />
+          <span class="company-hover-copy" aria-hidden="true"><small>${company.role}</small><span>${company.hover}</span></span>
+        </span>
         <strong>${company.name}</strong>
-        <small>${company.role}</small>
       </button>
     `).join('');
 
@@ -510,21 +569,21 @@
 
             <section class="blog-preview">
               <h2>Barron's Latest Blog Entry</h2>
-              <p>From Firefox forums to frontier AI: why I keep moving toward capabilities before the product is obvious.</p>
+              <p><strong>Why I keep showing up before there's a playbook</strong><br />I like technology best when it's clearly going somewhere but nobody has made the normal-person version yet.</p>
             </section>
 
             <section class="orange-section about-section">
               <h2>Barron's Blurbs</h2>
               <h3>About me:</h3>
-              <p>I tend to move toward emerging capabilities before the product is obvious. The throughline—from Firefox forums to frontier AI—is turning new technology into products people can actually use.</p>
-              <p><strong>Curious user → systems foundation → engineer → PM → founding PM → founder → scale → frontier AI.</strong></p>
+              <p>I've always liked being early enough that the playbook is still blank. I started out breaking Firefox betas, studied computer engineering so I could understand the machinery, and eventually realized I cared most about deciding what should get built.</p>
+              <p>Since then I've bounced between engineering, product, founding companies, and AI labs. These days I'm mostly thinking about agents that can keep track of work without making people babysit them.</p>
               <h3>Who I'd like to meet:</h3>
-              <p>People who are early for the right reasons: curious, rigorous, and willing to build the missing product.</p>
+              <p>People who are slightly too curious to leave a weird new capability alone.</p>
             </section>
 
             <section class="orange-section friend-space">
               <h2>Barron's Top 8 Chapters</h2>
-              <p class="friend-count"><strong>8</strong> chapters taught Barron how to build from zero. Choose one for the story.</p>
+              <p class="friend-count"><strong>8</strong> stops. Hover for the short version; click for the whole story.</p>
               <div class="company-grid">${companies}</div>
               <div class="company-detail" id="company-detail" aria-live="polite">${getCompanyDetailMarkup(selectedCompany)}</div>
             </section>
@@ -538,10 +597,10 @@
           <aside class="profile-sidebar">
             <h1>Barron</h1>
             <div class="profile-intro">
-              <div class="profile-photo-placeholder" role="img" aria-label="Barron monogram profile image"><span>B</span><small>PRODUCT BUILDER</small></div>
+              <img class="profile-photo" src="assets/barron-myspace.jpg" alt="Black-and-white portrait of Barron wearing clear-frame glasses" />
               <div class="profile-facts">
-                <p>"online early. still building."</p>
-                <p>Product builder<br />Internet years old</p>
+                <p>"probably prototyping something"</p>
+                <p>Product builder<br />San Francisco</p>
                 <p>California<br />UNITED STATES</p>
                 <p class="last-login">Last Login:<br />Today</p>
               </div>
@@ -550,9 +609,9 @@
             <section class="myspace-box interests-box">
               <h2>Barron's Interests</h2>
               <dl>
-                <div><dt>General</dt><dd>Emerging technology, product craft, old computers, internet history, good interfaces, music, travel, and making the web feel personal.</dd></div>
-                <div><dt>Music</dt><dd><strong>Currently playing:</strong> whatever helps me turn an unfinished idea into a working product.</dd></div>
-                <div><dt>Heroes</dt><dd>People who make ambitious technology useful—and make the result feel obvious in hindsight.</dd></div>
+                <div><dt>General</dt><dd>Old computers, new models, products with strong opinions, photography, good hotels, loud music, and side projects that get out of hand.</dd></div>
+                <div><dt>Music</dt><dd>Major Lazer is responsible for my marriage, so they have permanent top billing.</dd></div>
+                <div><dt>Heroes</dt><dd>Peter Steinberger for shipping obsessively. Demis Hassabis for taking ridiculous bets seriously. Bret Victor for refusing to accept bad interfaces. Stewart Butterfield for making software feel human.</dd></div>
               </dl>
             </section>
           </aside>

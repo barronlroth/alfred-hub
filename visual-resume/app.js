@@ -154,7 +154,7 @@
       }
       if (tab.kind === 'pm-twin') {
         panel.classList.add('pm-deck-panel');
-        panel.innerHTML = '<iframe class="pm-deck-frame" src="pm-twin/index.html" title="PM Twin 2.0 presentation" allow="fullscreen" scrolling="no"></iframe>';
+        panel.innerHTML = '<iframe class="pm-deck-frame" src="pm-twin/" title="PM Twin 2.0 presentation" allow="fullscreen" scrolling="no"></iframe>';
       }
       tabPanels.append(panel);
     });

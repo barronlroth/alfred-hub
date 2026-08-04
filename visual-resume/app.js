@@ -34,28 +34,20 @@
 
   const COMPANY_PROFILES = [
     {
-      name: 'Firefox Beta',
-      role: 'Curious user · fifth grade',
-      image: 'assets/top8-firefox.webp',
-      imageAlt: 'Barron testing an early browser on a glowing CRT computer',
-      hover: 'Broke beta builds. Sent feedback.',
-      note: 'Tabs felt like a magic trick. I joined the beta forums, broke builds, and sent feedback long before I knew product management was a job.',
-    },
-    {
-      name: 'Computer Engineering',
-      role: 'Systems foundation',
+      name: 'Boston University',
+      role: 'Computer Engineering',
       image: 'assets/top8-computer-engineering.webp',
       imageAlt: 'Barron working with a circuit board at an electronics bench',
       hover: 'Learned what lives under the interface.',
-      note: 'I wanted to understand what was happening under the interface, so I studied computer engineering and learned to build the machinery.',
+      note: 'I studied computer engineering at Boston University because I wanted to understand what was happening under the interface. Building the machinery gave me the confidence to keep pulling new systems apart.',
     },
     {
-      name: 'AMD / Xbox',
-      role: 'Engineer',
+      name: 'AMD',
+      role: 'Engineer · Xbox APU team',
       image: 'assets/top8-amd-xbox.webp',
       imageAlt: 'Barron in a high-performance computer hardware lab',
-      hover: 'Shipped inside serious technical systems.',
-      note: 'This was my first real taste of shipping inside a huge technical system. I liked engineering, but I kept drifting toward the product decisions.',
+      hover: 'Shipped hardware on the Xbox APU team.',
+      note: 'I worked as an engineer on the Xbox APU team, my first taste of shipping inside a huge technical system. I liked engineering, but I kept drifting toward the product decisions.',
     },
     {
       name: 'Blade',
@@ -97,6 +89,14 @@
       hover: 'Built with frontier AI before the playbook.',
       note: 'I joined to work on AI before the job description really existed. We built agentic commerce prototypes, MCPs, and used Claude Code early enough that nobody had a playbook yet.',
       nextKind: 'youtube',
+    },
+    {
+      name: 'Google',
+      role: 'Product Manager · AI Agents',
+      image: 'assets/top8-google.webp',
+      imageAlt: 'Barron building enterprise AI agents in a colourful systems workspace',
+      hover: 'Built enterprise agents. Kept tinkering.',
+      note: 'At Google Cloud, I build enterprise customer-service agents in CX Agent Studio. PM Twin came from the same habit I have always had: find a new capability, pull it apart, and build the useful version myself.',
     },
   ];
 
@@ -261,7 +261,7 @@
             <h1>Barron discovers AI at Shopify, becomes obsessed</h1>
             <div class="yt-player">
               <div class="yt-video-stage">
-                <video class="yt-video" preload="metadata" playsinline${autoplay ? ' autoplay muted' : ''}>
+                <video class="yt-video" preload="metadata" playsinline loop${autoplay ? ' autoplay muted' : ''}>
                   <source src="assets/guy-opening-llm-box.mp4" type="video/mp4" />
                 </video>
               </div>
@@ -299,9 +299,9 @@
           </section>
 
           <aside class="yt-sidebar">
-            <div class="yt-shopify-banner"><span>SHOPIFY</span><strong>MORE VIDEOS...</strong></div>
+            <div class="yt-shopify-banner"><a href="https://www.shopify.com/" aria-label="Shopify"><img src="assets/shopify-logo.svg" alt="Shopify" /></a><strong>MORE VIDEOS...</strong></div>
             <section class="yt-channel-card">
-              <div class="yt-channel-heading"><span class="yt-channel-mark">SHOP</span><div>From: <a href="#">Shopify AI Labs</a><small>Added: 2023</small><a href="#" class="yt-more-info">(more info)</a></div><button type="button">Subscribe</button></div>
+              <div class="yt-channel-heading"><span class="yt-channel-mark"><img src="assets/shopify-glyph.svg" alt="" /></span><div>From: <a href="#">Shopify AI Labs</a><small>Added: 2023</small><a href="#" class="yt-more-info">(more info)</a></div><button type="button">Subscribe</button></div>
               <p>A small prototyping team exploring agentic commerce, AI-native developer tools, and the infrastructure agents need to work with Shopify.</p>
               <label>URL <input value="https://youtube.local/shopify-frontier-ai" readonly /></label>
               <label>Embed <input value="&lt;object width='425' height='344'&gt;..." readonly /></label>
@@ -575,7 +575,7 @@
             <section class="orange-section about-section">
               <h2>Barron's Blurbs</h2>
               <h3>About me:</h3>
-              <p>I've always liked being early enough that the playbook is still blank. I started out breaking Firefox betas, studied computer engineering so I could understand the machinery, and eventually realized I cared most about deciding what should get built.</p>
+              <p>I've always been a tinkerer. I started out breaking Firefox betas to see what changed, then studied computer engineering because I wanted to understand the machinery underneath. Eventually I realized I cared most about deciding what should get built.</p>
               <p>Since then I've bounced between engineering, product, founding companies, and AI labs. These days I'm mostly thinking about agents that can keep track of work without making people babysit them.</p>
               <h3>Who I'd like to meet:</h3>
               <p>People who are slightly too curious to leave a weird new capability alone.</p>
@@ -609,9 +609,9 @@
             <section class="myspace-box interests-box">
               <h2>Barron's Interests</h2>
               <dl>
-                <div><dt>General</dt><dd>Old computers, new models, products with strong opinions, photography, good hotels, loud music, and side projects that get out of hand.</dd></div>
-                <div><dt>Music</dt><dd>Major Lazer is responsible for my marriage, so they have permanent top billing.</dd></div>
-                <div><dt>Heroes</dt><dd>Peter Steinberger for shipping obsessively. Demis Hassabis for taking ridiculous bets seriously. Bret Victor for refusing to accept bad interfaces. Stewart Butterfield for making software feel human.</dd></div>
+                <div><dt>General</dt><dd>Old computers, new models, products with strong opinions, photography, good hotels, and side projects that get out of hand.</dd></div>
+                <div><dt>Music</dt><dd>Evanescence, Linkin Park, The Killers, Fall Out Boy, and whatever else was playing through tinny laptop speakers in 2007.</dd></div>
+                <div><dt>Heroes</dt><dd>Peter Steinberger for shipping obsessively. Demis Hassabis for taking ridiculous bets seriously. Bret Victor for treating software as a medium for thought. Stewart Butterfield for making software feel human.</dd></div>
               </dl>
             </section>
           </aside>
@@ -1106,7 +1106,7 @@
     focus: false,
     activate: false,
     kind: 'pm-twin',
-    title: 'PM Twin 2.0 - Presentation',
+    title: 'PMTwin-DeepDive',
     url: 'https://jetski.local/pm-twin-deck',
   });
 })();

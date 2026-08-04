@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 32" role="img" aria-labelledby="title">
+  <title id="title">MySpace people mark</title>
+  <g fill="#000">
+    <circle cx="10" cy="8" r="5"/>
+    <circle cx="24" cy="7" r="6"/>
+    <circle cx="39" cy="6" r="7"/>
+    <path d="M3 30V20c0-4 3-7 7-7s7 3 7 7v10z"/>
+    <path d="M16 30V18c0-4.5 3.6-8 8-8s8 3.5 8 8v12z"/>
+    <path d="M31 30V16c0-5 3.7-9 8-9s8 4 8 9v14z"/>
+  </g>
+</svg>

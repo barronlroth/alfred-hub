@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#245edb" />
+    <title>Visual Resume — Firefox on Windows XP</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="desktop" id="desktop" aria-label="Windows XP desktop">
+      <div class="desktop-shortcuts" aria-label="Desktop shortcuts">
+        <button class="desktop-icon" type="button" data-action="recycle">
+          <span class="desktop-glyph recycle-glyph" aria-hidden="true">♻</span>
+          <span>Recycle Bin</span>
+        </button>
+
+        <button class="desktop-icon" type="button" data-action="documents">
+          <span class="desktop-glyph folder-glyph" aria-hidden="true"></span>
+          <span>My Documents</span>
+        </button>
+
+        <button class="desktop-icon firefox-shortcut" type="button" data-action="open-firefox">
+          <img src="assets/firefox-2004.svg" alt="" />
+          <span>Mozilla Firefox</span>
+        </button>
+      </div>
+
+      <section
+        class="browser-window"
+        id="browserWindow"
+        aria-label="Mozilla Firefox"
+        tabindex="-1"
+      >
+        <header class="titlebar" id="titlebar">
+          <div class="titlebar-title">
+            <img src="assets/firefox-2004.svg" alt="" />
+            <span id="windowTitle">(Untitled) - Mozilla Firefox</span>
+          </div>
+          <div class="window-controls">
+            <button class="window-button minimize" id="minimizeButton" type="button" aria-label="Minimize Firefox">
+              <span aria-hidden="true"></span>
+            </button>
+            <button class="window-button maximize" id="maximizeButton" type="button" aria-label="Maximize Firefox">
+              <span aria-hidden="true"></span>
+            </button>
+            <button class="window-button close-window" id="closeWindowButton" type="button" aria-label="Close Firefox">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+        </header>
+
+        <nav class="menu-bar" aria-label="Firefox menu">
+          <button type="button"><u>F</u>ile</button>
+          <button type="button"><u>E</u>dit</button>
+          <button type="button"><u>V</u>iew</button>
+          <button type="button"><u>H</u>istory</button>
+          <button type="button"><u>B</u>ookmarks</button>
+          <button type="button"><u>T</u>ools</button>
+          <button type="button"><u>H</u>elp</button>
+        </nav>
+
+        <div class="navigation-bar" aria-label="Navigation toolbar">
+          <div class="toolbar-grip" aria-hidden="true"></div>
+          <button class="nav-button back" type="button" aria-label="Back" disabled>
+            <span aria-hidden="true">←</span>
+          </button>
+          <button class="nav-button forward" type="button" aria-label="Forward" disabled>
+            <span aria-hidden="true">→</span>
+          </button>
+          <button class="nav-button dropdown" type="button" aria-label="Navigation history" disabled>
+            <span aria-hidden="true">▾</span>
+          </button>
+          <button class="nav-button reload" type="button" aria-label="Reload">
+            <span aria-hidden="true">↻</span>
+          </button>
+          <button class="nav-button stop" type="button" aria-label="Stop" disabled>
+            <span aria-hidden="true">×</span>
+          </button>
+          <button class="nav-button home" type="button" aria-label="Home">
+            <span class="home-roof" aria-hidden="true"></span>
+          </button>
+
+          <label class="address-field" aria-label="Location">
+            <img src="assets/firefox-2004.svg" alt="" />
+            <input id="addressInput" type="text" value="about:blank" spellcheck="false" aria-label="Address" />
+            <span class="rss" aria-hidden="true">◔</span>
+            <span class="star" aria-hidden="true">☆</span>
+            <span class="address-arrow" aria-hidden="true">▾</span>
+          </label>
+
+          <label class="search-field">
+            <span class="search-logo" aria-hidden="true">G</span>
+            <input type="search" placeholder="Google" aria-label="Search" />
+            <span class="magnifier" aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <div class="bookmarks-bar" aria-label="Bookmarks toolbar">
+          <div class="toolbar-grip" aria-hidden="true"></div>
+          <button type="button"><span class="bookmark-icon orange" aria-hidden="true">▣</span> Most Visited <span aria-hidden="true">▾</span></button>
+          <button type="button"><span class="bookmark-icon page" aria-hidden="true"></span> Getting Started</button>
+          <button type="button"><span class="bookmark-icon feed" aria-hidden="true">◔</span> Latest Headlines <span aria-hidden="true">▾</span></button>
+        </div>
+
+        <div class="tab-strip-shell">
+          <div class="tabs" id="tabList" role="tablist" aria-label="Open tabs"></div>
+          <button class="new-tab-button" id="newTabButton" type="button" aria-label="New tab" title="Open a new tab (Ctrl+T)">
+            <span aria-hidden="true">+</span>
+          </button>
+          <button class="all-tabs-button" type="button" aria-label="List all tabs">
+            <span aria-hidden="true">⌄</span>
+          </button>
+        </div>
+
+        <div class="content-frame">
+          <div class="tab-panels" id="tabPanels"></div>
+          <div class="classic-scrollbar" aria-hidden="true">
+            <button tabindex="-1">▲</button>
+            <div class="scroll-track"><span class="scroll-thumb"></span></div>
+            <button tabindex="-1">▼</button>
+          </div>
+        </div>
+
+        <footer class="status-bar">
+          <span id="statusText">Done</span>
+          <span class="status-spacer"></span>
+          <span class="resize-grip" id="resizeGrip" aria-hidden="true"></span>
+        </footer>
+      </section>
+
+      <section class="start-menu" id="startMenu" aria-label="Start menu" hidden>
+        <header>
+          <span class="user-avatar" aria-hidden="true">B</span>
+          <strong>Barron</strong>
+        </header>
+        <div class="start-menu-body">
+          <div class="start-primary">
+            <button type="button" data-action="open-firefox"><img src="assets/firefox-2004.svg" alt="" /><span><strong>Mozilla Firefox</strong><small>Internet</small></span></button>
+            <button type="button"><span class="mail-icon" aria-hidden="true">✉</span><span><strong>Outlook Express</strong><small>E-mail</small></span></button>
+            <hr />
+            <button type="button"><span class="start-glyph" aria-hidden="true">▤</span><span><strong>Notepad</strong><small>Plain text editor</small></span></button>
+          </div>
+          <div class="start-secondary">
+            <button type="button"><span aria-hidden="true">📁</span> My Documents</button>
+            <button type="button"><span aria-hidden="true">🖥</span> My Computer</button>
+            <button type="button"><span aria-hidden="true">⚙</span> Control Panel</button>
+            <hr />
+            <button type="button"><span aria-hidden="true">🔎</span> Search</button>
+            <button type="button"><span aria-hidden="true">▣</span> Run...</button>
+          </div>
+        </div>
+        <footer><button type="button" id="logOffButton">🔑 Log Off</button><button type="button" id="turnOffButton">⏻ Turn Off Computer</button></footer>
+      </section>
+
+      <footer class="taskbar" aria-label="Windows taskbar">
+        <button class="start-button" id="startButton" type="button" aria-expanded="false" aria-controls="startMenu">
+          <span class="windows-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span>start</span>
+        </button>
+        <div class="quick-launch" aria-hidden="true">
+          <span>◉</span><span>▤</span>
+        </div>
+        <button class="task-button active" id="firefoxTaskButton" type="button">
+          <img src="assets/firefox-2004.svg" alt="" />
+          <span>Mozilla Firefox</span>
+        </button>
+        <div class="taskbar-space"></div>
+        <div class="system-tray">
+          <span class="tray-icons" aria-hidden="true">◀ ◉ 🔊</span>
+          <time id="clock">9:09 PM</time>
+        </div>
+      </footer>
+
+      <div class="sr-only" id="liveRegion" aria-live="polite"></div>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -20,6 +20,11 @@
           <span>My Documents</span>
         </button>
 
+        <button class="desktop-icon photo-shortcut" type="button" data-action="open-beta-photo" title="Double-click to open firefox_beta_testing.jpg">
+          <span class="jpeg-file-icon" aria-hidden="true"><img src="assets/firefox_beta_testing.jpg" alt="" /></span>
+          <span>firefox_beta_testing.jpg</span>
+        </button>
+
         <button class="desktop-icon firefox-shortcut" type="button" data-action="open-firefox">
           <img src="assets/firefox-2004.svg" alt="" />
           <span>Mozilla Firefox</span>
@@ -27,7 +32,7 @@
       </div>
 
       <section
-        class="browser-window"
+        class="browser-window is-active"
         id="browserWindow"
         aria-label="Mozilla Firefox"
         tabindex="-1"
@@ -129,6 +134,32 @@
         </footer>
       </section>
 
+      <section
+        class="photo-window hidden"
+        id="photoWindow"
+        aria-label="firefox_beta_testing.jpg - Windows Picture and Fax Viewer"
+        tabindex="-1"
+      >
+        <header class="titlebar" id="photoTitlebar">
+          <div class="titlebar-title">
+            <span class="jpeg-title-icon" aria-hidden="true"></span>
+            <span>firefox_beta_testing.jpg - Windows Picture and Fax Viewer</span>
+          </div>
+          <div class="window-controls">
+            <button class="window-button minimize" id="photoMinimizeButton" type="button" aria-label="Minimize image viewer"><span aria-hidden="true"></span></button>
+            <button class="window-button maximize" id="photoMaximizeButton" type="button" aria-label="Maximize image viewer"><span aria-hidden="true"></span></button>
+            <button class="window-button close-window" id="photoCloseButton" type="button" aria-label="Close image viewer"><span aria-hidden="true">×</span></button>
+          </div>
+        </header>
+        <div class="photo-viewer-stage">
+          <img src="assets/firefox_beta_testing.jpg" alt="A child using Firefox on a CRT computer in a bedroom" />
+        </div>
+        <footer class="photo-viewer-footer">
+          <span>firefox_beta_testing.jpg</span>
+          <span>463 × 512</span>
+        </footer>
+      </section>
+
       <section class="start-menu" id="startMenu" aria-label="Start menu" hidden>
         <header>
           <span class="user-avatar" aria-hidden="true">B</span>
@@ -164,6 +195,10 @@
         <button class="task-button active" id="firefoxTaskButton" type="button">
           <img src="assets/firefox-2004.svg" alt="" />
           <span>Mozilla Firefox</span>
+        </button>
+        <button class="task-button" id="photoTaskButton" type="button" hidden>
+          <span class="jpeg-task-icon" aria-hidden="true"></span>
+          <span>firefox_beta_testing.jpg</span>
         </button>
         <div class="taskbar-space"></div>
         <div class="system-tray">

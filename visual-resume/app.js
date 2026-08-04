@@ -16,6 +16,12 @@
   const startButton = document.querySelector('#startButton');
   const startMenu = document.querySelector('#startMenu');
   const clock = document.querySelector('#clock');
+  const photoWindow = document.querySelector('#photoWindow');
+  const photoTitlebar = document.querySelector('#photoTitlebar');
+  const photoMinimizeButton = document.querySelector('#photoMinimizeButton');
+  const photoMaximizeButton = document.querySelector('#photoMaximizeButton');
+  const photoCloseButton = document.querySelector('#photoCloseButton');
+  const photoTaskButton = document.querySelector('#photoTaskButton');
 
   let tabs = [];
   let activeTabId = null;
@@ -23,6 +29,10 @@
   let windowState = 'open';
   let previousGeometry = null;
   let pointerOperation = null;
+  let photoState = 'closed';
+  let photoPreviousGeometry = null;
+  let photoPointerOperation = null;
+  let browserLayoutBeforePhoto = null;
 
   const TAB_ICONS = {
     forum: 'assets/firefox-2004.svg',
@@ -804,7 +814,7 @@
   function showWindow() {
     browserWindow.classList.remove('hidden');
     windowState = browserWindow.classList.contains('maximized') ? 'maximized' : 'open';
-    firefoxTaskButton.classList.add('active');
+    activateWindow('firefox');
     browserWindow.focus();
   }
 
@@ -814,6 +824,107 @@
     firefoxTaskButton.classList.remove('active');
     startMenu.hidden = true;
     startButton.setAttribute('aria-expanded', 'false');
+    if (!photoWindow.classList.contains('hidden')) activateWindow('photo');
+  }
+
+  function activateWindow(kind) {
+    const photoIsActive = kind === 'photo' && !photoWindow.classList.contains('hidden');
+    photoWindow.classList.toggle('is-active', photoIsActive);
+    browserWindow.classList.toggle('is-active', !photoIsActive && !browserWindow.classList.contains('hidden'));
+    photoWindow.style.zIndex = photoIsActive ? '10' : '6';
+    browserWindow.style.zIndex = photoIsActive ? '5' : '9';
+    photoTaskButton.classList.toggle('active', photoIsActive);
+    firefoxTaskButton.classList.toggle('active', !photoIsActive && !browserWindow.classList.contains('hidden'));
+  }
+
+  function getPhotoGeometry() {
+    const rect = photoWindow.getBoundingClientRect();
+    return { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+  }
+
+  function setPhotoGeometry({ left, top, width, height }) {
+    Object.assign(photoWindow.style, {
+      left: `${Math.round(left)}px`,
+      top: `${Math.round(top)}px`,
+      width: `${Math.round(width)}px`,
+      height: `${Math.round(height)}px`,
+    });
+  }
+
+  function tileWindowsForPhoto() {
+    if (isCompact() || desktop.clientWidth < 1180) return;
+
+    browserLayoutBeforePhoto = {
+      geometry: getGeometry(),
+      maximized: browserWindow.classList.contains('maximized'),
+    };
+
+    browserWindow.classList.remove('maximized');
+    const workspaceHeight = visibleWorkspaceHeight();
+    const edge = 10;
+    const gap = 10;
+    const photoWidth = Math.min(520, Math.round(desktop.clientWidth * .38));
+    const browserLeft = edge + photoWidth + gap;
+
+    setPhotoGeometry({
+      left: edge,
+      top: 48,
+      width: photoWidth,
+      height: workspaceHeight - 88,
+    });
+    setGeometry({
+      left: browserLeft,
+      top: edge,
+      width: desktop.clientWidth - browserLeft - edge,
+      height: workspaceHeight - (edge * 2),
+    });
+  }
+
+  function restoreBrowserAfterPhoto() {
+    if (!browserLayoutBeforePhoto || isCompact()) return;
+    browserWindow.classList.toggle('maximized', browserLayoutBeforePhoto.maximized);
+    if (!browserLayoutBeforePhoto.maximized) setGeometry(browserLayoutBeforePhoto.geometry);
+    browserLayoutBeforePhoto = null;
+  }
+
+  function showPhotoWindow({ tile = false } = {}) {
+    const wasClosed = photoState === 'closed';
+    if (browserWindow.classList.contains('hidden')) showWindow();
+    photoWindow.classList.remove('hidden');
+    photoTaskButton.hidden = false;
+    photoState = photoWindow.classList.contains('maximized') ? 'maximized' : 'open';
+    if (tile && wasClosed) tileWindowsForPhoto();
+    activateWindow('photo');
+    photoWindow.focus();
+    announce('Opened firefox_beta_testing.jpg beside Firefox');
+  }
+
+  function hidePhotoWindow(kind) {
+    photoWindow.classList.add('hidden');
+    photoWindow.classList.remove('is-active');
+    photoState = kind;
+    photoTaskButton.classList.remove('active');
+    if (kind === 'closed') {
+      photoTaskButton.hidden = true;
+      photoWindow.classList.remove('maximized');
+      restoreBrowserAfterPhoto();
+    }
+    if (!browserWindow.classList.contains('hidden')) activateWindow('firefox');
+  }
+
+  function togglePhotoMaximize() {
+    if (isCompact()) return;
+    if (photoWindow.classList.contains('maximized')) {
+      photoWindow.classList.remove('maximized');
+      if (photoPreviousGeometry) setPhotoGeometry(photoPreviousGeometry);
+      photoState = 'open';
+      photoMaximizeButton.setAttribute('aria-label', 'Maximize image viewer');
+    } else {
+      photoPreviousGeometry = getPhotoGeometry();
+      photoWindow.classList.add('maximized');
+      photoState = 'maximized';
+      photoMaximizeButton.setAttribute('aria-label', 'Restore image viewer');
+    }
   }
 
   function getGeometry() {
@@ -887,6 +998,39 @@
   function endPointerOperation(event) {
     if (!pointerOperation || pointerOperation.pointerId !== event.pointerId) return;
     pointerOperation = null;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+  }
+
+  function beginPhotoDrag(event) {
+    activateWindow('photo');
+    if (isCompact() || photoWindow.classList.contains('maximized') || event.button !== 0) return;
+    if (event.target.closest('.window-controls')) return;
+    photoPointerOperation = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startGeometry: getPhotoGeometry(),
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  }
+
+  function updatePhotoDrag(event) {
+    if (!photoPointerOperation || photoPointerOperation.pointerId !== event.pointerId) return;
+    const start = photoPointerOperation.startGeometry;
+    const minLeft = -start.width + 120;
+    const maxLeft = desktop.clientWidth - 120;
+    const maxTop = visibleWorkspaceHeight() - 24;
+    setPhotoGeometry({
+      ...start,
+      left: Math.min(maxLeft, Math.max(minLeft, start.left + event.clientX - photoPointerOperation.startX)),
+      top: Math.min(maxTop, Math.max(0, start.top + event.clientY - photoPointerOperation.startY)),
+    });
+  }
+
+  function endPhotoDrag(event) {
+    if (!photoPointerOperation || photoPointerOperation.pointerId !== event.pointerId) return;
+    photoPointerOperation = null;
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
   }
 
@@ -1023,6 +1167,25 @@
     });
   });
 
+  const photoShortcut = document.querySelector('[data-action="open-beta-photo"]');
+  photoShortcut.addEventListener('dblclick', () => showPhotoWindow({ tile: true }));
+  photoShortcut.addEventListener('click', (event) => {
+    if (event.detail === 0) showPhotoWindow({ tile: true });
+  });
+
+  photoMinimizeButton.addEventListener('click', () => hidePhotoWindow('minimized'));
+  photoCloseButton.addEventListener('click', () => hidePhotoWindow('closed'));
+  photoMaximizeButton.addEventListener('click', togglePhotoMaximize);
+  photoTitlebar.addEventListener('dblclick', (event) => { if (!event.target.closest('.window-controls')) togglePhotoMaximize(); });
+  photoTaskButton.addEventListener('click', () => {
+    if (photoWindow.classList.contains('hidden')) showPhotoWindow();
+    else if (photoWindow.classList.contains('is-active')) hidePhotoWindow('minimized');
+    else {
+      activateWindow('photo');
+      photoWindow.focus();
+    }
+  });
+
   startButton.addEventListener('click', () => {
     const opening = startMenu.hidden;
     startMenu.hidden = !opening;
@@ -1034,7 +1197,13 @@
       startMenu.hidden = true;
       startButton.setAttribute('aria-expanded', 'false');
     }
-    if (event.target.closest('.browser-window')) browserWindow.focus();
+    if (event.target.closest('.photo-window')) {
+      activateWindow('photo');
+      photoWindow.focus();
+    } else if (event.target.closest('.browser-window')) {
+      activateWindow('firefox');
+      browserWindow.focus();
+    }
   });
 
   titlebar.addEventListener('pointerdown', (event) => beginPointerOperation(event, 'drag'));
@@ -1045,6 +1214,10 @@
   resizeGrip.addEventListener('pointermove', updatePointerOperation);
   resizeGrip.addEventListener('pointerup', endPointerOperation);
   resizeGrip.addEventListener('pointercancel', endPointerOperation);
+  photoTitlebar.addEventListener('pointerdown', beginPhotoDrag);
+  photoTitlebar.addEventListener('pointermove', updatePhotoDrag);
+  photoTitlebar.addEventListener('pointerup', endPhotoDrag);
+  photoTitlebar.addEventListener('pointercancel', endPhotoDrag);
 
   document.addEventListener('keydown', (event) => {
     if (pointerOperation && event.key === 'Escape') {
@@ -1073,7 +1246,10 @@
   });
 
   window.addEventListener('resize', () => {
-    if (isCompact()) browserWindow.classList.remove('maximized');
+    if (isCompact()) {
+      browserWindow.classList.remove('maximized');
+      photoWindow.classList.remove('maximized');
+    }
   });
 
   function updateClock() {

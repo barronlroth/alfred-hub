@@ -97,6 +97,39 @@ input:focus-visible,
   filter: drop-shadow(1px 2px 1px rgba(0,0,0,.35));
 }
 
+.jpeg-file-icon {
+  position: relative;
+  display: block;
+  width: 38px;
+  height: 40px;
+  margin: 0 auto 4px;
+  padding: 3px;
+  border: 1px solid #74869c;
+  background: #fff;
+  box-shadow: 1px 2px 1px rgba(0,0,0,.3);
+}
+
+.jpeg-file-icon::after {
+  content: "JPG";
+  position: absolute;
+  right: -5px;
+  bottom: -3px;
+  padding: 0 2px;
+  border: 1px solid #315585;
+  background: #eaf3ff;
+  color: #173d70;
+  font: 700 7px/10px Tahoma, sans-serif;
+  text-shadow: none;
+}
+
+.desktop-icon .jpeg-file-icon img {
+  width: 30px;
+  height: 32px;
+  margin: 0;
+  object-fit: cover;
+  filter: none;
+}
+
 .recycle-glyph {
   border: 2px solid #d7ecf6;
   border-radius: 2px 2px 7px 7px;
@@ -149,6 +182,87 @@ input:focus-visible,
 }
 
 .browser-window.hidden { display: none; }
+
+.photo-window {
+  position: absolute;
+  z-index: 8;
+  left: 2vw;
+  top: 10vh;
+  display: grid;
+  width: clamp(400px, 42vw, 560px);
+  height: min(76vh, 670px);
+  min-width: 360px;
+  min-height: 430px;
+  grid-template-rows: 24px minmax(0, 1fr) 24px;
+  overflow: hidden;
+  border: 2px solid #0756c3;
+  border-radius: 6px 6px 2px 2px;
+  background: #ece9d8;
+  box-shadow: 1px 2px 6px rgba(0, 28, 72, .55);
+}
+
+.photo-window.hidden { display: none; }
+
+.photo-window.maximized {
+  left: 0 !important;
+  top: 0 !important;
+  width: 100vw !important;
+  height: calc(100vh - var(--taskbar-height)) !important;
+  min-width: 0;
+  border-radius: 0;
+}
+
+.browser-window:not(.is-active) .titlebar,
+.photo-window:not(.is-active) .titlebar {
+  background: linear-gradient(#7f9db9, #5e7796 52%, #7f9db9);
+}
+
+.photo-viewer-stage {
+  display: grid;
+  min-height: 0;
+  place-items: center;
+  overflow: hidden;
+  padding: 12px;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #aca899;
+  background: #d7d7d7;
+}
+
+.photo-viewer-stage img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  border: 1px solid #777;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.35);
+  object-fit: contain;
+}
+
+.photo-viewer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 7px;
+  border-top: 1px solid #fff;
+  color: #333;
+  font-size: 11px;
+}
+
+.jpeg-title-icon,
+.jpeg-task-icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  border: 1px solid #4c6686;
+  background: linear-gradient(145deg, #83c6ef 0 45%, #4c8f45 46% 68%, #f0cf66 69%);
+  box-shadow: inset 1px 1px #fff;
+}
+
+.jpeg-task-icon { width: 16px; height: 16px; }
 
 .browser-window.maximized {
   left: 0 !important;
@@ -1707,6 +1821,7 @@ input:focus-visible,
 }
 .task-button.active { background: linear-gradient(#1b5fb4, #124c9d); box-shadow: inset 1px 1px 3px rgba(0,0,0,.42); }
 .task-button img { width: 16px; height: 16px; object-fit: contain; }
+.task-button[hidden] { display: none !important; }
 .task-button span { overflow: hidden; text-overflow: ellipsis; }
 .taskbar-space { flex: 1; }
 .system-tray {
@@ -1780,6 +1895,14 @@ input:focus-visible,
   :root { --taskbar-height: 34px; }
   .desktop { min-height: 0; }
   .desktop-shortcuts { display: none; }
+  .photo-window {
+    left: 8px !important;
+    top: 42px !important;
+    width: min(88vw, 440px) !important;
+    height: calc(100vh - var(--taskbar-height) - 54px) !important;
+    min-width: 0;
+    min-height: 0;
+  }
   .browser-window {
     left: 4px !important;
     top: 4px !important;

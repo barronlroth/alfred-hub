@@ -468,7 +468,7 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
 <div class="slide active cover">
   <div class="cover-inner">
     <div class="cover-patch"><img src="/pm-twin/pm-twin-patch.jpg" alt="PM Twin Mission Patch"></div>
-    <div class="label" style="justify-content:center;">August 3, 2026 / Barron Roth — Product Manager, Applied AI</div>
+    <div class="label" style="justify-content:center;"><time id="coverDate">August 3, 2026</time> / Barron Roth — Product Manager, Applied AI</div>
     <h1 style="color:var(--cream);">PM Twin</h1>
     <p>A work partner that wakes up knowing what matters.</p>
   </div>
@@ -901,6 +901,17 @@ Turns product thinking into a clear, decision-ready PRD.</pre>
 
 <script>
 (function() {
+  const coverDateEl = document.getElementById('coverDate');
+  const today = new Date();
+  coverDateEl.textContent = new Intl.DateTimeFormat('en-US', {
+    month: 'long', day: 'numeric', year: 'numeric'
+  }).format(today);
+  coverDateEl.dateTime = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, '0'),
+    String(today.getDate()).padStart(2, '0')
+  ].join('-');
+
   const slides = document.querySelectorAll('.slide');
   const TOTAL = slides.length;
   const numEl = document.getElementById('slideNum');

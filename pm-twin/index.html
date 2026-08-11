@@ -123,7 +123,7 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
 }
 .problem-text .big {
   font-family: 'Inter', sans-serif; font-size: clamp(1.4rem, 2.5vw, 2rem);
-  font-weight: 600; color: var(--navy); line-height: 1.4; margin-bottom: 0.8rem;
+  font-weight: 700; color: var(--navy); line-height: 1.4; margin-bottom: 0.8rem;
 }
 .problem-text .dim {
   font-family: 'Inter', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
@@ -159,16 +159,17 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
 
 /* ── CONSTELLATION SLIDE ── */
 .constellation-layout {
-  display: flex; width: 100%; max-width: 1200px; height: 70vh; gap: 2rem; align-items: center;
+  display: grid; grid-template-columns: 25% 75%;
+  width: 100%; max-width: 1280px; height: 70vh; gap: 1.25rem; align-items: center;
 }
 .constellation-text {
-  width: 30%; flex-shrink: 0;
+  position: relative; z-index: 4;
 }
 .constellation-text p {
   font-size: 1rem; line-height: 1.7; color: var(--ink-muted);
 }
 .constellation-viz {
-  width: 70%; height: 100%; position: relative; overflow: hidden;
+  width: 100%; height: 100%; position: relative; overflow: visible;
 }
 .constellation-chip {
   position: absolute; display: flex; align-items: center; gap: 4px;
@@ -187,7 +188,7 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
   display: flex; align-items: center; justify-content: center;
   font-family: 'Space Mono', monospace; font-size: 0.55rem; font-weight: 700;
   color: var(--cream); letter-spacing: 0.1em; z-index: 3;
-  left: 50%; top: 50%; transform: translate(-50%, -50%);
+  left: 55%; top: 50%; transform: translate(-50%, -50%);
 }
 .constellation-lines {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
@@ -231,13 +232,17 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
 .cover .label { color: var(--rust-light); justify-content: center; }
 .cover .label::before { background: var(--rust-light); }
 .cover h2 { color: var(--cream); margin-bottom: 0.75rem; }
-.cover p { color: rgba(245,240,232,0.6); text-align: center; margin: 0 auto; font-size: 1.2rem; }
+.cover p {
+  font-family: 'Inter', sans-serif; font-weight: 600;
+  color: rgba(245,240,232,0.78); text-align: center;
+  margin: 0 auto; font-size: 1.2rem; letter-spacing: -0.01em;
+}
 
 /* Architecture tabs */
 .arch-tab {
   display: block; width: 100%; text-align: left;
   background: var(--paper); border: 2px solid var(--border);
-  border-radius: 8px; padding: 1rem 1.25rem; cursor: pointer;
+  border-radius: 8px; padding: 0.75rem 1rem; cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
   font-family: inherit;
 }
@@ -257,12 +262,6 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
 .arch-preview .gr { color: #a6e3a1; }
 .arch-preview .bl { color: #89b4fa; }
 .arch-preview .gy { color: #6c7086; }
-.catalyst-footer {
-  font-family: 'Space Mono', monospace; font-size: 0.75rem;
-  color: var(--ink-dim); text-align: center; width: 100%; line-height: 1.6;
-  margin-top: 2rem;
-}
-
 /* ── FIX SLIDE ── */
 .fix-content { text-align: center; max-width: 700px; }
 .fix-content p { text-align: center; margin: 0 auto 1rem; }
@@ -506,7 +505,7 @@ status update doc for the steering committee.</pre>
   <div class="constellation-layout">
     <div class="constellation-text">
       <div class="label">The Realization</div>
-      <h2 class="compact">A project isn't a doc. It's a constellation.</h2>
+      <h2 class="compact">A project is a constellation of context</h2>
       <p>All that pasting made me realize what my work actually is. I work on projects — and projects aren't artifacts. They're ephemeral blobs of context drifting through time.</p>
     </div>
     <div class="constellation-viz" id="constellationViz">
@@ -525,21 +524,20 @@ status update doc for the steering committee.</pre>
     <div class="catalyst-cards">
       <div class="catalyst-card">
         <span class="catalyst-icon">&#128196;</span>
-        <h3>Skills became a primitive</h3>
-        <p>A markdown instruction file. No fine-tuning, no code. Gemini CLI adopted the skills protocol.</p>
+        <h3>Agent Skills</h3>
+        <p>A markdown instruction file. No fine-tuning, no code. I could supercharge my workflows.</p>
       </div>
       <div class="catalyst-card">
         <span class="catalyst-icon">🦞</span>
-        <h3>OpenClaw-inspired memory</h3>
+        <h3>OpenClaw</h3>
         <p>Markdown files the agent reads on wake, writes before sleep. Dead simple. No database, no embeddings.</p>
       </div>
       <div class="catalyst-card">
         <span class="catalyst-icon">&#128172;</span>
-        <h3>CLIs opened the workspace</h3>
+        <h3>Workspace CLI</h3>
         <p>Agents could finally query Chat, Gmail, Docs, Drive, and internal systems for current context.</p>
       </div>
     </div>
-    <p class="catalyst-footer">Skills gave agents craft. Memory gave them continuity. CLIs gave them access to the work.</p>
   </div>
 </div>
 
@@ -558,9 +556,9 @@ status update doc for the steering committee.</pre>
   <div style="width:100%; max-width:1100px;">
     <div class="label" style="justify-content:center; text-align:center;">Architecture</div>
     <h2 style="text-align:center;">Your context, maintained for you</h2>
-    <div style="display:flex; gap:2rem; margin-top:2rem; align-items:stretch;">
+    <div style="display:flex; gap:2rem; margin-top:1.25rem; align-items:stretch;">
       <!-- Left: file tabs -->
-      <div style="width:35%; display:flex; flex-direction:column; gap:0.75rem;">
+      <div style="width:35%; display:flex; flex-direction:column; gap:0.55rem;">
         <button class="arch-tab active" onclick="showArchPreview(0)" data-tab="0">
           <div class="file-name" style="margin-bottom:0.25rem;">📄 gemini.md</div>
           <p style="font-size:0.8rem; margin:0;">The identity and wake-up protocol that turns a blank session into a work partner.</p>
@@ -576,6 +574,10 @@ status update doc for the steering committee.</pre>
         <button class="arch-tab" onclick="showArchPreview(3)" data-tab="3">
           <div class="file-name" style="margin-bottom:0.25rem;">🧠 automations/</div>
           <p style="font-size:0.8rem; margin:0;">Workspace sweeps, a daily sync, and nightly dreaming maintain context automatically.</p>
+        </button>
+        <button class="arch-tab" onclick="showArchPreview(4)" data-tab="4">
+          <div class="file-name" style="margin-bottom:0.25rem;">🧰 skills/</div>
+          <p style="font-size:0.8rem; margin:0;">Required operating skills plus optional craft for the work at hand.</p>
         </button>
       </div>
       <!-- Right: preview pane -->
@@ -607,9 +609,9 @@ Before answering any query, ground yourself:
 <span class="gy">2.</span> Compare live evidence with remembered state
 <span class="gy">3.</span> Apply changes → update durable context
 
-<span class="bl">C. PM Craft</span> <span class="gy">(Reusable skills)</span>
-<span class="gy">-</span> Load product strategy, PRD, research, and communication skills
-<span class="gy">-</span> Write durable learning back to the wiki</pre>
+<span class="bl">C. PM Craft</span> <span class="gy">(Skills)</span>
+<span class="gy">-</span> Follow required skills on every task
+<span class="gy">-</span> Load optional craft skills as needed</pre>
         </div>
         <div class="arch-preview" id="archPreview1" style="display:none;">
           <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">daily-context.md</span></div>
@@ -664,6 +666,22 @@ Builds <span class="gr">daily-context.md</span> from Workspace and Moment.
 Reviews the day's sessions and writes durable learning
 back into memory files overnight.</pre>
         </div>
+        <div class="arch-preview" id="archPreview4" style="display:none;">
+          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">skills/</span></div>
+          <pre><span class="bl"># Skills</span>
+
+<span class="yl">## Required</span>
+<span class="gy">Part of the Twin's default operating contract.</span>
+
+<span class="gr">eli-pm/SKILL.md</span>
+PM-level explanation and decision framing.
+
+<span class="yl">## Craft</span> <span class="gy">(optional)</span>
+<span class="gy">Loaded only when the task calls for it.</span>
+
+<span class="gr">prd-writer/SKILL.md</span>
+Turns product thinking into a clear, decision-ready PRD.</pre>
+        </div>
       </div>
     </div>
   </div>
@@ -681,25 +699,25 @@ back into memory files overnight.</pre>
       <div class="chain-step" data-delay="0">
         <span class="step-icon">&#128203;</span>
         <span class="step-title">Read daily context</span>
-        <span class="step-desc">— today's priorities put Jupiter in focus</span>
+        <span class="step-desc">— Who is my user? What is their world?</span>
       </div>
       <div class="chain-step" data-delay="1000">
         <span class="step-icon">&#128214;</span>
         <span class="step-title">Search the wiki</span>
-        <span class="step-desc">— finds project history, current state, and decisions</span>
+        <span class="step-desc">— what is the entire historical context on Jupiter?</span>
       </div>
       <div class="chain-step" data-delay="2000">
         <span class="step-icon">&#129504;</span>
         <span class="step-title">Launch a context agent</span>
-        <span class="step-desc">— inspects the latest work through connected CLIs</span>
+        <span class="step-desc">— What is the latest Jupiter context across Chat, Docs, etc.?</span>
       </div>
       <div class="chain-step" data-delay="3000">
         <span class="step-icon">&#128172;</span>
         <span class="step-title">Query Workspace</span>
-        <span class="step-desc">— pulls relevant Chat, Gmail, Docs, and Drive context</span>
+        <span class="step-desc">— Interesting! A big decision was made an hour ago.</span>
       </div>
       <div class="chain-step" data-delay="4000">
-        <span class="step-icon">&#127909;</span>
+        <span class="step-icon">&#129513;</span>
         <span class="step-title">Reconcile context</span>
         <span class="step-desc">— compares live evidence with durable project memory</span>
       </div>
@@ -769,7 +787,7 @@ back into memory files overnight.</pre>
 <div class="slide">
   <div style="text-align:center; width:100%; max-width:900px;">
     <div class="label" style="justify-content:center;">Adoption</div>
-    <h2>Fourteen thousand views on go/pm-twin.</h2>
+    <h2>Estimated Twins in the wild</h2>
     <div id="adoptionChart" style="position:relative; width:100%; height:300px; margin:2rem auto;">
       <svg width="100%" height="100%" viewBox="0 0 800 300" preserveAspectRatio="none" style="overflow:visible;">
         <!-- Y-axis label -->
@@ -988,10 +1006,20 @@ back into memory files overnight.</pre>
     const svg = document.getElementById('constellationLines');
     const w = viz.offsetWidth;
     const h = viz.offsetHeight;
-    const cx = w / 2;
+    const cx = w * 0.55;
     const cy = h / 2;
 
     const drifts = ['chip-drift-1', 'chip-drift-2', 'chip-drift-3'];
+
+    function boundChip(chip, x, y) {
+      const pad = 8;
+      const halfWidth = chip.offsetWidth / 2;
+      const halfHeight = chip.offsetHeight / 2;
+      return {
+        x: Math.max(halfWidth + pad, Math.min(w - halfWidth - pad, x)),
+        y: Math.max(halfHeight + pad, Math.min(h - halfHeight - pad, y))
+      };
+    }
 
     function placeRing(items, radiusFrac, fontSize, opacity) {
       const rx = w * radiusFrac * 0.5;
@@ -1015,19 +1043,20 @@ back into memory files overnight.</pre>
         chip.style.animationDelay = (Math.random() * 3).toFixed(1) + 's';
 
         viz.appendChild(chip);
+        const target = boundChip(chip, x, y);
 
         // Animate outward
         setTimeout(() => {
           chip.style.transition = 'left 1.5s cubic-bezier(0.16, 1, 0.3, 1), top 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease';
-          chip.style.left = x + 'px';
-          chip.style.top = y + 'px';
+          chip.style.left = target.x + 'px';
+          chip.style.top = target.y + 'px';
           chip.style.opacity = String(opacity);
         }, 100 + i * 60);
 
         // Add drift after entrance + tag with ring for rotation
         chip.dataset.ring = (radiusFrac < 0.5 ? '0' : radiusFrac < 0.7 ? '1' : '2');
-        chip.dataset.baseX = String(x);
-        chip.dataset.baseY = String(y);
+        chip.dataset.baseX = String(target.x);
+        chip.dataset.baseY = String(target.y);
         chip.dataset.angle = String((2 * Math.PI * i / items.length) - Math.PI / 2);
         setTimeout(() => {
           chip.style.transition = 'none';
@@ -1037,7 +1066,7 @@ back into memory files overnight.</pre>
         // SVG line
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute('x1', cx); line.setAttribute('y1', cy);
-        line.setAttribute('x2', x); line.setAttribute('y2', y);
+        line.setAttribute('x2', target.x); line.setAttribute('y2', target.y);
         line.setAttribute('stroke', item.color);
         line.setAttribute('stroke-opacity', (0.04 + Math.random() * 0.04).toFixed(2));
         line.setAttribute('stroke-width', '1');
@@ -1077,8 +1106,9 @@ back into memory files overnight.</pre>
         const newAngle = baseAngle + elapsed * ringSpeeds[ring];
         const nx = cx + rx * Math.cos(newAngle) + mouseOffX * (ring + 1) * 0.5;
         const ny = cy + ry * Math.sin(newAngle) + mouseOffY * (ring + 1) * 0.5;
-        chip.style.left = nx + 'px';
-        chip.style.top = ny + 'px';
+        const target = boundChip(chip, nx, ny);
+        chip.style.left = target.x + 'px';
+        chip.style.top = target.y + 'px';
       });
       requestAnimationFrame(rotateRings);
     }

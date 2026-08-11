@@ -447,9 +447,9 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
 <div class="slide active cover">
   <div class="cover-inner">
     <div class="cover-patch"><img src="/pm-twin/pm-twin-patch.jpg" alt="PM Twin Mission Patch"></div>
-    <div class="label" style="justify-content:center;">June 3, 2026 / Barron Roth — Product Manager, Applied AI</div>
+    <div class="label" style="justify-content:center;">August 3, 2026 / Barron Roth — Product Manager, Applied AI</div>
     <h1 style="color:var(--cream);">PM Twin</h1>
-    <p>Build your Agentic Chief of Staff | Technical Showcase hosted by The Google School for Leaders</p>
+    <p>A work partner that wakes up knowing what matters.</p>
   </div>
 </div>
 
@@ -530,16 +530,16 @@ status update doc for the steering committee.</pre>
       </div>
       <div class="catalyst-card">
         <span class="catalyst-icon">🦞</span>
-        <h3>OpenClaw Memory</h3>
+        <h3>OpenClaw-inspired memory</h3>
         <p>Markdown files the agent reads on wake, writes before sleep. Dead simple. No database, no embeddings.</p>
       </div>
       <div class="catalyst-card">
         <span class="catalyst-icon">&#128172;</span>
-        <h3>Chat became accessible</h3>
-        <p>The final piece. Google Chat added to the Workspace MCP server. The full picture was obtainable.</p>
+        <h3>CLIs opened the workspace</h3>
+        <p>Agents could finally query Chat, Gmail, Docs, Drive, and internal systems for current context.</p>
       </div>
     </div>
-    <p class="catalyst-footer">Skills gave agents direction. Memory gave them continuity. Chat completed the context.</p>
+    <p class="catalyst-footer">Skills gave agents craft. Memory gave them continuity. CLIs gave them access to the work.</p>
   </div>
 </div>
 
@@ -549,7 +549,7 @@ status update doc for the steering committee.</pre>
     <div class="cover-patch"><img src="/pm-twin/pm-twin-patch.jpg" alt="PM Twin Mission Patch"></div>
     <div class="label" style="justify-content:center;">The Fix</div>
     <h2>PM Twin was born</h2>
-    <p>Three files. Zero pasting. Full context.</p>
+    <p>Context, memory, skills, and automations working as one.</p>
   </div>
 </div>
 
@@ -557,130 +557,112 @@ status update doc for the steering committee.</pre>
 <div class="slide" style="padding: 3rem 5vw;">
   <div style="width:100%; max-width:1100px;">
     <div class="label" style="justify-content:center; text-align:center;">Architecture</div>
-    <h2 style="text-align:center;">Your context, structured once</h2>
+    <h2 style="text-align:center;">Your context, maintained for you</h2>
     <div style="display:flex; gap:2rem; margin-top:2rem; align-items:stretch;">
       <!-- Left: file tabs -->
       <div style="width:35%; display:flex; flex-direction:column; gap:0.75rem;">
         <button class="arch-tab active" onclick="showArchPreview(0)" data-tab="0">
-          <div class="file-name" style="margin-bottom:0.25rem;">📄 pm-twin.md</div>
-          <p style="font-size:0.8rem; margin:0;">The skill file itself. Workflows, search strategies, and the wake-up protocol.</p>
+          <div class="file-name" style="margin-bottom:0.25rem;">📄 gemini.md</div>
+          <p style="font-size:0.8rem; margin:0;">The identity and wake-up protocol that turns a blank session into a work partner.</p>
         </button>
         <button class="arch-tab" onclick="showArchPreview(1)" data-tab="1">
-          <div class="file-name" style="margin-bottom:0.25rem;">📋 pm_context.yaml</div>
-          <p style="font-size:0.8rem; margin:0;">Your project universe. Chat spaces, pinned docs, sheets, customer accounts.</p>
+          <div class="file-name" style="margin-bottom:0.25rem;">📋 daily-context.md</div>
+          <p style="font-size:0.8rem; margin:0;">A concise daily briefing on the human, active priorities, and relevant projects.</p>
         </button>
         <button class="arch-tab" onclick="showArchPreview(2)" data-tab="2">
-          <div class="file-name" style="margin-bottom:0.25rem;">📖 glossary.md</div>
-          <p style="font-size:0.8rem; margin:0;">Your team's language. Codenames, acronyms, people, systems.</p>
+          <div class="file-name" style="margin-bottom:0.25rem;">📖 wiki/</div>
+          <p style="font-size:0.8rem; margin:0;">A transparent, project-aware source of truth the human can inspect and edit.</p>
         </button>
         <button class="arch-tab" onclick="showArchPreview(3)" data-tab="3">
-          <div class="file-name" style="margin-bottom:0.25rem;">🧠 memory/</div>
-          <p style="font-size:0.8rem; margin:0;">Persistent context across sessions. The skill writes what it learns.</p>
+          <div class="file-name" style="margin-bottom:0.25rem;">🧠 automations/</div>
+          <p style="font-size:0.8rem; margin:0;">Workspace sweeps, a daily sync, and nightly dreaming maintain context automatically.</p>
         </button>
       </div>
       <!-- Right: preview pane -->
       <div style="width:65%;">
         <div class="arch-preview" id="archPreview0" style="display:block;">
-          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">pm-twin.md</span></div>
+          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">gemini.md</span></div>
           <pre><span class="gy">---</span>
-<span class="yl">name</span><span class="gy">:</span> <span class="gr">pm-twin</span>
-<span class="yl">description</span><span class="gy">:</span> <span class="gr">Act as a high-level Tech Chief of Staff for PMs.</span>
+<span class="yl">name</span><span class="gy">:</span> <span class="gr">PM Twin</span>
+<span class="yl">description</span><span class="gy">:</span> <span class="gr">A work partner that wakes up knowing what matters.</span>
 <span class="gy">---</span>
 
-<span class="bl"># PM Twin (Chief of Staff)</span>
+<span class="bl"># PM Twin 2.0</span>
 
 <span class="yl">## 1. The "Wake Up" Protocol</span>
 Before answering any query, ground yourself:
-<span class="gy">1.</span> <span class="gr">Load Memory</span> — read ALL files in .agent/memory/
-   Ingests pm_context.yaml, glossary.md, and work logs.
-<span class="gy">2.</span> <span class="gr">Fetch Pinned</span> — read all URLs in pm_context.yaml
+<span class="gy">1.</span> <span class="gr">Read daily context</span> — understand the human and today's priorities.
+<span class="gy">2.</span> <span class="gr">Search the wiki</span> — load project history and decisions.
 
 <span class="yl">## 2. Workflows</span>
 
 <span class="bl">A. Context Synthesis</span> <span class="gy">("What's new?")</span>
-<span class="gy">1.</span> Search transcripts: <span class="gr">"Notes by Gemini"</span> modified recently
-<span class="gy">2.</span> Entity-link each to a project via pm_context.yaml
-<span class="gy">3.</span> Read transcript + main doc → identify decisions, AIs
-<span class="gy">4.</span> Propose: <span class="gr">"Should I update [Doc] with [Decision]?"</span>
+<span class="gy">1.</span> Query Workspace through the available CLIs
+<span class="gy">2.</span> Match new evidence to the right project
+<span class="gy">3.</span> Reconcile it with durable wiki context
+<span class="gy">4.</span> Complete the work with sources in view
 
 <span class="bl">B. Targeted Updates</span> <span class="gy">("Update X based on Y")</span>
-<span class="gy">1.</span> Discover artifact + source via Drive search
-<span class="gy">2.</span> Diff source against artifact
-<span class="gy">3.</span> Apply changes → journal the work
+<span class="gy">1.</span> Discover the source and destination
+<span class="gy">2.</span> Compare live evidence with remembered state
+<span class="gy">3.</span> Apply changes → update durable context
 
-<span class="bl">C. Journaling</span> <span class="gy">(The "Scribe")</span>
-<span class="gy">-</span> Append narrative entries to memory/work_log_YYYY_W##.md
-<span class="gy">-</span> Log intent and results, not raw tool calls</pre>
+<span class="bl">C. PM Craft</span> <span class="gy">(Reusable skills)</span>
+<span class="gy">-</span> Load product strategy, PRD, research, and communication skills
+<span class="gy">-</span> Write durable learning back to the wiki</pre>
         </div>
         <div class="arch-preview" id="archPreview1" style="display:none;">
-          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">pm_context.yaml</span></div>
-          <pre><span class="yl">projects</span><span class="gy">:</span>
-  <span class="gy">-</span> <span class="yl">name</span><span class="gy">:</span> <span class="gr">"Project Jupiter"</span>
-    <span class="yl">aliases</span><span class="gy">:</span> <span class="gr">[jupiter, agent-builder]</span>
-    <span class="yl">chat_spaces</span><span class="gy">:</span>
-      <span class="gy">-</span> <span class="gr">"spaces/AAAA1234"</span>  <span class="gy"># Core team</span>
-      <span class="gy">-</span> <span class="gr">"spaces/BBBB5678"</span>  <span class="gy"># XFN</span>
-    <span class="yl">pinned_docs</span><span class="gy">:</span>
-      <span class="gy">-</span> <span class="gr">"docs/d/1abc..."</span>   <span class="gy"># PRD v3</span>
-      <span class="gy">-</span> <span class="gr">"docs/d/2def..."</span>   <span class="gy"># API Design Doc</span>
-    <span class="yl">pinned_sheets</span><span class="gy">:</span>
-      <span class="gy">-</span> <span class="gr">"sheets/d/3ghi..."</span> <span class="gy"># Q2 OKRs</span>
-    <span class="yl">customers</span><span class="gy">:</span>
-      <span class="gy">-</span> <span class="gr">"acme-corp"</span>
-      <span class="gy">-</span> <span class="gr">"initech"</span>
+          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">daily-context.md</span></div>
+          <pre><span class="bl"># Daily Context</span>
 
-  <span class="gy">-</span> <span class="yl">name</span><span class="gy">:</span> <span class="gr">"Project Saturn"</span>
-    <span class="yl">aliases</span><span class="gy">:</span> <span class="gr">[saturn, orchestration]</span>
-    <span class="yl">chat_spaces</span><span class="gy">:</span>
-      <span class="gy">-</span> <span class="gr">"spaces/CCCC9012"</span></pre>
+<span class="gy">Generated every morning by the daily sync.</span>
+
+<span class="yl">## The human</span>
+The context needed to collaborate well today.
+
+<span class="yl">## Current priorities</span>
+Active projects and the work that matters now.
+
+<span class="yl">## Sources</span>
+<span class="gy">-</span> <span class="gr">Workspace CLIs</span> surface current project activity.
+<span class="gy">-</span> <span class="gr">Moment CLI</span> adds user information and OKRs.
+
+<span class="yl">## Starting state</span>
+New sessions begin informed instead of blank.</pre>
         </div>
         <div class="arch-preview" id="archPreview2" style="display:none;">
-          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">glossary.md</span></div>
-          <pre><span class="bl"># Glossary</span>
+          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">wiki/</span></div>
+          <pre><span class="bl">wiki/</span>
 
-<span class="yl">## Projects</span>
-<span class="gy">-</span> <span class="gr">Jupiter</span> — Enterprise agent builder platform (external name: Agent Studio)
-<span class="gy">-</span> <span class="gr">Saturn</span> — Orchestration layer for multi-agent workflows
-<span class="gy">-</span> <span class="gr">Neptune</span> — Internal evaluation & testing harness
+<span class="yl">## projects/</span>
+<span class="gy">-</span> <span class="gr">jupiter.md</span> — history, decisions, current state
+<span class="gy">-</span> <span class="gr">saturn.md</span> — adjacent scope and dependencies
 
-<span class="yl">## People</span>
-<span class="gy">-</span> <span class="gr">Sarah Chen</span> — EM, Jupiter core team
-<span class="gy">-</span> <span class="gr">Mike Torres</span> — TL, API & infra
-<span class="gy">-</span> <span class="gr">Priya Kapoor</span> — UXR lead, onboarding studies
-<span class="gy">-</span> <span class="gr">Ravi</span> — PM on Saturn (adjacent team)
+<span class="yl">## areas/</span>
+<span class="gy">-</span> <span class="gr">people/</span> — durable working context
 
-<span class="yl">## Acronyms</span>
-<span class="gy">-</span> <span class="gr">CAS</span> — Customer Agent Studio (old name, deprecated)
-<span class="gy">-</span> <span class="gr">MCP</span> — Model Context Protocol
-<span class="gy">-</span> <span class="gr">XFN</span> — Cross-functional
-<span class="gy">-</span> <span class="gr">LGTM</span> — Looks good to me (code review approval)
-<span class="gy">-</span> <span class="gr">P0</span> — Highest priority issue</pre>
+<span class="yl">## resources/</span>
+<span class="gy">-</span> Reusable research, frameworks, and references
+
+<span class="yl">## archive/</span>
+<span class="gy">-</span> Completed or inactive work
+
+<span class="gy">Transparent. Inspectable. Editable by the human.</span></pre>
         </div>
         <div class="arch-preview" id="archPreview3" style="display:none;">
-          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">memory/work_log_2026_W13.md</span></div>
-          <pre><span class="bl"># Work Log — Week 13, 2026</span>
+          <div class="terminal-bar"><div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div><span class="terminal-title">automations/</span></div>
+          <pre><span class="bl"># Three background jobs</span>
 
-<span class="yl">## Monday 3/24</span>
-<span class="gy">-</span> Updated Jupiter PRD section 3 (onboarding flow) based on
-  Friday's sync. Sarah approved the revised timeline.
-<span class="gy">-</span> Reviewed Saturn's API proposal — flagged scope overlap
-  with Jupiter's integration layer. Sent note to Ravi.
-<span class="gy">-</span> Acme Corp escalation: customer wants batch processing
-  by Q3. Added to Jupiter roadmap as P1.
+<span class="yl">## Workspace sync</span> <span class="gy">— throughout the day</span>
+Background agents query Chat, Docs, Gmail, and other
+Workspace sources across projects, then update the wiki.
 
-<span class="yl">## Tuesday 3/25</span>
-<span class="gy">-</span> Steering committee prep: pulled Q2 OKR progress,
-  compiled launch readiness checklist.
-<span class="gy">-</span> Priya shared UXR findings on onboarding drop-off.
-  Key insight: users abandon at step 3 (agent config).
-<span class="gy">-</span> <span class="gr">Mental note:</span> Mike prefers async updates over
-  meetings. Use Chat for API status going forward.
+<span class="yl">## Daily sync</span> <span class="gy">— every morning</span>
+Builds <span class="gr">daily-context.md</span> from Workspace and Moment.
 
-<span class="yl">## Wednesday 3/26</span>
-<span class="gy">-</span> Jupiter Weekly Sync: decided to ship onboarding v2
-  behind a feature flag. Mike owns implementation.
-<span class="gy">-</span> Drafted stakeholder email re: timeline slip. Waiting
-  for Sarah's sign-off before sending.</pre>
+<span class="yl">## Nightly dreaming</span> <span class="gy">— every night</span>
+Reviews the day's sessions and writes durable learning
+back into memory files overnight.</pre>
         </div>
       </div>
     </div>
@@ -698,42 +680,42 @@ Before answering any query, ground yourself:
     <div class="chain-timeline" id="chainTimeline">
       <div class="chain-step" data-delay="0">
         <span class="step-icon">&#128203;</span>
-        <span class="step-title">Resolve project</span>
-        <span class="step-desc">— reads pm_context.yaml → "Jupiter" matches → loads config</span>
+        <span class="step-title">Read daily context</span>
+        <span class="step-desc">— today's priorities put Jupiter in focus</span>
       </div>
       <div class="chain-step" data-delay="1000">
         <span class="step-icon">&#128214;</span>
-        <span class="step-title">Absorb glossary</span>
-        <span class="step-desc">— Jupiter = codename, key people identified</span>
+        <span class="step-title">Search the wiki</span>
+        <span class="step-desc">— finds project history, current state, and decisions</span>
       </div>
       <div class="chain-step" data-delay="2000">
         <span class="step-icon">&#129504;</span>
-        <span class="step-title">Read memory</span>
-        <span class="step-desc">— last work: updated PRD, flagged API concern</span>
+        <span class="step-title">Launch a context agent</span>
+        <span class="step-desc">— inspects the latest work through connected CLIs</span>
       </div>
       <div class="chain-step" data-delay="3000">
         <span class="step-icon">&#128172;</span>
-        <span class="step-title">Pull chat history</span>
-        <span class="step-desc">— Workspace MCP → 14 threads, 3 from today</span>
+        <span class="step-title">Query Workspace</span>
+        <span class="step-desc">— pulls relevant Chat, Gmail, Docs, and Drive context</span>
       </div>
       <div class="chain-step" data-delay="4000">
         <span class="step-icon">&#127909;</span>
-        <span class="step-title">Find transcripts</span>
-        <span class="step-desc">— "Notes by Gemini" → Jupiter Weekly Sync</span>
+        <span class="step-title">Reconcile context</span>
+        <span class="step-desc">— compares live evidence with durable project memory</span>
       </div>
       <div class="chain-step" data-delay="5000">
         <span class="step-icon">&#128196;</span>
-        <span class="step-title">Follow references</span>
-        <span class="step-desc">— transcript links to design doc → reads it</span>
+        <span class="step-title">Complete the work</span>
+        <span class="step-desc">— synthesizes evidence into the requested output</span>
       </div>
       <div class="chain-step" data-delay="6000">
         <span class="step-icon">&#10024;</span>
-        <span class="step-title">Synthesize</span>
-        <span class="step-desc">— full context assembled → generates output</span>
+        <span class="step-title">Write back</span>
+        <span class="step-desc">— durable actions and decisions update the wiki</span>
       </div>
     </div>
     <div class="chain-output" id="chainOutput">
-      Output: A complete, context-rich status doc. Names correct. Decisions cited.
+      Output: A context-rich update now — and a smarter starting point tomorrow.
     </div>
   </div>
 </div>
@@ -769,7 +751,7 @@ Before answering any query, ground yourself:
         <div class="uc-action">Connect</div>
         <div>
           <div class="uc-prompt">"What did Saturn say about our API proposal?"</div>
-          <div class="uc-desc">Crosses project boundaries via YAML.</div>
+          <div class="uc-desc">Connects related project history through the wiki.</div>
         </div>
       </div>
       <div class="unlock-card">
@@ -787,11 +769,11 @@ Before answering any query, ground yourself:
 <div class="slide">
   <div style="text-align:center; width:100%; max-width:900px;">
     <div class="label" style="justify-content:center;">Adoption</div>
-    <h2>It's already spreading.</h2>
+    <h2>Fourteen thousand views on go/pm-twin.</h2>
     <div id="adoptionChart" style="position:relative; width:100%; height:300px; margin:2rem auto;">
       <svg width="100%" height="100%" viewBox="0 0 800 300" preserveAspectRatio="none" style="overflow:visible;">
         <!-- Y-axis label -->
-        <text x="15" y="170" text-anchor="middle" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="9" transform="rotate(-90, 15, 170)">Downloads</text>
+        <text x="15" y="170" text-anchor="middle" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="9" transform="rotate(-90, 15, 170)">Views</text>
         <!-- Grid lines -->
         <line x1="60" y1="260" x2="760" y2="260" stroke="#d4cfc3" stroke-width="1"/>
         <line x1="60" y1="200" x2="760" y2="200" stroke="#d4cfc3" stroke-width="0.5" stroke-dasharray="4,4"/>
@@ -799,9 +781,9 @@ Before answering any query, ground yourself:
         <line x1="60" y1="80" x2="760" y2="80" stroke="#d4cfc3" stroke-width="0.5" stroke-dasharray="4,4"/>
         <!-- Y-axis labels -->
         <text x="50" y="265" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">0</text>
-        <text x="50" y="205" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">400</text>
-        <text x="50" y="145" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">800</text>
-        <text x="50" y="85" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">1,300+</text>
+        <text x="50" y="205" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">4K</text>
+        <text x="50" y="145" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">8K</text>
+        <text x="50" y="85" text-anchor="end" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">14K</text>
         <!-- X-axis labels -->
         <text x="120" y="280" text-anchor="middle" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">Jan</text>
         <text x="300" y="280" text-anchor="middle" fill="#8a8a9e" font-family="Space Mono, monospace" font-size="10">Feb</text>
@@ -829,28 +811,28 @@ Before answering any query, ground yourself:
 <div class="slide">
   <div style="text-align:center; width:100%; max-width:1000px;">
     <div class="label" style="justify-content:center;">Get Started</div>
-    <h2>Five minutes of setup. Hours saved every week.</h2>
+    <h2>Build your own PM Twin.</h2>
     <div style="font-family:'Space Mono',monospace; font-size:2rem; color:var(--rust); margin:1.5rem 0 2rem; letter-spacing:0.05em;">go/pm-twin</div>
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
-        <h3>Install the skill</h3>
-        <p>Drop pm-twin into your skills directory.</p>
+        <h3>Open the guide</h3>
+        <p>Start at go/pm-twin.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
-        <h3>Create pm_context.yaml</h3>
-        <p>Map your projects, chats, and docs.</p>
+        <h3>Connect context</h3>
+        <p>Select the Workspace sources that matter.</p>
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <h3>Add glossary.md</h3>
-        <p>Define your team's lingo and codenames.</p>
+        <h3>Review the wiki</h3>
+        <p>Keep durable memory visible and editable.</p>
       </div>
       <div class="step">
         <div class="step-num">04</div>
-        <h3>Prompt naturally</h3>
-        <p>"Write a status doc for Jupiter"</p>
+        <h3>Let it work</h3>
+        <p>Daily syncs and nightly dreaming maintain context.</p>
       </div>
     </div>
   </div>

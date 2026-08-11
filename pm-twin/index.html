@@ -6,8 +6,28 @@
 <title>PM Twin — Internal Slides</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
+@font-face {
+  font-family: 'Circular Std';
+  src: url('/pm-twin/fonts/circular-book.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Circular Std';
+  src: url('/pm-twin/fonts/circular-medium.otf') format('opentype');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Circular Std';
+  src: url('/pm-twin/fonts/circular-medium.otf') format('opentype');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Circular Std';
+  src: url('/pm-twin/fonts/circular-bold.otf') format('opentype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
 @font-face {
   font-family: 'Apestron';
   src: url('/pm-twin/Apestron.ttf') format('truetype');
@@ -20,6 +40,7 @@
   --rust: #c44d2b; --rust-light: #e67a58;
   --ink: #1f1f2e; --ink-muted: #5a5a72; --ink-dim: #8a8a9e;
   --border: #d4cfc3; --stripe: #c44d2b;
+  --font-sans: 'Circular Std', sans-serif;
   /* Type scale (1.25 ratio) */
   --text-xs: 0.7rem; --text-sm: 0.8rem; --text-base: 1rem;
   --text-lg: 1.15rem; --text-xl: 1.5rem;
@@ -29,7 +50,7 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { font-size: 18px; background: var(--cream); }
-body { font-family: 'Inter', sans-serif; color: var(--ink); overflow: hidden; height: 100dvh; }
+body { font-family: var(--font-sans); color: var(--ink); overflow: hidden; height: 100dvh; }
 
 /* ── SLIDE SYSTEM ── */
 .deck { position: relative; width: 100vw; height: 100dvh; }
@@ -103,7 +124,7 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
   letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--navy); margin-bottom: 1.5rem;
 }
 .title-sub {
-  font-family: 'Inter', sans-serif; font-size: 1.2rem;
+  font-family: var(--font-sans); font-size: 1.2rem;
   color: var(--ink-muted); line-height: 1.6; max-width: 600px; margin: 0 auto;
 }
 
@@ -113,7 +134,7 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
   box-shadow: 0 8px 40px rgba(26,39,68,0.12); margin-bottom: 1.5rem;
 }
 .dream-caption {
-  font-family: 'Inter', sans-serif; font-size: 1.15rem;
+  font-family: var(--font-sans); font-size: 1.15rem;
   color: var(--ink-muted); font-style: italic; text-align: center; max-width: 600px;
 }
 
@@ -122,11 +143,11 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
   text-align: center; max-width: 700px;
 }
 .problem-text .big {
-  font-family: 'Inter', sans-serif; font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-family: var(--font-sans); font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 700; color: var(--navy); line-height: 1.4; margin-bottom: 0.8rem;
 }
 .problem-text .dim {
-  font-family: 'Inter', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-family: var(--font-sans); font-size: clamp(1.2rem, 2vw, 1.6rem);
   font-weight: 400; color: var(--ink-dim); line-height: 1.5;
 }
 
@@ -233,7 +254,7 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
 .cover .label::before { background: var(--rust-light); }
 .cover h2 { color: var(--cream); margin-bottom: 0.75rem; }
 .cover p {
-  font-family: 'Inter', sans-serif; font-weight: 600;
+  font-family: var(--font-sans); font-weight: 600;
   color: rgba(245,240,232,0.78); text-align: center;
   margin: 0 auto; font-size: 1.2rem; letter-spacing: -0.01em;
 }
@@ -330,11 +351,11 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
 .chain-step.visible::before { background: var(--teal); }
 .chain-step .step-icon { font-size: 1rem; margin-right: 0.5rem; }
 .chain-step .step-title {
-  font-family: 'Inter', sans-serif; font-weight: 700;
+  font-family: var(--font-sans); font-weight: 700;
   font-size: 0.9rem; color: var(--navy); display: inline;
 }
 .chain-step .step-desc {
-  font-family: 'Inter', sans-serif; font-size: 0.8rem;
+  font-family: var(--font-sans); font-size: 0.8rem;
   color: var(--ink-dim); margin-left: 0.3rem;
 }
 .chain-output {
@@ -385,7 +406,7 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
   font-weight: 700; color: var(--navy); opacity: 0.15; margin-bottom: 0.5rem;
 }
 .step h3 {
-  font-family: 'Inter', sans-serif; font-size: 0.9rem;
+  font-family: var(--font-sans); font-size: 0.9rem;
   font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;
 }
 .step p {
@@ -421,11 +442,11 @@ p { font-size: var(--text-lg); line-height: 1.7; color: var(--ink-muted); max-wi
   opacity: 0.85;
 }
 .closer-content .line1 {
-  font-family: 'Inter', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-family: var(--font-sans); font-size: clamp(1.2rem, 2vw, 1.6rem);
   color: var(--ink-muted); margin-bottom: 0.6rem; font-weight: 400;
 }
 .closer-content .line2 {
-  font-family: 'Inter', sans-serif; font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-family: var(--font-sans); font-size: clamp(1.2rem, 2vw, 1.6rem);
   color: var(--navy); margin-bottom: 1.5rem; font-weight: 600;
 }
 .closer-content .line3 {

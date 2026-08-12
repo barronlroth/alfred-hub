@@ -10,8 +10,8 @@
   --frame-x: clamp(28px, 4.2vw, 72px);
   --frame-top: clamp(20px, 3vh, 32px);
   --frame-bottom: 68px;
-  --mono: "Courier New", Courier, monospace;
-  --serif: Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", "Courier New", Courier, monospace;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --ease: cubic-bezier(.16, 1, .3, 1);
 }
 
@@ -156,6 +156,12 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   min-height: 0;
 }
 .hero-copy { position: relative; z-index: 3; align-self: center; padding-bottom: 3vh; }
+.hero-copy .lede {
+  max-width: 56ch;
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 500;
+  line-height: 1.55;
+}
 .hero-copy h1 {
   max-width: 780px;
   margin: clamp(15px, 2.4vh, 28px) 0 clamp(16px, 2.6vh, 30px);
@@ -533,6 +539,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .hero-layout, .editorial-heading, .receipt-field, .ask-layout, .handoff-layout, .operations-heading, .outcome-layout, .paradox-layout, .offer-layout, .sequence-heading, .infrastructure-layout, .experiment-layout, .close-layout { display: block; }
   .hero-copy { padding: 62px 0 22px; }
   .hero-copy h1 { margin: 18px 0 23px; font-size: clamp(58px, 18vw, 78px); }
+  .hero-copy .lede { max-width: 35ch; font-size: 15px; }
   .identity-stamp { width: 100%; margin: 28px 0 0; flex-direction: column; align-items: flex-start; }
   .hero-specimen { position: relative; inset: auto; height: 460px; margin: 10px -20px 0; }
   .editorial-heading { min-height: 0; padding: 48px 0 25px; }

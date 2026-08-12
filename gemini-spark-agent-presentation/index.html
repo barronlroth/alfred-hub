@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260812-horizons-owl">
+  <link rel="stylesheet" href="styles.css?v=20260812-horizons-fidelity">
   <script type="module" src="src/deck.js"></script>
 </head>
 <body>
@@ -42,7 +42,9 @@
 
     <section class="slide slide--cobalt slide--horizons" id="slide-2" data-slide="2" data-phase="RECEIPTS" aria-labelledby="title-2" hidden>
       <div class="slide__frame">
-        <header class="folio folio--light"><b>FIELD NOTES / RANGE</b><span>ONE CONTINUOUS TIME FIELD</span><span>FRAME 02/14 · GRID X02 Y01</span></header>
+        <header class="horizon-folio">
+          <b>ALFRED / PERSONAL AGENT</b><span>FIELD NOTES 02 · EVERY HORIZON</span><em>CONTEXT <i aria-hidden="true"></i> PERSISTENT</em>
+        </header>
         <div class="horizon-composition">
           <div class="horizon-intro reveal-group">
             <h2 id="title-2">Tonight. /<br>Next decade.</h2>
@@ -51,6 +53,7 @@
           </div>
 
           <p class="horizon-aside">THE VALUE ISN’T A SINGLE TASK.<br>IT’S CONTEXT ACROSS TIME.</p>
+          <div class="horizon-instruments" aria-hidden="true"><i></i><i></i><i></i></div>
 
           <figure class="horizon-alfred" aria-label="Alfred, a formal owl, spanning the full planning horizon">
             <img src="assets/alfred-every-horizon.png" alt="A dithered portrait of Alfred, the persistent personal agent, wearing a formal suit" width="1024" height="1536">
@@ -61,9 +64,10 @@
             <article class="horizon-stop horizon-stop--tonight">
               <h3>Tonight</h3><i aria-hidden="true"></i>
               <section class="horizon-card">
-                <p class="horizon-card__label">MAÎTRE D’ RESERVATION</p>
-                <strong>DATE NIGHT</strong><span>SURPRISE RESTAURANT</span>
-                <dl><div><dt>WHEN</dt><dd>TONIGHT</dd></div><div><dt>PARTY</dt><dd>TABLE FOR TWO</dd></div><div><dt>CONTEXT</dt><dd>DIET · DISTANCE · MOOD</dd></div><div><dt>SPECIAL</dt><dd>REMEMBERED</dd></div></dl>
+                <p class="horizon-card__label">MAÎTRE D’ / DATE NIGHT</p>
+                <div class="maitre-mark"><span>MD</span><p><strong>BLIND DATE NIGHT</strong><small>SAN FRANCISCO</small></p></div>
+                <p class="card-state">RESERVATION OPERATED</p>
+                <dl><div><dt>CADENCE</dt><dd>EVERY TWO WEEKS</dd></div><div><dt>SCOUT</dt><dd>SURPRISE RESTAURANT</dd></div><div><dt>REVEAL</dt><dd>WAYMO PICKUP TIME ONLY</dd></div><div><dt>CONSTRAINT</dt><dd>NO SPOILERS</dd></div></dl>
               </section>
             </article>
 
@@ -71,19 +75,20 @@
               <h3>This week</h3><i aria-hidden="true"></i>
               <section class="horizon-card horizon-card--health">
                 <p class="horizon-card__label">HEALTH + RECIPE PLAN</p>
-                <strong>WEEKLY PLAN</strong><span>SLEEP · ENERGY · LONGEVITY</span>
-                <div class="meal-mark" aria-hidden="true"><b>+</b></div>
-                <dl><div><dt>TRACK</dt><dd>TRENDS, NOT SNAPSHOTS</dd></div><div><dt>PREP</dt><dd>RECIPES + GROCERIES</dd></div></dl>
+                <strong>WEEKLY SUPPORT</strong><span>HEALTH · RECIPES · FOLLOW-THROUGH</span>
+                <figure class="meal-mark"><img src="assets/meal-every-horizon.png" width="580" height="325" alt="Halftone illustration of a prepared meal in a bowl"></figure>
+                <dl><div><dt>TRACK</dt><dd>HEALTH OVER TIME</dd></div><div><dt>MANAGE</dt><dd>RECIPES + GROCERIES</dd></div><div><dt>MODE</dt><dd>CONVERSATIONAL</dd></div></dl>
               </section>
             </article>
 
             <article class="horizon-stop horizon-stop--trip">
               <h3>This trip</h3><i aria-hidden="true"></i>
               <section class="horizon-card horizon-card--trip">
-                <p class="horizon-card__label">ITINERARY + TRIP APP</p>
-                <strong><span aria-hidden="true">✈</span> PORTUGAL</strong><span>ONE-OFF PERSONALIZED APP</span>
-                <dl><div><dt>PLAN</dt><dd>ROUTES + STAYS</dd></div><div><dt>OPERATE</dt><dd>CHANGES + RESERVATIONS</dd></div><div><dt>SHARE</dt><dd>ONE LIVE ITINERARY</dd></div></dl>
-                <p class="card-signal"><span aria-hidden="true">🦉</span> TRAVEL MODE</p>
+                <p class="horizon-card__label">TRAVEL AGENT / PERSONALIZED APP</p>
+                <div class="trip-route"><span aria-hidden="true">✈</span><strong>MAD → DOURO → OPO → LIS</strong></div>
+                <p class="card-state">PORTUGAL TRIP 2026 · 12 DAYS</p>
+                <dl><div><dt>PLAN</dt><dd>ROUTES + STAYS</dd></div><div><dt>CURATE</dt><dd>WINERIES + RESTAURANTS</dd></div><div><dt>OPERATE</dt><dd>CHANGES + RESERVATIONS</dd></div><div><dt>DELIVER</dt><dd>ONE LIVE ITINERARY APP</dd></div></dl>
+                <p class="card-signal"><span aria-hidden="true">🦉</span> ITINERARY + APP</p>
               </section>
             </article>
 
@@ -91,8 +96,10 @@
               <h3>This release</h3><i aria-hidden="true"></i>
               <section class="horizon-card horizon-card--release">
                 <p class="horizon-card__label">APP STORE RELEASE + USER REQUEST</p>
-                <div class="release-title"><span aria-hidden="true">🐻</span><p><strong>Cubby 2.0</strong><small>KNOW WHERE EVERYTHING LIVES.</small></p></div>
-                <dl><div><dt>OPERATE</dt><dd>APP STORE + RELEASE</dd></div><div><dt>LISTEN</dt><dd>USER REQUESTS</dd></div><div><dt>RETURN</dt><dd>SHIPPED + CLOSED LOOP</dd></div></dl>
+                <div class="release-title"><img src="assets/cubby-app-icon.png" width="256" height="256" alt="Cubby app icon"><p><strong>Cubby 2.0</strong><small>KNOW WHERE EVERYTHING LIVES.</small></p></div>
+                <p class="release-version">VERSION 2.0 · PRODUCT + OPERATIONS</p>
+                <ul class="release-list"><li>RUNS RELEASE WORK</li><li>MANAGES APP STORE CONNECT</li><li>TURNS USER REQUESTS INTO PRODUCT WORK</li></ul>
+                <p class="release-request"><span>USER REQUEST</span>RECEIVED → SHIPPED → CLOSED LOOP</p>
               </section>
             </article>
 
@@ -100,16 +107,21 @@
               <h3>The next decade</h3><i aria-hidden="true"></i>
               <section class="horizon-card horizon-card--wealth">
                 <p class="horizon-card__label">HOUSEHOLD PLAN + WEALTH</p>
-                <strong>10-YEAR OUTLOOK</strong><span>ONE HOUSEHOLD MODEL</span>
-                <dl><div><dt>PLAN</dt><dd>CASH FLOW + INVESTING</dd></div><div><dt>OPTIMIZE</dt><dd>TAX + CREDIT CARDS</dd></div><div><dt>MONITOR</dt><dd>GOALS + TRADEOFFS</dd></div></dl>
-                <div class="wealth-trace" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+                <strong>LONG-RANGE PLAN</strong><span>ONE HOUSEHOLD MODEL</span>
+                <dl><div><dt>BUDGET</dt><dd>CASH FLOW + TRADEOFFS</dd></div><div><dt>WEALTH</dt><dd>LONG-TERM PLANNING</dd></div><div><dt>OPTIMIZE</dt><dd>TAX + 10-CARD STRATEGY</dd></div></dl>
+                <div class="wealth-chart" role="img" aria-label="Illustrative planning scenarios, not a financial forecast">
+                  <span>SCENARIO RANGE</span>
+                  <svg viewBox="0 0 160 58" preserveAspectRatio="none" aria-hidden="true"><path class="chart-grid" d="M0 14H160M0 29H160M0 44H160"/><path class="chart-base" d="M0 55 L20 47 L40 45 L60 37 L80 42 L100 27 L120 31 L140 18 L160 8"/><path class="chart-alt" d="M0 55 L20 51 L40 44 L60 46 L80 34 L100 38 L120 26 L140 25 L160 17"/></svg>
+                  <em>MONITOR · REPLAN · COMPOUND</em>
+                </div>
               </section>
             </article>
           </div>
 
-          <p class="horizon-spec">RELATIONSHIP: ALFRED<br>CONTEXT: PERSISTENT<br>MODE: ADVISE · ACT · MONITOR</p>
-          <span class="horizon-coordinate horizon-coordinate--left" aria-hidden="true">42.0</span>
-          <span class="horizon-coordinate horizon-coordinate--right" aria-hidden="true">13.7</span>
+          <p class="horizon-spec">AGENT: ALFRED<br>CONTEXT: PERSISTENT MEMORY<br>OPERATING RANGE: ADVISE · ACT · MONITOR</p>
+          <div class="horizon-utility" aria-hidden="true"><span>◎</span><i></i><span>◇</span><i></i><b>ALFRED</b></div>
+          <span class="horizon-coordinate horizon-coordinate--left" aria-hidden="true">RANGE</span>
+          <span class="horizon-coordinate horizon-coordinate--right" aria-hidden="true">TIME</span>
         </div>
         <footer class="status-bar status-bar--light"><span>BREADTH / TRUST CALIBRATION</span><span>SOURCE: LIVED PERSONAL OPERATIONS</span><b>ONE AGENT · EVERY HORIZON</b></footer>
       </div>

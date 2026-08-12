@@ -220,51 +220,89 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 
 /* 02: one agent across every horizon */
 .slide--horizons { overflow: clip; }
-.slide--horizons .slide__frame { padding-left: clamp(20px, 2.7vw, 46px); padding-right: clamp(20px, 2.7vw, 46px); }
-.horizon-composition { position: relative; flex: 1; min-height: 0; margin: 0 calc(0px - clamp(20px, 2.7vw, 46px)); overflow: clip; }
+.slide--horizons .slide__frame { padding: 16px clamp(26px, 2.35vw, 40px) var(--frame-bottom); }
+.horizon-folio { position: relative; z-index: 8; min-height: 25px; flex: 0 0 25px; display: grid; grid-template-columns: 165px 1fr 156px; align-items: start; gap: 18px; border-bottom: 1px dashed var(--ivory); color: var(--ivory); font-size: 8px; line-height: 1.2; letter-spacing: .12em; }
+.horizon-folio b, .horizon-folio em { height: 20px; padding: 4px 9px; border: 1px solid var(--ivory); font-style: normal; }
+.horizon-folio span { align-self: center; padding: 0 0 5px 2px; }
+.horizon-folio em { justify-self: end; width: 156px; text-align: center; }
+.horizon-folio em i { display: inline-block; width: 7px; height: 7px; margin: 0 4px; border-radius: 50%; background: var(--acid); }
+.horizon-composition { position: relative; flex: 1; min-height: 0; margin: 0 calc(0px - clamp(26px, 2.35vw, 40px)); overflow: visible; }
 .horizon-intro { position: absolute; z-index: 5; left: 2.4%; top: 4.2%; width: 40%; }
-.horizon-intro h2 { color: var(--ivory); font: 400 clamp(63px, 5.55vw, 94px)/.81 var(--serif); letter-spacing: -.03em; text-transform: uppercase; }
+.horizon-intro h2 { color: var(--ivory); font: 400 clamp(52px, 5vw, 64px)/.84 var(--serif); letter-spacing: -.025em; text-transform: uppercase; }
 .horizon-thesis { margin-top: 12px; color: var(--ivory); font-size: clamp(12px, 1.05vw, 18px); font-weight: 700; line-height: 1.15; letter-spacing: .08em; text-transform: uppercase; }
 .horizon-deck { max-width: 46ch; margin-top: 10px; color: var(--ivory); font-size: clamp(8px, .64vw, 11px); font-weight: 600; line-height: 1.45; letter-spacing: .08em; text-transform: uppercase; }
 .horizon-aside { position: absolute; z-index: 5; right: 5%; top: 10%; color: var(--ivory); font-size: clamp(8px, .7vw, 12px); font-weight: 600; line-height: 1.5; letter-spacing: .08em; }
-.horizon-alfred { position: absolute; z-index: 1; left: 31.1%; top: 0; width: 38.6%; height: 91%; overflow: hidden; opacity: .78; pointer-events: none; }
+.horizon-instruments { pointer-events: none; }
+.horizon-instruments i { position: absolute; z-index: 5; width: 15px; height: 15px; border: 1px solid var(--ivory); border-radius: 50%; opacity: .9; }
+.horizon-instruments i::before, .horizon-instruments i::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--ivory); transform: translate(-50%, -50%); }
+.horizon-instruments i::before { width: 35px; height: 1px; }
+.horizon-instruments i::after { width: 1px; height: 35px; }
+.horizon-instruments i:nth-child(1) { right: 2.8%; top: 4%; }
+.horizon-instruments i:nth-child(2) { right: 7.5%; top: 28%; }
+.horizon-instruments i:nth-child(3) { left: 1.5%; bottom: 8%; }
+.horizon-alfred { position: absolute; z-index: 1; left: 31.1%; top: 2.9%; width: 38.6%; height: 100%; overflow: hidden; opacity: .72; pointer-events: none; }
 .horizon-alfred img { width: 100%; height: 100%; object-fit: contain; object-position: center top; filter: saturate(.82) contrast(1.04); }
-.horizon-line { position: absolute; z-index: 3; left: 1.2%; right: 1.2%; top: 47.5%; border-top: 2px solid var(--acid); }
-.horizon-stops { position: absolute; z-index: 4; inset: 37.6% 1.5% auto; height: 49%; display: grid; grid-template-columns: .86fr 1.05fr .92fr 1.08fr .82fr; gap: clamp(24px, 4.2vw, 72px); }
-.horizon-stop { position: relative; min-width: 0; padding-top: 0; }
+.horizon-line { position: absolute; z-index: 3; left: 1.2%; right: 1.2%; top: 44.6%; border-top: 2px solid var(--acid); }
+.horizon-stops { position: absolute; z-index: 4; left: 0; right: 0; top: 37.1%; height: 55%; display: block; }
+.horizon-stop { position: absolute; top: 0; min-width: 0; padding-top: 0; }
+.horizon-stop--tonight { left: 2.87%; width: 11.55%; }
+.horizon-stop--week { left: 19.32%; width: 13.87%; }
+.horizon-stop--trip { left: 40.31%; width: 12.38%; }
+.horizon-stop--release { left: 64.48%; width: 14.17%; }
+.horizon-stop--decade { left: 83.13%; width: 12.44%; }
 .horizon-stop > h3 { color: var(--acid); font-size: clamp(10px, .95vw, 16px); line-height: 1; text-align: center; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; }
-.horizon-stop > i { position: absolute; z-index: 3; left: 50%; top: 8.2%; width: 13px; height: 13px; border: 2px solid var(--acid); border-radius: 50%; background: var(--cobalt); transform: translateX(-50%); }
+.horizon-stop > i { position: absolute; z-index: 3; left: 50%; top: 38px; width: 13px; height: 13px; border: 2px solid var(--acid); border-radius: 50%; background: var(--cobalt); transform: translateX(-50%); }
 .horizon-stop > i::before { content: ""; position: absolute; left: 50%; bottom: 100%; height: 28px; border-left: 1px dashed var(--ivory); opacity: .85; }
 .horizon-stop > i::after { content: ""; position: absolute; left: 50%; top: 100%; height: 22px; border-left: 1px dashed var(--ivory); opacity: .85; }
-.horizon-card { position: absolute; left: 0; right: 0; top: 25%; min-height: 74%; padding: 12px 10px 10px; border: 1px solid var(--ivory); color: var(--ivory); background: rgba(0,2,120,.72); box-shadow: inset 0 0 0 1px rgba(243,226,202,.08); }
-.horizon-card::before, .horizon-card::after { content: ""; position: absolute; width: 7px; height: 7px; border: 1px solid var(--ivory); }
-.horizon-card::before { left: -4px; top: -4px; border-right: 0; border-bottom: 0; }
-.horizon-card::after { right: -4px; bottom: -4px; border-left: 0; border-top: 0; }
+.horizon-stop > i::before { width: 25px; height: 1px; bottom: auto; top: 50%; border: 0; border-top: 1px solid var(--acid); transform: translate(-50%, -50%); }
+.horizon-stop > i::after { height: 38px; top: -29px; }
+.horizon-card { position: absolute; left: 0; right: 0; top: clamp(81px, 13.47vh, 97px); padding: 12px 10px 10px; border: 1px solid rgba(243,226,202,.9); color: var(--ivory); background: rgba(0,2,120,.3); }
+.horizon-stop--tonight .horizon-card { height: clamp(175px, 29.1vh, 210px); }
+.horizon-stop--week .horizon-card { height: clamp(197px, 32.94vh, 237px); }
+.horizon-stop--trip .horizon-card { height: clamp(210px, 35.07vh, 253px); }
+.horizon-stop--release .horizon-card { height: clamp(217px, 36.12vh, 260px); }
+.horizon-stop--decade .horizon-card { height: clamp(218px, 36.44vh, 262px); }
 .horizon-card__label { position: absolute; left: 9px; top: -20px; font-size: clamp(5px, .42vw, 7px); line-height: 1; letter-spacing: .08em; white-space: nowrap; }
 .horizon-card > strong { display: block; font-size: clamp(10px, .92vw, 15px); line-height: 1.15; letter-spacing: .04em; }
 .horizon-card > span { display: block; margin-top: 3px; font-size: clamp(6px, .48vw, 8px); line-height: 1.3; letter-spacing: .08em; }
+.maitre-mark { display: grid; grid-template-columns: 38px 1fr; align-items: center; gap: 8px; padding-bottom: 8px; }
+.maitre-mark > span { width: 36px; height: 36px; display: grid; place-items: center; border-right: 1px solid var(--ivory); font: 400 17px/1 var(--serif); }
+.maitre-mark strong, .maitre-mark small { display: block; }
+.maitre-mark strong { font-size: clamp(8px, .72vw, 12px); line-height: 1.1; }
+.maitre-mark small { margin-top: 4px; font-size: clamp(5px, .42vw, 7px); }
+.card-state { padding: 6px 0; border-top: 1px dashed rgba(243,226,202,.55); border-bottom: 1px dashed rgba(243,226,202,.55); color: var(--periwinkle); font-size: clamp(5px, .42vw, 7px); letter-spacing: .07em; }
 .horizon-card dl { margin-top: 10px; border-top: 1px dashed rgba(243,226,202,.55); }
-.horizon-card dl div { padding: 7px 0 6px; border-bottom: 1px dashed rgba(243,226,202,.38); }
+.horizon-card dl div { padding: clamp(4px, .7vh, 6px) 0; border-bottom: 1px dashed rgba(243,226,202,.38); }
 .horizon-card dt { color: var(--periwinkle); font-size: clamp(5px, .42vw, 7px); line-height: 1; letter-spacing: .08em; }
 .horizon-card dd { margin-top: 3px; font-size: clamp(6px, .5vw, 8px); line-height: 1.25; letter-spacing: .05em; }
-.meal-mark { position: relative; width: 70%; aspect-ratio: 2.4 / 1; margin: 13px auto 8px; border: 1px solid var(--ivory); border-radius: 50%; transform: rotate(-8deg); }
-.meal-mark::before { content: ""; position: absolute; inset: 19%; border: 1px dashed var(--ivory); border-radius: 50%; }
-.meal-mark b { position: absolute; left: 50%; top: 50%; color: var(--acid); font-size: 16px; transform: translate(-50%, -50%) rotate(8deg); }
+.meal-mark { width: 88%; height: clamp(63px, 10vh, 72px); margin: 5px auto 3px; overflow: hidden; }
+.meal-mark img { width: 100%; height: 100%; object-fit: contain; filter: saturate(.65) brightness(1.35); }
 .horizon-card--health dl { margin-top: 0; }
+.trip-route { display: grid; grid-template-columns: 24px 1fr; align-items: center; gap: 5px; min-height: 31px; padding-bottom: 7px; }
+.trip-route span { font-size: 19px; }
+.trip-route strong { font-size: clamp(7px, .6vw, 10px); line-height: 1.2; }
 .card-signal { position: absolute; left: 10px; right: 10px; bottom: 10px; display: flex; justify-content: space-between; align-items: center; color: var(--acid); font-size: clamp(6px, .5vw, 8px); }
 .release-title { display: grid; grid-template-columns: 36px 1fr; align-items: center; gap: 8px; padding-bottom: 9px; border-bottom: 1px dashed rgba(243,226,202,.55); }
-.release-title > span { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--acid); border-radius: 9px; font-size: 19px; }
+.release-title > img { width: 36px; height: 36px; border: 1px solid var(--acid); border-radius: 9px; object-fit: cover; }
 .release-title strong { display: block; font-size: clamp(10px, .92vw, 15px); line-height: 1; }
 .release-title small { display: block; margin-top: 5px; font-size: clamp(5px, .4vw, 7px); line-height: 1.2; letter-spacing: .06em; }
 .horizon-card--release dl { margin-top: 7px; border-top: 0; }
-.wealth-trace { position: absolute; left: 10px; right: 10px; bottom: 10px; height: 30px; border-bottom: 1px solid var(--ivory); transform: skewY(-9deg); }
-.wealth-trace i { position: absolute; bottom: 0; width: 23%; border-top: 1px solid var(--acid); transform-origin: left; }
-.wealth-trace i:nth-child(1) { left: 0; transform: rotate(-10deg); }
-.wealth-trace i:nth-child(2) { left: 20%; transform: rotate(17deg); }
-.wealth-trace i:nth-child(3) { left: 40%; transform: rotate(-15deg); }
-.wealth-trace i:nth-child(4) { left: 60%; transform: rotate(9deg); }
-.wealth-trace i:nth-child(5) { left: 80%; transform: rotate(-22deg); }
+.release-version { padding: 6px 0; border-bottom: 1px dashed rgba(243,226,202,.45); color: var(--periwinkle); font-size: clamp(5px, .42vw, 7px); }
+.release-list { margin: 0; padding: 7px 0 7px 14px; border-bottom: 1px dashed rgba(243,226,202,.45); font-size: clamp(5px, .42vw, 7px); line-height: 1.5; }
+.release-request { padding-top: 7px; font-size: clamp(5px, .42vw, 7px); line-height: 1.4; }
+.release-request span { display: block; margin-bottom: 3px; color: var(--acid); }
+.wealth-chart { position: absolute; left: 10px; right: 10px; bottom: 9px; padding-top: 5px; border-top: 1px dashed rgba(243,226,202,.45); }
+.wealth-chart > span, .wealth-chart > em { display: block; font-size: clamp(4px, .36vw, 6px); font-style: normal; letter-spacing: .06em; }
+.wealth-chart svg { display: block; width: 100%; height: 35px; margin: 3px 0; overflow: visible; }
+.wealth-chart path { fill: none; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+.chart-grid { stroke: rgba(243,226,202,.22); stroke-width: .7; }
+.chart-base { stroke: var(--acid); stroke-width: 1.4; }
+.chart-alt { stroke: var(--ivory); stroke-width: .8; stroke-dasharray: 3 2; opacity: .75; }
 .horizon-spec { position: absolute; z-index: 5; left: 2.4%; bottom: 1.8%; color: var(--ivory); font-size: clamp(6px, .55vw, 9px); line-height: 1.55; letter-spacing: .08em; }
+.horizon-utility { position: absolute; z-index: 12; left: 2.5%; bottom: -45px; display: flex; align-items: center; gap: 9px; color: var(--ivory); font-size: 12px; }
+.horizon-utility i { width: 1px; height: 15px; background: var(--ivory); opacity: .65; }
+.horizon-utility b { font-family: var(--serif); font-size: 16px; font-weight: 400; }
+.slide--horizons .status-bar > span:first-child { visibility: hidden; }
 .horizon-coordinate { position: absolute; z-index: 5; bottom: 17%; color: var(--ivory); font-size: 7px; }
 .horizon-coordinate::before, .horizon-coordinate::after { content: ""; position: absolute; border-color: var(--ivory); opacity: .75; }
 .horizon-coordinate::before { width: 24px; border-top: 1px dashed; top: 4px; }
@@ -520,6 +558,16 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .hero-copy h1 { font-size: clamp(61px, 6.9vw, 92px); }
   .hero-copy .lede { max-width: 52ch; }
   .identity-stamp { margin-top: 17px; padding: 9px 12px; }
+  .horizon-intro { top: 2%; }
+  .horizon-intro h2 { font-size: 51px; }
+  .horizon-thesis { margin-top: 8px; font-size: 11px; }
+  .horizon-deck { margin-top: 7px; max-width: 37ch; font-size: 7px; }
+  .horizon-stop--tonight .horizon-card { padding-top: 8px; }
+  .horizon-stop--tonight .maitre-mark { padding-bottom: 4px; }
+  .horizon-stop--tonight .card-state { padding: 3px 0; }
+  .horizon-stop--tonight .horizon-card dl { margin-top: 5px; }
+  .horizon-stop--tonight .horizon-card dl div { padding: 3px 0; }
+  .horizon-spec, .horizon-utility { display: none; }
   .operations-heading, .sequence-heading { min-height: 106px; padding-top: 8px; padding-bottom: 10px; }
   .operations-heading h2 { font-size: clamp(41px, 4.5vw, 62px); }
   .comparison h2 { font-size: clamp(68px, 7.7vw, 101px); margin: 14px 0 24px; }
@@ -584,6 +632,9 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .hero-specimen { position: relative; inset: auto; height: 460px; margin: 10px -20px 0; }
   .slide--horizons { overflow: visible; }
   .slide--horizons .slide__frame { padding-left: 20px; padding-right: 20px; }
+  .horizon-folio { grid-template-columns: 1fr auto; }
+  .horizon-folio span { display: none; }
+  .horizon-folio em { width: auto; }
   .horizon-composition { min-height: 1850px; margin: 0 -20px; overflow: hidden; }
   .horizon-intro { position: relative; left: auto; top: auto; width: auto; padding: 44px 20px 0; }
   .horizon-intro h2 { font-size: clamp(59px, 17vw, 72px); }
@@ -593,16 +644,17 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .horizon-alfred { left: 4%; top: 255px; width: 96%; height: 430px; opacity: .64; }
   .horizon-line { left: 49px; right: auto; top: 610px; bottom: 120px; border-top: 0; border-left: 2px solid var(--acid); }
   .horizon-stops { position: relative; inset: auto; height: auto; margin-top: 315px; padding: 0 20px 110px 78px; display: block; }
-  .horizon-stop { min-height: 242px; }
+  .horizon-stop, .horizon-stop--tonight, .horizon-stop--week, .horizon-stop--trip, .horizon-stop--release, .horizon-stop--decade { position: relative; left: auto; top: auto; width: auto; min-height: 242px; }
   .horizon-stop > h3 { position: absolute; left: -59px; top: 0; width: 45px; font-size: 9px; text-align: left; white-space: normal; }
   .horizon-stop > i { left: -29px; top: 0; width: 13px; height: 13px; transform: none; }
   .horizon-stop > i::before, .horizon-stop > i::after { display: none; }
-  .horizon-card { position: relative; top: auto; min-height: 205px; }
+  .horizon-stop--tonight .horizon-card, .horizon-stop--week .horizon-card, .horizon-stop--trip .horizon-card, .horizon-stop--release .horizon-card, .horizon-stop--decade .horizon-card { position: relative; top: auto; height: auto; min-height: 205px; }
   .horizon-card__label { font-size: 6px; }
   .horizon-card > strong, .release-title strong { font-size: 14px; }
   .horizon-card > span, .horizon-card dt, .horizon-card dd, .release-title small, .card-signal { font-size: 7px; }
   .meal-mark { width: 42%; max-width: 130px; }
   .horizon-spec { left: 78px; bottom: 30px; font-size: 7px; }
+  .horizon-utility { display: none; }
   .horizon-coordinate { display: none; }
   .slide--split { background: var(--cobalt); }
   .comparison { min-height: 72svh; padding: 20px 20px 70px; }

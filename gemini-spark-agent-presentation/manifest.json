@@ -1,0 +1,54 @@
+{
+  "allowlist": [
+    "index.html",
+    "styles.css",
+    "src/deck.js",
+    "assets/favicon.svg",
+    "assets/alfred-field-specimen.png",
+    "assets/montage/alfred-hub.png",
+    "assets/evidence/bound-declarations-redacted.png",
+    "assets/evidence/new-policy-invoice-redacted.png"
+  ],
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 25513,
+      "sha256": "66d87fcda116d70043caf723e3ae98d10a948c5461b1b5be0ddd2fd2b8cd8740"
+    },
+    {
+      "path": "styles.css",
+      "bytes": 36300,
+      "sha256": "ce39df72d3b26f33e6d1fd08a74b51cc8a2a60ee361b9714d4101ca3a5644945"
+    },
+    {
+      "path": "src/deck.js",
+      "bytes": 9031,
+      "sha256": "733e4ed0b7187c0f6b5fa2f36c65989dd293ff6825d236c3e03551cdff0254d4"
+    },
+    {
+      "path": "assets/favicon.svg",
+      "bytes": 367,
+      "sha256": "4b911d237a6740872001835faf98e4705ff714893a87edadd18794382c22dc21"
+    },
+    {
+      "path": "assets/alfred-field-specimen.png",
+      "bytes": 154440,
+      "sha256": "1e80d48c6165b94525f827c4a7df5df1e9a60716a151d0c3e9d0a7790a008e77"
+    },
+    {
+      "path": "assets/montage/alfred-hub.png",
+      "bytes": 99988,
+      "sha256": "a185db2322ae3590883c5d2655acd2cf1e9d3695805d159230c6d021c311c363"
+    },
+    {
+      "path": "assets/evidence/bound-declarations-redacted.png",
+      "bytes": 263949,
+      "sha256": "1bdf8bc4280249779da3891c1d7eb0b492c62366d0f7fe8a59974dd38be9fb47"
+    },
+    {
+      "path": "assets/evidence/new-policy-invoice-redacted.png",
+      "bytes": 156010,
+      "sha256": "796b6995baea4ae9ba78e80669a43e70d912a03f8abb04f3aefcc87265265718"
+    }
+  ]
+}

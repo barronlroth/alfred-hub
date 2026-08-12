@@ -3,265 +3,308 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1a2744">
-  <title>Alfred × Gemini Spark — Field Notes on Personal Agents</title>
+  <meta name="theme-color" content="#0005bd">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Alfred × Gemini Spark | Electric Field Manual</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script type="module" src="src/deck.js"></script>
 </head>
 <body>
-  <main id="deck" aria-label="Gemini Spark presentation">
-    <section class="slide slide--navy slide--cover" id="slide-01" data-slide-index="1" data-duration="50" aria-labelledby="slide-01-title">
-      <div class="slide-frame cover-grid reveal-stage">
-        <p class="eyebrow">FIELD NOTES / PERSONAL AGENTS</p>
-        <div class="alfred-medallion alfred-medallion--hero reveal-item" aria-hidden="true">
-          <img src="assets/alfred-owl.png" alt="" width="1024" height="1024">
-        </div>
-        <div class="cover-claim reveal-item">
-          <h1 id="slide-01-title" class="claim claim--hero">ALFRED</h1>
-          <p class="cover-thesis">I’m a personal-agent maximalist.</p>
-        </div>
-        <p class="dateline reveal-item">Barron Roth / Gemini Spark / August 2026</p>
-      </div>
-      <aside class="speaker-notes" hidden>Open personally: Alfred is the agent I actually use, not a hypothetical assistant. Establish that I am unusually willing to delegate, then set up the surprise that even I missed the task hiding in an ordinary question.</aside>
-    </section>
+  <a class="skip-link" href="#slide-1">Skip to presentation</a>
+  <main class="deck" id="deck" aria-label="Alfred and Gemini Spark presentation" data-initialized="false">
 
-    <section class="slide slide--cream slide--receipts" id="slide-02" data-slide-index="2" data-duration="55" aria-labelledby="slide-02-title">
-      <div class="slide-frame receipts-grid reveal-stage">
-        <header class="receipts-copy">
-          <p class="eyebrow">FIELD LOG / RECEIPTS</p>
-          <h2 id="slide-02-title" class="claim">ALFRED,<br>IN PRACTICE</h2>
-          <p class="category-line">DINING / TRAVEL / SPORTS / WEDDING / PROJECTS</p>
-          <p class="body-lede">Real work. Real accounts. Persistent follow-through.</p>
+    <section class="slide slide--cobalt slide--hero is-active" id="slide-1" data-slide="1" data-phase="IDENTITY" aria-labelledby="title-1">
+      <div class="slide__frame">
+        <header class="folio folio--light">
+          <b>ALFRED / PERSONAL AGENT</b><span>FIELD REPORT 01</span><span>FRAME 01/14 · GRID X01 Y01</span>
         </header>
-        <div class="receipt-constellation" aria-label="Five examples of Alfred projects">
-          <div class="constellation-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-          <figure class="receipt receipt--dining reveal-item"><img src="assets/montage/maitre-d-owl.jpg" alt="Alfred restaurant planning illustration" width="1280" height="698"><figcaption>DINING</figcaption></figure>
-          <figure class="receipt receipt--travel reveal-item"><img src="assets/montage/portugal-owl.png" alt="Alfred Portugal travel planning illustration" width="1408" height="768"><figcaption>TRAVEL</figcaption></figure>
-          <figure class="receipt receipt--sports reveal-item"><img src="assets/montage/superbowl-owl.png" alt="Alfred sports planning illustration" width="1408" height="768"><figcaption>SPORTS</figcaption></figure>
-          <figure class="receipt receipt--wedding reveal-item"><img src="assets/montage/wedding-planning-owl.png" alt="Alfred wedding planning illustration" width="1408" height="768"><figcaption>WEDDING</figcaption></figure>
-          <figure class="receipt receipt--projects reveal-item"><img src="assets/montage/alfred-hub.png" alt="Alfred project hub illustration" width="1200" height="1018"><figcaption>PROJECTS</figcaption></figure>
-          <div class="constellation-hub reveal-item">ALFRED</div>
-        </div>
-      </div>
-      <aside class="speaker-notes" hidden>These are receipts, not a feature list: dinners, travel, sports, wedding work, and projects. The pattern is persistent follow-through in real accounts. Keep condo insurance out of this montage so the case can still expand unexpectedly.</aside>
-    </section>
-
-    <section class="slide slide--cream slide--equations" id="slide-03" data-slide-index="3" data-duration="50" aria-labelledby="slide-03-title">
-      <div class="slide-frame equation-frame reveal-stage">
-        <p class="eyebrow">MY OLD MENTAL MODEL</p>
-        <div class="equation-stack">
-          <h2 id="slide-03-title" class="claim equation equation--answers reveal-item">GEMINI = ANSWERS</h2>
-          <div class="equation-rule" aria-hidden="true"></div>
-          <p class="claim equation equation--actions reveal-item">ALFRED = ACTIONS</p>
-        </div>
-      </div>
-      <aside class="speaker-notes" hidden>Before this story, I had a clean division of labor. Gemini helped me think; Alfred did things. Say this slowly because the rest of the talk dismantles the line between discovery and execution.</aside>
-    </section>
-
-    <section class="slide slide--cream slide--ask" id="slide-04" data-slide-index="4" data-duration="55" aria-labelledby="slide-04-title">
-      <div class="slide-frame split-frame reveal-stage">
-        <header class="ask-copy">
-          <p class="eyebrow">AN ORDINARY ASK</p>
-          <h2 id="slide-04-title" class="quote-claim reveal-item">“need help with<br>condo insurance”</h2>
-          <p class="body-lede reveal-item">Forwarded with a photographed lender notice.</p>
-        </header>
-        <figure class="notice-placeholder reveal-item" aria-label="Placeholder for unavailable original lender notice photograph">
-          <div class="document-silhouette" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-          <figcaption>ORIGINAL LENDER NOTICE PHOTO<br><strong>SOURCE IMAGE TO BE RE-UPLOADED</strong></figcaption>
-        </figure>
-      </div>
-      <aside class="speaker-notes" hidden>This is the whole opening ask. It does not sound like a task specification; it sounds like help interpreting a notice. The original photo is not in the source package, so the deck labels that absence instead of substituting a cleaner fake.</aside>
-    </section>
-
-    <section class="slide slide--cream slide--permission" id="slide-05" data-slide-index="5" data-duration="70" aria-labelledby="slide-05-title">
-      <div class="slide-frame console-frame reveal-stage">
-        <p class="eyebrow">THE JOB APPEARS</p>
-        <h2 id="slide-05-title" class="visually-hidden">Permission boundary for autonomous condo insurance work</h2>
-        <div class="evidence-console permission-console reveal-item">
-          <div class="console-bar"><span>VERIFIED TRANSCRIPT / SOURCE CROP PENDING</span><span>AUTHORITY SCOPE</span></div>
-          <p class="console-question">“what do i need to give you to handle this autonomously”</p>
-          <div class="console-scope">
-            Proceed autonomously on condo insurance: <span>search</span> my email/docs, <span>contact</span> insurers/agents/property manager/RoundPoint as needed, <span>fill out</span> quote forms, and <span>submit</span> proof of insurance.
+        <div class="hero-layout">
+          <div class="hero-copy reveal-group">
+            <p class="eyebrow">ONE USER · ONE PERSISTENT AGENT · REAL LIFE</p>
+            <h1 id="title-1">I’m a personal-agent maximalist.</h1>
+            <p class="lede">This is Alfred. He works across the ordinary mess of my life, with memory, tools, and explicit boundaries.</p>
+            <div class="identity-stamp"><span>ALFRED</span><small>PERSONAL AGENT / ACTIVE SINCE 2025</small></div>
           </div>
-          <p class="approval-boundary">Do not bind coverage or spend money without my explicit approval.</p>
+          <figure class="hero-specimen reveal-group">
+            <div class="instrument instrument--hero" aria-hidden="true"><i></i><i></i><i></i><b>SPECIMEN A</b><span>HALFTONE FIELD / 1200×900</span></div>
+            <img src="assets/alfred-field-specimen.png" alt="A dithered blue and ivory portrait of Alfred, a formal owl wearing a bow tie, with an acid-green registration scope over one eye" width="1200" height="900">
+            <figcaption>APPROVED FIELD SPECIMEN · GENERATED PORTRAIT, NOT PRODUCT UI</figcaption>
+          </figure>
         </div>
+        <footer class="status-bar status-bar--light"><span>PERSONAL AGENT / MAXIMALIST</span><span>SOURCE: LIVED OPERATION</span><b>BEGIN WITH THE HUMAN</b></footer>
       </div>
-      <aside class="speaker-notes" hidden>The conversation reveals a larger job, but autonomy is scoped. Reversible work is allowed: search, contact, fill, submit. Consequential action is not. Emphasize the full boundary: no binding coverage and no spending without explicit approval.</aside>
+      <aside class="presenter-note" data-note>Open personally. Alfred is not a concept or a demo. He is the agent I use for real work. Do not list capabilities yet. Let the specimen and the word maximalist establish the premise.</aside>
     </section>
 
-    <section class="slide slide--cream slide--execution slide--compact" id="slide-06" data-slide-index="6" data-duration="95" aria-labelledby="slide-06-title">
-      <div class="slide-frame execution-frame reveal-stage">
-        <header class="execution-heading">
-          <p class="eyebrow">28 DAYS OF EXECUTION</p>
-          <h2 id="slide-06-title" class="claim claim--compact date-range">JUNE <span>25</span> → JULY <span>23</span></h2>
-        </header>
-        <ol class="execution-rail" aria-label="Five events over twenty-eight days">
-          <li class="event-node reveal-item"><time>JUNE 25</time><strong>BROKER NEGOTIATION</strong><p>“Can you improve the premium while keeping the required coverage?”</p></li>
-          <li class="event-node reveal-item"><time>BACKGROUND</time><strong>REPLY WATCHER CREATED</strong><p>“Monitor the thread and surface a response without another prompt.”</p></li>
-          <li class="event-node reveal-item"><time>WEEKDAYS</time><strong>ADVANCEMENT JOB CREATED</strong><p>“Keep the open insurance work moving on business days.”</p></li>
-          <li class="event-node event-node--approval reveal-item"><time>JUNE 30 / HUMAN GATE</time><strong>EXPLICIT APPROVAL</strong><p>“kk let’s do it”</p></li>
-          <li class="event-node reveal-item"><time>JULY 23</time><strong>CLOSEOUT</strong><p>Proof, refund, and escrow difference reconciled.</p></li>
+    <section class="slide slide--taupe" id="slide-2" data-slide="2" data-phase="RECEIPTS" aria-labelledby="title-2" hidden>
+      <div class="slide__frame">
+        <header class="folio"><b>FIELD NOTES / BREADTH</b><span>RECEIPT INDEX 02</span><span>FRAME 02/14 · GRID X02 Y01</span></header>
+        <div class="editorial-heading">
+          <p class="eyebrow">TRUST IS EARNED IN REPEATED, ORDINARY WORK</p>
+          <h2 id="title-2">Alfred already has range.</h2>
+          <p class="margin-note">Not a capability list. A compact set of lived receipts across time, accounts, and stakes.</p>
+        </div>
+        <div class="receipt-field reveal-group">
+          <figure class="receipt-specimen receipt-specimen--wide">
+            <img src="assets/montage/alfred-hub.png" alt="A redacted overview of the Alfred personal agent workspace" width="1200" height="1018">
+            <figcaption>WORKSPACE / PERSISTENT CONTEXT</figcaption>
+          </figure>
+          <ol class="receipt-ledger" aria-label="Examples of completed or ongoing agent work">
+            <li><span>01</span><b>TRAVEL</b><p>Portugal planning, itineraries, changes, and follow-through.</p><em>OPERATED</em></li>
+            <li><span>02</span><b>DINING</b><p>Reservation research and coordinated plans with real constraints.</p><em>COMPLETED</em></li>
+            <li><span>03</span><b>FAMILY</b><p>Wedding planning, guest logistics, and persistent open loops.</p><em>ONGOING</em></li>
+            <li><span>04</span><b>LIFE ADMIN</b><p>Finance, health, projects, and situations watched across weeks.</p><em>TRUSTED</em></li>
+          </ol>
+          <div class="receipt-thesis"><span>THE RECEIPT</span><p>Sometimes Alfred advises.<br>Sometimes he acts.<br>Sometimes he keeps watch.</p></div>
+        </div>
+        <footer class="status-bar"><span>BREADTH / TRUST CALIBRATION</span><span>SOURCE: VERIFIED PERSONAL OPERATIONS</span><b>NO OUTCOME REVEALED</b></footer>
+      </div>
+      <aside class="presenter-note" data-note>Move quickly. These receipts establish that I am unusually comfortable delegating to an agent. That is what makes the condo story surprising. Do not turn this into feature tourism.</aside>
+    </section>
+
+    <section class="slide slide--split" id="slide-3" data-slide="3" data-phase="MENTAL MODEL" aria-labelledby="title-3" hidden>
+      <div class="comparison comparison--answers">
+        <header class="folio folio--light"><b>PRIOR MUSCLE MEMORY</b><span>MODEL A</span><span>FRAME 03/14 · LEFT</span></header>
+        <p class="eyebrow">ASK</p><h2 id="title-3">Gemini<br><i>answers.</i></h2>
+        <div class="definition"><span>EXPLAIN</span><span>RESEARCH</span><span>ADVISE</span></div>
+      </div>
+      <div class="comparison comparison--actions">
+        <header class="folio"><b>PRIOR MUSCLE MEMORY</b><span>MODEL B</span><span>FRAME 03/14 · RIGHT</span></header>
+        <p class="eyebrow">DELEGATE</p><h2>Alfred<br><i>acts.</i></h2>
+        <div class="definition"><span>PLAN</span><span>OPERATE</span><span>CLOSE</span></div>
+      </div>
+      <div class="registration-mark" aria-hidden="true">×</div>
+      <aside class="presenter-note" data-note>I had built a two-AI muscle memory. Gemini was where I went for answers. Alfred was where I went for action. Then one ordinary Gemini-shaped question broke that model.</aside>
+    </section>
+
+    <section class="slide slide--taupe slide--evidence" id="slide-4" data-slide="4" data-phase="ORDINARY ASK" aria-labelledby="title-4" hidden>
+      <div class="slide__frame">
+        <header class="folio"><b>CASE FILE / ENTRY POINT</b><span>MESSAGE TRANSCRIPTION</span><span>FRAME 04/14 · GRID X04 Y02</span></header>
+        <div class="ask-layout">
+          <div class="ask-copy reveal-group">
+            <p class="eyebrow">JUNE 25, 2026 · EXACT USER LANGUAGE</p>
+            <h2 id="title-4">“need help with condo insurance”</h2>
+            <p class="lede lede--ink">No agent mode. No workflow selected. Just an ordinary request for help.</p>
+          </div>
+          <figure class="missing-evidence" role="img" aria-label="The original lender notice photograph is unavailable and has not been reconstructed">
+            <div class="missing-evidence__grid" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <figcaption><b>SOURCE IMAGE UNAVAILABLE</b><span>ORIGINAL LENDER NOTICE PHOTO</span><span>NOT RECONSTRUCTED · HONEST MISSING-EVIDENCE LABEL</span></figcaption>
+          </figure>
+          <div class="diagnosis-strip"><span>THE CONVERSATION UNCOVERED</span><p>A lender-placed HO-6 problem, requirements to interpret, and a real-world job hiding behind six words.</p></div>
+        </div>
+        <footer class="status-bar"><span>STATE: QUESTION</span><span>PROVENANCE: VERIFIED THREAD TRANSCRIPTION</span><b>JOB NOT YET DELEGATED</b></footer>
+      </div>
+      <aside class="presenter-note" data-note>Read the message exactly. My mother had sent a lender notice, but the source photo is not available for this deck. The label is intentionally honest. The point is the smallness of the ask.</aside>
+    </section>
+
+    <section class="slide slide--cobalt slide--handoff" id="slide-5" data-slide="5" data-phase="DELEGATION" aria-labelledby="title-5" hidden>
+      <div class="slide__frame">
+        <header class="folio folio--light"><b>CASE FILE / AUTHORITY</b><span>BOUNDARY RECORD</span><span>FRAME 05/14 · GRID X05 Y03</span></header>
+        <div class="handoff-layout reveal-group">
+          <div class="handoff-question">
+            <p class="eyebrow">THE JOB BECAME LEGIBLE</p>
+            <h2 id="title-5">“what do i need to give you to handle this autonomously”</h2>
+          </div>
+          <div class="authority-record">
+            <header><span>AUTHORITY GRANT / VERIFIED TRANSCRIPTION</span><b>REVERSIBLE WORK</b></header>
+            <blockquote>Proceed autonomously on condo insurance: search my email/docs, contact insurers/agents/property manager/RoundPoint as needed, fill out quote forms, and submit proof of insurance.</blockquote>
+            <div class="boundary"><b>CONSEQUENTIAL BOUNDARY</b><p>Do not bind coverage or spend money without my explicit approval.</p><span>NO BIND</span><span>NO SPEND</span></div>
+          </div>
+        </div>
+        <footer class="status-bar status-bar--light"><span>STATE: SUPERVISED AUTONOMY</span><span>ACID: HUMAN AUTHORITY</span><b class="risk-text">RED: APPROVAL GATE</b></footer>
+      </div>
+      <aside class="presenter-note" data-note>The key is progressive delegation, not magic. Alfred could do broad reversible work without micromanagement. Binding coverage and spending money stayed behind my explicit approval gate.</aside>
+    </section>
+
+    <section class="slide slide--taupe slide--operations" id="slide-6" data-slide="6" data-phase="PERSISTENCE" aria-labelledby="title-6" hidden>
+      <div class="slide__frame">
+        <header class="folio"><b>CASE FILE / OPERATING RECORD</b><span>ELAPSED FIELD LOG</span><span>FRAME 06/14 · GRID X06 Y04</span></header>
+        <div class="operations-heading">
+          <p class="eyebrow">THE ASK EXPANDED INTO AN OPERATION</p>
+          <h2 id="title-6">28 days of persistent work.</h2>
+          <div class="run-index" aria-label="Conservative background automation ledger"><span><b>21</b>AUTONOMOUS RUNS</span><span><b>304</b>MODEL CALLS</span><span><b>451</b>TOOL CALLS</span><span><b>88.3</b>MIN ACTIVE</span></div>
+        </div>
+        <ol class="operation-rows reveal-group">
+          <li><span>01</span><b>INTERPRET</b><p>Read lender requirements, association materials, and the servicer situation.</p><em>COMPLETE</em></li>
+          <li><span>02</span><b>SOURCE</b><p>Search records, contact brokers and property management, gather quotes.</p><em>COMPLETE</em></li>
+          <li><span>03</span><b>NEGOTIATE</b><p>Clarify underwriting, compare coverage, and advance broker follow-up.</p><em>COMPLETE</em></li>
+          <li><span>04</span><b>PERSIST</b><p>Run a reply watcher and weekday advancement loop without repeated prompting.</p><em>BACKGROUND</em></li>
+          <li><span>05</span><b>RETURN</b><p>Surface a concrete recommendation at the consequential decision point.</p><em>AWAIT APPROVAL</em></li>
         </ol>
-        <div class="metric-strip reveal-item">
-          <p><strong>21</strong> MODEL-DRIVEN RUNS <span>/</span> <strong>451</strong> TOOL CALLS <span>/</span> <strong>88.3</strong> ACTIVE MINUTES</p>
-          <small>Conservative background-agent minimum.</small>
-        </div>
+        <div class="timeline-rule" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <footer class="status-bar"><span>JUNE 25 → JULY 23</span><span>LEDGER: BACKGROUND JOB ONLY</span><b>OUTCOME STILL WITHHELD</b></footer>
       </div>
-      <aside class="speaker-notes" hidden>Now let elapsed time do the work. This was not one heroic prompt. It involved negotiation, a watcher Alfred created, a weekday advancement job, a human approval gate, and closeout across twenty-eight days. The usage numbers are a conservative minimum, not theater.</aside>
+      <aside class="presenter-note" data-note>Make the depth felt before the payoff. Over 28 days, the dedicated background job alone ran 21 times, made 304 model calls and 451 tool calls, and recorded 88.3 minutes of active runtime. That conservative lower bound excludes the initial live investigation and script-only reply watcher.</aside>
     </section>
 
-    <section class="slide slide--cream slide--outcome" id="slide-07" data-slide-index="7" data-duration="90" aria-labelledby="slide-07-title">
-      <div class="slide-frame outcome-frame reveal-stage">
-        <header class="outcome-heading">
-          <p class="eyebrow">VERIFIED OUTCOME</p>
-          <h2 id="slide-07-title" class="claim">SQUARED AWAY.</h2>
-        </header>
-        <div class="outcome-workbench reveal-item">
-          <div class="state-selectors" role="tablist" aria-label="Outcome evidence states">
-            <button type="button" role="tab" id="state-bound" aria-controls="pane-bound" aria-selected="true" data-outcome-state="bound"><span>BOUND</span><small>$1,510.69 annual HO-6</small><em>SAVED / $724.02 per year</em></button>
-            <button type="button" role="tab" id="state-submitted" aria-controls="pane-submitted" aria-selected="false" data-outcome-state="submitted"><span>SUBMITTED</span><small>proof delivered to the servicer</small></button>
-            <button type="button" role="tab" id="state-refunded" aria-controls="pane-refunded" aria-selected="false" data-outcome-state="refunded"><span>REFUNDED</span><small>$1,810.63 to escrow</small></button>
-            <button type="button" role="tab" id="state-reconciled" aria-controls="pane-reconciled" aria-selected="false" data-outcome-state="reconciled"><span>RECONCILED</span><small>final closeout confirmed</small></button>
+    <section class="slide slide--taupe slide--outcome" id="slide-7" data-slide="7" data-phase="OUTCOME" aria-labelledby="title-7" hidden>
+      <div class="slide__frame">
+        <header class="folio"><b>CASE FILE / FINANCIAL REVEAL</b><span>ISSUED · BOUND · RECONCILED</span><span>FRAME 07/14 · GRID X07 Y05</span></header>
+        <div class="outcome-layout">
+          <div class="outcome-claim reveal-group">
+            <p class="eyebrow">THE WITHHELD PAYOFF</p>
+            <h2 id="title-7">A completed operation, not an answer.</h2>
+            <ul class="financial-ledger" aria-label="Verified financial outcome">
+              <li><span>NEW ANNUAL PREMIUM</span><strong>$1,510.69</strong><em>BOUND</em></li>
+              <li><span>FORCE-PLACED CHARGE</span><strong>$2,234.71</strong><em>BENCHMARK</em></li>
+              <li><span>ANNUAL SAVINGS</span><strong>$724.02</strong><em>32%</em></li>
+              <li><span>SERVICER REFUND</span><strong>$1,810.63</strong><em>RECONCILED</em></li>
+            </ul>
           </div>
-          <div class="evidence-pane" aria-live="polite">
-            <article id="pane-bound" role="tabpanel" aria-labelledby="state-bound" data-outcome-panel="bound">
-              <div class="evidence-images evidence-images--bound">
-                <figure><img src="assets/evidence/selected-quote-redacted.png" alt="Redacted selected insurance quote showing the annual premium" width="1015" height="290"><figcaption>SELECTED QUOTE / REDACTED SOURCE</figcaption></figure>
-                <figure><img src="assets/evidence/bound-declarations-redacted.png" alt="Redacted bound policy declarations" width="1130" height="1160"><figcaption>BOUND DECLARATIONS / REDACTED SOURCE</figcaption></figure>
-              </div>
-              <p class="pane-summary"><strong>BOUND</strong> / $1,510.69 annual HO-6 <span>SAVED / $724.02 per year</span></p>
-            </article>
-            <article id="pane-submitted" role="tabpanel" aria-labelledby="state-submitted" data-outcome-panel="submitted" hidden>
-              <figure class="single-evidence"><img src="assets/evidence/new-policy-invoice-redacted.png" alt="Redacted new policy invoice used in the proof package" width="1210" height="815"><figcaption>NEW POLICY INVOICE / REDACTED SOURCE</figcaption></figure>
-              <p class="pane-summary"><strong>SUBMITTED</strong> / proof delivered to the servicer</p>
-            </article>
-            <article id="pane-refunded" role="tabpanel" aria-labelledby="state-refunded" data-outcome-panel="refunded" hidden>
-              <div class="record-reconstruction verified-record"><span>RECONSTRUCTED FROM VERIFIED RECORD</span><strong>REFUNDED</strong><p>$1,810.63 to escrow</p></div>
-            </article>
-            <article id="pane-reconciled" role="tabpanel" aria-labelledby="state-reconciled" data-outcome-panel="reconciled" hidden>
-              <blockquote class="record-reconstruction verified-transcript"><span>VERIFIED TRANSCRIPT / SOURCE CROP PENDING</span><p>“ok we're squared away! the other shit was i guess the prorate. nice work!”</p></blockquote>
-            </article>
+          <div class="proof-stack">
+            <figure class="proof proof--invoice"><img src="assets/evidence/new-policy-invoice-redacted.png" alt="Redacted Universal Property new policy invoice showing a total amount due of 1,510 dollars and 69 cents" width="1210" height="815"><figcaption><b>ISSUED</b> NEW POLICY INVOICE · $1,510.69</figcaption></figure>
+            <figure class="proof proof--declaration"><img src="assets/evidence/bound-declarations-redacted.png" alt="Redacted homeowners declaration showing a total policy premium of 1,510 dollars and 69 cents" width="1130" height="1160"><figcaption><b>BOUND</b> DECLARATION EVIDENCE</figcaption></figure>
+            <div class="refund-proof"><b>VERIFIED CLOSEOUT RECORD</b><strong>$1,810.63</strong><span>PROOF SUBMITTED · REFUNDED · RECONCILED</span></div>
           </div>
         </div>
+        <footer class="status-bar"><span>STATE: CLOSED</span><span>SOURCES: REDACTED POLICY DOCUMENTS + VERIFIED RECORD</span><b>32% LOWER ANNUAL PREMIUM</b></footer>
       </div>
-      <aside class="speaker-notes" hidden>Only now reveal the outcome. Bound is different from quoted. Submitted is different from drafted. The savings annotation belongs to the bound premium. Refund and final reconciliation are verified records without direct crops, so they are clearly labelled rather than mocked up.</aside>
+      <aside class="presenter-note" data-note>Now reveal the economics. The replacement policy was issued and bound at $1,510.69 versus a $2,234.71 force-placed charge, a $724.02 annual difference, or 32 percent. The declarations prove the bound premium. Verified case records establish proof submission, the $1,810.63 refund, and final reconciliation.</aside>
     </section>
 
-    <section class="slide slide--cream slide--paradox" id="slide-08" data-slide-index="8" data-duration="55" aria-labelledby="slide-08-title">
-      <div class="slide-frame paradox-frame reveal-stage">
-        <header>
-          <p class="eyebrow">THE DISCOVERY PARADOX</p>
-          <h2 id="slide-08-title" class="claim">EVEN I DIDN’T KNOW THIS WAS AN AGENT TASK.</h2>
-          <p class="body-lede">If a maximalist needs the conversation to reveal the job, what are ordinary users missing?</p>
-        </header>
-        <div class="ask-orbit reveal-item"><p>“need help with<br>condo insurance”</p><span>ORIGINAL ASK</span></div>
-      </div>
-      <aside class="speaker-notes" hidden>This is the reinterpretation. I was already a maximalist, yet I did not arrive with an agent task in mind. The conversation discovered the work. Ask what ordinary users are missing when the product waits for them to name delegation explicitly.</aside>
-    </section>
-
-    <section class="slide slide--navy slide--reset" id="slide-09" data-slide-index="9" data-duration="25" aria-labelledby="slide-09-title">
-      <div class="slide-frame reset-frame reveal-stage">
-        <h2 id="slide-09-title" class="claim claim--hero reveal-item">WHAT DOES THIS<br>MEAN FOR SPARK?</h2>
-      </div>
-      <aside class="speaker-notes" hidden>Pause. This is the chapter turn from personal field report to product implication. Let the question sit without adding a subtitle or answer yet.</aside>
-    </section>
-
-    <section class="slide slide--cream slide--opportunity" id="slide-10" data-slide-index="10" data-duration="65" aria-labelledby="slide-10-title">
-      <div class="slide-frame opportunity-frame reveal-stage">
-        <header>
-          <p class="eyebrow">THE OPPORTUNITY</p>
-          <h2 id="slide-10-title" class="visually-hidden">Gemini discovers completable goals and hands context to Spark</h2>
-        </header>
-        <div class="evidence-console product-console reveal-item">
-          <div class="console-bar"><span>PRODUCT PROPOSITION</span><span>CONTEXT PRESERVED</span></div>
-          <p class="product-observation">Gemini detects a completable real-world goal.</p>
-          <p class="product-offer">“This looks like something I can take through completion. Want me to handle it?”</p>
-          <div class="choice-signal" aria-label="User choice point">USER CHOICE</div>
-          <div class="handoff-path" aria-label="Context handoff to Spark"><span>HAND CONTEXT TO SPARK</span><i aria-hidden="true"></i><b>SPARK<br><small>READY</small></b></div>
+    <section class="slide slide--taupe slide--paradox" id="slide-8" data-slide="8" data-phase="DISCOVERY" aria-labelledby="title-8" hidden>
+      <div class="slide__frame">
+        <header class="folio"><b>FIELD NOTE / DISCOVERY PARADOX</b><span>INTERPRETATION</span><span>FRAME 08/14 · GRID X08 Y06</span></header>
+        <div class="paradox-layout reveal-group">
+          <p class="eyebrow">THE SURPRISING PART WAS NOT THE AUTOMATION</p>
+          <h2 id="title-8">Even I didn’t know this was an agent task.</h2>
+          <div class="paradox-question"><span>IF A MAXIMALIST NEEDS THE CONVERSATION TO REVEAL THE JOB</span><p>What are ordinary users missing?</p></div>
+          <blockquote>Users cannot switch into agent mode for tasks they don’t know might become agentic.</blockquote>
         </div>
+        <footer class="status-bar"><span>DISCOVERY SURFACE: ORDINARY CONVERSATION</span><span>LATENT WORK BECOMES LEGIBLE</span><b>USERS ASK FOR HELP</b></footer>
       </div>
-      <aside class="speaker-notes" hidden>The proposal is not a new dashboard. Gemini recognizes a completable goal, offers to carry it through, and preserves the context when the user chooses Spark. Label this as a proposition: we are testing a behavior, not pretending finished UI exists.</aside>
+      <aside class="presenter-note" data-note>This is the hinge. I am the person most likely to recognize delegable work, and I still started with help, not an agent. Mainstream users cannot choose a mode for a job they cannot yet imagine.</aside>
     </section>
 
-    <section class="slide slide--cream slide--journey" id="slide-11" data-slide-index="11" data-duration="65" aria-labelledby="slide-11-title">
-      <div class="slide-frame journey-frame reveal-stage">
-        <header>
-          <p class="eyebrow">THE JOURNEY</p>
-          <h2 id="slide-11-title" class="visually-hidden">Six-step journey from ask to confirmed completion</h2>
-        </header>
-        <ol class="mission-rail" aria-label="Agent journey">
-          <li class="reveal-item"><span>01</span><strong>ASK</strong></li>
-          <li class="reveal-item"><span>02</span><strong>UNCOVER<br>REAL GOAL</strong></li>
-          <li class="mission-node--choice reveal-item"><span>03</span><strong>PREVIEW<br>DELEGATION</strong></li>
-          <li class="reveal-item"><span>04</span><strong>HAND CONTEXT<br>TO SPARK</strong></li>
-          <li class="mission-node--choice reveal-item"><span>05</span><strong>SUPERVISE</strong></li>
-          <li class="mission-node--complete reveal-item"><span>06</span><strong>CONFIRM<br>COMPLETION</strong></li>
+    <section class="slide slide--cobalt slide--chapter" id="slide-9" data-slide="9" data-phase="SPARK" aria-labelledby="title-9" hidden>
+      <div class="slide__frame">
+        <header class="folio folio--light"><b>CHAPTER TURN / PRODUCT</b><span>QUESTION 09</span><span>FRAME 09/14 · GRID X09 Y07</span></header>
+        <div class="chapter-copy reveal-group">
+          <p class="eyebrow">FROM LIVED CASE TO PRODUCT OPPORTUNITY</p>
+          <h2 id="title-9">WHAT DOES THIS MEAN FOR SPARK?</h2>
+          <div class="chapter-rule" aria-hidden="true"><span></span><i></i><b>09</b></div>
+        </div>
+        <footer class="status-bar status-bar--light"><span>SECTION II / RECOMMENDATION</span><span>NO SUPPORTING DETAIL</span><b>RESET THE ROOM</b></footer>
+      </div>
+      <aside class="presenter-note" data-note>Pause. Let the title reset the room. The case is complete. Now move from what happened to what Gemini and Spark can learn from it.</aside>
+    </section>
+
+    <section class="slide slide--taupe slide--offer" id="slide-10" data-slide="10" data-phase="OFFER" aria-labelledby="title-10" hidden>
+      <div class="slide__frame">
+        <header class="folio"><b>PRODUCT NOTE / DISCOVERY</b><span>PROPOSED SAME-THREAD OFFER</span><span>FRAME 10/14 · GRID X10 Y08</span></header>
+        <div class="offer-layout reveal-group">
+          <div class="offer-proposition">
+            <p class="eyebrow">KEEP THE EXECUTION BOUNDARY</p>
+            <h2 id="title-10">Remove the imagination boundary.</h2>
+            <p>Gemini can notice when an answer has revealed a completable real-world goal, then offer a context-preserving handoff to Spark.</p>
+          </div>
+          <blockquote class="same-thread-offer">
+            <header><span>PROPOSED COPY</span><b>NOT PRODUCT UI</b></header>
+            <p>“This looks like something I can take through completion. Want me to handle it?”</p>
+            <footer><span>STAYS IN THE SAME THREAD</span><em>HUMAN CHOOSES</em></footer>
+          </blockquote>
+          <div class="offer-rail"><span>ANSWER</span><i></i><b>OFFER</b><i></i><span>SPARK</span></div>
+        </div>
+        <footer class="status-bar"><span>GEMINI: DISCOVERY SURFACE</span><span>SPARK: EXECUTION LAYER</span><b>CONTEXT PRESERVED</b></footer>
+      </div>
+      <aside class="presenter-note" data-note>This is a journey recommendation, not an architecture shortcut. Gemini stays the discovery surface. Spark remains the dedicated execution layer. The product move is a context-preserving offer in the same conversation.</aside>
+    </section>
+
+    <section class="slide slide--cobalt slide--sequence" id="slide-11" data-slide="11" data-phase="JOURNEY" aria-labelledby="title-11" hidden>
+      <div class="slide__frame">
+        <header class="folio folio--light"><b>OPERATING SEQUENCE / USER JOURNEY</b><span>SIX STATES</span><span>FRAME 11/14 · GRID X11 Y09</span></header>
+        <div class="sequence-heading"><p class="eyebrow">ONE THREAD · DURABLE STATE · SUPERVISED EXECUTION</p><h2 id="title-11">From ask to completion.</h2></div>
+        <ol class="sequence-rows reveal-group">
+          <li><span>01</span><b>ASK</b><p>Ordinary language in Gemini.</p><em>HUMAN</em></li>
+          <li><span>02</span><b>UNCOVER</b><p>Reveal the real goal and hidden work.</p><em>GEMINI</em></li>
+          <li><span>03</span><b>PREVIEW</b><p>Show plan, scope, and needed access.</p><em>VISIBLE</em></li>
+          <li><span>04</span><b>SPARK EXECUTES</b><p>Carry context into persistent background work.</p><em>ACTIVE</em></li>
+          <li class="sequence-rows__boundary"><span>05</span><b>APPROVALS</b><p>Stop at binding, spending, or consequential change.</p><em>HUMAN GATE</em></li>
+          <li><span>06</span><b>COMPLETION</b><p>Return evidence, state, and a closed loop.</p><em>DONE</em></li>
         </ol>
-        <p class="journey-line" aria-hidden="true">ASK → UNCOVER REAL GOAL → PREVIEW DELEGATION → HAND CONTEXT TO SPARK → SUPERVISE → CONFIRM COMPLETION</p>
+        <footer class="status-bar status-bar--light"><span>ASK → UNCOVER → PREVIEW → EXECUTE</span><span>APPROVALS → COMPLETION</span><b>ONE CONTINUOUS THREAD</b></footer>
       </div>
-      <aside class="speaker-notes" hidden>Walk the rail as one continuity, not six features. The key design requirement is that the conversation fragment travels into Spark. Choice and approval remain human moments. Teal appears only at confirmed completion.</aside>
+      <aside class="presenter-note" data-note>Walk left to right through the six states: Ask, Uncover, Preview, Spark executes, Approvals, Completion. The red row is the consequential boundary. The acid states are human choice, active work, and completion.</aside>
     </section>
 
-    <section class="slide slide--cream slide--architecture" id="slide-12" data-slide-index="12" data-duration="70" aria-labelledby="slide-12-title">
-      <div class="slide-frame architecture-frame reveal-stage">
-        <header class="architecture-heading">
-          <p class="eyebrow">TRUST ARCHITECTURE</p>
-          <h2 id="slide-12-title" class="claim">THE HANDOFF IS TINY.<br>THE SYSTEM BENEATH IT ISN’T.</h2>
-        </header>
-        <div class="tiny-handoff reveal-item"><span>GEMINI CONTEXT</span><i aria-hidden="true"></i><strong>HAND TO SPARK</strong></div>
-        <div class="operations-cutaway" aria-label="Linked operational stack beneath the handoff">
-          <ol>
-            <li class="reveal-item">PLANS</li>
-            <li class="reveal-item">SCOPED PERMISSIONS</li>
-            <li class="reveal-item">BACKGROUND WORK</li>
-            <li class="reveal-item">APPROVALS</li>
-            <li class="reveal-item">AUDITABILITY</li>
-            <li class="reveal-item">RECOVERY</li>
+    <section class="slide slide--taupe slide--infrastructure" id="slide-12" data-slide="12" data-phase="TRUST" aria-labelledby="title-12" hidden>
+      <div class="slide__frame">
+        <header class="folio"><b>ENGINEERING NOTE / TRUST</b><span>VISIBLE HANDOFF, SUBSTANTIAL SYSTEM</span><span>FRAME 12/14 · GRID X12 Y10</span></header>
+        <div class="infrastructure-layout">
+          <div class="handoff-small"><span>THE VISIBLE MOMENT</span><p>“Want me to handle it?”</p><b>ONE LINE</b></div>
+          <div class="infrastructure-heading"><p class="eyebrow">THE HANDOFF CAN BE SMALL</p><h2 id="title-12">The infrastructure cannot be.</h2></div>
+          <ol class="infrastructure-rows reveal-group">
+            <li><span>01</span><b>PERSISTENT</b><p>Durable task state, plans, background work, and progress inspection.</p></li>
+            <li><span>02</span><b>PERMISSION</b><p>Scoped authority, source access, and explicit consequential gates.</p></li>
+            <li><span>03</span><b>AUDIT</b><p>What happened, why it happened, which source supported it, and who approved it.</p></li>
+            <li><span>04</span><b>RECOVERY</b><p>Pause, intervene, retry, roll back where possible, and resume without losing context.</p></li>
           </ol>
         </div>
+        <footer class="status-bar"><span>DEDICATED EXECUTION SURFACE</span><span>TRUST IS STRUCTURAL</span><b>SPARK EARNS THE HANDOFF</b></footer>
       </div>
-      <aside class="speaker-notes" hidden>The visible handoff should be tiny. The complexity belongs underneath: plans, scoped permissions, durable background work, approvals, auditability, and recovery. This is what turns a delightful suggestion into a trustworthy consequential system.</aside>
+      <aside class="presenter-note" data-note>Do not trivialize the engineering. A tiny conversational offer sits on persistence, permissions, auditability, and recovery. Spark is not bypassed. Spark is what makes execution worthy of trust.</aside>
     </section>
 
-    <section class="slide slide--cream slide--experiment" id="slide-13" data-slide-index="13" data-duration="55" aria-labelledby="slide-13-title">
-      <div class="slide-frame experiment-frame reveal-stage">
-        <header>
-          <p class="eyebrow">PRODUCT TEST</p>
-          <h2 id="slide-13-title" class="claim">RUN THE EXPERIMENT</h2>
-          <p class="body-lede">In ordinary Gemini chats, offer a context-preserving Spark handoff.</p>
-        </header>
-        <div class="experiment-rail" aria-label="Experiment from ordinary chat to Spark handoff">
-          <span>ORDINARY CHAT</span><i aria-hidden="true"></i><strong>SPARK HANDOFF OFFER</strong>
+    <section class="slide slide--taupe slide--experiment" id="slide-13" data-slide="13" data-phase="EXPERIMENT" aria-labelledby="title-13" hidden>
+      <div class="slide__frame">
+        <header class="folio"><b>PRODUCT NOTE / TEST</b><span>NEAR-TERM EXPERIMENT</span><span>FRAME 13/14 · GRID X13 Y11</span></header>
+        <div class="experiment-layout">
+          <div class="experiment-brief reveal-group">
+            <p class="eyebrow">START IN ORDINARY GEMINI CHATS</p>
+            <h2 id="title-13">Test the moment a goal becomes executable.</h2>
+            <ol class="experiment-steps">
+              <li><span>01</span><p>Detect a narrow set of conversations where a real-world goal and next work are legible.</p></li>
+              <li><span>02</span><p>Offer a preview with scope, plan, access, and approval boundaries.</p></li>
+              <li><span>03</span><p>Hand accepted tasks into Spark with context intact and inspectable.</p></li>
+            </ol>
+          </div>
+          <div class="measure-field">
+            <header><span>SUCCESS MEASURES</span><b>NOT VANITY METRICS</b></header>
+            <dl>
+              <div><dt>HANDOFF ACCEPTANCE</dt><dd>Did the offer match intent?</dd></div>
+              <div><dt>COMPLETION</dt><dd>Did the delegated goal finish?</dd></div>
+              <div><dt>INTERVENTION / FAILURE</dt><dd>Where did trust or execution break?</dd></div>
+              <div><dt>TRUST AFTER COMPLETION</dt><dd>Would the user delegate again?</dd></div>
+              <div><dt>REPEAT DELEGATION</dt><dd>Did discovery compound over time?</dd></div>
+            </dl>
+          </div>
         </div>
-        <ol class="measure-line" aria-label="Five experiment measures">
-          <li class="reveal-item"><span></span>HANDOFF<br>ACCEPTANCE</li>
-          <li class="measure--open reveal-item"><span></span>COMPLETION</li>
-          <li class="measure--intervention reveal-item"><span></span>INTERVENTION<br>/ FAILURE</li>
-          <li class="reveal-item"><span></span>TRUST AFTER<br>COMPLETION</li>
-          <li class="reveal-item"><span></span>REPEAT<br>DELEGATION</li>
-        </ol>
+        <footer class="status-bar"><span>HYPOTHESIS: CONVERSATION REVEALS LATENT WORK</span><span>MEASURE QUALITY + TRUST</span><b>MAKE IT FALSIFIABLE</b></footer>
       </div>
-      <aside class="speaker-notes" hidden>End with a testable move: offer the handoff inside ordinary Gemini conversations and preserve context. Instrument acceptance, completion, intervention or failure, trust after completion, and repeat delegation. Completion is intentionally unfilled because results do not exist yet.</aside>
+      <aside class="presenter-note" data-note>Make the recommendation testable. Start narrow. Measure whether offers match intent, whether goals complete, where intervention happens, whether trust survives completion, and whether users delegate again.</aside>
     </section>
 
-    <section class="slide slide--navy slide--close" id="slide-14" data-slide-index="14" data-duration="70" aria-labelledby="slide-14-title">
-      <div class="slide-frame close-frame reveal-stage">
-        <div class="alfred-medallion alfred-medallion--muted" aria-hidden="true"><img src="assets/alfred-owl.png" alt="" width="1024" height="1024"></div>
-        <div class="close-claim">
-          <h2 id="slide-14-title" class="claim claim--hero reveal-item">AGENTS RETURN<br>PIECES OF LIFE.</h2>
-          <p class="close-secondary reveal-item">Time. Attention. Emotional energy.</p>
-          <p class="close-tertiary reveal-item">Not just completed tasks.</p>
+    <section class="slide slide--cobalt slide--close" id="slide-14" data-slide="14" data-phase="CLOSE" aria-labelledby="title-14" hidden>
+      <div class="slide__frame">
+        <header class="folio folio--light"><b>FIELD REPORT / CLOSE</b><span>HUMAN VALUE</span><span>FRAME 14/14 · GRID X14 Y12</span></header>
+        <div class="close-layout reveal-group">
+          <p class="eyebrow">THE REAL RETURN</p>
+          <h2 id="title-14">Agents can return pieces of life.</h2>
+          <div class="close-copy">
+            <p>Alfred didn’t just complete an insurance operation.</p>
+            <p>He returned the hours, attention, and emotional energy it would have taken from my life.</p>
+          </div>
+          <blockquote>That is the opportunity for Spark: help billions of people recover more of what only they can spend.</blockquote>
+          <div class="human-signal"><span>TIME</span><i></i><span>ATTENTION</span><i></i><span>LIFE</span></div>
         </div>
+        <footer class="status-bar status-bar--light"><span>END OF FIELD REPORT</span><span>DISCUSSION</span><b>RETURN TO THE HUMAN</b></footer>
       </div>
-      <aside class="speaker-notes" hidden>Close on the human return, not the insurance savings. Useful agents return time, attention, and emotional energy—the pieces of life consumed by open loops. That is the value Spark can unlock when discovery and execution remain connected.</aside>
+      <aside class="presenter-note" data-note>Close slowly. The money proved the operation, but it is not the meaning. The meaning is hours, attention, and emotional energy returned. That is the product opportunity and responsibility.</aside>
     </section>
   </main>
-  <script type="module">
-    import { initDeck } from './src/deck.js';
-    initDeck(document.querySelector('#deck'));
-  </script>
+
+  <nav class="deck-controls" aria-label="Presentation controls">
+    <button class="control-button" type="button" data-action="prev" aria-label="Previous slide">←<span class="sr-only">Previous</span></button>
+    <ol class="route" aria-label="Slide route"></ol>
+    <p class="counter" aria-live="polite"><b data-current>01</b><span>/</span><span data-total>14</span></p>
+    <button class="control-button" type="button" data-action="next" aria-label="Next slide">→<span class="sr-only">Next</span></button>
+  </nav>
+
+  <aside class="presenter-panel" id="presenter-panel" aria-label="Presenter notes" hidden>
+    <header><b>PRESENTER NOTES</b><span data-presenter-count>01/14</span></header>
+    <p data-presenter-note></p>
+  </aside>
+  <noscript><p class="noscript">JavaScript is disabled. All slides remain available in document order for reading and printing.</p></noscript>
 </body>
 </html>

@@ -5,6 +5,7 @@
     "src/deck.js",
     "assets/favicon.svg",
     "assets/alfred-field-specimen.png",
+    "assets/alfred-every-horizon.png",
     "assets/montage/alfred-hub.png",
     "assets/montage/homepages/cubby.jpg",
     "assets/montage/homepages/how-we-met.jpg",
@@ -19,13 +20,13 @@
   "files": [
     {
       "path": "index.html",
-      "bytes": 31810,
-      "sha256": "ae0da5414d699cb737202fe6233a0fdbd13cd8775e031c273938f3c7c1f898a8"
+      "bytes": 31837,
+      "sha256": "46ecb8f67c9d49d22b8a8b24b6f47cf22e1eab9441be5a666a5dac8107b3b291"
     },
     {
       "path": "styles.css",
       "bytes": 44894,
-      "sha256": "f830e10f13f31b7733469aabcbc1185e70e16543b57d960bcb49d748a49143b5"
+      "sha256": "ca5c1947d4b1152be5c22f7274061de6db9d35285270da78520e4cbe41de96e8"
     },
     {
       "path": "src/deck.js",
@@ -41,6 +42,11 @@
       "path": "assets/alfred-field-specimen.png",
       "bytes": 154440,
       "sha256": "1e80d48c6165b94525f827c4a7df5df1e9a60716a151d0c3e9d0a7790a008e77"
+    },
+    {
+      "path": "assets/alfred-every-horizon.png",
+      "bytes": 3281521,
+      "sha256": "4d91d2a433838a541d8df8d86770666031080f97d7315bf17a491ff09b3dbfe5"
     },
     {
       "path": "assets/montage/alfred-hub.png",

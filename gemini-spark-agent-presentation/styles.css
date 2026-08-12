@@ -227,8 +227,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .horizon-thesis { margin-top: 12px; color: var(--ivory); font-size: clamp(12px, 1.05vw, 18px); font-weight: 700; line-height: 1.15; letter-spacing: .08em; text-transform: uppercase; }
 .horizon-deck { max-width: 46ch; margin-top: 10px; color: var(--ivory); font-size: clamp(8px, .64vw, 11px); font-weight: 600; line-height: 1.45; letter-spacing: .08em; text-transform: uppercase; }
 .horizon-aside { position: absolute; z-index: 5; right: 5%; top: 10%; color: var(--ivory); font-size: clamp(8px, .7vw, 12px); font-weight: 600; line-height: 1.5; letter-spacing: .08em; }
-.horizon-alfred { position: absolute; z-index: 1; left: 31.1%; top: 0; width: 38.6%; height: 91%; overflow: hidden; opacity: .72; mix-blend-mode: screen; }
-.horizon-alfred img { width: 100%; height: 100%; object-fit: cover; object-position: 67% center; filter: contrast(1.12) saturate(.78); }
+.horizon-alfred { position: absolute; z-index: 1; left: 31.1%; top: 0; width: 38.6%; height: 91%; overflow: hidden; opacity: .78; pointer-events: none; }
+.horizon-alfred img { width: 100%; height: 100%; object-fit: contain; object-position: center top; filter: saturate(.82) contrast(1.04); }
 .horizon-line { position: absolute; z-index: 3; left: 1.2%; right: 1.2%; top: 47.5%; border-top: 2px solid var(--acid); }
 .horizon-stops { position: absolute; z-index: 4; inset: 37.6% 1.5% auto; height: 49%; display: grid; grid-template-columns: .86fr 1.05fr .92fr 1.08fr .82fr; gap: clamp(24px, 4.2vw, 72px); }
 .horizon-stop { position: relative; min-width: 0; padding-top: 0; }
@@ -590,7 +590,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .horizon-thesis { max-width: 28ch; font-size: 13px; }
   .horizon-deck { max-width: 36ch; font-size: 9px; }
   .horizon-aside { position: relative; right: auto; top: auto; max-width: 31ch; margin: 25px 20px 0 auto; font-size: 8px; text-align: right; }
-  .horizon-alfred { left: 4%; top: 255px; width: 96%; height: 430px; opacity: .58; }
+  .horizon-alfred { left: 4%; top: 255px; width: 96%; height: 430px; opacity: .64; }
   .horizon-line { left: 49px; right: auto; top: 610px; bottom: 120px; border-top: 0; border-left: 2px solid var(--acid); }
   .horizon-stops { position: relative; inset: auto; height: auto; margin-top: 315px; padding: 0 20px 110px 78px; display: block; }
   .horizon-stop { min-height: 242px; }

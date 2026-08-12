@@ -6,19 +6,28 @@
     "assets/favicon.svg",
     "assets/alfred-field-specimen.png",
     "assets/montage/alfred-hub.png",
+    "assets/montage/homepages/cubby.jpg",
+    "assets/montage/homepages/guide-to-alfred.jpg",
+    "assets/montage/homepages/how-we-met.jpg",
+    "assets/montage/homepages/maitre-d.jpg",
+    "assets/montage/homepages/portugal.jpg",
+    "assets/montage/homepages/super-bowl.jpg",
+    "assets/montage/homepages/the-loop.jpg",
+    "assets/montage/homepages/weekend-atlas.jpg",
     "assets/evidence/bound-declarations-redacted.png",
-    "assets/evidence/new-policy-invoice-redacted.png"
+    "assets/evidence/new-policy-invoice-redacted.png",
+    "assets/evidence/roundpoint-lender-notice-original.jpg"
   ],
   "files": [
     {
       "path": "index.html",
-      "bytes": 25836,
-      "sha256": "a72415cfec64244ddb4d8b8695fa65a54d01d33eebcdc4c8b400e984a7047fc8"
+      "bytes": 28925,
+      "sha256": "0b957e82d3a7f50fa48905b5d6cc156b2f0a1d38d63b30294a4a8d729e48cb16"
     },
     {
       "path": "styles.css",
-      "bytes": 36512,
-      "sha256": "1f14341dd0530c512afd138fdb6f0dcd723b960fc7c67be61d7260cc389f512b"
+      "bytes": 36981,
+      "sha256": "dd59716549ad74cfa09c30fa1d64a4080b3b735c53e93208c9ed5f889f50e20d"
     },
     {
       "path": "src/deck.js",
@@ -41,6 +50,46 @@
       "sha256": "a185db2322ae3590883c5d2655acd2cf1e9d3695805d159230c6d021c311c363"
     },
     {
+      "path": "assets/montage/homepages/cubby.jpg",
+      "bytes": 23423,
+      "sha256": "b81b7e027cee06827ce5eaf1d3dc50427f83fa51575d744f79f468cd384a7563"
+    },
+    {
+      "path": "assets/montage/homepages/guide-to-alfred.jpg",
+      "bytes": 63814,
+      "sha256": "350ad0f38d3fbd3192a99d33767b4b91c161f78d1d7d06c3fb25b1b8ba05b240"
+    },
+    {
+      "path": "assets/montage/homepages/how-we-met.jpg",
+      "bytes": 47584,
+      "sha256": "a92ea6fdcbb72ede5eca26faef899b26f0696c9d3c99500fc6f93e5993325a5a"
+    },
+    {
+      "path": "assets/montage/homepages/maitre-d.jpg",
+      "bytes": 84609,
+      "sha256": "9b9f9a0af7a04c466f198c31f461f94dc8e1d72995021f06392b6fa941324e7d"
+    },
+    {
+      "path": "assets/montage/homepages/portugal.jpg",
+      "bytes": 35336,
+      "sha256": "7335add6add036dbfad76d82b8a7c7115addcaef4a1672f762c156c367f7ee38"
+    },
+    {
+      "path": "assets/montage/homepages/super-bowl.jpg",
+      "bytes": 48459,
+      "sha256": "1830491145d1ae5e185d28c6391c2b786661030e146366f2afaad8a72127f654"
+    },
+    {
+      "path": "assets/montage/homepages/the-loop.jpg",
+      "bytes": 39035,
+      "sha256": "c0e863990f64faf2bfcfbcf9ac85b4d38a04549c287af88ea980d7190bc38060"
+    },
+    {
+      "path": "assets/montage/homepages/weekend-atlas.jpg",
+      "bytes": 163438,
+      "sha256": "fdd11f3409cda4eb03d849ccaee5b95f94fab83ec50372aa295fb9235b49b108"
+    },
+    {
       "path": "assets/evidence/bound-declarations-redacted.png",
       "bytes": 263949,
       "sha256": "1bdf8bc4280249779da3891c1d7eb0b492c62366d0f7fe8a59974dd38be9fb47"
@@ -49,6 +98,11 @@
       "path": "assets/evidence/new-policy-invoice-redacted.png",
       "bytes": 156010,
       "sha256": "796b6995baea4ae9ba78e80669a43e70d912a03f8abb04f3aefcc87265265718"
+    },
+    {
+      "path": "assets/evidence/roundpoint-lender-notice-original.jpg",
+      "bytes": 1075333,
+      "sha256": "f5f20ad6e8a2c2edfbf5e527e6129be5194873a11d3d07898b0bad91f68a9b90"
     }
   ]
 }

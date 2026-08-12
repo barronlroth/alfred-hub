@@ -285,6 +285,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .terminal-agent-frame > p { font-size: clamp(11px, .95vw, 14px); line-height: 1.5; }
 .terminal-authority { display: contents; }
 .terminal-authority p { font-size: clamp(11px, .95vw, 14px); line-height: 1.5; }
+.terminal-authority-quote { position: relative; padding-left: 18px; }
+.terminal-authority-quote::before { content: ">"; position: absolute; left: 0; color: var(--terminal-yellow); font-weight: 700; }
 .terminal-status { display: flex; align-items: center; min-height: 30px; border-top: 1px solid #a27800; border-bottom: 1px solid #a27800; font-size: 9px; }
 .terminal-status > * { padding: 7px 12px; border-right: 1px solid #535849; }
 .terminal-status strong { color: var(--terminal-yellow); }

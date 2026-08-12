@@ -23,12 +23,12 @@
     {
       "path": "index.html",
       "bytes": 33271,
-      "sha256": "505ceb7ae1b4892cb25a45b04ad716f93ce702aac6142ff1d71c1bc3d106cfc9"
+      "sha256": "a5811fe24afe075b021c7dae2937c07393b60e0e1b22dab02bd9dc250450d29b"
     },
     {
       "path": "styles.css",
-      "bytes": 50020,
-      "sha256": "a66e8e5159509f8864f5b2a191ad146236ffba29b7b5e78d532fb24bc0e7a74b"
+      "bytes": 50010,
+      "sha256": "efdd488b9f821fabe99f5d3864e25f9c48cf4515c7012099d5690ce3d2c5f895"
     },
     {
       "path": "src/deck.js",

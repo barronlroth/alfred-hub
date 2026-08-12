@@ -259,6 +259,11 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .horizon-stop > i::after { height: 38px; top: -29px; }
 .horizon-card { position: absolute; left: 0; right: 0; top: clamp(81px, 13.47vh, 97px); padding: 12px 10px 10px; border: 1px solid rgba(243,226,202,.9); color: var(--ivory); background: rgba(0,2,120,.3); }
 .horizon-stop--tonight .horizon-card { height: clamp(175px, 29.1vh, 210px); }
+.horizon-stop--tonight .horizon-card { padding-top: 8px; }
+.horizon-stop--tonight .maitre-mark { padding-bottom: 4px; }
+.horizon-stop--tonight .card-state { padding: 3px 0; }
+.horizon-stop--tonight .horizon-card dl { margin-top: 5px; }
+.horizon-stop--tonight .horizon-card dl div { padding: 3px 0; }
 .horizon-stop--week .horizon-card { height: clamp(197px, 32.94vh, 237px); }
 .horizon-stop--trip .horizon-card { height: clamp(210px, 35.07vh, 253px); }
 .horizon-stop--release .horizon-card { height: clamp(217px, 36.12vh, 260px); }
@@ -563,11 +568,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .horizon-intro h2 { font-size: 51px; }
   .horizon-thesis { margin-top: 8px; font-size: 11px; }
   .horizon-deck { margin-top: 7px; max-width: 37ch; font-size: 7px; }
-  .horizon-stop--tonight .horizon-card { padding-top: 8px; }
-  .horizon-stop--tonight .maitre-mark { padding-bottom: 4px; }
-  .horizon-stop--tonight .card-state { padding: 3px 0; }
-  .horizon-stop--tonight .horizon-card dl { margin-top: 5px; }
-  .horizon-stop--tonight .horizon-card dl div { padding: 3px 0; }
   .horizon-spec, .horizon-utility { display: none; }
   .operations-heading, .sequence-heading { min-height: 106px; padding-top: 8px; padding-bottom: 10px; }
   .operations-heading h2 { font-size: clamp(41px, 4.5vw, 62px); }

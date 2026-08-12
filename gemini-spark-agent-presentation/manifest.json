@@ -7,12 +7,10 @@
     "assets/alfred-field-specimen.png",
     "assets/montage/alfred-hub.png",
     "assets/montage/homepages/cubby.jpg",
-    "assets/montage/homepages/guide-to-alfred.jpg",
     "assets/montage/homepages/how-we-met.jpg",
     "assets/montage/homepages/maitre-d.jpg",
     "assets/montage/homepages/portugal.jpg",
     "assets/montage/homepages/super-bowl.jpg",
-    "assets/montage/homepages/the-loop.jpg",
     "assets/montage/homepages/weekend-atlas.jpg",
     "assets/evidence/bound-declarations-redacted.png",
     "assets/evidence/new-policy-invoice-redacted.png",
@@ -21,13 +19,13 @@
   "files": [
     {
       "path": "index.html",
-      "bytes": 28935,
-      "sha256": "601881cad77d791fc9772aadcdc1cf56f42c9b22359af5d25990ace7d73fb2bb"
+      "bytes": 28490,
+      "sha256": "be1a4ff91c41bef4a788af337821429d795acf603cfe23d54e34281176765cfa"
     },
     {
       "path": "styles.css",
       "bytes": 38113,
-      "sha256": "5b024a390c2dc990d33600c6bdde5c7b585f4913cd167deb75c79c6b3602317b"
+      "sha256": "43aca78bd71b34cb614557c5b284e45b3b9e5155cde1cd5cf8686497dd5988c0"
     },
     {
       "path": "src/deck.js",
@@ -55,11 +53,6 @@
       "sha256": "b81b7e027cee06827ce5eaf1d3dc50427f83fa51575d744f79f468cd384a7563"
     },
     {
-      "path": "assets/montage/homepages/guide-to-alfred.jpg",
-      "bytes": 63814,
-      "sha256": "350ad0f38d3fbd3192a99d33767b4b91c161f78d1d7d06c3fb25b1b8ba05b240"
-    },
-    {
       "path": "assets/montage/homepages/how-we-met.jpg",
       "bytes": 47584,
       "sha256": "a92ea6fdcbb72ede5eca26faef899b26f0696c9d3c99500fc6f93e5993325a5a"
@@ -78,11 +71,6 @@
       "path": "assets/montage/homepages/super-bowl.jpg",
       "bytes": 48459,
       "sha256": "1830491145d1ae5e185d28c6391c2b786661030e146366f2afaad8a72127f654"
-    },
-    {
-      "path": "assets/montage/homepages/the-loop.jpg",
-      "bytes": 39035,
-      "sha256": "c0e863990f64faf2bfcfbcf9ac85b4d38a04549c287af88ea980d7190bc38060"
     },
     {
       "path": "assets/montage/homepages/weekend-atlas.jpg",

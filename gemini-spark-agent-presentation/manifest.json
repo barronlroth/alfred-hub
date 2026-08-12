@@ -7,17 +7,11 @@
     "assets/alfred-field-specimen.png",
     "assets/montage/alfred-hub.png",
     "assets/montage/homepages/cubby.jpg",
-    "assets/montage/homepages/cubby-scroll.mp4",
     "assets/montage/homepages/how-we-met.jpg",
-    "assets/montage/homepages/how-we-met-scroll.mp4",
     "assets/montage/homepages/maitre-d.jpg",
-    "assets/montage/homepages/maitre-d-scroll.mp4",
     "assets/montage/homepages/portugal.jpg",
-    "assets/montage/homepages/portugal-scroll.mp4",
     "assets/montage/homepages/super-bowl.jpg",
-    "assets/montage/homepages/super-bowl-scroll.mp4",
     "assets/montage/homepages/weekend-atlas.jpg",
-    "assets/montage/homepages/weekend-atlas-scroll.mp4",
     "assets/evidence/bound-declarations-redacted.png",
     "assets/evidence/new-policy-invoice-redacted.png",
     "assets/evidence/roundpoint-lender-notice-original.jpg"
@@ -25,13 +19,13 @@
   "files": [
     {
       "path": "index.html",
-      "bytes": 30149,
-      "sha256": "bc4688ef10219d4748071d1c103ebd5a9d75bfe1055211475e5d664cbd28abb7"
+      "bytes": 28524,
+      "sha256": "5769ffa86ef6b24d55ba3e1039b6c056c5ecf6e663802e759da6103f1a26aaf3"
     },
     {
       "path": "styles.css",
-      "bytes": 38354,
-      "sha256": "b9da33c8919b5dfcdfc072b39ec7045aae6340df2b2a4f86f71fabf87e075b8b"
+      "bytes": 38116,
+      "sha256": "1530b4a6a5f79e551e9b49aeb8bea9f0f704f33b114e59107ba050ac13c6cd2e"
     },
     {
       "path": "src/deck.js",
@@ -59,19 +53,9 @@
       "sha256": "b81b7e027cee06827ce5eaf1d3dc50427f83fa51575d744f79f468cd384a7563"
     },
     {
-      "path": "assets/montage/homepages/cubby-scroll.mp4",
-      "bytes": 15939,
-      "sha256": "f811a16040fc03090cb860f0c9a6adbcb34f2e348ccbee993e8ad5a24c337642"
-    },
-    {
       "path": "assets/montage/homepages/how-we-met.jpg",
       "bytes": 47584,
       "sha256": "a92ea6fdcbb72ede5eca26faef899b26f0696c9d3c99500fc6f93e5993325a5a"
-    },
-    {
-      "path": "assets/montage/homepages/how-we-met-scroll.mp4",
-      "bytes": 29716,
-      "sha256": "a2b9bcf27abf0b10e47b2156c297e81a66d4fbe4b5318243b246642fe272fef8"
     },
     {
       "path": "assets/montage/homepages/maitre-d.jpg",
@@ -79,19 +63,9 @@
       "sha256": "9b9f9a0af7a04c466f198c31f461f94dc8e1d72995021f06392b6fa941324e7d"
     },
     {
-      "path": "assets/montage/homepages/maitre-d-scroll.mp4",
-      "bytes": 86327,
-      "sha256": "d300d2248438192c4eb60d36c6e5ed14c7117b4ec7e67f007ea48b79067ce6f6"
-    },
-    {
       "path": "assets/montage/homepages/portugal.jpg",
       "bytes": 35336,
       "sha256": "7335add6add036dbfad76d82b8a7c7115addcaef4a1672f762c156c367f7ee38"
-    },
-    {
-      "path": "assets/montage/homepages/portugal-scroll.mp4",
-      "bytes": 37540,
-      "sha256": "db049ffe6eb8db23705026519cab392a90186bd3a15cdd751cc371d2653e0ae4"
     },
     {
       "path": "assets/montage/homepages/super-bowl.jpg",
@@ -99,19 +73,9 @@
       "sha256": "1830491145d1ae5e185d28c6391c2b786661030e146366f2afaad8a72127f654"
     },
     {
-      "path": "assets/montage/homepages/super-bowl-scroll.mp4",
-      "bytes": 47871,
-      "sha256": "9ea5836448fa2fc557e966d7e6e2b31fa8e097741893577e19725743b671a5dc"
-    },
-    {
       "path": "assets/montage/homepages/weekend-atlas.jpg",
       "bytes": 163438,
       "sha256": "fdd11f3409cda4eb03d849ccaee5b95f94fab83ec50372aa295fb9235b49b108"
-    },
-    {
-      "path": "assets/montage/homepages/weekend-atlas-scroll.mp4",
-      "bytes": 103121,
-      "sha256": "27d3ed565653dd1adf323ca77b2050a104cd7d84a479e46a1535203c92071060"
     },
     {
       "path": "assets/evidence/bound-declarations-redacted.png",

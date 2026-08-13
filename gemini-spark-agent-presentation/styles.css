@@ -290,6 +290,29 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .chart-grid { stroke: rgba(243,226,202,.22); stroke-width: .7; }
 .chart-base { stroke: var(--acid); stroke-width: 1.4; }
 .chart-alt { stroke: var(--ivory); stroke-width: .8; stroke-dasharray: 3 2; opacity: .75; }
+@media (min-width: 761px) {
+  .horizon-card { padding: 13px 12px 11px; }
+  .horizon-card__label { left: 11px; top: -21px; font-size: clamp(6px, .5vw, 8px); }
+  .horizon-card > strong { font-size: clamp(11px, 1.04vw, 17px); }
+  .horizon-card > span { font-size: clamp(7px, .56vw, 9px); }
+  .maitre-mark { grid-template-columns: 42px 1fr; gap: 9px; }
+  .maitre-mark > span { width: 40px; height: 40px; font-size: 19px; }
+  .maitre-mark strong { font-size: clamp(9px, .82vw, 13px); }
+  .maitre-mark small, .card-state, .horizon-card dt { font-size: clamp(6px, .5vw, 8px); }
+  .horizon-card dd { font-size: clamp(7px, .58vw, 9px); }
+  .meal-mark { height: clamp(70px, 11vh, 80px); }
+  .trip-route { grid-template-columns: 27px 1fr; min-height: 35px; }
+  .trip-route span { font-size: 22px; }
+  .trip-route strong { font-size: clamp(8px, .69vw, 11px); }
+  .card-signal { left: 12px; right: 12px; font-size: clamp(7px, .58vw, 9px); }
+  .release-title { grid-template-columns: 40px 1fr; gap: 9px; }
+  .release-title > img { width: 40px; height: 40px; }
+  .release-title strong { font-size: clamp(11px, 1.04vw, 17px); }
+  .release-title small, .release-version, .release-list, .release-request { font-size: clamp(6px, .49vw, 8px); }
+  .wealth-chart { left: 12px; right: 12px; }
+  .wealth-chart > span, .wealth-chart > em { font-size: clamp(5px, .43vw, 7px); }
+  .wealth-chart svg { height: 40px; }
+}
 .horizon-spec { position: absolute; z-index: 5; left: 2.4%; bottom: 1.8%; color: var(--ivory); font-size: clamp(6px, .55vw, 9px); line-height: 1.55; letter-spacing: .08em; }
 .horizon-utility { position: absolute; z-index: 12; left: 2.5%; bottom: -45px; display: flex; align-items: center; gap: 9px; color: var(--ivory); font-size: 12px; }
 .horizon-utility i { width: 1px; height: 15px; background: var(--ivory); opacity: .65; }

@@ -398,8 +398,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .negotiation-copy p i::before, .negotiation-copy p i::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--acid); transform: translate(-50%, -50%); }
 .negotiation-copy p i::before { width: 52px; height: 2px; }
 .negotiation-copy p i::after { width: 2px; height: 52px; }
-.negotiation-evidence { position: absolute; z-index: 3; left: 38.5%; top: 7.6%; width: 58.85%; height: 77.3%; padding: 8px 9px 0; border: 1px solid var(--acid); background: #12161b; }
-.negotiation-evidence img { width: 100%; height: 100%; object-fit: fill; }
+.negotiation-evidence { position: absolute; z-index: 3; left: 38.5%; top: 7.6%; width: 58.85%; height: auto; aspect-ratio: 989 / 654; padding: 0; border: 1px solid var(--acid); background: #12161b; }
+.negotiation-evidence img { width: 100%; height: 100%; object-fit: contain; }
 .negotiation-evidence figcaption { position: absolute; left: 0; top: calc(100% + 11px); color: var(--ivory); font-size: clamp(10px, 1.15vw, 15px); line-height: 1; letter-spacing: .055em; white-space: nowrap; }
 .negotiation-markers { position: absolute; inset: 0; pointer-events: none; }
 .negotiation-markers i { position: absolute; left: 1.8%; width: 14px; height: 14px; border: 1.5px solid var(--acid); border-radius: 50%; }
@@ -408,7 +408,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .negotiation-markers i:nth-child(3) { top: 30.2%; --underline-width: 280px; }
 .negotiation-markers i::before { content: ""; position: absolute; left: -6px; top: 50%; width: 48px; border-top: 2px solid var(--acid); transform: translateY(-50%); }
 .negotiation-markers i::after { content: ""; position: absolute; left: 73px; top: 8px; width: var(--underline-width); border-top: 2px solid var(--acid); }
-.negotiation-underline { position: absolute; left: 59%; top: 67.2%; width: 18%; border-top: 2px solid var(--acid); pointer-events: none; }
+.negotiation-underline { position: absolute; left: 59%; top: 60.5%; width: 18%; border-top: 2px solid var(--acid); pointer-events: none; }
 .negotiation-bottom { position: absolute; z-index: 3; left: 5%; right: 5%; bottom: 8.7%; padding-top: 17px; border-top: 1px solid var(--acid); color: var(--ivory); font-size: clamp(11px, 1.3vw, 17px); line-height: 1.2; letter-spacing: .075em; text-align: center; }
 .negotiation-instrument { position: absolute; z-index: 2; top: 2.5%; bottom: 2.5%; width: 1px; border-left: 1px dashed var(--acid); pointer-events: none; }
 .negotiation-instrument--top { left: 2.35%; }
@@ -553,7 +553,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .negotiation-copy h2 { font-size: clamp(54px, 6vw, 69px); }
   .negotiation-copy ul { margin-top: 3vh; font-size: clamp(12px, 1.45vw, 17px); }
   .negotiation-copy p { margin-top: 3.8vh; font-size: clamp(16px, 1.7vw, 20px); }
-  .negotiation-evidence { top: 6.7%; height: 75%; }
+  .negotiation-evidence { left: auto; right: 2.7%; top: 6.7%; width: 51%; height: auto; }
   .negotiation-evidence figcaption { top: calc(100% + 10px); font-size: clamp(9px, 1vw, 12px); }
   .negotiation-bottom { bottom: 8.8%; padding-top: 11px; }
   .outcome-layout { padding-top: 12px; }
@@ -664,9 +664,9 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .negotiation-copy p i { flex-basis: 24px; width: 24px; height: 24px; }
   .negotiation-copy p i::before { width: 42px; }
   .negotiation-copy p i::after { height: 42px; }
-  .negotiation-evidence { position: relative; left: auto; top: auto; width: 100%; height: auto; aspect-ratio: 989 / 654; margin-top: 54px; padding: 4px; }
+  .negotiation-evidence { position: relative; left: auto; top: auto; width: 100%; height: auto; aspect-ratio: 989 / 654; margin-top: 54px; padding: 0; }
   .negotiation-evidence img { object-fit: contain; }
-  .negotiation-evidence figcaption { position: relative; top: auto; margin-top: 12px; font-size: 8px; line-height: 1.35; white-space: normal; }
+  .negotiation-evidence figcaption { position: absolute; top: calc(100% + 12px); margin-top: 0; font-size: 8px; line-height: 1.35; white-space: normal; }
   .negotiation-markers i { width: 8px; height: 8px; }
   .negotiation-markers i::before { left: -3px; width: 23px; border-top-width: 1px; }
   .negotiation-markers i::after { left: 33px; top: 4px; border-top-width: 1px; }

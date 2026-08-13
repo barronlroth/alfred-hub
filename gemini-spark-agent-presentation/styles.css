@@ -232,11 +232,11 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .horizon-line { position: absolute; z-index: 3; left: 1.2%; right: 1.2%; top: 44.6%; border-top: 2px solid var(--acid); }
 .horizon-stops { position: absolute; z-index: 4; left: 0; right: 0; top: 37.1%; height: 55%; display: block; }
 .horizon-stop { position: absolute; top: 0; min-width: 0; padding-top: 0; }
-.horizon-stop--tonight { left: 2.87%; width: 11.55%; }
-.horizon-stop--week { left: 19.32%; width: 13.87%; }
-.horizon-stop--trip { left: 40.31%; width: 12.38%; }
-.horizon-stop--release { left: 64.48%; width: 14.17%; }
-.horizon-stop--decade { left: 83.13%; width: 12.44%; }
+.horizon-stop--tonight { left: 2.29%; width: 12.71%; }
+.horizon-stop--week { left: 18.63%; width: 15.26%; }
+.horizon-stop--trip { left: 39.69%; width: 13.62%; }
+.horizon-stop--release { left: 63.77%; width: 15.59%; }
+.horizon-stop--decade { left: 82.51%; width: 13.68%; }
 .horizon-stop > h3 { color: var(--acid); font-size: clamp(10px, .95vw, 16px); line-height: 1; text-align: center; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; }
 .horizon-stop > i { position: absolute; z-index: 3; left: 50%; top: calc(7.5vh - 13.675px); width: 13px; height: 13px; border: 2px solid var(--acid); border-radius: 50%; background: var(--cobalt); transform: translateX(-50%); }
 .horizon-stop > i::before { content: ""; position: absolute; left: 50%; bottom: 100%; height: 28px; border-left: 1px dashed var(--ivory); opacity: .85; }
@@ -244,16 +244,16 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .horizon-stop > i::before { width: 25px; height: 1px; bottom: auto; top: 50%; border: 0; border-top: 1px solid var(--acid); transform: translate(-50%, -50%); }
 .horizon-stop > i::after { height: 38px; top: -29px; }
 .horizon-card { position: absolute; left: 0; right: 0; top: clamp(81px, 13.47vh, 97px); padding: 12px 10px 10px; border: 1px solid rgba(243,226,202,.9); color: var(--ivory); background: rgba(0,2,120,.3); }
-.horizon-stop--tonight .horizon-card { height: clamp(175px, 29.1vh, 210px); }
+.horizon-stop--tonight .horizon-card { height: clamp(189px, 31.43vh, 227px); }
 .horizon-stop--tonight .horizon-card { padding-top: 8px; }
 .horizon-stop--tonight .maitre-mark { padding-bottom: 4px; }
 .horizon-stop--tonight .card-state { padding: 3px 0; }
 .horizon-stop--tonight .horizon-card dl { margin-top: 5px; }
 .horizon-stop--tonight .horizon-card dl div { padding: 3px 0; }
-.horizon-stop--week .horizon-card { height: clamp(197px, 32.94vh, 237px); }
-.horizon-stop--trip .horizon-card { height: clamp(210px, 35.07vh, 253px); }
-.horizon-stop--release .horizon-card { height: clamp(217px, 36.12vh, 260px); }
-.horizon-stop--decade .horizon-card { height: clamp(218px, 36.44vh, 262px); }
+.horizon-stop--week .horizon-card { height: clamp(213px, 35.58vh, 256px); }
+.horizon-stop--trip .horizon-card { height: clamp(227px, 37.88vh, 273px); }
+.horizon-stop--release .horizon-card { height: clamp(234px, 39.01vh, 281px); }
+.horizon-stop--decade .horizon-card { height: clamp(235px, 39.36vh, 283px); }
 .horizon-card__label { position: absolute; left: 9px; top: -20px; font-size: clamp(5px, .42vw, 7px); line-height: 1; letter-spacing: .08em; white-space: nowrap; }
 .horizon-card > strong { display: block; font-size: clamp(10px, .92vw, 15px); line-height: 1.15; letter-spacing: .04em; }
 .horizon-card > span { display: block; margin-top: 3px; font-size: clamp(6px, .48vw, 8px); line-height: 1.3; letter-spacing: .08em; }

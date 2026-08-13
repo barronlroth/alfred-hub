@@ -8,6 +8,7 @@
     "assets/alfred-every-horizon.png",
     "assets/cubby-app-icon.png",
     "assets/meal-every-horizon.png",
+    "assets/owls-every-shoulder.png",
     "assets/montage/alfred-hub.png",
     "assets/montage/homepages/cubby.jpg",
     "assets/montage/homepages/how-we-met.jpg",
@@ -22,13 +23,13 @@
   "files": [
     {
       "path": "index.html",
-      "bytes": 32001,
-      "sha256": "d94c2bc7a36e914bf6551d049a163568c5280d098381b3551112d926cb037711"
+      "bytes": 25931,
+      "sha256": "e491ddd2ef58ea1155fe578260c0cebf452c2d3e270f1546860c565d02a6846d"
     },
     {
       "path": "styles.css",
-      "bytes": 48262,
-      "sha256": "1e975ff6900294466848acc51981467943bd214dbd23f9b3c2c07deaafca2a7b"
+      "bytes": 43916,
+      "sha256": "6c0669e7e7257fb4b22be89c285f423c476ae35324d17b47fa48aa916b989249"
     },
     {
       "path": "src/deck.js",
@@ -59,6 +60,11 @@
       "path": "assets/meal-every-horizon.png",
       "bytes": 348951,
       "sha256": "295029c6a1d7b8a0ea34f1bfd6626bcb04ddea132d7a14dbbbeaff5236045e99"
+    },
+    {
+      "path": "assets/owls-every-shoulder.png",
+      "bytes": 2712361,
+      "sha256": "fced97f2f58760ac71048e53efcd70c5a00ddb28f5b35bbf93f803f463cff4d3"
     },
     {
       "path": "assets/montage/alfred-hub.png",

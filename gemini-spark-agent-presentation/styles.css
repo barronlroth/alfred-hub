@@ -169,20 +169,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   letter-spacing: -.045em;
   text-wrap: balance;
 }
-.identity-stamp {
-  width: min(530px, 94%);
-  margin-top: clamp(20px, 4vh, 42px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  padding: 13px 16px;
-  border: 2px solid var(--acid);
-  color: var(--acid);
-  box-shadow: 9px 10px 0 var(--deep-cobalt);
-}
-.identity-stamp span { font-size: 16px; font-weight: 700; letter-spacing: .18em; }
-.identity-stamp small { font-size: 7px; letter-spacing: .12em; }
 .hero-specimen {
   position: absolute;
   z-index: 1;
@@ -542,7 +528,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .status-bar { bottom: 10px; min-height: 30px; }
   .hero-copy h1 { font-size: clamp(61px, 6.9vw, 92px); }
   .hero-copy .lede { max-width: 52ch; }
-  .identity-stamp { margin-top: 17px; padding: 9px 12px; }
   .horizon-intro { top: 2%; }
   .horizon-intro h2 { font-size: 51px; }
   .horizon-thesis { margin-top: 8px; font-size: 11px; }
@@ -611,7 +596,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .hero-copy { padding: 62px 0 22px; }
   .hero-copy h1 { margin: 18px 0 23px; font-size: clamp(58px, 18vw, 78px); }
   .hero-copy .lede { max-width: 35ch; font-size: 15px; }
-  .identity-stamp { width: 100%; margin: 28px 0 0; flex-direction: column; align-items: flex-start; }
   .hero-specimen { position: relative; inset: auto; height: 460px; margin: 10px -20px 0; }
   .slide--horizons { overflow: visible; }
   .slide--horizons .slide__frame { padding-left: 20px; padding-right: 20px; }

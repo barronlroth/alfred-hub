@@ -414,7 +414,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .negotiation-layout { position: absolute; inset: 0; }
 .negotiation-copy { position: absolute; z-index: 3; left: 5%; top: 9.8%; width: 31.5%; }
 .negotiation-copy h2 { color: var(--ivory); font: 400 clamp(62px, 6.1vw, 78px)/.88 var(--serif); letter-spacing: -.015em; }
-.negotiation-copy ul { margin: 5.2vh 0 0; padding: 0; list-style: none; color: var(--ivory); font-size: clamp(14px, 1.55vw, 20px); line-height: 1.7; letter-spacing: .07em; }
+.negotiation-copy ul { margin: 5.2vh 0 0; padding: 0; list-style: none; color: var(--ivory); font-family: var(--mono); font-size: clamp(14px, 1.55vw, 20px); line-height: 1.7; letter-spacing: .07em; }
 .negotiation-copy p { display: flex; align-items: center; gap: 24px; margin-top: 4.6vh; color: var(--acid); font-size: clamp(18px, 1.9vw, 24px); line-height: 1; letter-spacing: .08em; }
 .negotiation-copy p i { margin-left: 10px; }
 .negotiation-copy p i { position: relative; flex: 0 0 30px; width: 30px; height: 30px; border: 2px solid var(--acid); border-radius: 50%; }
@@ -424,14 +424,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .negotiation-evidence { position: absolute; z-index: 3; left: 38.5%; top: 7.6%; width: 58.85%; height: auto; aspect-ratio: 989 / 654; padding: 0; border: 1px solid var(--acid); background: #12161b; }
 .negotiation-evidence img { width: 100%; height: 100%; object-fit: contain; }
 .negotiation-evidence figcaption { position: absolute; left: 0; top: calc(100% + 11px); color: var(--ivory); font-size: clamp(10px, 1.15vw, 15px); line-height: 1; letter-spacing: .055em; white-space: nowrap; }
-.negotiation-markers { position: absolute; inset: 0; pointer-events: none; }
-.negotiation-markers i { position: absolute; left: 1.8%; width: 14px; height: 14px; border: 1.5px solid var(--acid); border-radius: 50%; }
-.negotiation-markers i:nth-child(1) { top: 22.8%; --underline-width: 279px; }
-.negotiation-markers i:nth-child(2) { top: 26.6%; --underline-width: 238px; }
-.negotiation-markers i:nth-child(3) { top: 30.2%; --underline-width: 280px; }
-.negotiation-markers i::before { content: ""; position: absolute; left: -6px; top: 50%; width: 48px; border-top: 2px solid var(--acid); transform: translateY(-50%); }
-.negotiation-markers i::after { content: ""; position: absolute; left: 73px; top: 8px; width: var(--underline-width); border-top: 2px solid var(--acid); }
-.negotiation-underline { position: absolute; left: 59%; top: 60.5%; width: 18%; border-top: 2px solid var(--acid); pointer-events: none; }
 .negotiation-bottom { position: absolute; z-index: 3; left: 5%; right: 5%; bottom: 8.7%; padding-top: 17px; border-top: 1px solid var(--acid); color: var(--ivory); font-size: clamp(11px, 1.3vw, 17px); line-height: 1.2; letter-spacing: .075em; text-align: center; }
 .negotiation-instrument { position: absolute; z-index: 2; top: 2.5%; bottom: 2.5%; width: 1px; border-left: 1px dashed var(--acid); pointer-events: none; }
 .negotiation-instrument--top { left: 2.35%; }
@@ -690,12 +682,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .negotiation-evidence { position: relative; left: auto; top: auto; width: 100%; height: auto; aspect-ratio: 989 / 654; margin-top: 54px; padding: 0; }
   .negotiation-evidence img { object-fit: contain; }
   .negotiation-evidence figcaption { position: absolute; top: calc(100% + 12px); margin-top: 0; font-size: 8px; line-height: 1.35; white-space: normal; }
-  .negotiation-markers i { width: 8px; height: 8px; }
-  .negotiation-markers i::before { left: -3px; width: 23px; border-top-width: 1px; }
-  .negotiation-markers i::after { left: 33px; top: 4px; border-top-width: 1px; }
-  .negotiation-markers i:nth-child(1), .negotiation-markers i:nth-child(3) { --underline-width: 76px; }
-  .negotiation-markers i:nth-child(2) { --underline-width: 65px; }
-  .negotiation-underline { border-top-width: 1px; }
   .negotiation-bottom { position: relative; left: auto; right: auto; bottom: auto; margin-top: 24px; padding-top: 17px; font-size: 11px; text-align: left; }
   .negotiation-instrument { display: none; }
   .outcome-layout { padding-top: 48px; }

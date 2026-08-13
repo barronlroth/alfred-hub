@@ -414,7 +414,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .negotiation-layout { position: absolute; inset: 0; }
 .negotiation-copy { position: absolute; z-index: 3; left: 5%; top: 9.8%; width: 31.5%; }
 .negotiation-copy h2 { color: var(--ivory); font: 400 clamp(62px, 6.1vw, 78px)/.88 var(--serif); letter-spacing: -.015em; }
-.negotiation-copy ul { margin: 5.2vh 0 0; padding: 0; list-style: none; color: var(--ivory); font-family: var(--mono); font-size: clamp(14px, 1.55vw, 20px); line-height: 1.7; letter-spacing: .07em; }
+.negotiation-copy .negotiation-summary { display: block; margin: 5.2vh 0 0; color: var(--ivory); font: 400 clamp(14px, 1.55vw, 20px)/1.45 var(--mono); letter-spacing: 0; }
 .negotiation-copy p { display: flex; align-items: center; gap: 24px; margin-top: 4.6vh; color: var(--acid); font-size: clamp(18px, 1.9vw, 24px); line-height: 1; letter-spacing: .08em; }
 .negotiation-copy p i { margin-left: 10px; }
 .negotiation-copy p i { position: relative; flex: 0 0 30px; width: 30px; height: 30px; border: 2px solid var(--acid); border-radius: 50%; }
@@ -566,7 +566,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .operation-rows li { gap: 14px; padding-top: 3px; padding-bottom: 3px; }
   .negotiation-copy { top: 7.5%; }
   .negotiation-copy h2 { font-size: clamp(54px, 6vw, 69px); }
-  .negotiation-copy ul { margin-top: 3vh; font-size: clamp(12px, 1.45vw, 17px); }
+  .negotiation-copy .negotiation-summary { margin-top: 3vh; font-size: clamp(12px, 1.45vw, 17px); }
   .negotiation-copy p { margin-top: 3.8vh; font-size: clamp(16px, 1.7vw, 20px); }
   .negotiation-evidence { left: auto; right: 2.7%; top: 6.7%; width: 51%; height: auto; }
   .negotiation-evidence figcaption { top: calc(100% + 10px); font-size: clamp(9px, 1vw, 12px); }
@@ -674,7 +674,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .negotiation-layout { position: relative; inset: auto; min-height: 1016px; padding-top: 38px; }
   .negotiation-copy { position: relative; left: auto; top: auto; width: auto; }
   .negotiation-copy h2 { font-size: clamp(58px, 17vw, 72px); }
-  .negotiation-copy ul { margin-top: 38px; font-size: 14px; line-height: 1.9; }
+  .negotiation-copy .negotiation-summary { margin-top: 38px; font-size: 14px; line-height: 1.5; }
   .negotiation-copy p { margin-top: 36px; font-size: 18px; }
   .negotiation-copy p i { flex-basis: 24px; width: 24px; height: 24px; }
   .negotiation-copy p i::before { width: 42px; }

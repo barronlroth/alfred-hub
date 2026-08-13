@@ -387,14 +387,14 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 /* 06: operation */
 .operations-heading { min-height: clamp(135px, 22vh, 205px); display: grid; grid-template-columns: .52fr 1.03fr .85fr; align-items: end; gap: 24px; padding: 2vh 0 2.5vh; border-bottom: 2px solid var(--cobalt); }
 .operations-heading h2 { font: 400 clamp(49px, 5.2vw, 88px)/.84 var(--serif); letter-spacing: -.04em; }
-.run-index { display: flex; justify-content: end; gap: clamp(11px, 1.3vw, 21px); }
+.run-index { display: flex; justify-content: end; }
 .run-index span { display: grid; gap: 4px; font-size: 7px; letter-spacing: .1em; }
-.run-index b { color: var(--red); font: 400 clamp(27px, 2.5vw, 43px)/1 var(--serif); }
+.run-index b { color: var(--red); font: 400 clamp(38px, 3.8vw, 64px)/.88 var(--serif); }
 .operation-rows { flex: 1; min-height: 0; padding: 0; list-style: none; }
 .operation-rows li { min-height: 16.666%; display: grid; grid-template-columns: 48px 132px 1fr auto; align-items: center; gap: 18px; padding: 6px 12px; border-bottom: 1px solid var(--cobalt); }
 .operation-rows span { color: var(--red); font: 400 26px/1 var(--serif); }
 .operation-rows b { font-size: 9px; letter-spacing: .13em; }
-.operation-rows p { color: var(--ink); font-size: clamp(9.5px, .78vw, 12.5px); line-height: 1.35; }
+.operation-rows p { color: var(--ink); font-size: clamp(12px, .97vw, 15.22px); line-height: 1.32; }
 .operation-rows em { padding: 5px 7px; border: 1px solid var(--cobalt); font-size: 7px; font-style: normal; letter-spacing: .1em; }
 .operation-rows li:last-child em { border-color: var(--red); color: var(--red); }
 .timeline-rule { display: none; }
@@ -424,15 +424,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 .refund-proof { position: absolute; z-index: 3; left: 3%; bottom: 4%; width: 44%; min-height: 33%; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 15px; border: 2px solid var(--acid); background: var(--cobalt); color: var(--ivory); box-shadow: 8px 9px 0 var(--deep-cobalt); }
 .refund-proof b, .refund-proof span { font-size: 7px; letter-spacing: .11em; }
 .refund-proof strong { color: var(--acid); font: 400 clamp(29px, 3vw, 48px)/1 var(--serif); }
-
-/* 08: paradox */
-.paradox-layout { flex: 1; min-height: 0; display: grid; grid-template-columns: .5fr 1.25fr .55fr; grid-template-rows: auto 1fr auto; align-items: center; gap: 24px; padding: 2vh 0; }
-.paradox-layout > .eyebrow { align-self: start; padding-top: 2vh; }
-.paradox-layout h2 { grid-column: 2 / -1; font: 400 clamp(67px, 7.2vw, 122px)/.79 var(--serif); letter-spacing: -.05em; }
-.paradox-question { grid-column: 1 / 2; grid-row: 2 / 4; align-self: stretch; display: flex; flex-direction: column; justify-content: end; gap: 2vh; padding: 18px; border: 2px solid var(--cobalt); box-shadow: 9px 10px 0 var(--deep-cobalt); }
-.paradox-question span { font-size: 8px; line-height: 1.5; letter-spacing: .12em; }
-.paradox-question p { font: 400 clamp(26px, 2.8vw, 46px)/.96 var(--serif); }
-.paradox-layout blockquote { grid-column: 2 / -1; padding: 18px 0 5px; border-top: 2px solid var(--cobalt); font: 400 clamp(23px, 2.35vw, 40px)/1.06 var(--serif); }
 
 /* 09: chapter */
 .chapter-copy { flex: 1; display: flex; flex-direction: column; justify-content: center; }
@@ -525,7 +516,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   border: 1px solid var(--ivory);
   box-shadow: 5px 5px 0 rgba(10,15,60,.35);
 }
-.control-button, .route button {
+.control-button {
   border: 1px solid transparent;
   border-radius: 0;
   background: transparent;
@@ -534,10 +525,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
 }
 .control-button { width: 44px; height: 44px; font-size: 19px; }
 .control-button:disabled { opacity: .34; cursor: not-allowed; }
-.route { display: flex; align-items: center; padding: 0; list-style: none; }
-.route button { width: 44px; height: 44px; position: relative; font-size: 0; }
-.route button::after { content: ""; position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; background: var(--periwinkle); transform: translate(-50%, -50%); }
-.route button[aria-current="true"]::after { width: 11px; height: 11px; background: var(--acid); }
 .counter { min-width: 55px; display: flex; justify-content: center; gap: 4px; font-size: 8px; letter-spacing: .08em; }
 .counter b { color: var(--acid); }
 .presenter-panel {
@@ -588,7 +575,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .outcome-layout { padding-top: 12px; }
   .outcome-claim h2 { font-size: clamp(40px, 4.1vw, 58px); margin: 11px 0 13px; }
   .financial-ledger strong { font-size: 28px; }
-  .paradox-layout h2 { font-size: clamp(61px, 6.8vw, 88px); }
   .chapter-copy h2 { font-size: clamp(69px, 9vw, 116px); }
   .offer-proposition h2 { font-size: clamp(52px, 5.3vw, 70px); }
   .same-thread-offer > p { padding: 22px; font-size: 29px; }
@@ -625,7 +611,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .status-bar span:nth-child(2) { display: none; }
   .status-bar b { font-size: 6px; }
   .reveal-group > * { opacity: 1; transform: none; transition: none; }
-  .hero-layout, .ask-layout, .operations-heading, .outcome-layout, .paradox-layout, .offer-layout, .sequence-heading, .infrastructure-layout, .experiment-layout, .close-layout { display: block; }
+  .hero-layout, .ask-layout, .operations-heading, .outcome-layout, .offer-layout, .sequence-heading, .infrastructure-layout, .experiment-layout, .close-layout { display: block; }
   .hero-copy { padding: 62px 0 22px; }
   .hero-copy h1 { margin: 18px 0 23px; font-size: clamp(58px, 18vw, 78px); }
   .hero-copy .lede { max-width: 35ch; font-size: 15px; }
@@ -701,10 +687,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .proof--invoice { width: 92%; height: 320px; }
   .proof--declaration { width: 66%; height: 390px; }
   .refund-proof { width: 56%; min-height: 190px; }
-  .paradox-layout { padding: 52px 0 0; }
-  .paradox-layout h2 { margin: 18px 0 30px; font-size: 66px; }
-  .paradox-question { min-height: 280px; margin: 30px 0; }
-  .paradox-layout blockquote { font-size: 29px; }
   .chapter-copy { min-height: 78svh; }
   .chapter-copy h2 { font-size: 73px; }
   .chapter-rule i { width: 35px; }
@@ -736,7 +718,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--acid); outline-
   .close-layout blockquote { font-size: 30px; }
   .human-signal { margin-top: 30px; }
   .deck-controls { left: 10px; right: 10px; bottom: 8px; transform: none; justify-content: space-between; }
-  .route { display: none; }
   .counter { flex: 1; }
   .presenter-panel { top: auto; bottom: 68px; max-height: 44vh; overflow-y: auto; }
 }

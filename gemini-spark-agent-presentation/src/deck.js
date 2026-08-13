@@ -23,7 +23,6 @@ function initializeDeck(root = document.querySelector(".deck")) {
 
   const slides = [...root.querySelectorAll(":scope > .slide")];
   const total = slides.length;
-  const route = document.querySelector(".route");
   const prevButton = document.querySelector("[data-action='prev']");
   const nextButton = document.querySelector("[data-action='next']");
   const currentLabel = document.querySelector("[data-current]");
@@ -38,20 +37,6 @@ function initializeDeck(root = document.querySelector(".deck")) {
   let mode = mobileMedia.matches ? "mobile" : "desktop";
   let pointerStart = null;
   let observer = null;
-
-  route.replaceChildren();
-  const routeButtons = slides.map((slide, position) => {
-    const item = document.createElement("li");
-    const button = document.createElement("button");
-    const index = position + 1;
-    button.type = "button";
-    button.dataset.slideTarget = String(index);
-    button.setAttribute("aria-label", `Go to slide ${index}: ${slide.dataset.phase || slide.id}`);
-    button.addEventListener("click", () => activate(index, { history: "push", scroll: true }));
-    item.append(button);
-    route.append(item);
-    return button;
-  });
 
   function setSlideExposure(slide, active) {
     slide.classList.toggle("is-active", active);
@@ -68,10 +53,6 @@ function initializeDeck(root = document.querySelector(".deck")) {
 
   function syncUI() {
     slides.forEach((slide, position) => setSlideExposure(slide, position + 1 === current));
-    routeButtons.forEach((button, position) => {
-      const active = position + 1 === current;
-      button.setAttribute("aria-current", active ? "true" : "false");
-    });
     currentLabel.textContent = String(current).padStart(2, "0");
     totalLabel.textContent = String(total).padStart(2, "0");
     prevButton.disabled = current === 1;

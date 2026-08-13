@@ -22,18 +22,18 @@
   "files": [
     {
       "path": "index.html",
-      "bytes": 33271,
-      "sha256": "a5811fe24afe075b021c7dae2937c07393b60e0e1b22dab02bd9dc250450d29b"
+      "bytes": 32001,
+      "sha256": "d94c2bc7a36e914bf6551d049a163568c5280d098381b3551112d926cb037711"
     },
     {
       "path": "styles.css",
-      "bytes": 50010,
-      "sha256": "efdd488b9f821fabe99f5d3864e25f9c48cf4515c7012099d5690ce3d2c5f895"
+      "bytes": 48262,
+      "sha256": "1e975ff6900294466848acc51981467943bd214dbd23f9b3c2c07deaafca2a7b"
     },
     {
       "path": "src/deck.js",
-      "bytes": 9031,
-      "sha256": "733e4ed0b7187c0f6b5fa2f36c65989dd293ff6825d236c3e03551cdff0254d4"
+      "bytes": 8245,
+      "sha256": "f30695029e153d666ea0a677d9f858a879dd78c4f97356d60bed44ca32e1f4fb"
     },
     {
       "path": "assets/favicon.svg",

@@ -19,18 +19,24 @@
     "assets/evidence/bound-declarations-redacted.png",
     "assets/evidence/new-policy-invoice-redacted.png",
     "assets/evidence/broker-negotiation-email-original.png",
-    "assets/evidence/roundpoint-lender-notice-original.jpg"
+    "assets/evidence/roundpoint-lender-notice-original.jpg",
+    "assets/constellation/barron-request-avatar.jpg",
+    "assets/constellation/compare-providers.png",
+    "assets/constellation/contact-broker.png",
+    "assets/constellation/secure-approval.png",
+    "assets/constellation/submit-proof.png",
+    "assets/constellation/understand-coverage.png"
   ],
   "files": [
     {
       "path": "index.html",
-      "bytes": 28044,
-      "sha256": "904a260f423cc5a7d270aa736e3be03bb48c1377efac7478f709b9c5944132c5"
+      "bytes": 30477,
+      "sha256": "621c819b6142dd533012496c7ae6e29a85bd119d5d6f1b7c990f8da91a1b6732"
     },
     {
       "path": "styles.css",
-      "bytes": 49221,
-      "sha256": "6014fd8afc87a8fe790406b9f753c120665c8fc71af881c21f1a97092d79c6a7"
+      "bytes": 51857,
+      "sha256": "e31d484b1d3b26ffdf78265bf57f1f9310970493caea7aee9a5e73426069f658"
     },
     {
       "path": "src/deck.js",
@@ -121,6 +127,36 @@
       "path": "assets/evidence/roundpoint-lender-notice-original.jpg",
       "bytes": 1075333,
       "sha256": "f5f20ad6e8a2c2edfbf5e527e6129be5194873a11d3d07898b0bad91f68a9b90"
+    },
+    {
+      "path": "assets/constellation/barron-request-avatar.jpg",
+      "bytes": 71245,
+      "sha256": "2bbf258d14fb87fa42dbb0bc391edc37cc60db7a63ad6fa3aa3e3a2da0ad96a1"
+    },
+    {
+      "path": "assets/constellation/compare-providers.png",
+      "bytes": 2026724,
+      "sha256": "13a1dd4f1c4152fe1dacea08407cff8f63b9359043ec0c716c7e59d5454df2ac"
+    },
+    {
+      "path": "assets/constellation/contact-broker.png",
+      "bytes": 2898664,
+      "sha256": "548928882586b3071c5a884c0f85e07538fb98639e54024e4472c3b7e428dfaf"
+    },
+    {
+      "path": "assets/constellation/secure-approval.png",
+      "bytes": 1249758,
+      "sha256": "b8e4bfc24fcf5f6f44484e155a6ab35181ebb2283c36dc5d87f14250702affdd"
+    },
+    {
+      "path": "assets/constellation/submit-proof.png",
+      "bytes": 2785023,
+      "sha256": "9e7b2bf513ef3b747c4dfeafdbb1b484243bf556d5f58009c9eef8d58b2af720"
+    },
+    {
+      "path": "assets/constellation/understand-coverage.png",
+      "bytes": 2680799,
+      "sha256": "9c83b049ea97f7e878aa97f88e36b6877841d6fe342cb5b6d394c051fb416731"
     }
   ]
 }

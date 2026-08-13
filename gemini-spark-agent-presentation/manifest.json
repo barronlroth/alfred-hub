@@ -18,23 +18,24 @@
     "assets/montage/homepages/weekend-atlas.jpg",
     "assets/evidence/bound-declarations-redacted.png",
     "assets/evidence/new-policy-invoice-redacted.png",
+    "assets/evidence/broker-negotiation-email-redacted.png",
     "assets/evidence/roundpoint-lender-notice-original.jpg"
   ],
   "files": [
     {
       "path": "index.html",
-      "bytes": 25931,
-      "sha256": "e491ddd2ef58ea1155fe578260c0cebf452c2d3e270f1546860c565d02a6846d"
+      "bytes": 28400,
+      "sha256": "4b1052e22630a1a21c4531d659ae1910e75e8a7ad778144245a057e75e43bae9"
     },
     {
       "path": "styles.css",
-      "bytes": 43916,
-      "sha256": "6c0669e7e7257fb4b22be89c285f423c476ae35324d17b47fa48aa916b989249"
+      "bytes": 49685,
+      "sha256": "a68c0f905c13cfb5d725e09097628cabc4918913fa13494a08f1ad6d76d78ce2"
     },
     {
       "path": "src/deck.js",
-      "bytes": 8245,
-      "sha256": "f30695029e153d666ea0a677d9f858a879dd78c4f97356d60bed44ca32e1f4fb"
+      "bytes": 8291,
+      "sha256": "dd724175e6903a7d4eff7d06875cb4d0aed9c9fe43ccb64d70945e50bb8ff893"
     },
     {
       "path": "assets/favicon.svg",
@@ -110,6 +111,11 @@
       "path": "assets/evidence/new-policy-invoice-redacted.png",
       "bytes": 156010,
       "sha256": "796b6995baea4ae9ba78e80669a43e70d912a03f8abb04f3aefcc87265265718"
+    },
+    {
+      "path": "assets/evidence/broker-negotiation-email-redacted.png",
+      "bytes": 96122,
+      "sha256": "88f9ca810e580fc399effa71c3ad0efe6ff0c8788a9748997baae09b0515bb85"
     },
     {
       "path": "assets/evidence/roundpoint-lender-notice-original.jpg",

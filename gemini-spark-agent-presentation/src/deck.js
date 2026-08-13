@@ -158,13 +158,15 @@ function initializeDeck(root = document.querySelector(".deck")) {
     mode = mobileMedia.matches ? "mobile" : "desktop";
     document.body.classList.toggle("deck-mode", mode === "desktop");
     syncUI();
-    startMobileObserver();
     if (mode === "mobile" && initial) {
       document.documentElement.style.scrollBehavior = "auto";
       requestAnimationFrame(() => requestAnimationFrame(() => {
         scrollToSlide(current, "auto");
         document.documentElement.style.removeProperty("scroll-behavior");
+        startMobileObserver();
       }));
+    } else {
+      startMobileObserver();
     }
   }
 

@@ -1,0 +1,176 @@
+[
+  {
+    "slug": "palm-heights",
+    "name": "Palm Heights",
+    "location": "Seven Mile Beach, Grand Cayman",
+    "region": "Grand Cayman",
+    "rank": 1,
+    "rankTier": "top-pick",
+    "role": "The design-forward minimoon",
+    "summary": "The most distinctive and couple-scaled choice: 52 ocean-view suites, a sharp Caribbean design point of view, serious food, and the Garden Club wellness campus without the feel of a conventional mega-resort.",
+    "bestRoom": "One Bedroom Oceanfacing Terrace Suite",
+    "nightlyRange": [1240, 1410],
+    "sixNightRange": [7440, 8460],
+    "priceConfidence": "exact-date",
+    "priceNote": "Direct SynXis results checked for Oct 5–11, 2026 showed one-bedroom suites at $934–$1,074 per night before taxes and fees; the displayed all-in range normalizes 13% accommodation tax, an observed 10% service-charge signal, and a reported $90 nightly resort fee. Reconfirm the final checkout total before booking.",
+    "weather": "Hot, humid wet-season conditions: roughly 89°F daytime / 78°F nighttime norms, warm sea, sun mixed with tropical showers.",
+    "weatherRisk": "High. Early October is still in the wet season; September and October are the rainfall maxima, and Atlantic hurricane season runs through November 30.",
+    "route": "MIA → GCM nonstop; GCM → SFO requires at least one connection, most cleanly via MIA on American when schedules align.",
+    "travelFriction": "Low inbound, moderate outbound: about a 15-minute transfer from GCM, but no nonstop flight to SFO and an international connection on the return.",
+    "attributes": {
+      "romance": 10,
+      "privacy": 8,
+      "service": 9,
+      "foodSpa": 10,
+      "activities": 8,
+      "weather": 5
+    },
+    "honestCatch": "It is the strongest aesthetic fit, but not a secluded hideaway: the beach, restaurants, and social programming have a fashionable scene, and October weather can interrupt a beach-first plan.",
+    "quote": {
+      "text": "A design-centric oasis where the creative crowd go to meet, reset, and return inspired.",
+      "sourceName": "Condé Nast Traveler",
+      "url": "https://www.cntraveler.com/hotels/seven-mile-beach/palm-heights"
+    },
+    "bookingUrl": "https://be.synxis.com/?hotel=6196&chain=24399&level=hotel&locale=en-US&configcode=initialConfig&themecode=initialTheme&arrive=2026-10-05&depart=2026-10-11&adult=2&child=0&currency=USD",
+    "officialUrl": "https://palmheights.com/",
+    "images": [
+      {
+        "localPath": "assets/hotels/palm-heights/beach.webp",
+        "sourceUrl": "https://palmheights.com/wp-content/uploads/2019/11/Palm-Heights-Beach_crop.jpeg",
+        "sourceName": "Palm Heights official site",
+        "caption": "The hotel's yellow umbrellas on Seven Mile Beach.",
+        "alt": "Rows of yellow Palm Heights umbrellas on white sand beside turquoise Caribbean water"
+      },
+      {
+        "localPath": "assets/hotels/palm-heights/suite.webp",
+        "sourceUrl": "https://palmheights.com/wp-content/uploads/2025/02/PH_16-room-.jpeg",
+        "sourceName": "Palm Heights official site",
+        "caption": "A one-bedroom suite's warm, residential living room.",
+        "alt": "Cream curved sofa and vintage-inspired furnishings in a Palm Heights suite living room"
+      },
+      {
+        "localPath": "assets/hotels/palm-heights/garden-club.webp",
+        "sourceUrl": "https://palmheights.com/wp-content/uploads/2023/10/21_29A0262-copy-scaled.jpg",
+        "sourceName": "Palm Heights official site",
+        "caption": "Sculptural soaking pools at the Garden Club wellness campus.",
+        "alt": "Pale stone soaking pools surrounded by dense tropical greenery at Palm Heights Garden Club"
+      }
+    ]
+  },
+  {
+    "slug": "kimpton-seafire",
+    "name": "Kimpton Seafire Resort + Spa",
+    "location": "Northern Seven Mile Beach, Grand Cayman",
+    "region": "Grand Cayman",
+    "rank": null,
+    "rankTier": "backup",
+    "role": "The balanced modern resort",
+    "summary": "The easiest all-rounder: contemporary ocean-view rooms, a notably strong spa and dining lineup, and a quieter northern stretch of Seven Mile Beach, with enough resort infrastructure to make a weather-disrupted day painless.",
+    "bestRoom": "1 King Premium Ocean View",
+    "nightlyRange": [850, 1250],
+    "sixNightRange": [5100, 7500],
+    "priceConfidence": "generic-rate-signal",
+    "priceNote": "A researched all-in planning range rather than a captured Oct 5–11 checkout quote. It triangulates low-season public rate signals with the current $95 nightly resort-fee disclosure and Cayman taxes/service charges; reprice directly with IHG before relying on it.",
+    "weather": "Hot, humid wet-season conditions: roughly 89°F daytime / 78°F nighttime norms, warm sea, sun mixed with tropical showers.",
+    "weatherRisk": "High. Early October is still in the wet season; September and October are the rainfall maxima, and Atlantic hurricane season runs through November 30.",
+    "route": "MIA → GCM nonstop; GCM → SFO requires at least one connection, with MIA, DFW, ATL, or IAH the usual practical gateways depending on airline and day.",
+    "travelFriction": "Low inbound, moderate outbound: about a 15–20-minute transfer from GCM, then a one-stop-or-more return to SFO with no nonstop option.",
+    "attributes": {
+      "romance": 8,
+      "privacy": 7,
+      "service": 9,
+      "foodSpa": 9,
+      "activities": 9,
+      "weather": 5
+    },
+    "honestCatch": "It is polished and highly capable, but 264 rooms and a family-friendly program make it feel more like a full resort than an intimate honeymoon cocoon.",
+    "quote": {
+      "text": "For a seaside resort that is welcoming to families and offers incredible food options, a stunning spa, and thoughtful details that make the luxury tangible.",
+      "sourceName": "Condé Nast Traveler",
+      "url": "https://www.cntraveler.com/hotels/grand-cayman/kimpton-seafire-resort-and-spa"
+    },
+    "bookingUrl": "https://www.ihg.com/kimptonhotels/redirect?path=rates&hotelCode=GCMSE&brandCode=KI&regionCode=1&localeCode=en",
+    "officialUrl": "https://www.seafireresortandspa.com/",
+    "images": [
+      {
+        "localPath": "assets/hotels/kimpton-seafire/coccoloba.webp",
+        "sourceUrl": "https://res.cloudinary.com/dm3nabmcc/image/upload/f_auto/q_auto/c_scale,w_1700/v1743693463/coc-rt-002_vblu3r.jpg",
+        "sourceName": "Kimpton Seafire official Cloudinary CDN",
+        "caption": "Coccoloba's open-air counter runs directly along the beach.",
+        "alt": "Open-air Coccoloba restaurant counter overlooking turquoise water and white sand"
+      },
+      {
+        "localPath": "assets/hotels/kimpton-seafire/ocean-view-room.webp",
+        "sourceUrl": "https://res.cloudinary.com/dm3nabmcc/image/upload/f_auto/q_auto/c_scale,w_1700/v1743693369/070-bedroom-620-8303-revised_fabyvb.jpg",
+        "sourceName": "Kimpton Seafire official Cloudinary CDN",
+        "caption": "A king room opens through glass doors to a full Caribbean view.",
+        "alt": "Kimpton Seafire king room with magenta accents, balcony, and panoramic Caribbean view"
+      },
+      {
+        "localPath": "assets/hotels/kimpton-seafire/spa.webp",
+        "sourceUrl": "https://res.cloudinary.com/dm3nabmcc/image/upload/f_auto/q_auto/c_scale,w_1700/v1772653221/Seafire/p1369530-hdr-2-1.jpg",
+        "sourceName": "Kimpton Seafire official Cloudinary CDN",
+        "caption": "The spa's tiled hydrotherapy pool and heated loungers.",
+        "alt": "Patterned indoor hydrotherapy pool and cream heated loungers at The Spa at Seafire"
+      }
+    ]
+  },
+  {
+    "slug": "ritz-carlton-grand-cayman",
+    "name": "The Ritz-Carlton, Grand Cayman",
+    "location": "Seven Mile Beach, Grand Cayman",
+    "region": "Grand Cayman",
+    "rank": null,
+    "rankTier": "backup",
+    "role": "The full-service classic",
+    "summary": "The maximalist service-and-amenities choice: oceanfront rooms, Blue by Eric Ripert, a renewed spa, golf, tennis, watersports, and deep bench strength when the goal is effortless rather than boutique.",
+    "bestRoom": "Oceanfront Ocean Tower Balcony Room",
+    "nightlyRange": [1000, 1350],
+    "sixNightRange": [6000, 8100],
+    "priceConfidence": "generic-rate-signal",
+    "priceNote": "A researched all-in planning range rather than a captured Oct 5–11 checkout quote. It uses public October/low-season rate signals, Cayman tax/service assumptions, and the currently reported $110 nightly resort fee; verify the live Marriott total and room tower before booking.",
+    "weather": "Hot, humid wet-season conditions: roughly 89°F daytime / 78°F nighttime norms, warm sea, sun mixed with tropical showers.",
+    "weatherRisk": "High. Early October is still in the wet season; September and October are the rainfall maxima, and Atlantic hurricane season runs through November 30.",
+    "route": "MIA → GCM nonstop; GCM → SFO requires at least one connection, with MIA, DFW, ATL, or IAH the usual practical gateways depending on airline and day.",
+    "travelFriction": "Low inbound, moderate outbound: roughly a 10–15-minute transfer from GCM, then a one-stop-or-more return to SFO with no nonstop option.",
+    "attributes": {
+      "romance": 8,
+      "privacy": 6,
+      "service": 10,
+      "foodSpa": 10,
+      "activities": 10,
+      "weather": 5
+    },
+    "honestCatch": "The resort is large, family-oriented, and split across road-linked towers; choose the Ocean Tower carefully or the experience can feel more conference grand-hotel than minimoon retreat.",
+    "quote": {
+      "text": "One of the Caribbean's top luxury beach resorts, located directly on the famed Seven Mile Beach.",
+      "sourceName": "Condé Nast Traveler",
+      "url": "https://www.cntraveler.com/hotels/cayman-islands/george-town/ritz-carlton-grand-cayman"
+    },
+    "bookingUrl": "https://www.ritzcarlton.com/en/hotels/gcmrz-the-ritz-carlton-grand-cayman/overview/?fromDate=2026-10-05&toDate=2026-10-11&numberOfRooms=1&numberOfAdults=2",
+    "officialUrl": "https://www.ritzcarlton.com/en/hotels/gcmrz-the-ritz-carlton-grand-cayman/overview/",
+    "images": [
+      {
+        "localPath": "assets/hotels/ritz-carlton-grand-cayman/ocean-terrace.webp",
+        "sourceUrl": "https://cache.marriott.com/content/dam/marriott-renditions/GCMRZ/gcmrz-terrace-0015-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=1336px:*",
+        "sourceName": "Marriott official media CDN",
+        "caption": "An elevated Ocean Tower terrace over Seven Mile Beach.",
+        "alt": "White loungers on a Ritz-Carlton terrace above vivid turquoise Caribbean water"
+      },
+      {
+        "localPath": "assets/hotels/ritz-carlton-grand-cayman/ocean-view-room.webp",
+        "sourceUrl": "https://cache.marriott.com/content/dam/marriott-renditions/GCMRZ/gcmrz-king-7856-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=1336px:*",
+        "sourceName": "Marriott official media CDN",
+        "caption": "A refreshed king room frames the ocean beyond its balcony.",
+        "alt": "Ritz-Carlton king room with striped rug, balcony seating, and Caribbean ocean view"
+      },
+      {
+        "localPath": "assets/hotels/ritz-carlton-grand-cayman/seven-restaurant.webp",
+        "sourceUrl": "https://cache.marriott.com/content/dam/marriott-renditions/GCMRZ/gcmrz-seven-9155-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=1336px:*",
+        "sourceName": "Marriott official media CDN",
+        "caption": "The wine-lined dining room at Seven.",
+        "alt": "Warm wood dining room and floor-to-ceiling wine display at Seven restaurant"
+      }
+    ]
+  }
+]

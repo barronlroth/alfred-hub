@@ -1,0 +1,461 @@
+[
+  {
+    "slug": "wickaninnish-inn",
+    "index": 1,
+    "ok": true,
+    "source": "https://www.wickinn.com/site/assets/files/1039/wickaninnish_inn_exterior_aerial_of_inn_and_chesterman_beach_by_marcus_paladino_2024-1.1400x976.jpg",
+    "sourceDimensions": [
+      1400,
+      976
+    ],
+    "output": "assets/hotels/wickaninnish-inn/1.webp",
+    "outputDimensions": [
+      1400,
+      976
+    ],
+    "bytes": 403288,
+    "quality": 84
+  },
+  {
+    "slug": "wickaninnish-inn",
+    "index": 2,
+    "ok": true,
+    "source": "https://www.wickinn.com/site/assets/files/1041/wickaninnish_in_guest_room_premier_room_first_floor_by_caitlin_gray_-_ronda_apr_2025-1.1400x976.jpg",
+    "sourceDimensions": [
+      1400,
+      976
+    ],
+    "output": "assets/hotels/wickaninnish-inn/2.webp",
+    "outputDimensions": [
+      1400,
+      976
+    ],
+    "bytes": 265818,
+    "quality": 84
+  },
+  {
+    "slug": "wickaninnish-inn",
+    "index": 3,
+    "ok": true,
+    "source": "https://www.wickinn.com/site/assets/files/1592/wickaninnish_inn_exterior_chesterman_beach_couple_by_jeremy_koreski_2024_2_copy.2000x1028.jpg",
+    "sourceDimensions": [
+      2000,
+      1028
+    ],
+    "output": "assets/hotels/wickaninnish-inn/3.webp",
+    "outputDimensions": [
+      2000,
+      1028
+    ],
+    "bytes": 375756,
+    "quality": 84
+  },
+  {
+    "slug": "montage-healdsburg",
+    "index": 1,
+    "ok": true,
+    "source": "https://uploads.montage.com/uploads/sites/4/2023/10/02161624/vineyard-room-big-box-1920x730.webp",
+    "sourceDimensions": [
+      1920,
+      730
+    ],
+    "output": "assets/hotels/montage-healdsburg/1.webp",
+    "outputDimensions": [
+      1920,
+      730
+    ],
+    "bytes": 326242,
+    "quality": 84
+  },
+  {
+    "slug": "montage-healdsburg",
+    "index": 2,
+    "ok": true,
+    "source": "https://uploads.montage.com/uploads/sites/4/2023/10/02161002/hero-footer-vine-1920x730.webp",
+    "sourceDimensions": [
+      1920,
+      730
+    ],
+    "output": "assets/hotels/montage-healdsburg/2.webp",
+    "outputDimensions": [
+      1920,
+      730
+    ],
+    "bytes": 293440,
+    "quality": 84
+  },
+  {
+    "slug": "montage-healdsburg",
+    "index": 3,
+    "ok": true,
+    "source": "https://uploads.montage.com/uploads/sites/4/2022/04/14120516/MHB-PROPERTY-EXTERIOR-01-3222-V1-3-1920x1080.webp",
+    "sourceDimensions": [
+      1920,
+      1080
+    ],
+    "output": "assets/hotels/montage-healdsburg/3.webp",
+    "outputDimensions": [
+      1920,
+      1080
+    ],
+    "bytes": 595880,
+    "quality": 84
+  },
+  {
+    "slug": "post-ranch-inn",
+    "index": 1,
+    "ok": true,
+    "source": "https://postranchinn.com/wp-content/uploads/2023/09/gallery-ranch_coastal_82A6371.jpg",
+    "sourceDimensions": [
+      1800,
+      1200
+    ],
+    "output": "assets/hotels/post-ranch-inn/1.webp",
+    "outputDimensions": [
+      1800,
+      1200
+    ],
+    "bytes": 203540,
+    "quality": 84
+  },
+  {
+    "slug": "post-ranch-inn",
+    "index": 2,
+    "ok": true,
+    "source": "https://postranchinn.com/wp-content/uploads/spa_arch_couples_tub_S9A7844.jpg",
+    "sourceDimensions": [
+      2400,
+      1600
+    ],
+    "output": "assets/hotels/post-ranch-inn/2.webp",
+    "outputDimensions": [
+      2200,
+      1467
+    ],
+    "bytes": 606528,
+    "quality": 84
+  },
+  {
+    "slug": "post-ranch-inn",
+    "index": 3,
+    "ok": true,
+    "source": "https://postranchinn.com/wp-content/uploads/2023/09/ocean-house-hero_Q3A0397.jpg",
+    "sourceDimensions": [
+      1920,
+      1280
+    ],
+    "output": "assets/hotels/post-ranch-inn/3.webp",
+    "outputDimensions": [
+      1920,
+      1280
+    ],
+    "bytes": 327768,
+    "quality": 84
+  },
+  {
+    "slug": "alila-ventana-big-sur",
+    "index": 1,
+    "ok": true,
+    "source": "https://bunny-wp-pullzone-gjwg5mwhdq.b-cdn.net/wp-content/uploads/2026/03/ALI-P0274-Man-in-Pool-2000x1333.jpg",
+    "sourceDimensions": [
+      2000,
+      1333
+    ],
+    "output": "assets/hotels/alila-ventana-big-sur/1.webp",
+    "outputDimensions": [
+      2000,
+      1333
+    ],
+    "bytes": 262136,
+    "quality": 84
+  },
+  {
+    "slug": "alila-ventana-big-sur",
+    "index": 2,
+    "ok": true,
+    "source": "https://bunny-wp-pullzone-gjwg5mwhdq.b-cdn.net/wp-content/uploads/2026/02/SJCAL_Ventana-Fireplace-Guestroom-Seating-Area-2000x1333.jpg",
+    "sourceDimensions": [
+      2000,
+      1333
+    ],
+    "output": "assets/hotels/alila-ventana-big-sur/2.webp",
+    "outputDimensions": [
+      2000,
+      1333
+    ],
+    "bytes": 310770,
+    "quality": 84
+  },
+  {
+    "slug": "alila-ventana-big-sur",
+    "index": 3,
+    "ok": true,
+    "source": "https://bunny-wp-pullzone-gjwg5mwhdq.b-cdn.net/wp-content/uploads/2026/03/Alila-Ventana-Spa-2-2000x1333.jpg",
+    "sourceDimensions": [
+      2000,
+      1333
+    ],
+    "output": "assets/hotels/alila-ventana-big-sur/3.webp",
+    "outputDimensions": [
+      2000,
+      1333
+    ],
+    "bytes": 303628,
+    "quality": 84
+  },
+  {
+    "slug": "farmhouse-inn",
+    "index": 1,
+    "ok": true,
+    "source": "https://www.farmhouseinn.com/files/7642/28473258_ImageLargeWidth.jpg",
+    "sourceDimensions": [
+      1920,
+      1440
+    ],
+    "output": "assets/hotels/farmhouse-inn/1.webp",
+    "outputDimensions": [
+      1920,
+      1440
+    ],
+    "bytes": 643420,
+    "quality": 84
+  },
+  {
+    "slug": "farmhouse-inn",
+    "index": 2,
+    "ok": true,
+    "source": "https://www.farmhouseinn.com/files/7642/29204681_ImageLargeWidth.jpg",
+    "sourceDimensions": [
+      1920,
+      1295
+    ],
+    "output": "assets/hotels/farmhouse-inn/2.webp",
+    "outputDimensions": [
+      1920,
+      1295
+    ],
+    "bytes": 799674,
+    "quality": 84
+  },
+  {
+    "slug": "farmhouse-inn",
+    "index": 3,
+    "ok": true,
+    "source": "https://www.farmhouseinn.com/files/7642/29285358_ImageLargeWidth.jpg",
+    "sourceDimensions": [
+      1200,
+      825
+    ],
+    "output": "assets/hotels/farmhouse-inn/3.webp",
+    "outputDimensions": [
+      1200,
+      825
+    ],
+    "bytes": 256148,
+    "quality": 84
+  },
+  {
+    "slug": "harbor-house-inn",
+    "index": 1,
+    "ok": true,
+    "source": "https://static.wixstatic.com/media/72db9d_23813373b2a248f28607e95bd50dd6e2%7Emv2.jpg",
+    "sourceDimensions": [
+      1200,
+      675
+    ],
+    "output": "assets/hotels/harbor-house-inn/1.webp",
+    "outputDimensions": [
+      1200,
+      675
+    ],
+    "bytes": 124228,
+    "quality": 84
+  },
+  {
+    "slug": "harbor-house-inn",
+    "index": 2,
+    "ok": true,
+    "source": "https://static.wixstatic.com/media/72db9d_595eddf0ad1b40db83f1163076c4d43d~mv2.jpeg",
+    "sourceDimensions": [
+      9504,
+      6336
+    ],
+    "output": "assets/hotels/harbor-house-inn/2.webp",
+    "outputDimensions": [
+      2200,
+      1467
+    ],
+    "bytes": 158460,
+    "quality": 84
+  },
+  {
+    "slug": "harbor-house-inn",
+    "index": 3,
+    "ok": true,
+    "source": "https://static.wixstatic.com/media/72db9d_6028063da6c44bd5b14e4cd7dfd1aa03~mv2.jpeg",
+    "sourceDimensions": [
+      3200,
+      4000
+    ],
+    "output": "assets/hotels/harbor-house-inn/3.webp",
+    "outputDimensions": [
+      2200,
+      2750
+    ],
+    "bytes": 884522,
+    "quality": 84
+  },
+  {
+    "slug": "meadowood-napa-valley",
+    "index": 1,
+    "ok": true,
+    "source": "https://meadowood.com/wp-content/uploads/2025/03/Nighttime-homepage-hero_1920px-min.jpg",
+    "sourceDimensions": [
+      1920,
+      1093
+    ],
+    "output": "assets/hotels/meadowood-napa-valley/1.webp",
+    "outputDimensions": [
+      1920,
+      1093
+    ],
+    "bytes": 84704,
+    "quality": 84
+  },
+  {
+    "slug": "meadowood-napa-valley",
+    "index": 2,
+    "ok": true,
+    "source": "https://meadowood.com/wp-content/uploads/2022/12/Cottage-Room_full-room_600x402.jpg",
+    "sourceDimensions": [
+      2032,
+      1361
+    ],
+    "output": "assets/hotels/meadowood-napa-valley/2.webp",
+    "outputDimensions": [
+      2032,
+      1361
+    ],
+    "bytes": 202348,
+    "quality": 84
+  },
+  {
+    "slug": "meadowood-napa-valley",
+    "index": 3,
+    "ok": true,
+    "source": "https://meadowood.com/wp-content/uploads/2022/12/Oakview-Room_Bedroom-nook-and-fireplace_600x402.jpg",
+    "sourceDimensions": [
+      2025,
+      1357
+    ],
+    "output": "assets/hotels/meadowood-napa-valley/3.webp",
+    "outputDimensions": [
+      2025,
+      1357
+    ],
+    "bytes": 189850,
+    "quality": 84
+  },
+  {
+    "slug": "stanly-ranch",
+    "index": 1,
+    "ok": true,
+    "source": "https://dreffui1gbt6t.cloudfront.net/images/sr/stn-home-video-recrop-1-22.jpg",
+    "sourceDimensions": [
+      2000,
+      1125
+    ],
+    "output": "assets/hotels/stanly-ranch/1.webp",
+    "outputDimensions": [
+      2000,
+      1125
+    ],
+    "bytes": 320988,
+    "quality": 84
+  },
+  {
+    "slug": "stanly-ranch",
+    "index": 2,
+    "ok": true,
+    "source": "https://dreffui1gbt6t.cloudfront.net/images/sr/stn-gallery-stay-palomino-livingroom.jpg",
+    "sourceDimensions": [
+      2000,
+      1125
+    ],
+    "output": "assets/hotels/stanly-ranch/2.webp",
+    "outputDimensions": [
+      2000,
+      1125
+    ],
+    "bytes": 587480,
+    "quality": 84
+  },
+  {
+    "slug": "stanly-ranch",
+    "index": 3,
+    "ok": true,
+    "source": "https://dreffui1gbt6t.cloudfront.net/images/sr/STN_Galleries_Resort_101823_Asset-29.jpg",
+    "sourceDimensions": [
+      2000,
+      1125
+    ],
+    "output": "assets/hotels/stanly-ranch/3.webp",
+    "outputDimensions": [
+      2000,
+      1125
+    ],
+    "bytes": 795694,
+    "quality": 84
+  },
+  {
+    "slug": "solage",
+    "index": 1,
+    "ok": true,
+    "source": "https://dreffui1gbt6t.cloudfront.net/images/sol/sol-gal-resort-10.23-poolbright-land.jpg",
+    "sourceDimensions": [
+      2000,
+      1125
+    ],
+    "output": "assets/hotels/solage/1.webp",
+    "outputDimensions": [
+      2000,
+      1125
+    ],
+    "bytes": 488470,
+    "quality": 84
+  },
+  {
+    "slug": "solage",
+    "index": 2,
+    "ok": true,
+    "source": "https://dreffui1gbt6t.cloudfront.net/images/sol/sol-home-stayhover-patio.jpg",
+    "sourceDimensions": [
+      2000,
+      1125
+    ],
+    "output": "assets/hotels/solage/2.webp",
+    "outputDimensions": [
+      2000,
+      1125
+    ],
+    "bytes": 644720,
+    "quality": 84
+  },
+  {
+    "slug": "solage",
+    "index": 3,
+    "ok": true,
+    "source": "https://dreffui1gbt6t.cloudfront.net/images/sol/sol-gallery-stay-orchardsuite-outdoortub.jpg",
+    "sourceDimensions": [
+      2000,
+      1125
+    ],
+    "output": "assets/hotels/solage/3.webp",
+    "outputDimensions": [
+      2000,
+      1125
+    ],
+    "bytes": 198660,
+    "quality": 84
+  }
+]

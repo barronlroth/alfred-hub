@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A private decision atlas for Barron and Nina's October 2026 minimoon.">
+  <meta name="theme-color" content="#151b22">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23151b22' stroke='%23e1ad66' stroke-width='3'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='%23e1ad66' stroke-width='3'/%3E%3C/svg%3E">
+  <title>Six nights after forever | Minimoon atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:opsz,wght@12..100,300..700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#ranked">Skip to the ranked stays</a>
+  <noscript><p class="noscript">This decision atlas needs JavaScript to load the researched hotel data and comparison tools.</p></noscript>
+
+  <header class="hero" id="top">
+    <nav class="masthead" aria-label="Primary">
+      <a class="wordmark" href="#top" aria-label="Minimoon atelier — back to top"><span aria-hidden="true">B + N</span><span>Minimoon atelier</span></a>
+      <div class="nav-links">
+        <a href="#ranked">The ten</a>
+        <a href="#explore">Explore</a>
+        <button class="text-button" type="button" data-open-credits>Notes &amp; sources</button>
+      </div>
+    </nav>
+
+    <div class="hero-stage">
+      <div class="hero-copy">
+        <p class="kicker">October 2026 · a private decision atlas</p>
+        <h1><span>Six nights</span><span>after forever.</span></h1>
+        <p class="hero-question">Where do we exhale?</p>
+        <p class="lede">From the last wedding song in Miami to the first ordinary morning in San Francisco. Twenty-five places, narrowed with feeling and without flattery.</p>
+        <a class="start-link" href="#ranked">Begin with the ten <span aria-hidden="true">↓</span></a>
+      </div>
+      <figure class="hero-frame">
+        <img src="assets/hotels/palm-heights/beach.webp" alt="Yellow umbrellas on white sand beside turquoise water at Palm Heights" width="2048" height="1365">
+        <figcaption><span>Frame 01</span><span>Seven Mile Beach, Grand Cayman</span></figcaption>
+      </figure>
+      <div class="hero-note" aria-hidden="true">Married<br>10 · 03 · 26</div>
+    </div>
+
+    <div class="route-line" aria-label="Journey from Miami to a resort and onward to San Francisco">
+      <div class="airport"><strong>MIA</strong><span>Miami</span></div>
+      <div class="flight-path"><span class="plane" aria-hidden="true">✦</span></div>
+      <div class="airport resort-stop"><strong>STAY</strong><span data-stay-night-count>six nights</span></div>
+      <div class="flight-path return"><span class="plane" aria-hidden="true">✦</span></div>
+      <div class="airport"><strong>SFO</strong><span>San Francisco</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="decision-rail" aria-label="Trip dates and filters">
+      <div class="date-choice">
+        <span class="rail-label">Arrive</span>
+        <div class="segmented" role="group" aria-label="Arrival date">
+          <button type="button" class="is-active" data-start-date="2026-10-05" aria-pressed="true">Mon 05</button>
+          <button type="button" data-start-date="2026-10-06" aria-pressed="false">Tue 06</button>
+        </div>
+        <span class="departure">Leave Sun 11</span>
+      </div>
+      <button class="filter-toggle" type="button" aria-expanded="false" aria-controls="filters">Refine the field <span aria-hidden="true">＋</span></button>
+      <form class="filters" id="filters" hidden>
+        <label>Region<select name="region"><option value="all">Anywhere</option></select></label>
+        <label>Stay-range ceiling<select name="budget"><option value="all">Any range</option><option value="8000">Entirely under $8k</option><option value="10000">Entirely under $10k</option><option value="12000">Entirely under $12k</option><option value="15000">Entirely under $15k</option></select></label>
+        <label>Weather tolerance<select name="weather"><option value="all">Open to weather</option><option value="low">Low risk only</option><option value="medium">Low or medium</option></select></label>
+        <label>Intimacy<select name="intimacy"><option value="all">Any rhythm</option><option value="9">Very intimate (9+)</option><option value="8">Intimate (8+)</option></select></label>
+        <label>Activity level<select name="activity"><option value="all">Any pace</option><option value="9">Plenty to do (9+)</option><option value="8">Balanced (8+)</option><option value="7">Slow is fine (7+)</option></select></label>
+        <button class="reset-filters" type="reset">Reset all</button>
+      </form>
+      <p class="filter-status" aria-live="polite">Loading the field…</p>
+    </section>
+
+    <section class="opening-case" id="opening-case" aria-labelledby="opening-title">
+      <p class="kicker">The decision, before the details</p>
+      <h2 id="opening-title">Three ways to begin.</h2>
+      <div class="opening-options" id="opening-options" aria-live="polite"></div>
+    </section>
+
+    <section class="hotel-sequence ranked-sequence" id="ranked" aria-labelledby="ranked-title">
+      <header class="section-heading">
+        <div><p class="kicker">The ranked edit · 01–10</p><h2 id="ranked-title">The places worth arguing for.</h2></div>
+        <p>Ordered by minimoon fit, not fame. Rates shown are researched all-in planning ranges, never false live quotes.</p>
+      </header>
+      <div id="ranked-hotels" class="hotel-list" aria-live="polite">
+        <div class="loading-state"><span></span><p>Unspooling the contact sheets…</p></div>
+      </div>
+    </section>
+
+    <section class="explore-sequence" id="explore" aria-labelledby="explore-title">
+      <header class="section-heading explore-heading">
+        <div><p class="kicker">Fifteen more · lower priority, not lesser places</p><h2 id="explore-title">Keep the horizon open.</h2></div>
+        <p>These stays miss the first cut on weather, route, scale, price, or intimacy. Every one still gets the full truth.</p>
+      </header>
+      <div id="explore-hotels" class="hotel-list explore-list" aria-live="polite"></div>
+    </section>
+
+    <section class="empty-state" id="empty-state" hidden>
+      <p class="kicker">No exact match</p>
+      <h2>The filters asked for a place that isn’t in this field.</h2>
+      <p>Open one constraint and the coast comes back into view.</p>
+      <div class="nearest-matches" id="nearest-matches" aria-label="Closest alternatives"></div>
+      <button type="button" data-reset-filters>Reset every filter</button>
+    </section>
+
+    <section class="comparison" id="comparison" aria-labelledby="comparison-title" hidden>
+      <header class="section-heading">
+        <div><p class="kicker">Two to four, side by side</p><h2 id="comparison-title">What changes when we choose?</h2></div>
+        <button type="button" class="text-button" data-clear-shortlist>Clear shortlist</button>
+      </header>
+      <div class="matrix-wrap" tabindex="0" aria-label="Scrollable hotel comparison">
+        <table id="comparison-matrix"></table>
+      </div>
+    </section>
+  </main>
+
+  <aside class="compare-tray" id="compare-tray" aria-label="Shortlist" hidden>
+    <div class="tray-heading"><span>Our shortlist</span><strong><span id="tray-count">0</span> / 4</strong></div>
+    <div id="tray-items" class="tray-items"></div>
+    <a class="compare-action is-disabled" id="compare-action" href="#comparison" aria-disabled="true">Choose 2–4 to compare</a>
+  </aside>
+
+  <dialog class="credits" id="credits-dialog" aria-labelledby="credits-title">
+    <div class="dialog-top"><p class="kicker">Field notes</p><button type="button" data-close-credits aria-label="Close notes and sources">×</button></div>
+    <h2 id="credits-title">What the numbers mean.</h2>
+    <div class="credits-grid">
+      <section><h3>Rates</h3><p>Monday figures are USD planning ranges for six nights. Tuesday totals are plainly labeled proportional five-night estimates derived from that research, not live quotes. “Exact date” means a direct or third-party October 5–11 signal was captured. “Adjacent date” uses nearby inventory. “Generic signal” uses published or current public rates. Taxes, fees, parking, and worthwhile room categories are included where research supported them.</p></section>
+      <section><h3>Rank</h3><p>The top ten balance romance, privacy, service, food and spa, activities, weather, routing, and budget. The order is editorial judgment for this specific trip. It is not a universal hotel score.</p></section>
+      <section><h3>Weather and routes</h3><p>Weather describes early October patterns and material disruption risks. Route notes consider the full MIA → stay → SFO journey, not only the easiest flight segment.</p></section>
+      <section><h3>Images and words</h3><p>All 75 images are saved locally and were audited for integrity, resolution, duplication, and relevance. Captions, source names, and original source links are attached to each frame. Quotes retain their source link.</p></section>
+    </div>
+    <details class="image-credits"><summary>Open all hotel and image credits</summary><div id="image-credits-list"></div></details>
+    <p class="method-note">Research captured August 2026. Reconfirm rates, road status, renovations, flight schedules, and cancellation terms before booking.</p>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <footer><p>Made for Barron + Nina, for the quiet after the party.</p><button class="text-button" type="button" data-open-credits>Methodology &amp; image credits</button></footer>
+</body>
+</html>

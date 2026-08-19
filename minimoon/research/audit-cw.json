@@ -1,0 +1,587 @@
+{
+  "auditedAt": "2026-08-19T03:48:12Z",
+  "scope": [
+    "research/cayman.json",
+    "research/westcoast.json"
+  ],
+  "methodologyReference": "research/methodology.md",
+  "result": "pass-with-targeted-fixes",
+  "summary": {
+    "datasetCounts": {
+      "cayman": 3,
+      "westcoast": 9
+    },
+    "propertiesChecked": 12,
+    "requiredFieldsChecked": [
+      "slug",
+      "name",
+      "location",
+      "region",
+      "rank",
+      "rankTier",
+      "role",
+      "summary",
+      "bestRoom",
+      "nightlyRange",
+      "sixNightRange",
+      "priceConfidence",
+      "priceNote",
+      "weather",
+      "weatherRisk",
+      "route",
+      "travelFriction",
+      "attributes",
+      "honestCatch",
+      "quote",
+      "bookingUrl",
+      "officialUrl",
+      "images"
+    ],
+    "schemaCompleteAfterFix": true,
+    "numericRangesValid": true,
+    "attributeScoresWithin1To10": true,
+    "localImagesChecked": 36,
+    "allImagesDecodable": true,
+    "allImagesAtLeast1200pxWide": false,
+    "priceConfidenceLabelsValid": true,
+    "allowedPriceConfidenceLabels": [
+      "exact-date",
+      "adjacent-date",
+      "generic-rate-signal",
+      "estimate"
+    ]
+  },
+  "rankValidation": {
+    "expectedRanks": {
+      "palm-heights": 1,
+      "wickaninnish-inn": 3,
+      "montage-healdsburg": 5,
+      "post-ranch-inn": 7,
+      "alila-ventana-big-sur": 9,
+      "farmhouse-inn": 10
+    },
+    "actualRanks": {
+      "palm-heights": 1,
+      "wickaninnish-inn": 3,
+      "montage-healdsburg": 5,
+      "post-ranch-inn": 7,
+      "alila-ventana-big-sur": 9,
+      "farmhouse-inn": 10
+    },
+    "backupSlugs": [
+      "kimpton-seafire",
+      "ritz-carlton-grand-cayman",
+      "harbor-house-inn",
+      "meadowood-napa-valley",
+      "stanly-ranch",
+      "solage"
+    ],
+    "consistent": {
+      "palm-heights": true,
+      "wickaninnish-inn": true,
+      "montage-healdsburg": true,
+      "post-ranch-inn": true,
+      "alila-ventana-big-sur": true,
+      "farmhouse-inn": true
+    }
+  },
+  "urlValidation": {
+    "imageSourceUrls": {
+      "checked": 36,
+      "reachableHttp200": 36,
+      "result": "pass"
+    },
+    "quoteUrls": {
+      "checked": 12,
+      "reachable": 12,
+      "quotesVerifiedVerbatim": 12,
+      "result": "pass",
+      "methods": [
+        "static HTML exact-match",
+        "clean page extraction fallback for dynamic/WAF pages"
+      ]
+    },
+    "bookingUrls": {
+      "checked": 12,
+      "http200": 10,
+      "botProtectedButStructurallyValid": 2,
+      "result": "pass-with-warning",
+      "warnings": [
+        {
+          "slug": "kimpton-seafire",
+          "httpStatus": 403,
+          "note": "IHG endpoint rejects automated request; official hotel code and booking path retained."
+        },
+        {
+          "slug": "alila-ventana-big-sur",
+          "httpStatus": 429,
+          "note": "Hyatt endpoint rate-limits automated request; official SJCAL date-specific booking path retained."
+        }
+      ]
+    },
+    "officialUrls": {
+      "checked": 12,
+      "reachableHttp200": 12,
+      "result": "pass"
+    }
+  },
+  "fixesMade": [
+    {
+      "file": "research/cayman.json",
+      "change": "Added rank field; set Palm Heights to rank 1; marked Kimpton Seafire and Ritz-Carlton Grand Cayman as unranked backups."
+    },
+    {
+      "file": "research/westcoast.json",
+      "change": "Added established ranks: Wickaninnish 3, Montage Healdsburg 5, Post Ranch Inn 7, Alila Ventana Big Sur 9, Farmhouse Inn 10."
+    },
+    {
+      "file": "research/westcoast.json",
+      "change": "Normalized rankTier values so ranked entries no longer make contradictory Top three claims and Harbor House, Meadowood, Stanly Ranch, and Solage are backups."
+    },
+    {
+      "file": "research/westcoast.json",
+      "change": "Normalized all nine non-live pricing confidence values to generic-rate-signal; preserved the detailed confidence nuance in each priceNote."
+    },
+    {
+      "file": "assets/hotels/meadowood-napa-valley/1.webp",
+      "change": "Re-downloaded and decoded the documented official 1920×1093 source, replacing a 600px-wide local copy so the practical 1200px minimum is met."
+    }
+  ],
+  "propertyValidation": [
+    {
+      "slug": "palm-heights",
+      "dataset": "cayman",
+      "rank": 1,
+      "rankTier": "top-pick",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/palm-heights/beach.webp",
+          "width": 1994,
+          "height": 1122,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/palm-heights/suite.webp",
+          "width": 2000,
+          "height": 1333,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/palm-heights/garden-club.webp",
+          "width": 2000,
+          "height": 1143,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "kimpton-seafire",
+      "dataset": "cayman",
+      "rank": null,
+      "rankTier": "backup",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/kimpton-seafire/coccoloba.webp",
+          "width": 1700,
+          "height": 960,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/kimpton-seafire/ocean-view-room.webp",
+          "width": 1700,
+          "height": 960,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/kimpton-seafire/spa.webp",
+          "width": 1700,
+          "height": 960,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "ritz-carlton-grand-cayman",
+      "dataset": "cayman",
+      "rank": null,
+      "rankTier": "backup",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/ritz-carlton-grand-cayman/ocean-terrace.webp",
+          "width": 1336,
+          "height": 751,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/ritz-carlton-grand-cayman/ocean-view-room.webp",
+          "width": 1336,
+          "height": 751,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/ritz-carlton-grand-cayman/seven-restaurant.webp",
+          "width": 1336,
+          "height": 751,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "wickaninnish-inn",
+      "dataset": "westcoast",
+      "rank": 3,
+      "rankTier": "top-three",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/wickaninnish-inn/1.webp",
+          "width": 1400,
+          "height": 976,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/wickaninnish-inn/2.webp",
+          "width": 1400,
+          "height": 976,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/wickaninnish-inn/3.webp",
+          "width": 2000,
+          "height": 1028,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "montage-healdsburg",
+      "dataset": "westcoast",
+      "rank": 5,
+      "rankTier": "shortlist",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/montage-healdsburg/1.webp",
+          "width": 1920,
+          "height": 730,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/montage-healdsburg/2.webp",
+          "width": 1920,
+          "height": 730,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/montage-healdsburg/3.webp",
+          "width": 1920,
+          "height": 1080,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "post-ranch-inn",
+      "dataset": "westcoast",
+      "rank": 7,
+      "rankTier": "shortlist",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/post-ranch-inn/1.webp",
+          "width": 1800,
+          "height": 1200,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/post-ranch-inn/2.webp",
+          "width": 2200,
+          "height": 1467,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/post-ranch-inn/3.webp",
+          "width": 1920,
+          "height": 1280,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "alila-ventana-big-sur",
+      "dataset": "westcoast",
+      "rank": 9,
+      "rankTier": "shortlist",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/alila-ventana-big-sur/1.webp",
+          "width": 2000,
+          "height": 1333,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/alila-ventana-big-sur/2.webp",
+          "width": 2000,
+          "height": 1333,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/alila-ventana-big-sur/3.webp",
+          "width": 2000,
+          "height": 1333,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "farmhouse-inn",
+      "dataset": "westcoast",
+      "rank": 10,
+      "rankTier": "shortlist",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/farmhouse-inn/1.webp",
+          "width": 1920,
+          "height": 1440,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/farmhouse-inn/2.webp",
+          "width": 1920,
+          "height": 1295,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/farmhouse-inn/3.webp",
+          "width": 1200,
+          "height": 825,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "harbor-house-inn",
+      "dataset": "westcoast",
+      "rank": null,
+      "rankTier": "backup",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/harbor-house-inn/1.webp",
+          "width": 1200,
+          "height": 675,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/harbor-house-inn/2.webp",
+          "width": 2200,
+          "height": 1467,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/harbor-house-inn/3.webp",
+          "width": 2200,
+          "height": 2750,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "meadowood-napa-valley",
+      "dataset": "westcoast",
+      "rank": null,
+      "rankTier": "backup",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/meadowood-napa-valley/1.webp",
+          "width": 600,
+          "height": 448,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": false
+        },
+        {
+          "localPath": "assets/hotels/meadowood-napa-valley/2.webp",
+          "width": 2032,
+          "height": 1361,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/meadowood-napa-valley/3.webp",
+          "width": 2025,
+          "height": 1357,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "stanly-ranch",
+      "dataset": "westcoast",
+      "rank": null,
+      "rankTier": "backup",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/stanly-ranch/1.webp",
+          "width": 2000,
+          "height": 1125,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/stanly-ranch/2.webp",
+          "width": 2000,
+          "height": 1125,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/stanly-ranch/3.webp",
+          "width": 2000,
+          "height": 1125,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    },
+    {
+      "slug": "solage",
+      "dataset": "westcoast",
+      "rank": null,
+      "rankTier": "backup",
+      "schemaComplete": true,
+      "rangesValid": true,
+      "attributeScoresValid": true,
+      "imageCount": 3,
+      "images": [
+        {
+          "localPath": "assets/hotels/solage/1.webp",
+          "width": 2000,
+          "height": 1125,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/solage/2.webp",
+          "width": 2000,
+          "height": 1125,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        },
+        {
+          "localPath": "assets/hotels/solage/3.webp",
+          "width": 2000,
+          "height": 1125,
+          "format": "WEBP",
+          "decodable": true,
+          "meets1200pxWidth": true
+        }
+      ]
+    }
+  ],
+  "issuesRemaining": [
+    "Automated HTTP checks receive anti-bot responses from the IHG Kimpton booking URL (403) and Hyatt Ventana booking URL (429); neither response establishes a broken human-facing link. No content replacement was warranted."
+  ]
+}

@@ -1,0 +1,821 @@
+[
+  {
+    "slug": "hotel-wailea",
+    "name": "Hotel Wailea",
+    "location": "Wailea, Maui",
+    "region": "Maui",
+    "rankTier": "top-pick",
+    "role": "The adults-only couple-first choice",
+    "summary": "A 72-suite, adults-only Relais & Châteaux retreat on 15 hillside acres: intimate, residential and far removed from Hawai‘i’s family mega-resort pattern.",
+    "bestRoom": "Celebration Ocean View Suite",
+    "nightlyRange": [
+      1200,
+      1900
+    ],
+    "sixNightRange": [
+      7200,
+      11400
+    ],
+    "priceConfidence": "estimate",
+    "priceNote": "No usable Oct 5–11 checkout quote was captured. This is an estimated all-in planning range; request a refundable six-night total including taxes and any mandatory charges. Andaz Maui is intentionally excluded from this set because its posted Sep 7–Nov 14, 2026 renovation overlaps the stay.",
+    "weather": "Warm, trade-wind early October; south Maui is among the drier island microclimates, with hot beach days and occasional brief showers.",
+    "weatherRisk": "low",
+    "route": "MIA → OGG requires a connection; OGG → SFO has nonstop service on selected schedules. Wailea is roughly 25–35 minutes from OGG.",
+    "travelFriction": "medium",
+    "attributes": {
+      "romance": 10,
+      "privacy": 9,
+      "service": 9,
+      "foodSpa": 9,
+      "activities": 7,
+      "weather": 9
+    },
+    "honestCatch": "It is not beachfront and has a smaller on-property activity campus; the value case depends on a live all-in quote below the hard ceiling.",
+    "quote": {
+      "text": "Hawaii’s Sole Adults-Only Relais & Châteaux Hotel",
+      "sourceName": "Hotel Wailea official site",
+      "url": "https://www.hotelwailea.com/"
+    },
+    "bookingUrl": "https://be.synxis.com/?adult=2&chain=8565&hotel=65144&arrive=2026-10-05&depart=2026-10-11",
+    "officialUrl": "https://www.hotelwailea.com/",
+    "images": [
+      {
+        "localPath": "assets/hotels/hotel-wailea/1.jpg",
+        "sourceUrl": "https://www.hotelwailea.com/wp-content/uploads/2025/11/hotel-wailea-hero-scaled-1-1-2048x1134.jpg",
+        "sourceName": "Hotel Wailea official site",
+        "caption": "The adults-only retreat above Wailea",
+        "alt": "Hotel Wailea pool nestled into tropical hillside gardens above the Pacific"
+      },
+      {
+        "localPath": "assets/hotels/hotel-wailea/2.jpg",
+        "sourceUrl": "https://www.hotelwailea.com/wp-content/uploads/2025/05/IG_HW_Suites2023-1.jpg",
+        "sourceName": "Hotel Wailea official site",
+        "caption": "A residential-style suite",
+        "alt": "Bright Hotel Wailea suite with sitting area, lanai and Pacific view"
+      },
+      {
+        "localPath": "assets/hotels/hotel-wailea/3.jpg",
+        "sourceUrl": "https://www.hotelwailea.com/wp-content/uploads/2026/04/8X3A9733-Enhanced-NR-2048x1365.jpg",
+        "sourceName": "Hotel Wailea official site",
+        "caption": "The house car sets out",
+        "alt": "A couple riding in Hotel Wailea’s open-air house car beside the property sign"
+      }
+    ]
+  },
+  {
+    "slug": "kona-village-rosewood",
+    "name": "Kona Village, A Rosewood Resort",
+    "location": "Kailua-Kona, Hawaiʻi Island",
+    "region": "Hawaiʻi Island",
+    "rankTier": "top-pick",
+    "role": "The most transporting island experience",
+    "summary": "Standalone kauhale, lava-and-ocean landscape, cultural and marine programming, and an Asaya spa built into the lava flow create the strongest sense of place in the field.",
+    "bestRoom": "Beach Front One-Bedroom Kauhale",
+    "nightlyRange": [
+      1800,
+      2800
+    ],
+    "sixNightRange": [
+      10800,
+      16800
+    ],
+    "priceConfidence": "estimate",
+    "priceNote": "No exact-date rate or availability was returned. This high, wide all-in estimate reflects the premium room product and Hawaiʻi taxes; obtain a written six-night total before considering it within budget.",
+    "weather": "Hot and generally dry on the leeward Kona coast in early October, though Kona storms can interrupt the normal pattern as the wetter season approaches.",
+    "weatherRisk": "low",
+    "route": "MIA → KOA requires a protected mainland connection; KOA → SFO has nonstop options. The resort is roughly 20 minutes from KOA.",
+    "travelFriction": "medium",
+    "attributes": {
+      "romance": 10,
+      "privacy": 10,
+      "service": 8,
+      "foodSpa": 10,
+      "activities": 10,
+      "weather": 9
+    },
+    "honestCatch": "It can exceed the $2,500 all-in ceiling, and recent evidence is mixed on service and food-and-beverage execution despite the extraordinary setting.",
+    "quote": {
+      "text": "A rhythm intentionally in harmony with nature.",
+      "sourceName": "Kona Village official wellness page",
+      "url": "https://www.rosewoodhotels.com/en/kona-village/wellness"
+    },
+    "bookingUrl": "https://www.rosewoodhotels.com/en/kona-village/accommodation",
+    "officialUrl": "https://www.rosewoodhotels.com/en/kona-village",
+    "images": [
+      {
+        "localPath": "assets/hotels/kona-village-rosewood/1.jpg",
+        "sourceUrl": "https://picasso.rosewoodhotelgroup.com/transform/4066534d-482a-4dd8-81da-bb99f86a4c02/RWKVL_3-0_Brand-com_Assets_Facilities_ExteriorProperty_Aerial-10",
+        "sourceName": "Rosewood official media CDN",
+        "caption": "Kona Village in the lava landscape",
+        "alt": "Aerial view of low-rise Kona Village kauhale among palms and dark volcanic ground"
+      },
+      {
+        "localPath": "assets/hotels/kona-village-rosewood/2.jpg",
+        "sourceUrl": "https://picasso.rosewoodhotelgroup.com/transform/5dd6acf4-0239-4888-b97d-da86b34cd2f7/RWKVL_Global_3-0_Brand-com_Assets_Accommodations_Kauhale_BeachFront_Living_03",
+        "sourceName": "Rosewood official media CDN",
+        "caption": "Beachfront kauhale living",
+        "alt": "Open-air Kona Village living room looking through palms to the ocean"
+      },
+      {
+        "localPath": "assets/hotels/kona-village-rosewood/3.jpg",
+        "sourceUrl": "https://picasso.rosewoodhotelgroup.com/transform/96977925-c2db-4fcc-8130-e8fa71656c13/RWKVL_3-0_Brand-com_Assets_Restaurants_Kahuwai_Cookhouse_01",
+        "sourceName": "Rosewood official media CDN",
+        "caption": "Kahuwai Cookhouse",
+        "alt": "Airy timber dining room and garden at Kahuwai Cookhouse, Kona Village"
+      }
+    ]
+  },
+  {
+    "slug": "1-hotel-hanalei-bay",
+    "name": "1 Hotel Hanalei Bay",
+    "location": "Princeville, Kauaʻi",
+    "region": "Kauaʻi",
+    "rankTier": "strong-contender",
+    "role": "The cinematic north-shore choice",
+    "summary": "The field’s most dramatic setting pairs Hanalei Bay views with serious wellness, three heated pools, ocean access and nature-led design.",
+    "bestRoom": "Ocean View Terrace King with a confirmed real terrace",
+    "nightlyRange": [
+      1860,
+      1980
+    ],
+    "sixNightRange": [
+      11160,
+      11880
+    ],
+    "priceConfidence": "exact-date",
+    "priceNote": "A third-party Oct 5–11 signal showed $9,382.63 before tax for six nights, with the $59 nightly resort fee included; the all-in range adds the listed tax stack and valet allowance. Reconfirm directly. Signature Welina Terrace is closed Oct 5–30, 2026, with a pop-up replacing it.",
+    "weather": "Warm and lush, with the highest rain risk in this Hawaiʻi set as Princeville moves into the wetter season; showers can be localized but materially affect a beach-first stay.",
+    "weatherRisk": "high",
+    "route": "MIA → LIH requires a connection; LIH → SFO has nonstop options. Princeville is roughly 50–60 minutes from LIH.",
+    "travelFriction": "medium",
+    "attributes": {
+      "romance": 10,
+      "privacy": 8,
+      "service": 7,
+      "foodSpa": 10,
+      "activities": 9,
+      "weather": 5
+    },
+    "honestCatch": "Welina Terrace is closed for the entire stay, service consistency has drawn credible complaints, and many standard rooms lack a true terrace; book only a confirmed terrace room on a refundable rate.",
+    "quote": {
+      "text": "Reconnect with the island’s natural beauty.",
+      "sourceName": "1 Hotel Hanalei Bay FAQ",
+      "url": "https://www.1hotels.com/hanalei-bay/faq"
+    },
+    "bookingUrl": "https://www.1hotels.com/hanalei-bay/book",
+    "officialUrl": "https://www.1hotels.com/hanalei-bay",
+    "images": [
+      {
+        "localPath": "assets/hotels/1-hotel-hanalei-bay/1.jpg",
+        "sourceUrl": "https://cdn.bfldr.com/TU9NUD0C/at/mkb99p3b4fxf9fmh6xbprv4/1_Hotels_HB_Architecture_Makana_Penthouse_06_0057-v7.jpg",
+        "sourceName": "1 Hotels official media CDN",
+        "caption": "Hanalei Bay from the room",
+        "alt": "Natural-toned 1 Hotel Hanalei Bay bedroom framing mountains and blue water"
+      },
+      {
+        "localPath": "assets/hotels/1-hotel-hanalei-bay/2.jpg",
+        "sourceUrl": "https://www.1hotels.com/sites/1hotels.com/files/styles/card/public/brandfolder/qjfx4tcfkz33khfb2xr5qsnz/1_Hotels_HB_Architecture_Pu_u_Poa_Ocean_Loft_06_0197h1280.jpg?h=8c1344d8&itok=aqzf0s95",
+        "sourceName": "1 Hotels official media CDN",
+        "caption": "An ocean loft above the bay",
+        "alt": "White and wood guest room with a broad Hanalei Bay view at 1 Hotel"
+      },
+      {
+        "localPath": "assets/hotels/1-hotel-hanalei-bay/3.jpg",
+        "sourceUrl": "https://www.1hotels.com/sites/1hotels.com/files/styles/card/public/brandfolder/763b5v646mnrcnmw977bsc/1_Hotel_HW_Walkabout_05_Architecture_0365_Round_1h1280.jpg?h=8c1344d8&itok=cEud5Sbj",
+        "sourceName": "1 Hotels official media CDN",
+        "caption": "Architecture reclaimed by the landscape",
+        "alt": "Weathered timber and dense tropical planting integrated into 1 Hotel Hanalei Bay"
+      }
+    ]
+  },
+  {
+    "slug": "four-seasons-hualalai",
+    "name": "Four Seasons Resort Hualālai",
+    "location": "Kailua-Kona, Hawaiʻi Island",
+    "region": "Hawaiʻi Island",
+    "rankTier": "strong-contender",
+    "role": "The polished all-round resort",
+    "summary": "Extensively renovated rooms, five restaurants, King’s Pond, marine-biologist programming, manta snorkeling, golf and volcanic excursions make this the safest full-service choice.",
+    "bestRoom": "Ocean-View Prime King Room",
+    "nightlyRange": [
+      1700,
+      2800
+    ],
+    "sixNightRange": [
+      10200,
+      16800
+    ],
+    "priceConfidence": "generic-signal",
+    "priceNote": "No Oct 5–11 quote was captured. Public non-date signals ran from roughly $1,330 for standard rooms to above $2,000 for ocean views before the full Hawaiʻi tax stack; this is an all-in planning range.",
+    "weather": "Hot, sunny leeward-coast weather is the baseline, with low rain risk relative to Kauaʻi and windward locations.",
+    "weatherRisk": "low",
+    "route": "MIA → KOA requires a connection; KOA → SFO has nonstops. The resort is roughly 15 minutes from KOA.",
+    "travelFriction": "medium",
+    "attributes": {
+      "romance": 9,
+      "privacy": 7,
+      "service": 10,
+      "foodSpa": 10,
+      "activities": 10,
+      "weather": 9
+    },
+    "honestCatch": "It is large and family-oriented, and the ocean-view category most worth booking may land at or above the hard all-in ceiling.",
+    "quote": {
+      "text": "Experience King’s Pond, Hualalai’s signature 1.8-million-gallon swimmable aquarium.",
+      "sourceName": "Four Seasons official site",
+      "url": "https://www.fourseasons.com/hualalai/"
+    },
+    "bookingUrl": "https://www.fourseasons.com/hualalai/accommodations/",
+    "officialUrl": "https://www.fourseasons.com/hualalai/",
+    "images": [
+      {
+        "localPath": "assets/hotels/four-seasons-hualalai/1.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~65.1920.536,3104-966,5884-2413,1762-1357,4116/publish/content/dam/fourseasons/images/web/KON/KON_1286_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "Hualālai at the waterline",
+        "alt": "Palm-lined Four Seasons Hualālai shoreline and resort lights at blue hour"
+      },
+      {
+        "localPath": "assets/hotels/four-seasons-hualalai/2.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~65.1920.0,0000-156,7500-3000,0000-1687,5000/publish/content/dam/fourseasons/images/web/KON/KON_2308_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "Renovated indoor-outdoor living",
+        "alt": "Warm wood Four Seasons Hualālai suite opening toward tropical grounds"
+      },
+      {
+        "localPath": "assets/hotels/four-seasons-hualalai/3.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~65.1920.127,6462-739,0881-1320,7917-742,9453/publish/content/dam/fourseasons/images/web/KON/KON_3181_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "A Kohala Coast sunset",
+        "alt": "Silhouetted palms and guests on the beach at sunset at Four Seasons Hualālai"
+      }
+    ]
+  },
+  {
+    "slug": "mauna-lani-auberge",
+    "name": "Mauna Lani, Auberge Collection",
+    "location": "Kohala Coast, Hawaiʻi Island",
+    "region": "Hawaiʻi Island",
+    "rankTier": "strong-contender",
+    "role": "The value-oriented Big Island resort",
+    "summary": "A renovated Kohala Coast resort with a real spa, broad cultural and ocean programming, golf and a calm bay—capable without Hualālai or Kona Village pricing.",
+    "bestRoom": "Ocean View King",
+    "nightlyRange": [
+      1050,
+      1550
+    ],
+    "sixNightRange": [
+      6300,
+      9300
+    ],
+    "priceConfidence": "generic-signal",
+    "priceNote": "No exact October quote was captured. A separate-date signal started near $848 including taxes and fees; this all-in planning range adds room-category spread plus the official $60 resort fee and likely $40 parking.",
+    "weather": "Warm, dry and sunny on the leeward Kohala Coast, with among the best early-October weather odds in Hawaiʻi.",
+    "weatherRisk": "low",
+    "route": "MIA → KOA requires a connection; KOA → SFO has nonstop options. Mauna Lani is about 30 minutes from KOA.",
+    "travelFriction": "medium",
+    "attributes": {
+      "romance": 8,
+      "privacy": 7,
+      "service": 8,
+      "foodSpa": 9,
+      "activities": 10,
+      "weather": 9
+    },
+    "honestCatch": "At 333 rooms it is a full resort, not a hideaway; the beach is a calm lagoon, and the $60 resort fee plus parking erodes the apparent value.",
+    "quote": {
+      "text": "A soulful journey through the piko of Hawai‘i.",
+      "sourceName": "Mauna Lani official site",
+      "url": "https://auberge.com/mauna-lani/"
+    },
+    "bookingUrl": "https://reserve.auberge.com/?hotel=7968&arrive=2026-10-05&depart=2026-10-11&adult=2",
+    "officialUrl": "https://auberge.com/mauna-lani/",
+    "images": [
+      {
+        "localPath": "assets/hotels/mauna-lani-auberge/1.jpg",
+        "sourceUrl": "https://dreffui1gbt6t.cloudfront.net/images/mna/MNL_Lifestyle_SurfShack_03196_No-People_Fnl_Home_Surf-Shack_021026.jpg",
+        "sourceName": "Mauna Lani official media CDN",
+        "caption": "The Surf Shack lawn at sunset",
+        "alt": "Guests gathering on Mauna Lani’s oceanfront lawn under palms at sunset"
+      },
+      {
+        "localPath": "assets/hotels/mauna-lani-auberge/2.jpg",
+        "sourceUrl": "https://dreffui1gbt6t.cloudfront.net/images/mna/MNL_Gallery_Stay_Asset-6.jpg",
+        "sourceName": "Mauna Lani official media CDN",
+        "caption": "Indoor-outdoor island living",
+        "alt": "Contemporary Mauna Lani living room opening toward a private pool and ocean"
+      },
+      {
+        "localPath": "assets/hotels/mauna-lani-auberge/3.jpg",
+        "sourceUrl": "https://dreffui1gbt6t.cloudfront.net/images/mna/MNL_Galleries_Accommodations_121624_Asset-1.jpg",
+        "sourceName": "Mauna Lani official media CDN",
+        "caption": "Poolside dining",
+        "alt": "Guests dining beside a private pool with the Kohala Coast beyond at Mauna Lani"
+      }
+    ]
+  },
+  {
+    "slug": "four-seasons-resort-lanai",
+    "name": "Four Seasons Resort Lānaʻi",
+    "location": "Mānele Bay, Lānaʻi",
+    "region": "Lānaʻi",
+    "rankTier": "strong-contender",
+    "role": "The secluded oceanfront island escape",
+    "summary": "A quiet, high-service resort above Mānele Bay with a broad island program and genuine remove from the family-resort circuit.",
+    "bestRoom": "Prime Ocean Front King Room",
+    "nightlyRange": [
+      1570,
+      2200
+    ],
+    "sixNightRange": [
+      9420,
+      13200
+    ],
+    "priceConfidence": "generic-signal",
+    "priceNote": "A Michelin-indexed non-date signal was about $1,567 with taxes. This broader all-in range is not proof of Oct 5–11 availability; obtain a cancellable quote. Eligible room bookings include round-trip Honolulu–Lānaʻi flights through 2027.",
+    "weather": "Warm and generally dry around Mānele Bay, with trade winds and a lower rain risk than Kauaʻi’s north shore.",
+    "weatherRisk": "low",
+    "route": "MIA → HNL requires a connection, followed by the included Lānaʻi Air sector when eligible; return positions through HNL before HNL → SFO.",
+    "travelFriction": "high",
+    "attributes": {
+      "romance": 10,
+      "privacy": 9,
+      "service": 10,
+      "foodSpa": 9,
+      "activities": 10,
+      "weather": 8
+    },
+    "honestCatch": "The island isolation is romantic but creates the highest routing friction in the set, including a mandatory positioning flight before the mainland return.",
+    "quote": {
+      "text": "Round-trip flights from Honolulu are included in all room bookings through December 31, 2027 on Lanai Air.",
+      "sourceName": "Four Seasons getting-here page",
+      "url": "https://www.fourseasons.com/lanai/getting-here/"
+    },
+    "bookingUrl": "https://www.fourseasons.com/lanai/accommodations/",
+    "officialUrl": "https://www.fourseasons.com/lanai/",
+    "images": [
+      {
+        "localPath": "assets/hotels/four-seasons-resort-lanai/1.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~65.1920.0,0000-0,0000-1600,0000-900,0000/publish/content/dam/fourseasons/images/web/MAN/MAN_971_aspect16x9.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "Ocean-view guest-room living",
+        "alt": "Four Seasons Resort Lānaʻi sitting room opening to a private terrace and Pacific view"
+      },
+      {
+        "localPath": "assets/hotels/four-seasons-resort-lanai/2.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~65.1920.0,0000-17,1335-3000,0000-1687,5000/publish/content/dam/fourseasons/images/web/MAN/MAN_976_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "Sunset from the room",
+        "alt": "Warm wood Four Seasons Lānaʻi bedroom with a broad sunset ocean view"
+      },
+      {
+        "localPath": "assets/hotels/four-seasons-resort-lanai/3.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~65.1920.0,0000-267,5000-3000,0000-1687,5000/publish/content/dam/fourseasons/images/web/MAN/MAN_1803_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "The island’s southern coast",
+        "alt": "Aerial view of the golf course and rugged Pacific coastline near Four Seasons Lānaʻi"
+      }
+    ]
+  },
+  {
+    "slug": "lodge-at-kukuiula",
+    "name": "The Lodge at Kukui‘ula",
+    "location": "Poʻipū, Kauaʻi",
+    "region": "Kauaʻi",
+    "rankTier": "strong-contender",
+    "role": "The private residential-club minimoon",
+    "summary": "A one-bedroom club bungalow delivers a private island home plus an adult pool, spa, farm, golf, racquets, dining and adventure programming.",
+    "bestRoom": "One-Bedroom Platinum Club Bungalow with exact unit guaranteed",
+    "nightlyRange": [
+      1400,
+      1900
+    ],
+    "sixNightRange": [
+      8400,
+      11400
+    ],
+    "priceConfidence": "adjacent-date",
+    "priceNote": "Nearby-date entry inventory was around $1,182 with estimated taxes and fees. This all-in target includes a cushion for the official 15% destination fee, $150 reservation fee and damage waiver; exact Oct 5–11 inventory was not verified.",
+    "weather": "Warm and comparatively dry in sunny Poʻipū; the south shore is the safer Kauaʻi weather bet in October.",
+    "weatherRisk": "low",
+    "route": "MIA → LIH requires a connection; LIH → SFO has nonstops. The Lodge is roughly 25–35 minutes from LIH.",
+    "travelFriction": "medium",
+    "attributes": {
+      "romance": 10,
+      "privacy": 10,
+      "service": 9,
+      "foodSpa": 10,
+      "activities": 10,
+      "weather": 8
+    },
+    "honestCatch": "This is a residential/private-club product rather than a conventional hotel, it has no direct swimmable beach, and the 15% destination fee materially changes the total.",
+    "quote": {
+      "text": "Unparalleled access to the private club community of Kukui‘ula.",
+      "sourceName": "The Lodge at Kukui‘ula official site",
+      "url": "https://www.lodgeatkukuiula.com/"
+    },
+    "bookingUrl": "https://www.lodgeatkukuiula.com/accommodations/",
+    "officialUrl": "https://www.lodgeatkukuiula.com/",
+    "images": [
+      {
+        "localPath": "assets/hotels/lodge-at-kukuiula/1.jpg",
+        "sourceUrl": "https://www.lodgeatkukuiula.com/site/assets/files/12444/villa-pool-at-sunset.1500x800.jpg",
+        "sourceName": "The Lodge at Kukui‘ula official site",
+        "caption": "A villa terrace at sunset",
+        "alt": "Private Lodge at Kukui‘ula terrace facing palms, lawn and sunset"
+      },
+      {
+        "localPath": "assets/hotels/lodge-at-kukuiula/2.jpg",
+        "sourceUrl": "https://www.lodgeatkukuiula.com/site/assets/files/12444/lodge_at_kukuiula_four_bedroom_villa.1500x800.jpg",
+        "sourceName": "The Lodge at Kukui‘ula official site",
+        "caption": "Residential island living",
+        "alt": "Spacious timber-ceilinged villa living room and kitchen at The Lodge at Kukui‘ula"
+      },
+      {
+        "localPath": "assets/hotels/lodge-at-kukuiula/3.jpg",
+        "sourceUrl": "https://www.lodgeatkukuiula.com/site/assets/files/14594/lodge_at_kukuiula_sandy_pool.2000x0.jpg",
+        "sourceName": "The Lodge at Kukui‘ula official site",
+        "caption": "The sandy-bottom pool",
+        "alt": "Lagoon-like pool and palms at The Lodge at Kukui‘ula"
+      }
+    ]
+  },
+  {
+    "slug": "sensei-lanai",
+    "name": "Sensei Lānaʻi, A Four Seasons Resort",
+    "location": "Lānaʻi City, Lānaʻi",
+    "region": "Lānaʻi",
+    "rankTier": "consider",
+    "role": "The structured wellness reset",
+    "summary": "An adults-only upland retreat built around personalized wellness, private spa hales, movement, nutrition and unusually calm garden surroundings.",
+    "bestRoom": "Koʻele Deluxe Room near the gardens",
+    "nightlyRange": [
+      1400,
+      2200
+    ],
+    "sixNightRange": [
+      8400,
+      13200
+    ],
+    "priceConfidence": "estimate",
+    "priceNote": "No October price or availability was verified. This is a broad all-in estimate for planning only; wellness consultations, spa-hale time and premium programming may be additional.",
+    "weather": "Cooler in the island uplands than Mānele Bay, with trade winds, cloud and brief showers possible.",
+    "weatherRisk": "medium",
+    "route": "MIA → HNL requires a connection and a Lānaʻi positioning flight; return requires the reverse before HNL → SFO.",
+    "travelFriction": "high",
+    "attributes": {
+      "romance": 8,
+      "privacy": 10,
+      "service": 10,
+      "foodSpa": 10,
+      "activities": 8,
+      "weather": 7
+    },
+    "honestCatch": "It is inland rather than beachfront and more structured wellness retreat than romantic beach resort; choose it only if post-wedding recovery is the trip’s central purpose.",
+    "quote": {
+      "text": "Move. Nourish. Rest.",
+      "sourceName": "Sensei official site",
+      "url": "https://sensei.com/retreats/lanai/"
+    },
+    "bookingUrl": "https://www.fourseasons.com/sensei/accommodations/",
+    "officialUrl": "https://www.fourseasons.com/sensei/",
+    "images": [
+      {
+        "localPath": "assets/hotels/sensei-lanai/1.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~65.1920.0,0000-312,5000-3000,0000-1687,5000/publish/content/dam/fourseasons/images/web/KOE/KOE_388_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "Lānaʻi beyond the gardens",
+        "alt": "Elevated island and ocean view from the cool uplands near Sensei Lānaʻi"
+      },
+      {
+        "localPath": "assets/hotels/sensei-lanai/2.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~65.1920.0,0000-1250,2974-1965,0000-1105,3125/publish/content/dam/fourseasons/images/web/KOE/KOE_799_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "A garden sanctuary",
+        "alt": "Guest walking beside a reflecting pool in Sensei Lānaʻi’s lush gardens"
+      },
+      {
+        "localPath": "assets/hotels/sensei-lanai/3.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~70.1530.456,6115-0,0000-1600,0000-2000,0000/publish/content/dam/fourseasons/images/web/KOE/KOE_1395_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "Personal welcome",
+        "alt": "Sensei Lānaʻi staff member welcoming a guest at a garden-facing room"
+      }
+    ]
+  },
+  {
+    "slug": "mauna-kea-beach-hotel",
+    "name": "Mauna Kea Beach Hotel",
+    "location": "Kohala Coast, Hawaiʻi Island",
+    "region": "Hawaiʻi Island",
+    "rankTier": "top-pick",
+    "role": "The best renovated beach classic",
+    "summary": "Fresh from a roughly $240 million transformation, Mauna Kea combines a superb swimmable crescent beach, new adult infinity pool and spa, manta viewing, golf, tennis and cultural programming.",
+    "bestRoom": "Renovated Beachfront Wing Oceanfront King",
+    "nightlyRange": [
+      1200,
+      1600
+    ],
+    "sixNightRange": [
+      7200,
+      9600
+    ],
+    "priceConfidence": "generic-signal",
+    "priceNote": "AFAR reported rates from $998 including breakfast for two, with other current signals around $1,100–$1,200 including taxes and fees. This is a non-date all-in target for a worthwhile ocean room.",
+    "weather": "Warm, dry Kohala Coast conditions around 86°F/74°F historically, with low rainfall and excellent early-October odds.",
+    "weatherRisk": "low",
+    "route": "MIA → KOA requires a connection; KOA → SFO has nonstops. The hotel is roughly 35–45 minutes from KOA.",
+    "travelFriction": "medium",
+    "attributes": {
+      "romance": 9,
+      "privacy": 8,
+      "service": 9,
+      "foodSpa": 9,
+      "activities": 10,
+      "weather": 10
+    },
+    "honestCatch": "It remains a multigenerational legacy resort rather than an intimate hideaway, and food-and-beverage consistency is the recurring weak spot.",
+    "quote": {
+      "text": "A timeless Hawaiian icon, reimagined.",
+      "sourceName": "Mauna Kea Resort official renewal page",
+      "url": "https://www.maunakearesort.com/renewal/"
+    },
+    "bookingUrl": "https://www.marriott.com/en-us/hotels/koaak-mauna-kea-beach-hotel-autograph-collection/rooms/",
+    "officialUrl": "https://www.maunakearesort.com/",
+    "images": [
+      {
+        "localPath": "assets/hotels/mauna-kea-beach-hotel/1.jpg",
+        "sourceUrl": "https://www.maunakearesort.com/images/content/specialoffers/koaak-adult-pool-jacquzzi-midres.jpg",
+        "sourceName": "Mauna Kea Resort official site",
+        "caption": "The adults-only infinity pool",
+        "alt": "Mauna Kea Beach Hotel infinity pool facing palms and the ocean"
+      },
+      {
+        "localPath": "assets/hotels/mauna-kea-beach-hotel/2.jpg",
+        "sourceUrl": "https://www.maunakearesort.com/images/content/specialoffers/women-on-beach-looking-at-hotel.jpg",
+        "sourceName": "Mauna Kea Resort official site",
+        "caption": "Kauna‘oa Bay",
+        "alt": "Two guests looking across the water from Kauna‘oa Beach at Mauna Kea"
+      },
+      {
+        "localPath": "assets/hotels/mauna-kea-beach-hotel/3.jpg",
+        "sourceUrl": "https://www.maunakearesort.com/images/content/specialoffers/ocean-front-king.jpg",
+        "sourceName": "Mauna Kea Resort official site",
+        "caption": "Renovated oceanfront room",
+        "alt": "Bright Mauna Kea Beach Hotel room opening to a furnished ocean-view lanai"
+      }
+    ]
+  },
+  {
+    "slug": "koa-kea-resort",
+    "name": "Ko‘a Kea Resort on Poʻipū Beach",
+    "location": "Poʻipū, Kauaʻi",
+    "region": "Kauaʻi",
+    "rankTier": "top-pick",
+    "role": "The intimate Kauaʻi value choice",
+    "summary": "A low-rise 121-room oceanfront hotel with couple-forward energy, Red Salt, yoga and beach access—Kauaʻi’s clearest conventional minimoon hotel.",
+    "bestRoom": "Oceanfront King",
+    "nightlyRange": [
+      1000,
+      1300
+    ],
+    "sixNightRange": [
+      6000,
+      7800
+    ],
+    "priceConfidence": "adjacent-date",
+    "priceNote": "Michelin’s October calendar showed roughly $968 with free cancellation, but not a captured Oct 5–11 checkout. This all-in range allows for resort fee, parking and Hawaiʻi taxes; confirm the oceanfront premium.",
+    "weather": "Warm and comparatively dry on Kauaʻi’s south shore, with better October reliability than Princeville.",
+    "weatherRisk": "low",
+    "route": "MIA → LIH requires a connection; LIH → SFO has nonstops. Poʻipū is roughly 25–35 minutes from LIH.",
+    "travelFriction": "medium",
+    "attributes": {
+      "romance": 9,
+      "privacy": 8,
+      "service": 9,
+      "foodSpa": 9,
+      "activities": 7,
+      "weather": 8
+    },
+    "honestCatch": "The room hardware is slightly dated—dark wood, carpet and not-very-private lanais—and the pool and spa are compact. Book only oceanfront.",
+    "quote": {
+      "text": "An intimate and romantic oceanfront escape.",
+      "sourceName": "Ko‘a Kea official site",
+      "url": "https://www.koakea.com/"
+    },
+    "bookingUrl": "https://www.koakea.com/rooms-suites",
+    "officialUrl": "https://www.koakea.com/",
+    "images": [
+      {
+        "localPath": "assets/hotels/koa-kea-resort/1.jpg",
+        "sourceUrl": "https://assets.koakea.com/system/uploads/fae/image/asset/4823/xxl_kkr-homepage-hero.jpg",
+        "sourceName": "Ko‘a Kea official media CDN",
+        "caption": "Ko‘a Kea on Poʻipū Beach",
+        "alt": "Aerial view of intimate low-rise Ko‘a Kea Resort directly on Poʻipū Beach"
+      },
+      {
+        "localPath": "assets/hotels/koa-kea-resort/2.jpg",
+        "sourceUrl": "https://assets.koakea.com/system/uploads/fae/image/asset/3499/xxl_kkr-room-suites-hero.jpg",
+        "sourceName": "Ko‘a Kea official media CDN",
+        "caption": "An ocean-facing room",
+        "alt": "Ko‘a Kea king room opening to a palm-framed ocean-view lanai"
+      },
+      {
+        "localPath": "assets/hotels/koa-kea-resort/3.jpg",
+        "sourceUrl": "https://assets.koakea.com/system/uploads/fae/image/asset/3501/xxl_kkr-red-salt-dine-lp.jpg",
+        "sourceName": "Ko‘a Kea official media CDN",
+        "caption": "Dinner at Red Salt",
+        "alt": "A couple enjoying dinner and cocktails at Ko‘a Kea’s Red Salt restaurant"
+      }
+    ]
+  },
+  {
+    "slug": "halekulani",
+    "name": "Halekulani",
+    "location": "Waikīkī, Oʻahu",
+    "region": "Oʻahu",
+    "rankTier": "strong-contender",
+    "role": "The service-led Waikīkī grand dame",
+    "summary": "A composed oceanfront classic with the strongest recent service signal, elegant rooms, La Mer and a calm pool culture despite its urban setting.",
+    "bestRoom": "Diamond Head Oceanfront Prime King",
+    "nightlyRange": [
+      900,
+      1500
+    ],
+    "sixNightRange": [
+      5400,
+      9000
+    ],
+    "priceConfidence": "generic-signal",
+    "priceNote": "No exact Oct 5–11 checkout was captured. This all-in planning range reflects generic public luxury-Waikīkī signals and room-category spread; reprice the Diamond Head category directly.",
+    "weather": "Hot and generally sunny in leeward Honolulu, with brief showers possible and lower weather risk than Oʻahu’s North Shore.",
+    "weatherRisk": "low",
+    "route": "MIA → HNL requires a connection; HNL → SFO has frequent nonstops. Waikīkī is roughly 25–45 minutes from HNL depending on traffic.",
+    "travelFriction": "low",
+    "attributes": {
+      "romance": 8,
+      "privacy": 7,
+      "service": 10,
+      "foodSpa": 10,
+      "activities": 7,
+      "weather": 9
+    },
+    "honestCatch": "It is an urban Waikīkī grand dame with a small beach footprint, not a secluded resort; city and neighboring-hotel energy remain close.",
+    "quote": {
+      "text": "For over a century, Halekulani has been a cherished place of serenity and renewal.",
+      "sourceName": "Halekulani official site",
+      "url": "https://www.halekulani.com/"
+    },
+    "bookingUrl": "https://www.halekulani.com/rooms-suites/",
+    "officialUrl": "https://www.halekulani.com/",
+    "images": [
+      {
+        "localPath": "assets/hotels/halekulani/1.jpg",
+        "sourceUrl": "https://www.halekulani.com/wp-content/uploads/2022/07/HKU_Pool_Sunrise-web-1280x750-c-x50y50.jpg",
+        "sourceName": "Halekulani official site",
+        "caption": "The orchid pool at sunrise",
+        "alt": "Halekulani’s orchid mosaic pool, palms and Waikīkī ocean at sunrise"
+      },
+      {
+        "localPath": "assets/hotels/halekulani/2.jpg",
+        "sourceUrl": "https://www.halekulani.com/wp-content/uploads/2024/11/Bungalow_Premier_Suite-web-crop.jpg",
+        "sourceName": "Halekulani official site",
+        "caption": "A Premier Suite",
+        "alt": "Cream-toned Halekulani Premier Suite living room with garden-facing shutters"
+      },
+      {
+        "localPath": "assets/hotels/halekulani/3.jpg",
+        "sourceUrl": "https://www.halekulani.com/wp-content/uploads/2022/02/HKU_Diamond-Head-Oceanfront-Prime_King-01.jpg",
+        "sourceName": "Halekulani official site",
+        "caption": "Diamond Head Oceanfront Prime",
+        "alt": "Bright Halekulani king room with balcony and Diamond Head ocean view"
+      }
+    ]
+  },
+  {
+    "slug": "four-seasons-oahu-ko-olina",
+    "name": "Four Seasons Resort Oʻahu at Ko Olina",
+    "location": "Ko Olina, Oʻahu",
+    "region": "Oʻahu",
+    "rankTier": "strong-contender",
+    "role": "The controlled lagoon resort",
+    "summary": "A polished west-Oʻahu resort with a calm swimmable lagoon, serious spa and a valuable adults-only infinity pool that creates a genuine couple refuge.",
+    "bestRoom": "Prime Oceanfront King, away from connecting-family inventory",
+    "nightlyRange": [
+      1200,
+      2000
+    ],
+    "sixNightRange": [
+      7200,
+      12000
+    ],
+    "priceConfidence": "generic-signal",
+    "priceNote": "No exact-date quote was captured. This broad all-in planning range reflects generic luxury Ko Olina signals and meaningful category spread; confirm taxes, fees and room adjacency.",
+    "weather": "Hot, sunny and dry on Oʻahu’s leeward coast, with very good early-October beach weather odds.",
+    "weatherRisk": "low",
+    "route": "MIA → HNL requires a connection; HNL → SFO has frequent nonstops. Ko Olina is roughly 30–45 minutes from HNL.",
+    "travelFriction": "low",
+    "attributes": {
+      "romance": 8,
+      "privacy": 7,
+      "service": 9,
+      "foodSpa": 10,
+      "activities": 9,
+      "weather": 9
+    },
+    "honestCatch": "The resort is highly family-oriented and sits beside Disney Aulani; explicitly request a quiet room without a connecting door and away from family-adjacent inventory.",
+    "quote": {
+      "text": "Discover your own pace of paradise.",
+      "sourceName": "Four Seasons Oʻahu official site",
+      "url": "https://www.fourseasons.com/oahu/"
+    },
+    "bookingUrl": "https://www.fourseasons.com/oahu/accommodations/",
+    "officialUrl": "https://www.fourseasons.com/oahu/",
+    "images": [
+      {
+        "localPath": "assets/hotels/four-seasons-oahu-ko-olina/1.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~65.1920.300,0709-251,4188-2548,4761-1433,5178/publish/content/dam/fourseasons/images/web/OAH/OAH_565_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "Ko Olina’s lagoonfront setting",
+        "alt": "Aerial view of Four Seasons Oʻahu beside a calm Ko Olina lagoon"
+      },
+      {
+        "localPath": "assets/hotels/four-seasons-oahu-ko-olina/2.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~65.1920.0,0000-156,2500-3000,0000-1687,5000/publish/content/dam/fourseasons/images/web/OAH/OAH_599_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "A treatment open to the garden",
+        "alt": "Guest receiving a massage in a garden-facing pavilion at Four Seasons Oʻahu"
+      },
+      {
+        "localPath": "assets/hotels/four-seasons-oahu-ko-olina/3.jpg",
+        "sourceUrl": "https://www.fourseasons.com/alt/img-opt/~70.1530.486,5332-0,0000-1600,0000-2000,0000/publish/content/dam/fourseasons/images/web/OAH/OAH_1598_original.jpg",
+        "sourceName": "Four Seasons official media CDN",
+        "caption": "An island excursion",
+        "alt": "Couple seated in a vintage-style aircraft during a Four Seasons Oʻahu experience"
+      }
+    ]
+  },
+  {
+    "slug": "ritz-carlton-oahu-turtle-bay",
+    "name": "The Ritz-Carlton Oʻahu, Turtle Bay",
+    "location": "Kahuku, Oʻahu",
+    "region": "Oʻahu",
+    "rankTier": "conditional",
+    "role": "The North Shore activity base—bungalow only",
+    "summary": "Turtle Bay’s landscape, surfing, horseback riding, golf, hiking and spa are compelling when paired with one of 42 waterfront Ocean Bungalows separated from the 408-room main building.",
+    "bestRoom": "Ocean Bungalow King",
+    "nightlyRange": [
+      1200,
+      1800
+    ],
+    "sixNightRange": [
+      7200,
+      10800
+    ],
+    "priceConfidence": "generic-signal",
+    "priceNote": "The resort’s generic October average was around $940, but that does not price the only category recommended here. This all-in bungalow range is directional; eliminate it if the live bungalow total exceeds about $1,800.",
+    "weather": "Warm and breezy on Oʻahu’s North Shore, with more passing showers and surf exposure than Ko Olina but less rain risk than Princeville.",
+    "weatherRisk": "medium",
+    "route": "MIA → HNL requires a connection; HNL → SFO has frequent nonstops. Turtle Bay is roughly 60–90 minutes from HNL depending on traffic.",
+    "travelFriction": "medium",
+    "attributes": {
+      "romance": 9,
+      "privacy": 9,
+      "service": 7,
+      "foodSpa": 8,
+      "activities": 10,
+      "weather": 7
+    },
+    "honestCatch": "It is compelling only in an Ocean Bungalow. The main wing is a large family-heavy legacy resort, and recent reviews repeatedly flag slow or uneven service and food.",
+    "quote": {
+      "text": "A beachfront resort rooted in the North Shore’s spirit of adventure.",
+      "sourceName": "Ritz-Carlton official site",
+      "url": "https://www.ritzcarlton.com/en/hotels/hnlkz-the-ritz-carlton-oahu-turtle-bay/overview/"
+    },
+    "bookingUrl": "https://www.marriott.com/en-us/hotels/hnlkz-the-ritz-carlton-oahu-turtle-bay/rooms/",
+    "officialUrl": "https://www.ritzcarlton.com/en/hotels/hnlkz-the-ritz-carlton-oahu-turtle-bay/overview/",
+    "images": [
+      {
+        "localPath": "assets/hotels/ritz-carlton-oahu-turtle-bay/1.jpg",
+        "sourceUrl": "https://cache.marriott.com/is/image/marriotts7prod/rz-hnlkz-aerial-kuilima-33460:Feature-Hor?wid=1920&fit=constrain",
+        "sourceName": "Marriott official media CDN",
+        "caption": "The Kuilima coastline",
+        "alt": "Aerial view of The Ritz-Carlton Oʻahu, Turtle Bay on the North Shore"
+      },
+      {
+        "localPath": "assets/hotels/ritz-carlton-oahu-turtle-bay/2.jpg",
+        "sourceUrl": "https://cache.marriott.com/is/image/marriotts7prod/rz-hnlkz-main-pool-daytime-17943:Feature-Hor?wid=1920&fit=constrain",
+        "sourceName": "Marriott official media CDN",
+        "caption": "The oceanfront pool",
+        "alt": "Palm-lined main pool overlooking the ocean at The Ritz-Carlton Oʻahu, Turtle Bay"
+      },
+      {
+        "localPath": "assets/hotels/ritz-carlton-oahu-turtle-bay/3.jpg",
+        "sourceUrl": "https://cache.marriott.com/is/image/marriotts7prod/rz-hnlkz-king-view-22256:Feature-Hor?wid=1920&fit=constrain",
+        "sourceName": "Marriott official media CDN",
+        "caption": "An ocean-view king room",
+        "alt": "Ritz-Carlton Turtle Bay king room and lanai facing the North Shore surf"
+      }
+    ]
+  }
+]

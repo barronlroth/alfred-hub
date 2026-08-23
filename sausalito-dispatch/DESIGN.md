@@ -10,7 +10,7 @@ Mediterranean Day Ticket: a perforated Riviera ferry ticket rebuilt as a live mo
 - Deep cobalt: `oklch(29% 0.13 258)`
 - Ticket ivory: `oklch(96% 0.025 88)`
 - Paper shadow: `oklch(83% 0.035 88)`
-- Signal coral: `oklch(61% 0.22 29)`
+- Signal coral: `oklch(54% 0.20 29)`
 - Lemon: `oklch(86% 0.17 93)`
 - Pine ink: `oklch(33% 0.08 158)`
 

@@ -366,7 +366,14 @@ h1 {
 .ticket-footer > div:first-child { display: flex; flex-direction: column; }
 .ticket-footer span, .ticket-footer a { font-size: .67rem; }
 .ticket-footer strong { font-family: "Barlow Condensed"; font-size: 1rem; text-transform: uppercase; }
-.ticket-footer a { justify-self: end; color: var(--lemon); font-weight: 700; }
+.ticket-footer a {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-self: end;
+  color: var(--lemon);
+  font-weight: 700;
+}
 .alfred-mark { display: grid; width: 48px; height: 48px; place-items: center; border: 2px solid var(--lemon); border-radius: 50%; font-family: "Barlow Condensed"; font-size: 1.4rem; font-weight: 800; transform: rotate(-8deg); }
 .alfred-mark span { position: absolute; transform: translate(13px, 14px); font-size: .9rem; }
 

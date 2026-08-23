@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123b82">
+  <meta name="description" content="A live Sausalito day coordinator for six friends.">
+  <meta property="og:title" content="Sausalito Day Ticket">
+  <meta property="og:description" content="Two crews. One lunch. No group-chat archaeology.">
+  <title>Sausalito Day Ticket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Kalam:wght@400;700&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#dispatch">Skip to dispatch</a>
+  <main class="page-shell">
+    <header class="masthead" aria-label="Sausalito day ticket header">
+      <div class="ticket-code">AW · SAU · 0823</div>
+      <div class="party-lockup"><span>6</span> adults</div>
+    </header>
+
+    <article class="ticket" aria-labelledby="page-title">
+      <section class="ticket-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Alfred’s live field ticket</p>
+          <h1 id="page-title">Sausalito,<br>without the faff.</h1>
+          <p class="lede">Two crews, one waterfront lunch, then the good shops south.</p>
+        </div>
+        <div class="route-seal" aria-hidden="true">
+          <span>SF</span><i></i><span>SAU</span>
+          <b>DAY PASS</b>
+        </div>
+      </section>
+
+      <section class="split-strip" aria-label="Current group split">
+        <div><strong>Barron + Nina</strong><span>Suzette waitlist</span></div>
+        <div class="split-arrow" aria-hidden="true">→</div>
+        <div><strong>The other four</strong><span>Dunphy Park</span></div>
+      </section>
+
+      <section class="dispatch" id="dispatch" aria-labelledby="dispatch-title">
+        <div class="section-label"><span>01</span> Live dispatch</div>
+        <div class="dispatch-head">
+          <div>
+            <p class="eyebrow" id="dispatch-title">Park crew leaves at</p>
+            <div class="departure-time" id="departure-time" aria-live="polite">Now</div>
+          </div>
+          <div class="walk-fact"><strong>17</strong><span>min walk</span></div>
+        </div>
+        <p class="dispatch-note" id="dispatch-note">Choose Suzette’s quoted wait. I’ll do the subtraction; civilisation survives.</p>
+
+        <fieldset class="wait-fieldset">
+          <legend>Quoted wait</legend>
+          <div class="wait-options" role="group" aria-label="Select quoted restaurant wait">
+            <button type="button" data-wait="15">15</button>
+            <button type="button" data-wait="30" class="is-selected" aria-pressed="true">30</button>
+            <button type="button" data-wait="45">45</button>
+            <button type="button" data-wait="60">60</button>
+          </div>
+          <label class="custom-wait">
+            <span>Or exact</span>
+            <input id="custom-wait" type="number" inputmode="numeric" min="5" max="120" placeholder="min" aria-describedby="wait-help">
+          </label>
+          <p id="wait-help">Calculated from the time on this phone. Walking time is fixed at 17 minutes.</p>
+        </fieldset>
+
+        <div class="dispatch-actions">
+          <a class="action action-primary" href="https://www.google.com/maps/dir/?api=1&origin=Dunphy+Park,+Sausalito,+CA&destination=Suzette+Cafe+%26+Bistro,+633+Bridgeway,+Sausalito,+CA&travelmode=walking" target="_blank" rel="noopener">Walk to Suzette <span aria-hidden="true">↗</span></a>
+          <a class="action action-quiet" href="tel:+14153247070">Call Suzette</a>
+        </div>
+      </section>
+
+      <div class="perforation" aria-hidden="true"><span>TEAR AFTER LUNCH</span></div>
+
+      <section class="route-section" aria-labelledby="route-title">
+        <div class="section-label"><span>02</span> The day, in order</div>
+        <h2 id="route-title">Lunch first.<br>Then drift south.</h2>
+        <ol class="route-list">
+          <li class="route-stop is-live">
+            <div class="stop-marker">A</div>
+            <div class="stop-copy">
+              <p class="stop-meta">Barron + Nina · now</p>
+              <h3>Suzette waitlist</h3>
+              <p>Drop the name for six. If the table is called early, tell the host four are exactly 17 minutes away.</p>
+              <a href="https://www.google.com/maps/search/?api=1&query=Suzette+Cafe+%26+Bistro,+633+Bridgeway,+Sausalito,+CA" target="_blank" rel="noopener">Open Suzette in Maps ↗</a>
+            </div>
+          </li>
+          <li class="route-stop">
+            <div class="stop-marker">B</div>
+            <div class="stop-copy">
+              <p class="stop-meta">The other four · while waiting</p>
+              <h3>Dunphy Park</h3>
+              <p>Bay views, lawn, and enough dignity to avoid hovering in a restaurant doorway.</p>
+              <a href="https://www.google.com/maps/search/?api=1&query=Dunphy+Park,+Bridgeway+at+Napa+Street,+Sausalito,+CA" target="_blank" rel="noopener">Open park in Maps ↗</a>
+            </div>
+          </li>
+          <li class="route-stop route-stop-lunch">
+            <div class="stop-marker">C</div>
+            <div class="stop-copy">
+              <p class="stop-meta">Reunite · waterfront</p>
+              <h3>Lunch at Suzette</h3>
+              <p>French bistro, bay windows, brunch until 4. This is the point of the operation.</p>
+              <a href="https://www.suzettebistro.com/menu" target="_blank" rel="noopener">See the menu ↗</a>
+            </div>
+          </li>
+          <li class="route-stop">
+            <div class="stop-marker">D</div>
+            <div class="stop-copy">
+              <p class="stop-meta">After lunch · local Sausalito</p>
+              <h3>Caledonia Street</h3>
+              <p>Walk north for the less touristy stretch, then make Studio 333 the anchor.</p>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Suzette+Cafe+%26+Bistro,+633+Bridgeway,+Sausalito,+CA&destination=Studio+333,+333+Caledonia+Street,+Sausalito,+CA&travelmode=walking" target="_blank" rel="noopener">Route to Studio 333 ↗</a>
+            </div>
+          </li>
+          <li class="route-stop">
+            <div class="stop-marker">E</div>
+            <div class="stop-copy">
+              <p class="stop-meta">Final drift · southbound</p>
+              <h3>Waterfront + Ferry Plaza</h3>
+              <p>Loop south via Bridgeway, Studio 333 Downtown, the marina views, and Ferry Plaza.</p>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Studio+333,+333+Caledonia+Street,+Sausalito,+CA&destination=Sausalito+Ferry+Terminal,+Sausalito,+CA&waypoints=Studio+333+Downtown,+803+Bridgeway,+Sausalito,+CA&travelmode=walking" target="_blank" rel="noopener">Open the post-lunch walk ↗</a>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="rules-strip" aria-label="Waitlist rules">
+        <p class="hand-note">If the host says “table ready,” everyone walks. Alfred has yet to invent teleportation.</p>
+        <div class="rule-grid">
+          <div><strong>≤ 20 min</strong><span>Walk now</span></div>
+          <div><strong>30–45 min</strong><span>Wait, then launch</span></div>
+          <div><strong>Called early</strong><span>Say four are en route</span></div>
+        </div>
+      </section>
+
+      <footer class="ticket-footer">
+        <div><span>Weather</span><strong>Layer up by the water</strong></div>
+        <div class="alfred-mark">A<span>🦉</span></div>
+        <a href="/weekend-atlas/">Weekend Atlas</a>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>

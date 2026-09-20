@@ -1,4 +1,4 @@
-const CACHE='sf-party-bingo-shell-v2';
+const CACHE='sf-party-bingo-shell-v3';
 const BASE=new URL('./',self.location).href;
 const ASSETS=['./','./index.html','./style.css','./cards.js','./app.js'].map(p=>new URL(p,BASE).href);
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));

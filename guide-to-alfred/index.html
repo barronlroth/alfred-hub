@@ -493,8 +493,9 @@
     <div class="toc-title">On this page</div>
     <a href="#topics">Telegram Topics</a>
     <a href="#gbrain">GBrain Memory</a>
-    <a href="#lcm">Lossless Context</a>
-    <a href="#cron">Cron Jobs</a>
+    <a href="#lcm">LCM-X</a>
+    <a href="#cron">Heartbeat + Cron</a>
+    <a href="#walkie">Walkie-Talkie</a>
     <a href="#skills">Skills</a>
     <a href="#coding">Coding Modes</a>
     <a href="#docs">Documents &amp; Sheets</a>
@@ -576,29 +577,30 @@
     <!-- 03 LOSSLESS CONTEXT MANAGEMENT -->
     <div class="section fade-in" id="lcm">
       <div class="section-number">03</div>
-      <h2>Hermes LCM: never fully forget</h2>
+      <h2>LCM-X: never fully forget</h2>
       <img src="/guide-to-alfred/images/18-lcm.jpg" alt="Owl examining a tree of documents and summaries" class="section-img" loading="lazy" />
       <p>
         Long-running agent conversations create a nasty problem: eventually the context window fills up. Traditional compaction squashes the conversation into a summary and detail evaporates. You keep &ldquo;discussed DJ options&rdquo; and lose the actual decision.
       </p>
       <p>
-        Alfred uses the <strong>Hermes LCM plugin</strong> for Lossless Context Management. It builds a DAG of raw messages and summaries, so the model can see a compact view while the original detail remains recoverable underneath.
+        Alfred uses <strong><a href="https://github.com/electricsheephq/lcm-x">LCM-X</a></strong>, a Hermes plugin for Lossless Context Management. It builds a DAG of raw messages and summaries, so the model can see a compact view while the original detail remains recoverable underneath.
       </p>
       <p>
         When detail is needed, Alfred can call tools like <code>lcm_expand</code> or <code>lcm_expand_query</code> to drill back into the source messages. Compaction becomes a two-way door: compress for working memory, expand when precision matters.
       </p>
 
       <div class="code-block">
-        <div class="code-label">Hermes LCM, verified on this setup</div>
-        <pre><code>plugin: hermes-lcm
-version: 0.14.0
-engine: lcm
+        <div class="code-label">LCM-X, verified on this setup</div>
+        <pre><code>plugin: hermes-lcm-x
+version: 0.28.0
+preset: codex_gpt_long_context (8K leaves)
 context threshold: 75%
-fresh tail: 24 messages
+summaries: GPT-6 Luna, Sol as fallback
 raw messages: preserved in lcm.db</code></pre>
       </div>
 
       <div class="callout-green callout">
+        <p><strong>If you install one plugin, make it this one.</strong> Long-lived Telegram topics are the whole point of this setup, and without LCM-X they eventually forget their own history.</p>
         <p><strong>How to think about it:</strong> GBrain is durable long-term project memory. LCM is session continuity. One remembers what matters across months; the other keeps a live conversation from getting lobotomized when it gets long.</p>
       </div>
     </div>
@@ -606,18 +608,23 @@ raw messages: preserved in lcm.db</code></pre>
     <!-- 04 CRON -->
     <div class="section fade-in" id="cron">
       <div class="section-number">04</div>
-      <h2>Cron jobs: the night shift</h2>
+      <h2>Heartbeat + cron: the night shift</h2>
       <img src="/guide-to-alfred/images/05-cron.jpg" alt="Owl at a control desk pulling levers at midnight" class="section-img" loading="lazy" />
       <p>
-        Hermes does not need the old generic heartbeat loop. Instead, I use explicit <strong>cron jobs</strong>: small scheduled agents or scripts that check a specific surface, usually stay quiet, and only notify me when something is worth my attention.
+        The primary productivity layer is now a <strong>heartbeat</strong>, a newer Hermes feature. Think of it as a cron job that keeps one consistent session: every hour it wakes up inside the same Front Desk topic, with the same history, instead of starting from zero each run. It remembers what it already told me, what I said back, and what is still open.
+      </p>
+      <p>
+        Point your heartbeat at the surfaces that run your day: check new email, check every calendar, look at what is coming up, and suggest the next useful move. Most runs should end in silence. The good ones stage the work, like a drafted reply or a reminder, so I only have to say yes. Write your own checklist; the value is in teaching it what matters to <em>you</em>.
+      </p>
+      <p>
+        Around that, I still use explicit <strong>cron jobs</strong>: small scheduled agents or scripts that check one specific surface, usually stay quiet, and only notify me when something is worth my attention.
       </p>
       <p>
         Some jobs are LLM-driven. Some are deterministic script watchers with no agent at all. They can deliver into a specific Telegram topic, save locally, or notify only on meaningful changes.
       </p>
 
       <ul class="feature-list">
-        <li><span class="bullet">&mdash;</span><span><strong>Front desk</strong> &mdash; useful email/calendar scans during the day and a morning briefing before I wake up.</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Travel sentinel</strong> &mdash; check-ins, packing lists, trip readiness, and day-of reminders.</span></li>
+                <li><span class="bullet">&mdash;</span><span><strong>Travel sentinel</strong> &mdash; check-ins, packing lists, trip readiness, and day-of reminders.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Open Loop Radar</strong> &mdash; reviews recent sessions every few days for unresolved threads and implicit commitments.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>GBrain/wiki ops</strong> &mdash; bookmark ingestion, weekly maintenance, nightly wiki commit/push, and update watching.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Follow-up/accountability</strong> &mdash; iMessage follow-up triage and other small social loose ends.</span></li>
@@ -626,13 +633,36 @@ raw messages: preserved in lcm.db</code></pre>
       </ul>
 
       <div class="callout">
-        <p><strong>The product idea is the same as heartbeat:</strong> Alfred periodically checks well-defined surfaces and mostly stays quiet. The implementation is cleaner: explicit jobs, explicit schedules, explicit delivery targets.</p>
+        <p><strong>Rule of thumb:</strong> use the heartbeat for judgment across your whole day, where continuity matters. Use cron for narrow, well-defined checks with their own schedule and delivery target.</p>
       </div>
     </div>
 
+    <!-- WALKIE-TALKIE -->
+    <div class="section fade-in" id="walkie">
+      <div class="section-number">05</div>
+      <h2>Walkie-talkie: topics that talk to each other</h2>
+      <p>
+        Topics keep context clean, but sometimes work starts in one lane and belongs in another. A bank alert shows up in the Front Desk heartbeat; it should be handled in Finance. A coordinator topic decides a build needs checking; that belongs in the app&rsquo;s topic.
+      </p>
+      <p>
+        So I built <strong><a href="https://github.com/barronlroth/hermes-walkie-talkie">walkie-talkie</a></strong>, a Hermes plugin that lets one session message another existing session. The target topic wakes up with its full history, handles the message as a normal turn, and replies in its own chat. In Telegram you see two messages back to back: <code>📻 Sent from Front Desk</code> with the request, then the target&rsquo;s answer.
+      </p>
+      <ul class="feature-list">
+        <li><span class="bullet">&mdash;</span><span><strong>Email routing</strong> &mdash; the heartbeat forwards money stuff to Finance, trips to Travel, recruiters to Career, and keeps the rest.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Handoffs</strong> &mdash; &ldquo;tell the Wiki topic to file this&rdquo; from anywhere, including cron jobs.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Fire-and-forget</strong> &mdash; the sender does not wait. If you reply in the target topic, the conversation stays there.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Guardrails</strong> &mdash; off until you opt in, visible label on every handoff, one hop only so topics cannot loop.</span></li>
+      </ul>
+      <div class="callout">
+        <p><strong>Why it matters:</strong> it turns a pile of separate chats into a team. Each lane keeps its own memory, and work still finds its way to the right one.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
     <!-- 05 SKILLS -->
     <div class="section fade-in" id="skills">
-      <div class="section-number">05</div>
+      <div class="section-number">06</div>
       <h2>Skills: reusable protocols</h2>
       <img src="/guide-to-alfred/images/06-skills.jpg" alt="Owl holding a recipe book with modular cards" class="section-img" loading="lazy" />
       <p>
@@ -656,7 +686,7 @@ raw messages: preserved in lcm.db</code></pre>
 
     <!-- 06 CODING -->
     <div class="section fade-in" id="coding">
-      <div class="section-number">06</div>
+      <div class="section-number">07</div>
       <h2>Coding: two modes</h2>
       <img src="/guide-to-alfred/images/07-coding.jpg" alt="Owl at a workbench with two different toolkits" class="section-img" loading="lazy" />
       <p>
@@ -675,7 +705,7 @@ raw messages: preserved in lcm.db</code></pre>
 
     <!-- 07 DOCUMENTS & SHEETS -->
     <div class="section fade-in" id="docs">
-      <div class="section-number">07</div>
+      <div class="section-number">08</div>
       <h2>Documents and tracking</h2>
       <img src="/guide-to-alfred/images/07-docs.jpg" alt="Owl typing on a typewriter with floating documents" class="section-img" loading="lazy" />
       <p>
@@ -688,7 +718,7 @@ raw messages: preserved in lcm.db</code></pre>
 
     <!-- 08 GITHUB + VERCEL -->
     <div class="section fade-in" id="deploy">
-      <div class="section-number">08</div>
+      <div class="section-number">09</div>
       <h2>GitHub + Vercel: ship instantly</h2>
       <img src="/guide-to-alfred/images/08-deploy.jpg" alt="Owl launching a paper airplane that becomes a website" class="section-img" loading="lazy" />
       <p>
@@ -701,7 +731,7 @@ raw messages: preserved in lcm.db</code></pre>
 
     <!-- 09 TOOLS & INTEGRATIONS -->
     <div class="section fade-in" id="tools">
-      <div class="section-number">09</div>
+      <div class="section-number">10</div>
       <h2>Tools and integrations</h2>
       <img src="/guide-to-alfred/images/09-tools.jpg" alt="Owl wearing a utility belt of tiny tools" class="section-img" loading="lazy" />
       <p>
@@ -724,7 +754,7 @@ raw messages: preserved in lcm.db</code></pre>
 
     <!-- 10 IMAGE GENERATION -->
     <div class="section fade-in" id="images">
-      <div class="section-number">10</div>
+      <div class="section-number">11</div>
       <h2>Image generation through OpenAI</h2>
       <img src="/guide-to-alfred/images/10-images.jpg" alt="Owl painting on a canvas with a palette" class="section-img" loading="lazy" />
       <p>
@@ -737,7 +767,7 @@ raw messages: preserved in lcm.db</code></pre>
 
     <!-- 11 MAINTENANCE -->
     <div class="section fade-in" id="maintenance">
-      <div class="section-number">11</div>
+      <div class="section-number">12</div>
       <h2>Maintenance: let Alfred watch the stack</h2>
       <img src="/guide-to-alfred/images/12-updates.jpg" alt="Owl reading a glowing changelog scroll" class="section-img" loading="lazy" />
       <p>
@@ -750,14 +780,14 @@ raw messages: preserved in lcm.db</code></pre>
 
     <!-- 12 PERSONALITY -->
     <div class="section fade-in" id="personality">
-      <div class="section-number">12</div>
+      <div class="section-number">13</div>
       <h2>The personality upgrade</h2>
       <img src="/guide-to-alfred/images/13-personality.jpg" alt="Owl adjusting a bow tie in front of a mirror" class="section-img" loading="lazy" />
       <p>
-        Early on, I asked Alfred to modify its own personality. I gave it a description of the voice I wanted &mdash; British, dry, sharp, warm underneath &mdash; and let it write its own <code>SOUL.md</code>. That file shapes how Alfred communicates. You can read <a href="https://github.com/barronlroth/alfred-soul/blob/master/SOUL.md">Alfred&rsquo;s full SOUL.md on GitHub</a>.
+        Hermes reads a <code>SOUL.md</code> file that shapes how your agent talks and what it cares about. Spend real time on yours. Mine has changed several times as I figured out what I actually wanted from Alfred, and each version made it more useful.
       </p>
       <p>
-        This matters more than you would think. The default AI assistant voice is polished but generic. A well-crafted personality makes every interaction feel <strong>less like using a tool and more like talking to someone</strong>. You text it more, trust it more, and actually enjoy the interactions.
+        Find the voice that makes you want to text it, and the working style that makes you more productive: how blunt it should be, when to push back, when to just do the thing. This matters more than you would think. The default AI assistant voice is polished but generic. A well-crafted personality makes every interaction feel <strong>less like using a tool and more like talking to someone</strong>. You text it more, trust it more, and actually enjoy the interactions.
       </p>
 
       <div class="callout">
@@ -769,7 +799,7 @@ raw messages: preserved in lcm.db</code></pre>
 
     <!-- 13 THE MODEL -->
     <div class="section fade-in" id="model">
-      <div class="section-number">13</div>
+      <div class="section-number">14</div>
       <h2>Just use the best model</h2>
       <img src="/guide-to-alfred/images/14-model.jpg" alt="Owl standing confidently on a golden coin" class="section-img" loading="lazy" />
       <p>
@@ -795,14 +825,14 @@ raw messages: preserved in lcm.db</code></pre>
 
     <!-- 14 REMOTE ACCESS -->
     <div class="section fade-in" id="remote">
-      <div class="section-number">14</div>
-      <h2>Remote access: mostly unnecessary now</h2>
+      <div class="section-number">15</div>
+      <h2>Remote access: Tailscale is non-negotiable</h2>
       <img src="/guide-to-alfred/images/16-remote.jpg" alt="Owl using a tiny phone to control a distant server" class="section-img" loading="lazy" />
       <p>
-        The old version of this guide had a whole Tailscale-plus-Termius section so I could SSH into the Mac mini from my phone. I almost never need that anymore. Hermes has been stable enough that emergency remote access is not a daily operating concern.
+        An always-on agent lives on a box you are not sitting in front of. <strong>Tailscale</strong> puts the Mac mini on a private network with my phone and laptop, so I can reach it from anywhere without opening ports to the internet. I use it constantly: SSH, screen sharing, local dashboards, and reaching services that only listen on the home machine.
       </p>
       <p>
-        The rescue path now is simpler: <strong>Codex mobile connected to the Mac mini</strong>. If something needs a fix while I am away, I can open Codex, remote into the box, and patch it without doing terminal origami on a phone.
+        For actual fixes on the go, <strong>Codex mobile connected to the Mac mini</strong> rides on top of that. If something breaks while I am away, I open Codex, remote into the box, and patch it without doing terminal origami on a phone.
       </p>
     </div>
 
@@ -810,11 +840,11 @@ raw messages: preserved in lcm.db</code></pre>
 
     <!-- 15 VOICE TRANSCRIPTION -->
     <div class="section fade-in" id="voice">
-      <div class="section-number">15</div>
+      <div class="section-number">16</div>
       <h2>Voice transcription: local and free</h2>
       <img src="/guide-to-alfred/images/17-voice.jpg" alt="Owl with headphones listening to audio" class="section-img" loading="lazy" />
       <p>
-        I send Alfred a lot of voice notes from Telegram. Hermes transcribes them locally on the Mac mini using <strong>faster-whisper</strong>. The current config uses the local provider with the <code>base</code> model, so there is no separate transcription bill and no network round trip for normal voice input.
+        I send Alfred a lot of voice notes from Telegram. Hermes transcribes them locally on the Mac mini using <strong>faster-whisper</strong>. The current config uses the local provider with the <code>large-v3</code> model, so there is no separate transcription bill and no network round trip for normal voice input.
       </p>
       <p>
         Parakeet MLX is still installed on the machine from an older experiment, but it is not the active path anymore. The boring built-in Hermes local STT path won, which is frankly rude but convenient.
@@ -825,7 +855,7 @@ raw messages: preserved in lcm.db</code></pre>
   enabled: true
   provider: local
   local:
-    model: base
+    model: large-v3
     language: ''</code></pre>
       </div>
     </div>
@@ -842,12 +872,14 @@ raw messages: preserved in lcm.db</code></pre>
         <li><span class="bullet">&mdash;</span><span><strong>Telegram topics</strong> as the personal UI and project lanes.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Claude Opus via Claude subscription</strong> as the main model, with <strong>GPT-6 Luna/Sol via Codex OAuth</strong> for context summaries.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>GBrain/wiki</strong> as canonical long-term memory and project state.</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Hermes LCM</strong> for session continuity and lossless context.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>LCM-X</strong> for session continuity and lossless context.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Skills + skills.sh</strong> for reusable procedures across agents.</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Cron jobs</strong> for proactive checks, watchers, and reminders.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Heartbeat</strong> as the hourly productivity layer, plus <strong>cron jobs</strong> for narrow checks, watchers, and reminders.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Walkie-talkie</strong> so topics can hand work to each other.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Google Workspace + <code>gws</code></strong> for email, calendar, docs, and sheets.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>1Password <code>Claw</code> vault</strong> for credential handoff.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>GitHub + Vercel</strong> for the fast coding and deploy loop.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Tailscale</strong> for private remote access to the Mac mini.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Codex app/mobile</strong> for larger builds and remote rescue.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Gemini Maps grounding</strong> for restaurants and place intelligence.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Printing Press CLIs</strong> for custom tools like Fandango, Monarch, Splitwise, and reservations.</span></li>

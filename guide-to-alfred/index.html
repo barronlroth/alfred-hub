@@ -519,7 +519,7 @@
         Telegram is the interface, but topics are the unlock. Instead of one endless chat where wedding vendors, iOS bugs, work ideas, and travel plans all smear together, Alfred gets separate lanes with separate session context.
       </p>
       <p>
-        The newer setup uses <strong>private DM topics</strong> for my personal work. Permanent topics can be pinned for recurring areas like Cubby, finance, or CXAS. One-off topics work like Discord threads: spin one up when a task deserves its own context, let Hermes auto-rename it from the session, and keep the main General chat clean.
+        The newer setup uses Hermes&rsquo;s <strong>Telegram topic mode</strong>: turn on <strong>Threaded Mode</strong> for your bot in @BotFather, and the bot DM gets real topics, each with its own session. The root chat becomes a lobby, and every lane lives in a <strong>private DM topic</strong>. Permanent topics can be pinned for recurring areas like Cubby, finance, or CXAS. One-off topics work like Discord threads: spin one up when a task deserves its own context, let Hermes auto-rename it from the session, and keep the main General chat clean.
       </p>
       <p>
         I still also use a shared Telegram group with my fianc&eacute;e. That group has its own topics for wedding planning, travel, household decisions, and anything where Alfred is useful to both of us.
@@ -614,6 +614,9 @@ raw messages: preserved in lcm.db</code></pre>
         The primary productivity layer is now a <strong>heartbeat</strong>, a newer Hermes feature. Think of it as a cron job that keeps one consistent session: every hour it wakes up inside the same Front Desk topic, with the same history, instead of starting from zero each run. It remembers what it already told me, what I said back, and what is still open.
       </p>
       <p>
+        Mine lives in a <strong>Front Desk</strong> topic, and that is the core idea of the whole setup: Front Desk is the triage desk. It sees everything coming in, decides what matters, and hands each item to the topic that owns it (Finance, Travel, Career) using the walkie-talkie below. The specialist topics do the deep work; Front Desk keeps the queue moving.
+      </p>
+      <p>
         Point your heartbeat at the surfaces that run your day: check new email, check every calendar, look at what is coming up, and suggest the next useful move. Most runs should end in silence. The good ones stage the work, like a drafted reply or a reminder, so I only have to say yes. Write your own checklist; the value is in teaching it what matters to <em>you</em>.
       </p>
       <p>
@@ -642,7 +645,7 @@ raw messages: preserved in lcm.db</code></pre>
       <div class="section-number">05</div>
       <h2>Walkie-talkie: topics that talk to each other</h2>
       <p>
-        Topics keep context clean, but sometimes work starts in one lane and belongs in another. A bank alert shows up in the Front Desk heartbeat; it should be handled in Finance. A coordinator topic decides a build needs checking; that belongs in the app&rsquo;s topic.
+        This is what makes the Front Desk triage model work. Topics keep context clean, but work usually arrives in one lane and belongs in another. A bank alert shows up in the Front Desk heartbeat; it should be handled in Finance. A coordinator topic decides a build needs checking; that belongs in the app&rsquo;s topic.
       </p>
       <p>
         So I built <strong><a href="https://github.com/barronlroth/hermes-walkie-talkie">walkie-talkie</a></strong>, a Hermes plugin that lets one session message another existing session. The target topic wakes up with its full history, handles the message as a normal turn, and replies in its own chat. In Telegram you see two messages back to back: <code>📻 Sent from Front Desk</code> with the request, then the target&rsquo;s answer.
@@ -784,10 +787,13 @@ raw messages: preserved in lcm.db</code></pre>
       <h2>The personality upgrade</h2>
       <img src="/guide-to-alfred/images/13-personality.jpg" alt="Owl adjusting a bow tie in front of a mirror" class="section-img" loading="lazy" />
       <p>
-        Hermes reads a <code>SOUL.md</code> file that shapes how your agent talks and what it cares about. Spend real time on yours. Mine has changed several times as I figured out what I actually wanted from Alfred, and each version made it more useful.
+        Hermes reads a <code>SOUL.md</code> file that shapes how your agent talks and what it cares about. Early on, I asked Alfred to rewrite its own: British, dry, sharp, warm underneath. Yes, I gave my AI agent a butler accent. Yes, I know. That is the bit, and the bit works: it makes every exchange a little more fun, which means I actually use it.
       </p>
       <p>
-        Find the voice that makes you want to text it, and the working style that makes you more productive: how blunt it should be, when to push back, when to just do the thing. This matters more than you would think. The default AI assistant voice is polished but generic. A well-crafted personality makes every interaction feel <strong>less like using a tool and more like talking to someone</strong>. You text it more, trust it more, and actually enjoy the interactions.
+        Mine has changed several times since as I figured out what I actually wanted from Alfred, and each version made it more useful. The voice is the fun part; the real payload is the working style: how blunt it is, when it pushes back, when it just does the thing.
+      </p>
+      <p>
+        Find the voice that makes you want to text it, and the working style that makes you more productive. This matters more than you would think. The default AI assistant voice is polished but generic. A well-crafted personality makes every interaction feel <strong>less like using a tool and more like talking to someone</strong>. You text it more, trust it more, and actually enjoy the interactions.
       </p>
 
       <div class="callout">

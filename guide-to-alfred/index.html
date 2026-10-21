@@ -480,11 +480,11 @@
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">Model</span>
-        <span class="hero-meta-value">GPT-5.5</span>
+        <span class="hero-meta-value">Claude Opus</span>
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">Updated</span>
-        <span class="hero-meta-value">June 3, 2026</span>
+        <span class="hero-meta-value">October 21, 2026</span>
       </div>
     </div>
   </div>
@@ -773,7 +773,13 @@ raw messages: preserved in lcm.db</code></pre>
       <h2>Just use the best model</h2>
       <img src="/guide-to-alfred/images/14-model.jpg" alt="Owl standing confidently on a golden coin" class="section-img" loading="lazy" />
       <p>
-        Alfred currently runs on <strong>GPT-5.5</strong> with high reasoning and fast/priority mode enabled through OpenAI/Codex OAuth. The exact best model will change; the principle will not.
+        Alfred currently runs on <strong>Claude Opus</strong> through my Claude subscription, using a Hermes provider plugin that drives the Claude Agent SDK. No API keys, no per-token bill. The exact best model will change; the principle will not.
+      </p>
+      <p>
+        It is not one model for everything. The main chat, cron jobs and topic lanes run on Opus. Context compression (the LCM summaries) runs on <strong>GPT-6 Luna</strong> with <strong>GPT-6 Sol</strong> as fallback, through my OpenAI/Codex subscription. Summaries are a high-volume, background job, so they go to a strong model on a plan I am already paying for instead of eating into Opus.
+      </p>
+      <p>
+        Switching is cheap. When a lane misbehaves on one model, I flip that topic to the other for a day and keep going. Two flat-rate subscriptions beat one metered API.
       </p>
       <p>
         Do not over-optimize away quality. The difference between the smartest available model and a cheaper &ldquo;good enough&rdquo; model compounds across thousands of small autonomous decisions: every email triage, cron judgment, code edit, memory update, route recommendation, and social draft.
@@ -834,7 +840,7 @@ raw messages: preserved in lcm.db</code></pre>
         <li><span class="bullet">&mdash;</span><span><strong>Mac mini</strong> as the always-on home base.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Hermes Agent</strong> for the runtime, gateway, tools, and scheduled work.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Telegram topics</strong> as the personal UI and project lanes.</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>GPT-5.5 / OpenAI Codex OAuth</strong> as the main model/provider path.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Claude Opus via Claude subscription</strong> as the main model, with <strong>GPT-6 Luna/Sol via Codex OAuth</strong> for context summaries.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>GBrain/wiki</strong> as canonical long-term memory and project state.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Hermes LCM</strong> for session continuity and lossless context.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Skills + skills.sh</strong> for reusable procedures across agents.</span></li>

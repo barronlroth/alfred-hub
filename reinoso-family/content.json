@@ -1,0 +1,707 @@
+{
+  "version": "1.0",
+  "siteTitle": {
+    "en": "Reinoso | A family, many worlds",
+    "es": "Reinoso | Una familia, muchos mundos"
+  },
+  "description": {
+    "en": "An illustrated, bilingual journey through the Reinoso and Delboy family story.",
+    "es": "Un recorrido ilustrado y bilingüe por las historias de la familia Reinoso y Delboy."
+  },
+  "familyAnchor": "Alicia Reinoso Delboy",
+  "sources": {
+    "rah": {
+      "title": {
+        "en": "Royal Academy of History: Hernando de Santillán",
+        "es": "Real Academia de la Historia: Hernando de Santillán"
+      },
+      "url": "https://historia-hispanica.rah.es/biografias/40834-hernando-de-santillan-y-figueroa"
+    },
+    "cervantes": {
+      "title": {
+        "en": "José Toribio Medina: writers celebrated by Cervantes",
+        "es": "José Toribio Medina: escritores celebrados por Cervantes"
+      },
+      "url": "https://www.cervantesvirtual.com/obra-visor/escritores-americanos-celebrados-por-cervantes-en-el-canto-de-caliope--0/html/ff73354c-82b1-11df-acc7-002185ce6064_7.html"
+    },
+    "unam": {
+      "title": {
+        "en": "UNAM: documentary genealogy of the Moscoso family",
+        "es": "UNAM: genealogía documental de la familia Moscoso"
+      },
+      "url": "https://historicas.unam.mx/publicaciones/publicadigital/libros/626/626_04_09_JuanPio.pdf"
+    },
+    "congress": {
+      "title": {
+        "en": "Peruvian Congress: historical service record",
+        "es": "Congreso del Perú: relación histórica de servicios"
+      },
+      "url": "https://www3.congreso.gob.pe/Docs/FondoEditorial/bicentenario/Tupac_Amaru_2/files/basic-html/page41.html"
+    },
+    "navy": {
+      "title": {
+        "en": "Peruvian naval biographies, 1999, page 65",
+        "es": "Reseñas biográficas de oficiales de Marina, 1999, p. 65"
+      },
+      "url": "https://archivohistoricodemarina.mil.pe/repo/data/DOCUMENTOS/BIBLIOTECA/LIBROS%20Y%20MISCELANEOS/LIBROS/pdf/Rese%C3%B1as%20Biogr%C3%A1ficas%20de%20Oficiales%20de%20Marina%201500-1930.pdf"
+    },
+    "voyage": {
+      "title": {
+        "en": "Peruvian Foreign Ministry: the Amazonas voyage",
+        "es": "Ministerio de Relaciones Exteriores: el viaje de la Amazonas"
+      },
+      "url": "https://cdn.www.gob.pe/uploads/document/file/5808538/5153224-boletininternacional192.pdf"
+    },
+    "passenger": {
+      "title": {
+        "en": "New York passenger index: José Miguel Reinoso, 1914",
+        "es": "Índice de pasajeros de Nueva York: José Miguel Reinoso, 1914"
+      },
+      "url": "https://www.ancestry.com/search/collections/7488/records/4014934491",
+      "accessNote": {
+        "en": "This archive may require sign-in or a subscription.",
+        "es": "Este archivo puede requerir una cuenta o suscripción."
+      }
+    },
+    "draft": {
+      "title": {
+        "en": "Max A. Reinoso: 1917 draft registration",
+        "es": "Max A. Reinoso: registro de reclutamiento de 1917"
+      },
+      "url": "https://www.familysearch.org/ark:/61903/1:1:K6N1-TWC",
+      "accessNote": {
+        "en": "This archive may require sign-in or a subscription.",
+        "es": "Este archivo puede requerir una cuenta o suscripción."
+      }
+    },
+    "emilio": {
+      "title": {
+        "en": "Mariano Emilio Delboy: baptism index",
+        "es": "Mariano Emilio Delboy: índice de bautismo"
+      },
+      "url": "https://www.ancestry.com/search/collections/60114/records/1438291",
+      "accessNote": {
+        "en": "This archive may require sign-in or a subscription.",
+        "es": "Este archivo puede requerir una cuenta o suscripción."
+      }
+    },
+    "alicia": {
+      "title": {
+        "en": "María Alicia Delboy: 1903 birth registration",
+        "es": "María Alicia Delboy: inscripción de nacimiento de 1903"
+      },
+      "url": "https://www.ancestry.com/search/collections/60121/records/738320",
+      "accessNote": {
+        "en": "This archive may require sign-in or a subscription.",
+        "es": "Este archivo puede requerir una cuenta o suscripción."
+      }
+    },
+    "family": {
+      "title": {
+        "en": "Family research shared by Lbrei on Ancestry",
+        "es": "Investigación familiar compartida por Lbrei en Ancestry"
+      },
+      "url": "https://www.ancestry.com/family-tree/person/tree/22473110/person/28883645082/facts",
+      "accessNote": {
+        "en": "This archive may require sign-in or a subscription.",
+        "es": "Este archivo puede requerir una cuenta o suscripción."
+      }
+    },
+    "swiss-photo": {
+      "title": {
+        "en": "Family photograph: Arturo with his brothers in Switzerland",
+        "es": "Fotografía familiar: Arturo con sus hermanos en Suiza"
+      },
+      "url": "https://www.ancestry.com/mediaui-viewer/tree/22473110/person/28883645082/media/563b46ca-2e9e-40b2-a986-1e3290416d58",
+      "accessNote": {
+        "en": "This archive may require sign-in or a subscription.",
+        "es": "Este archivo puede requerir una cuenta o suscripción."
+      }
+    }
+  },
+  "slides": [
+    {
+      "id": "home",
+      "kind": "cover",
+      "title": {
+        "en": "Reinoso. A family, many worlds.",
+        "es": "Reinoso. Una familia, muchos mundos."
+      },
+      "body": {
+        "en": "From the white streets of Arequipa to a voyage around the world. Ten stories from the Reinoso and Delboy family.",
+        "es": "De las calles blancas de Arequipa a un viaje alrededor del mundo. Diez historias de la familia Reinoso y Delboy."
+      },
+      "image": "assets/art/cover.webp",
+      "branch": {
+        "en": "Reinoso + Delboy",
+        "es": "Reinoso + Delboy"
+      },
+      "period": {
+        "en": "16th–20th centuries",
+        "es": "Siglos XVI–XX"
+      },
+      "context": {
+        "en": "A family storybook, in English and Spanish.",
+        "es": "Un álbum de historias familiares, en español e inglés."
+      },
+      "sourceIds": [
+        "family"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy"
+      ],
+      "certainty": {
+        "en": "Historical stories follow the family tree. Not every old parent-child link has been independently proved.",
+        "es": "Las historias siguen el árbol familiar. No se ha comprobado de forma independiente cada vínculo antiguo."
+      }
+    },
+    {
+      "id": "history",
+      "kind": "timeline",
+      "title": {
+        "en": "A little history. A lot of change.",
+        "es": "Un poco de historia. Un mundo de cambios."
+      },
+      "body": {
+        "en": "These stories cross a conquest, centuries of colonial government, independence, and a later war with Spain. They are not all the same conflict.",
+        "es": "Estas historias atraviesan una conquista, siglos de gobierno colonial, la independencia y una guerra posterior con España. No se trata de un solo conflicto."
+      },
+      "image": "assets/art/independence.webp",
+      "branch": {
+        "en": "The historical setting",
+        "es": "El contexto histórico"
+      },
+      "period": "1532–1866",
+      "events": [
+        {
+          "year": "1532",
+          "label": {
+            "en": "Spanish forces capture the Inca emperor Atahualpa.",
+            "es": "Las fuerzas españolas capturan al inca Atahualpa."
+          }
+        },
+        {
+          "year": "1540",
+          "label": {
+            "en": "The Spanish city of Arequipa is founded in an already inhabited valley.",
+            "es": "Se funda la ciudad española de Arequipa en un valle ya habitado."
+          }
+        },
+        {
+          "year": "1821–24",
+          "label": {
+            "en": "Peru declares independence, then wins the decisive campaigns.",
+            "es": "El Perú proclama su independencia y gana las campañas decisivas."
+          }
+        },
+        {
+          "year": "1866",
+          "label": {
+            "en": "Already-independent Peru fights a Spanish fleet.",
+            "es": "El Perú ya independiente combate contra una escuadra española."
+          }
+        }
+      ],
+      "sourceIds": [
+        "rah",
+        "navy"
+      ],
+      "relation": [],
+      "certainty": {
+        "en": "Context, not proof that an ancestor took part in every event.",
+        "es": "Contexto histórico, no prueba de que un antepasado participara en cada hecho."
+      }
+    },
+    {
+      "id": "two-roots",
+      "kind": "story",
+      "title": {
+        "en": "Two surnames. Different journeys.",
+        "es": "Dos apellidos. Distintos caminos."
+      },
+      "body": {
+        "en": "The Reinoso line is placed in Arequipa by 1690 in the family tree. The Delboy line brings a later French connection: Alexandre Delboy’s family was established in Peru by 1839.",
+        "es": "El árbol sitúa a los Reinoso en Arequipa desde 1690. Los Delboy aportan una conexión francesa posterior: la familia de Alexandre Delboy ya estaba establecida en el Perú en 1839."
+      },
+      "image": "assets/art/bordeaux.webp",
+      "number": 1,
+      "branch": {
+        "en": "Reinoso + Delboy",
+        "es": "Reinoso + Delboy"
+      },
+      "period": {
+        "en": "1690 / by 1839",
+        "es": "1690 / ya en 1839"
+      },
+      "stat": {
+        "value": "2",
+        "label": {
+          "en": "family journeys, not one arrival",
+          "es": "caminos familiares, no una sola llegada"
+        }
+      },
+      "context": {
+        "en": "A surname is one thread. Other branches of this same family were in Peru much earlier.",
+        "es": "Un apellido es solo un hilo. Otras ramas de esta misma familia ya estaban en el Perú mucho antes."
+      },
+      "sourceIds": [
+        "family",
+        "navy"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        "Max Reinoso / Alicia Delboy",
+        "Diego Reinoso / Alexandre Delboy"
+      ],
+      "certainty": {
+        "en": "1690 follows the family tree; 1839 is an established-by date from Ulises’s Peruvian birth, not a passenger arrival. Alexandre’s exact arrival and conflicting birth years remain unresolved.",
+        "es": "1690 procede del árbol familiar; 1839 indica que la familia ya estaba en el Perú por el nacimiento de Ulises, no una fecha de desembarco. La llegada exacta de Alexandre y su año de nacimiento siguen pendientes."
+      }
+    },
+    {
+      "id": "quito",
+      "kind": "story",
+      "title": {
+        "en": "A family connection to colonial Quito.",
+        "es": "Una conexión familiar con el Quito colonial."
+      },
+      "body": {
+        "en": "Hernando de Santillán came to Peru in the late 1540s as a senior judge in Lima. He later became the first president of Quito’s Royal Audiencia.",
+        "es": "Hernando de Santillán llegó al Perú a fines de la década de 1540 como oidor de Lima. Después fue el primer presidente de la Real Audiencia de Quito."
+      },
+      "image": "assets/art/court.webp",
+      "number": 2,
+      "branch": {
+        "en": "Reinoso · Moscoso branch",
+        "es": "Reinoso · rama Moscoso"
+      },
+      "period": {
+        "en": "1540s–1560s",
+        "es": "Décadas de 1540–1560"
+      },
+      "context": {
+        "en": "An audiencia was a colonial court and governing body, not the presidency of modern Ecuador. Spain was building colonial institutions over existing Indigenous societies.",
+        "es": "Una audiencia era un tribunal y órgano de gobierno colonial, no la presidencia del Ecuador moderno. España imponía sus instituciones sobre sociedades indígenas ya existentes."
+      },
+      "sourceIds": [
+        "rah",
+        "family"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        "Max Reinoso",
+        {
+          "en": "Reinoso / Moscoso ancestors",
+          "es": "Antepasados Reinoso / Moscoso"
+        },
+        "Leonor de Figueroa y Santillán",
+        "Hernando de Santillán"
+      ],
+      "certainty": {
+        "en": "His historical career and daughter’s identity are documented. The long connection to this family follows inherited genealogical research. Intermediate generations are condensed here.",
+        "es": "Su trayectoria y la identidad de su hija están documentadas. El vínculo largo con esta familia sigue la investigación genealógica heredada. Aquí se resumen generaciones intermedias."
+      }
+    },
+    {
+      "id": "cervantes",
+      "kind": "story",
+      "title": {
+        "en": "Cervantes praised a poet in the family tree.",
+        "es": "Cervantes elogió a un poeta del árbol familiar."
+      },
+      "body": {
+        "en": "Juan Dávalos de Ribera, married to Leonor de Figueroa y Santillán, closely matches the poet celebrated by the author of Don Quixote. He was also elected mayor of Lima in 1600 and 1609.",
+        "es": "Juan Dávalos de Ribera, esposo de Leonor de Figueroa y Santillán, coincide estrechamente con el poeta celebrado por el autor del Quijote. También fue elegido alcalde de Lima en 1600 y 1609."
+      },
+      "image": "assets/art/poet.webp",
+      "number": 3,
+      "branch": {
+        "en": "Reinoso · Moscoso branch",
+        "es": "Reinoso · rama Moscoso"
+      },
+      "period": {
+        "en": "Around 1600",
+        "es": "Hacia 1600"
+      },
+      "context": {
+        "en": "A poet and a civic official: literary life and colonial power could overlap. His family’s status also belonged to an unequal colonial order.",
+        "es": "Poeta y autoridad local: la vida literaria y el poder colonial podían coincidir. La posición de su familia también formaba parte de un orden colonial desigual."
+      },
+      "sourceIds": [
+        "cervantes",
+        "family"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        {
+          "en": "Reinoso / Moscoso ancestors",
+          "es": "Antepasados Reinoso / Moscoso"
+        },
+        "Elvira Dávalos de Ribera",
+        "Juan Dávalos de Ribera"
+      ],
+      "certainty": {
+        "en": "The spouse and family relationships are a strong historical match. Exact birth years differ across sources; the older family chain is not independently proved at every step.",
+        "es": "La esposa y los vínculos familiares ofrecen una coincidencia histórica fuerte. Las fuentes discrepan en el año de nacimiento; no se ha comprobado cada eslabón antiguo."
+      }
+    },
+    {
+      "id": "archbishop",
+      "kind": "story",
+      "title": {
+        "en": "An archbishop who had to find a cheaper doctorate.",
+        "es": "Un arzobispo que buscó un doctorado más económico."
+      },
+      "body": {
+        "en": "Juan Manuel Moscoso y Peralta became bishop of Cuzco and archbishop of Granada. A historical service record says he could not afford the doctoral expenses at San Marcos in Lima, so he completed his doctorate in Cuzco.",
+        "es": "Juan Manuel Moscoso y Peralta fue obispo del Cuzco y arzobispo de Granada. Una relación de servicios cuenta que no pudo costear el doctorado en San Marcos, Lima, y lo terminó en el Cuzco."
+      },
+      "image": "assets/art/bishop.webp",
+      "number": 4,
+      "branch": {
+        "en": "Reinoso · a distant Moscoso uncle",
+        "es": "Reinoso · un tío lejano de los Moscoso"
+      },
+      "period": {
+        "en": "18th century",
+        "es": "Siglo XVIII"
+      },
+      "context": {
+        "en": "Prestigious connections did not mean that every relative had unlimited money. This is Juan Manuel, a collateral relative, not the direct ancestor Juan José.",
+        "es": "Tener conexiones prestigiosas no significaba disponer de dinero ilimitado. Este es Juan Manuel, un pariente colateral, no el antepasado directo Juan José."
+      },
+      "sourceIds": [
+        "congress",
+        "unam"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        {
+          "en": "Moscoso ancestors",
+          "es": "Antepasados Moscoso"
+        },
+        "Manuel José Moscoso + Antonia de Peralta",
+        {
+          "en": "Their son: Juan Manuel",
+          "es": "Su hijo: Juan Manuel"
+        }
+      ],
+      "certainty": {
+        "en": "The historical record explicitly names the matching parents. He belongs to a collateral branch, not the direct ancestral line.",
+        "es": "El documento histórico nombra expresamente a los padres coincidentes. Pertenece a una rama colateral, no a la línea ancestral directa."
+      }
+    },
+    {
+      "id": "royalist",
+      "kind": "story",
+      "title": {
+        "en": "A cousin branch on the other side of independence.",
+        "es": "Una rama de primos al otro lado de la independencia."
+      },
+      "body": {
+        "en": "Juan Pío Tristán, connected through the Moscoso family, fought for the Spanish Crown. After the royalist defeat at Ayacucho in 1824, he briefly headed the remaining royal government, then later held republican office.",
+        "es": "Juan Pío Tristán, vinculado por la familia Moscoso, combatió por la Corona española. Tras la derrota realista de Ayacucho en 1824, encabezó brevemente el gobierno real restante y después ocupó cargos republicanos."
+      },
+      "image": "assets/art/independence.webp",
+      "number": 5,
+      "branch": {
+        "en": "Reinoso · a distant collateral branch",
+        "es": "Reinoso · una rama colateral lejana"
+      },
+      "period": "1824",
+      "context": {
+        "en": "This was the independence struggle. The naval fighting against Spain in 1866 was a separate conflict, decades later.",
+        "es": "Esta sí fue la lucha por la independencia. Los combates navales contra España de 1866 fueron otro conflicto, décadas después."
+      },
+      "sourceIds": [
+        "unam"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        {
+          "en": "Moscoso ancestors",
+          "es": "Antepasados Moscoso"
+        },
+        {
+          "en": "Gaspar José, brother of Manuel",
+          "es": "Gaspar José, hermano de Manuel"
+        },
+        "María Josefa Mercedes Moscoso",
+        "Juan Pío Tristán"
+      ],
+      "certainty": {
+        "en": "A published genealogy supports the collateral connection. He is not presented as a direct ancestor. His brief interim title should not be confused with years of effective rule.",
+        "es": "Una genealogía publicada respalda el parentesco colateral. No se presenta como antepasado directo. Su breve título interino no equivale a años de gobierno efectivo."
+      }
+    },
+    {
+      "id": "voyage",
+      "kind": "story",
+      "title": {
+        "en": "Setting off around the world at seventeen.",
+        "es": "A los diecisiete, rumbo al mundo."
+      },
+      "body": {
+        "en": "Ulises Delboy sailed on the Amazonas in 1856–1858, the first Latin American warship to circumnavigate the globe. He later commanded Amazon river steamers, fought at Abtao and Callao, and served as Peru’s consul in Macao.",
+        "es": "Ulises Delboy navegó en la Amazonas en 1856–1858, la primera nave de guerra latinoamericana que dio la vuelta al mundo. Después comandó vapores amazónicos, combatió en Abtao y el Callao y fue cónsul del Perú en Macao."
+      },
+      "image": "assets/art/voyage.webp",
+      "number": 6,
+      "branch": {
+        "en": "Delboy · Mariano Emilio’s brother",
+        "es": "Delboy · hermano de Mariano Emilio"
+      },
+      "period": "1856–1858",
+      "stat": {
+        "value": "17",
+        "label": {
+          "en": "years old at the start",
+          "es": "años al iniciar el viaje"
+        }
+      },
+      "context": {
+        "en": "He returned at nineteen, after about nineteen months. His later 1866 battles defended an already-independent Peru. Macao was on the Chinese coast under Portuguese administration.",
+        "es": "Regresó a los diecinueve, tras unos diecinueve meses. En 1866 defendió a un Perú ya independiente. Macao estaba en la costa china bajo administración portuguesa."
+      },
+      "sourceIds": [
+        "navy",
+        "voyage"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        "Alicia Delboy",
+        "Mariano Emilio Delboy",
+        {
+          "en": "His brother: Ulises Delboy",
+          "es": "Su hermano: Ulises Delboy"
+        }
+      ],
+      "certainty": {
+        "en": "His naval biography explicitly records participation. The painting is an interpretation, not a photograph or a technical reconstruction of the Amazonas.",
+        "es": "Su biografía naval documenta expresamente su participación. La pintura es una interpretación, no una fotografía ni una reconstrucción técnica de la Amazonas."
+      }
+    },
+    {
+      "id": "atlantic",
+      "kind": "story",
+      "title": {
+        "en": "A family on both sides of the Atlantic.",
+        "es": "Una familia a ambos lados del Atlántico."
+      },
+      "body": {
+        "en": "A matching passenger record places José Miguel Reinoso in New York on 30 June 1914, with his wife Aurora listed in Hamburg and Paris as his intended destination. A matching 1917 draft card places his son Max in New York, working in export.",
+        "es": "Un registro de pasajeros coincidente sitúa a José Miguel Reinoso en Nueva York el 30 de junio de 1914; menciona a su esposa Aurora en Hamburgo y París como destino previsto. Una ficha de 1917 sitúa a su hijo Max en Nueva York, trabajando en exportación."
+      },
+      "image": "assets/art/new-york.webp",
+      "number": 7,
+      "branch": {
+        "en": "Reinoso · Max and his father",
+        "es": "Reinoso · Max y su padre"
+      },
+      "period": "1914–1917",
+      "context": {
+        "en": "The 1914 arrival was two days after the assassination that triggered the crisis leading to World War I. We do not know whether the war changed their plans. A draft card does not prove military service.",
+        "es": "La llegada de 1914 ocurrió dos días después del atentado que desencadenó la crisis de la Primera Guerra Mundial. No sabemos si la guerra cambió sus planes. La ficha no demuestra servicio militar."
+      },
+      "sourceIds": [
+        "passenger",
+        "draft",
+        "family"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        "Max Reinoso",
+        {
+          "en": "His father: José Miguel Reinoso",
+          "es": "Su padre: José Miguel Reinoso"
+        }
+      ],
+      "certainty": {
+        "en": "The passenger name, wife and family details are a strong match; some ages vary. Intended travel is not proof that the person completed every leg.",
+        "es": "El nombre, la esposa y los datos familiares ofrecen una coincidencia fuerte; algunas edades varían. Un destino previsto no prueba que se completara cada tramo."
+      },
+      "archiveIds": [
+        "jose-miguel-reinoso-portrait",
+        "don-miguel-reinoso"
+      ]
+    },
+    {
+      "id": "connections",
+      "kind": "story",
+      "title": {
+        "en": "Not every branch stayed separate.",
+        "es": "No todas las ramas quedaron separadas."
+      },
+      "body": {
+        "en": "The tree suggests José Matías Reinoso and Isabel Ampuero were second cousins, descending through two Moscoso women. Separately, a published study records an older ancestral couple needing permission to marry because they were related.",
+        "es": "El árbol sugiere que José Matías Reinoso e Isabel Ampuero eran primos segundos, por dos mujeres Moscoso. Por separado, un estudio documenta que otra pareja ancestral más antigua necesitó permiso para casarse por su parentesco."
+      },
+      "image": "assets/art/family-threads.webp",
+      "number": 8,
+      "branch": {
+        "en": "Reinoso · Ampuero and Moscoso",
+        "es": "Reinoso · Ampuero y Moscoso"
+      },
+      "period": {
+        "en": "Family connections",
+        "es": "Vínculos familiares"
+      },
+      "context": {
+        "en": "Families could reinforce social ties through marriage. Genealogists call repeated ancestors pedigree collapse; it does not by itself establish a medical consequence.",
+        "es": "Los matrimonios podían reforzar redes familiares y sociales. La repetición de antepasados se llama colapso de pedigrí; por sí sola no demuestra consecuencias médicas."
+      },
+      "sourceIds": [
+        "family",
+        "unam"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        "Max Reinoso",
+        "José Miguel Reinoso",
+        {
+          "en": "His parents: José Matías + Isabel",
+          "es": "Sus padres: José Matías + Isabel"
+        }
+      ],
+      "certainty": {
+        "en": "The second-cousin relationship is a hypothesis from a tree containing duplicate profiles. The separate 1693 marriage dispensation is published evidence; its historical degree must not be casually translated into a modern cousin degree.",
+        "es": "El parentesco de primos segundos es una hipótesis de un árbol con perfiles duplicados. La dispensa de 1693 está documentada; su grado histórico no debe convertirse sin más a un grado moderno."
+      }
+    },
+    {
+      "id": "generations",
+      "kind": "story",
+      "title": {
+        "en": "A nineteenth-century life, surprisingly close.",
+        "es": "Una vida del siglo XIX, más cercana de lo que parece."
+      },
+      "body": {
+        "en": "Mariano Emilio Delboy was born in 1847. His daughter Alicia was born in 1903, when he was fifty-six. She became the mother of Alicia Reinoso Delboy.",
+        "es": "Mariano Emilio Delboy nació en 1847. Su hija Alicia nació en 1903, cuando él tenía cincuenta y seis años. Ella fue la madre de Alicia Reinoso Delboy."
+      },
+      "image": "assets/art/lima-1903.webp",
+      "number": 9,
+      "branch": {
+        "en": "Delboy · father, daughter, granddaughter",
+        "es": "Delboy · padre, hija y nieta"
+      },
+      "period": "1847 → 1903 → 1925",
+      "stat": {
+        "value": "56",
+        "label": {
+          "en": "years old when Alicia was born",
+          "es": "años cuando nació Alicia"
+        }
+      },
+      "context": {
+        "en": "His life began before the American Civil War. His daughter was born in the year of the Wright brothers’ first powered flight. Long generations can make distant history feel unexpectedly close.",
+        "es": "Él nació antes de la guerra civil estadounidense. Su hija nació el año del primer vuelo motorizado de los hermanos Wright. Las generaciones largas acercan épocas que parecen remotas."
+      },
+      "sourceIds": [
+        "emilio",
+        "alicia",
+        "family"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        {
+          "en": "Her mother: Alicia Delboy",
+          "es": "Su madre: Alicia Delboy"
+        },
+        {
+          "en": "Her grandfather: Mariano Emilio Delboy",
+          "es": "Su abuelo: Mariano Emilio Delboy"
+        }
+      ],
+      "certainty": {
+        "en": "The age is calculated from the indexed 1847 baptism/birth and 1903 civil birth. No claim is made about the mother’s disputed age.",
+        "es": "La edad se calcula con los índices del nacimiento/bautismo de 1847 y del nacimiento civil de 1903. No se afirma la edad discutida de la madre."
+      }
+    },
+    {
+      "id": "switzerland",
+      "kind": "story",
+      "title": {
+        "en": "A Swiss chapter in the family album.",
+        "es": "Un capítulo suizo en el álbum familiar."
+      },
+      "body": {
+        "en": "A preserved family photograph shows three men on a bench. Its caption identifies Arturo in the center, with his brothers in Switzerland, where it says he studied. The family collection links the photograph to Máximo Arturo Reinoso.",
+        "es": "Una fotografía familiar conservada muestra a tres hombres en una banca. La leyenda identifica a Arturo en el centro, con sus hermanos en Suiza, donde dice que estudió. La colección familiar vincula la imagen con Máximo Arturo Reinoso."
+      },
+      "image": "assets/art/switzerland.webp",
+      "number": 10,
+      "branch": {
+        "en": "Reinoso · Arturo and his brothers",
+        "es": "Reinoso · Arturo y sus hermanos"
+      },
+      "period": {
+        "en": "Date unknown",
+        "es": "Fecha desconocida"
+      },
+      "archiveIds": [
+        "arturo-reinoso-and-two-brothers",
+        "maximo-arturo-reinoso-portrait"
+      ],
+      "context": {
+        "en": "A photograph can reveal a chapter that a list of birthplaces misses. The exact Swiss town, school, course of study, date, and other brothers’ identities have not been established.",
+        "es": "Una fotografía puede revelar un capítulo que una lista de lugares de nacimiento no cuenta. No se han establecido la ciudad suiza, la escuela, los estudios, la fecha ni la identidad de los otros hermanos."
+      },
+      "sourceIds": [
+        "swiss-photo",
+        "family"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        {
+          "en": "Her father: Max Reinoso",
+          "es": "Su padre: Max Reinoso"
+        }
+      ],
+      "certainty": {
+        "en": "The place, study and central identification come from the preserved family caption and profile attribution, not an independently checked school record. The background is a symbolic Swiss illustration.",
+        "es": "El lugar, los estudios y la identificación central proceden de la leyenda familiar conservada y su vinculación al perfil, no de un registro escolar comprobado. El fondo es una ilustración simbólica de Suiza."
+      }
+    },
+    {
+      "id": "album",
+      "kind": "archive",
+      "title": {
+        "en": "The faces behind the stories.",
+        "es": "Los rostros detrás de las historias."
+      },
+      "body": {
+        "en": "Real family photographs belong beside the stories, not underneath invented portraits. Explore the preserved images, their captions, and the people who shared them.",
+        "es": "Las fotografías familiares reales acompañan estas historias, sin sustituirse por retratos inventados. Mira las imágenes conservadas, sus descripciones y quién las compartió."
+      },
+      "image": "assets/art/cover.webp",
+      "branch": {
+        "en": "The family album",
+        "es": "El álbum familiar"
+      },
+      "period": {
+        "en": "The archive",
+        "es": "El archivo"
+      },
+      "sourceIds": [
+        "family"
+      ],
+      "relation": [
+        "Alicia Reinoso Delboy",
+        "Reinoso + Delboy"
+      ],
+      "certainty": {
+        "en": "Archive photographs and generated historical illustrations are labeled separately. Captions and identifications follow the cited family source and retain uncertainty.",
+        "es": "Las fotografías de archivo y las ilustraciones históricas generadas se identifican por separado. Las descripciones siguen la fuente familiar y conservan sus dudas."
+      }
+    }
+  ],
+  "methodology": {
+    "en": "Family connections follow research shared by Lbrei and the family tree. Historical careers were cross-checked against published and official sources. A documented historical person is not proof of every ancestral link. Illustrations recreate settings, not people’s actual faces. No living relatives’ private details are published.",
+    "es": "Los parentescos siguen la investigación compartida por Lbrei y el árbol familiar. Las trayectorias históricas se contrastaron con fuentes publicadas y oficiales. Documentar a un personaje no prueba cada vínculo ancestral. Las ilustraciones recrean ambientes, no los rostros reales de las personas. No se publican datos privados de familiares vivos."
+  },
+  "relationNotice": {
+    "en": "Relationship summaries omit intermediate generations. They show the family connection, not a complete sequence of parent-child links. Collateral relatives are identified separately.",
+    "es": "Los resúmenes de parentesco omiten generaciones intermedias. Muestran la conexión familiar, no una cadena completa de vínculos entre padres e hijos. Los parientes de ramas colaterales se identifican por separado."
+  }
+}

@@ -4,20 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#142d3c">
-  <meta name="description" content="An illustrated, bilingual journey through the Reinoso and Delboy family story. Un recorrido ilustrado por la historia familiar.">
+  <meta name="description" content="True stories from Grandma Alicia Reinoso’s family, in time order. Historias reales de la familia, en orden cronológico.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Reinoso + Delboy · A family, many worlds / Una familia, muchos mundos">
-  <meta property="og:description" content="Ten family stories in English and Spanish. Diez historias familiares en español e inglés.">
+  <meta property="og:description" content="13 family stories from 1527 to 1925, in English and Spanish. 13 historias familiares de 1527 a 1925.">
   <meta property="og:image" content="https://alfred.barronroth.com/reinoso-family/assets/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Reinoso + Delboy: an illustrated family storybook / Un libro familiar ilustrado">
   <meta property="og:url" content="https://alfred.barronroth.com/reinoso-family/">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Reinoso + Delboy · A family, many worlds / Una familia, muchos mundos">
-  <meta name="twitter:description" content="Ten family stories in English and Spanish. Diez historias familiares en español e inglés.">
   <meta name="twitter:image" content="https://alfred.barronroth.com/reinoso-family/assets/og.jpg">
-  <meta name="twitter:image:alt" content="Reinoso + Delboy: an illustrated family storybook / Un libro familiar ilustrado">
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://alfred.barronroth.com/reinoso-family/">
   <title>Reinoso + Delboy · A family, many worlds</title>
@@ -31,34 +27,38 @@
 <body>
   <a class="skip-link" href="#story-title" data-ui="skip">Skip to story</a>
   <header class="masthead">
-    <a class="wordmark" href="?lang=en#home" aria-label="Reinoso + Delboy — Home"><span class="monogram" aria-hidden="true">R<span>·</span>D</span><span class="family-name">Reinoso <span>+ Delboy</span></span></a>
+    <a class="wordmark" href="?lang=en#home"><span class="monogram" aria-hidden="true">R<span>·</span>D</span><span class="family-name">Reinoso <span>+ Delboy</span></span></a>
     <div class="header-actions">
       <div class="languages" role="group" aria-label="Language"><button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button><span aria-hidden="true">/</span><button type="button" data-lang="es" lang="es" aria-pressed="false">ES</button></div>
-      <button class="index-button" type="button" id="chapters-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span data-ui="chapters">Chapters</span></button>
+      <button class="index-button" type="button" id="chapters-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span data-ui="chapters">All stories</span></button>
     </div>
   </header>
   <main id="main">
     <article class="spread" data-kind="cover" aria-labelledby="story-title">
-      <figure class="artwork"><img id="scene-image" src="assets/art/cover.webp" alt="Illustrated Arequipa cathedral and Misti at dusk" fetchpriority="high"><figcaption><button type="button" id="art-credit"><span class="art-mark" aria-hidden="true">✧</span> <span data-ui="illustration">Historical illustration</span><span aria-hidden="true"> ↗</span></button></figcaption></figure>
-      <div class="reading-panel">
-        <div class="story-meta"><span id="chapter-label">Reinoso + Delboy</span><span class="meta-line" aria-hidden="true"></span><span id="period">1540s–1900s</span></div>
-        <h1 id="story-title" tabindex="-1">Reinoso.<br>A family,<br>many worlds.</h1>
-        <p class="story-body" id="story-body">From the white streets of Arequipa to a voyage around the world. Ten stories from the Reinoso and Delboy family.</p>
+      <figure class="artwork"><img id="scene-image" src="assets/art/cover.webp" alt="" fetchpriority="high"><figcaption><button type="button" id="art-credit"><span aria-hidden="true">✧</span> <span data-ui="illustration">Illustration</span></button></figcaption></figure>
+      <div class="reading-panel" id="reading-panel">
+        <div class="story-meta"><span id="chapter-label"></span><span class="meta-line" aria-hidden="true"></span><span id="branch"></span></div>
+        <p class="big-year" id="big-year" aria-hidden="true"></p>
+        <h1 id="story-title" tabindex="-1">Reinoso. A family, many worlds.</h1>
+        <section id="who" class="who" hidden></section>
+        <div class="story-body" id="story-body"></div>
         <div id="story-extra"></div>
-        <div id="story-actions" class="story-actions"><button type="button" id="begin" class="begin"><span data-ui="begin">Open the storybook</span><span aria-hidden="true">↗</span></button></div>
-        <div class="detail-actions"><button type="button" id="related-button" data-ui="related">How we're related</button><span aria-hidden="true">·</span><button type="button" id="sources-button" data-ui="sources">Sources & context</button></div>
+        <section id="path" class="path" hidden></section>
+        <section id="explain" class="explain" hidden></section>
+        <section id="context" class="context" hidden></section>
+        <div id="story-actions" class="story-actions"><button type="button" id="begin" class="begin"><span data-ui="begin">Begin</span><span aria-hidden="true">→</span></button></div>
+        <div class="detail-actions"><button type="button" id="sources-button" data-ui="sources">Sources &amp; how sure we are</button></div>
+        <div id="visual-extra"></div>
       </div>
-      <div id="visual-extra"></div>
     </article>
   </main>
   <footer class="navigation">
-    <button type="button" class="nav-arrow" id="previous" aria-label="Previous chapter"><span aria-hidden="true">←</span></button>
-    <div class="nav-center"><div class="nav-meta"><span id="progress-label">The storybook</span><span id="page-count">01 / 13</span></div><nav class="progress" id="progress" aria-label="Story chapters"></nav></div>
-    <button type="button" class="nav-arrow" id="next" aria-label="Next chapter"><span aria-hidden="true">→</span></button>
-    <button type="button" class="share-button" id="share-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5M5 13v7h14v-7"/></svg><span data-ui="share">Share</span></button>
+    <button type="button" class="nav-arrow" id="previous" aria-label="Previous"><span aria-hidden="true">←</span></button>
+    <nav class="timeline-nav" id="timeline" aria-label="Timeline"></nav>
+    <button type="button" class="nav-arrow" id="next" aria-label="Next"><span aria-hidden="true">→</span></button>
   </footer>
-  <dialog id="story-dialog" aria-labelledby="dialog-title"><div class="dialog-header"><span class="dialog-brand">Reinoso + Delboy</span><button type="button" id="dialog-close" autofocus aria-label="Close">×</button></div><div class="dialog-inner"><h2 id="dialog-title"></h2><div id="dialog-content"></div></div></dialog>
+  <dialog id="story-dialog" aria-labelledby="dialog-title"><div class="dialog-header"><span class="dialog-brand">Reinoso + Delboy</span><button type="button" id="dialog-close" aria-label="Close">×</button></div><div class="dialog-inner"><h2 id="dialog-title"></h2><div id="dialog-content"></div></div></dialog>
   <div id="status" role="status" aria-live="polite" class="status"></div>
-  <noscript><div class="noscript">Enable JavaScript to explore all 13 chapters and switch languages. Activa JavaScript para explorar los 13 capítulos y cambiar de idioma.</div></noscript>
+  <noscript><div class="noscript">Enable JavaScript to read the stories. Activa JavaScript para leer las historias.</div></noscript>
 </body>
 </html>

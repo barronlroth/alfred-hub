@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>A Guide to Alfred — How I Set Up Hermes</title>
-  <meta name="description" content="How Barron Roth set up Alfred, his AI butler, using Hermes on a Mac mini. Telegram topics, GBrain memory, cron jobs, skills, and more." />
+  <meta name="description" content="How Barron Roth set up Alfred, his AI butler, using Hermes on a Mac mini. Discord channel lanes, GBrain memory, heartbeat and cron, skills, and more." />
   <meta property="og:title" content="A Guide to Alfred" />
   <meta property="og:description" content="How I turned a Mac mini and Hermes into a personal AI butler that actually does things." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -476,7 +476,7 @@
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">Interface</span>
-        <span class="hero-meta-value">Telegram topics</span>
+        <span class="hero-meta-value">Discord server</span>
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">Model</span>
@@ -484,14 +484,14 @@
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">Updated</span>
-        <span class="hero-meta-value">October 21, 2026</span>
+        <span class="hero-meta-value">November 6, 2026</span>
       </div>
     </div>
   </div>
 
   <nav class="toc" id="toc">
     <div class="toc-title">On this page</div>
-    <a href="#topics">Telegram Topics</a>
+    <a href="#lanes">Discord Lanes</a>
     <a href="#gbrain">GBrain Memory</a>
     <a href="#lcm">LCM-X</a>
     <a href="#cron">Heartbeat + Cron</a>
@@ -510,39 +510,67 @@
   </nav>
 
   <div class="content">
-    <!-- 01 TOPICS ARCHITECTURE -->
-    <div class="section fade-in" id="topics">
+    <!-- 01 DISCORD LANES ARCHITECTURE -->
+    <div class="section fade-in" id="lanes">
       <div class="section-number">01</div>
-      <h2>Telegram topics as project lanes</h2>
+      <h2>Discord channels as project lanes</h2>
       <img src="/guide-to-alfred/images/01-topics.jpg" alt="Owl perched on branching chat threads" class="section-img" loading="lazy" />
       <p>
-        Telegram is the interface, but topics are the unlock. Instead of one endless chat where wedding vendors, iOS bugs, work ideas, and travel plans all smear together, Alfred gets separate lanes with separate session context.
+        The interface is now a private <strong>Discord server</strong> with Alfred as the only bot. It started out on Telegram topics, and the idea is the same: instead of one endless chat where vendor emails, iOS bugs, work ideas, and travel plans all smear together, Alfred gets separate lanes with separate session context. Discord just has more of that structure built in.
       </p>
       <p>
-        The newer setup uses Hermes&rsquo;s <strong>Telegram topic mode</strong>: turn on <strong>Threaded Mode</strong> for your bot in @BotFather, and the bot DM gets real topics, each with its own session. The root chat becomes a lobby, and every lane lives in a <strong>private DM topic</strong>. Permanent topics can be pinned for recurring areas like Cubby, finance, or CXAS. One-off topics work like Discord threads: spin one up when a task deserves its own context, let Hermes auto-rename it from the session, and keep the main General chat clean.
+        <strong>Channels are lanes, threads are tasks.</strong> Each recurring area of life gets a channel. With Hermes&rsquo;s <code>auto_thread</code> on, every new top-level message in a channel opens its own thread, and each thread is its own session. Hermes renames the thread from the conversation after the first exchange, so the channel turns into a tidy index of past tasks instead of one long scroll. Channels that should be a single running conversation, like #general or a status feed, go in <code>no_thread_channels</code>.
       </p>
       <p>
-        I still also use a shared Telegram group with my fianc&eacute;e. That group has its own topics for wedding planning, travel, household decisions, and anything where Alfred is useful to both of us.
+        <strong>Categories are privacy boundaries.</strong> The server has three: one only I can see, one shared with my wife, and one that is hers alone. Discord permissions decide who reads what, so a shared trip-planning lane and my private finance lane can sit side by side without leaking into each other. She talks to the same Alfred, with the same brain, in her own space.
       </p>
 
-      <div class="diagram"><span class="dim">Private DM topics</span>
-<span class="highlight">├─</span> General            <span class="dim">daily chat and quick questions</span>
-<span class="highlight">├─</span> Cubby              <span class="dim">iOS app development</span>
-<span class="highlight">├─</span> CXAS               <span class="dim">work/product thinking</span>
-<span class="highlight">├─</span> Finance            <span class="dim">budgeting, cards, planning</span>
-<span class="highlight">└─</span> one-off threads    <span class="dim">auto-renamed as needed</span>
+      <div class="diagram"><span class="dim">Private (just me)</span>
+<span class="highlight">├─</span> #general           <span class="dim">home base + hourly heartbeat</span>
+<span class="highlight">├─</span> #finance #travel   <span class="dim">specialist lanes that receive handoffs</span>
+<span class="highlight">├─</span> #career #health    <span class="dim">one thread per task</span>
+<span class="highlight">├─</span> #cubby #cooking    <span class="dim">side projects and hobbies</span>
+<span class="highlight">└─</span> #hermes-ops #wiki  <span class="dim">Alfred maintaining itself</span>
 
-<span class="dim">Shared group topics</span>
-<span class="highlight">├─</span> Wedding            <span class="dim">vendors, decisions, logistics</span>
-<span class="highlight">├─</span> Travel             <span class="dim">trip planning</span>
-<span class="highlight">└─</span> Household          <span class="dim">things Nina and I both need</span></div>
+<span class="dim">Shared (both of us)</span>
+<span class="highlight">├─</span> trips, holidays, family, household
+<span class="highlight">└─</span> forum channel     <span class="dim">one post per option for big searches</span>
+
+<span class="dim">Hers (just her)</span>
+<span class="highlight">└─</span> her own general, travel, shopping, fitness</div>
 
       <p>
-        For the important lanes, I bind a <strong>skill</strong> to the topic. That skill points Alfred to the right GBrain page or project file, so the lane comes with its own operating instructions and its own canonical memory path.
+        <strong>Every channel carries its own instructions.</strong> Two config blocks do the heavy lifting. <code>channel_skill_bindings</code> auto-loads skills in a channel, and <code>channel_prompts</code> gives it a standing brief: which wiki page is canonical, what Alfred may do without asking, and lane-specific rules. Threads inherit both from their parent channel. My favourite rule lives in the shared holiday channel: both of us read it, so gift ideas for either of us never go there.
+      </p>
+
+      <div class="code-block">
+        <div class="code-label">~/.hermes/config.yaml (IDs and prompts trimmed)</div>
+        <pre><code>discord:
+  require_mention: false       # no @ needed, it's my server
+  auto_thread: true            # new message = new thread = new session
+  thread_require_mention: false
+  history_backfill: true       # read recent scrollback when woken
+  no_thread_channels: &lt;general&gt;,&lt;status channels&gt;
+  channel_skill_bindings:
+    - id: &lt;#finance&gt;
+      skills: [personal-finance-workflows]
+    - id: &lt;#hermes-ops&gt;
+      skills: [hermes-agent]
+  channel_prompts:
+    &lt;#cooking&gt;: "Private cooking lane. Grams by default.
+      Saved recipes live in wiki/recipes/ ..."</code></pre>
+      </div>
+
+      <p>
+        <strong>Forum channels</strong> are the other unlock. For a search with lots of options (apartments, venues, products), each option gets its own post with tags, Alfred can open new posts itself, and a pinned strategy post holds the big picture. Cron jobs can deliver straight into a specific post, so a watcher for one option reports in that option&rsquo;s thread.
       </p>
 
       <div class="callout">
-        <p><strong>Why this matters:</strong> I am extremely jumpy in what I talk about. Topics let Alfred keep context tight without losing the shared brain. A wedding vendor email should not pollute an iOS debugging session. Astonishingly, computers work better when we stop treating them like soup.</p>
+        <p><strong>Why this matters:</strong> I am extremely jumpy in what I talk about. Lanes let Alfred keep context tight without losing the shared brain. A vendor email should not pollute an iOS debugging session. Astonishingly, computers work better when we stop treating them like soup.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-label">Gotchas</div>
+        <p>Auto-created threads archive after 24 hours idle, and that is hard-coded. Replying in an archived thread revives it with its full history. Config changes need a gateway restart. If you ever add a second bot, turn on <code>thread_require_mention</code> or they will both answer everything.</p>
       </div>
     </div>
 
@@ -555,7 +583,7 @@
         The biggest architecture change since the original guide: Alfred&rsquo;s long-term memory is now <strong><a href="https://github.com/garrytan/gbrain">GBrain</a></strong>, my wiki-backed markdown brain. Hermes still has memory, but the canonical project state lives in files I can read, edit, commit, sync, and hand to other agents.
       </p>
       <p>
-        This replaced the old <code>MEMORY.md</code>-plus-QMD mental model. The GBrain pages are the source of truth: project briefs, travel notes, financial models, wedding state, Cubby decisions, research pages, and the connective tissue between them.
+        This replaced the old <code>MEMORY.md</code>-plus-QMD mental model. The GBrain pages are the source of truth: project briefs, travel notes, financial models, household plans, Cubby decisions, research pages, and the connective tissue between them.
       </p>
       <p>
         Under the hood, GBrain gives me the things I liked about QMD without making QMD a separate guide section: keyword search, semantic/vector search, hybrid retrieval, reranking, graph traversal, embeddings/backfill, sync, watch, and import pipelines. The important part is simpler: <strong>the wiki is the memory; the indexes are derived from it.</strong>
@@ -563,7 +591,7 @@
 
       <ul class="feature-list">
         <li><span class="bullet">&mdash;</span><span><strong>Markdown as source of truth</strong> &mdash; durable, reviewable, portable files instead of invisible model memory.</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Topic-bound skills</strong> &mdash; a recurring Telegram lane loads the skill that points Alfred to the right GBrain page.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Channel-bound skills</strong> &mdash; each Discord lane loads the skill that points Alfred to the right GBrain page.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Manual review</strong> &mdash; I can inspect what Alfred wrote, fix it, and commit the wiki separately.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Multi-agent access</strong> &mdash; Alfred, Codex, and other agents can all read the same project brain.</span></li>
       </ul>
@@ -600,7 +628,7 @@ raw messages: preserved in lcm.db</code></pre>
       </div>
 
       <div class="callout-green callout">
-        <p><strong>If you install one plugin, make it this one.</strong> Long-lived Telegram topics are the whole point of this setup, and without LCM-X they eventually forget their own history.</p>
+        <p><strong>If you install one plugin, make it this one.</strong> Long-lived lanes are the whole point of this setup, and without LCM-X they eventually forget their own history.</p>
         <p><strong>How to think about it:</strong> GBrain is durable long-term project memory. LCM is session continuity. One remembers what matters across months; the other keeps a live conversation from getting lobotomized when it gets long.</p>
       </div>
     </div>
@@ -611,10 +639,10 @@ raw messages: preserved in lcm.db</code></pre>
       <h2>Heartbeat + cron: the night shift</h2>
       <img src="/guide-to-alfred/images/05-cron.jpg" alt="Owl at a control desk pulling levers at midnight" class="section-img" loading="lazy" />
       <p>
-        The primary productivity layer is now a <strong>heartbeat</strong>, a newer Hermes feature. Think of it as a cron job that keeps one consistent session: every hour it wakes up inside the same Front Desk topic, with the same history, instead of starting from zero each run. It remembers what it already told me, what I said back, and what is still open.
+        The primary productivity layer is now a <strong>heartbeat</strong>, a newer Hermes feature. Think of it as a cron job that keeps one consistent session: every hour it wakes up inside the same session, with the same history, instead of starting from zero each run. It remembers what it already told me, what I said back, and what is still open.
       </p>
       <p>
-        Mine lives in a <strong>Front Desk</strong> topic, and that is the core idea of the whole setup: Front Desk is the triage desk. It sees everything coming in, decides what matters, and hands each item to the topic that owns it (Finance, Travel, Career) using the walkie-talkie below. The specialist topics do the deep work; Front Desk keeps the queue moving.
+        Mine lives in <strong>#general</strong>, which works as the front desk, and that is the core idea of the whole setup: #general is the triage desk. It sees everything coming in, decides what matters, and hands each item to the channel that owns it (#finance, #travel, #career) using the walkie-talkie below. The specialist lanes do the deep work; the front desk keeps the queue moving. The checklist it follows is a plain markdown file it rereads every run, with a section at the top where it logs my pushback (&ldquo;stop pinging me about X&rdquo;) so the same mistake does not come back.
       </p>
       <p>
         Point your heartbeat at the surfaces that run your day: check new email, check every calendar, look at what is coming up, and suggest the next useful move. Most runs should end in silence. The good ones stage the work, like a drafted reply or a reminder, so I only have to say yes. Write your own checklist; the value is in teaching it what matters to <em>you</em>.
@@ -623,7 +651,7 @@ raw messages: preserved in lcm.db</code></pre>
         Around that, I still use explicit <strong>cron jobs</strong>: small scheduled agents or scripts that check one specific surface, usually stay quiet, and only notify me when something is worth my attention.
       </p>
       <p>
-        Some jobs are LLM-driven. Some are deterministic script watchers with no agent at all. They can deliver into a specific Telegram topic, save locally, or notify only on meaningful changes.
+        Some jobs are LLM-driven. Some are deterministic script watchers with no agent at all. They can deliver into a specific Discord channel or forum post, save locally, or notify only on meaningful changes. Ops jobs report to #hermes-ops, finance watchers to #finance, health check-ins to #health, so each report lands next to the context that can act on it.
       </p>
 
       <ul class="feature-list">
@@ -643,18 +671,18 @@ raw messages: preserved in lcm.db</code></pre>
     <!-- WALKIE-TALKIE -->
     <div class="section fade-in" id="walkie">
       <div class="section-number">05</div>
-      <h2>Walkie-talkie: topics that talk to each other</h2>
+      <h2>Walkie-talkie: lanes that talk to each other</h2>
       <p>
-        This is what makes the Front Desk triage model work. Topics keep context clean, but work usually arrives in one lane and belongs in another. A bank alert shows up in the Front Desk heartbeat; it should be handled in Finance. A coordinator topic decides a build needs checking; that belongs in the app&rsquo;s topic.
+        This is what makes the front desk triage model work. Lanes keep context clean, but work usually arrives in one lane and belongs in another. A bank alert shows up in the #general heartbeat; it should be handled in #finance. A coordinator thread decides a build needs checking; that belongs in the app&rsquo;s channel.
       </p>
       <p>
-        So I built <strong><a href="https://github.com/barronlroth/hermes-walkie-talkie">walkie-talkie</a></strong>, a Hermes plugin that lets one session message another existing session. The target topic wakes up with its full history, handles the message as a normal turn, and replies in its own chat. In Telegram you see two messages back to back: <code>📻 Sent from Front Desk</code> with the request, then the target&rsquo;s answer.
+        So I built <strong><a href="https://github.com/barronlroth/hermes-walkie-talkie">walkie-talkie</a></strong>, a Hermes plugin that lets one session message another existing session. The target channel wakes up with its full history, handles the message as a normal turn, and replies in its own chat. You see two messages back to back: a <code>📻 Sent from &hellip;</code> line with the request, then the target&rsquo;s answer.
       </p>
       <ul class="feature-list">
-        <li><span class="bullet">&mdash;</span><span><strong>Email routing</strong> &mdash; the heartbeat forwards money stuff to Finance, trips to Travel, recruiters to Career, and keeps the rest.</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Handoffs</strong> &mdash; &ldquo;tell the Wiki topic to file this&rdquo; from anywhere, including cron jobs.</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Fire-and-forget</strong> &mdash; the sender does not wait. If you reply in the target topic, the conversation stays there.</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Guardrails</strong> &mdash; off until you opt in, visible label on every handoff, one hop only so topics cannot loop.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Email routing</strong> &mdash; the heartbeat forwards money stuff to #finance, trips to #travel, recruiters to #career, and keeps the rest.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Handoffs</strong> &mdash; &ldquo;tell #wiki to file this&rdquo; from anywhere, including cron jobs.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Fire-and-forget</strong> &mdash; the sender does not wait. If you reply in the target channel, the conversation stays there.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Guardrails</strong> &mdash; off until you opt in, visible label on every handoff, one hop only so lanes cannot loop.</span></li>
       </ul>
       <div class="callout">
         <p><strong>Why it matters:</strong> it turns a pile of separate chats into a team. Each lane keeps its own memory, and work still finds its way to the right one.</p>
@@ -675,7 +703,7 @@ raw messages: preserved in lcm.db</code></pre>
         Skills are how Alfred improves without retraining. If a workflow changes, I update the skill file. Every future session gets the new procedure.
       </p>
       <p>
-        The current setup also uses skills as routing glue. A Telegram topic can load a skill; that skill tells Alfred which GBrain page to treat as canonical for that lane. The topic provides conversational isolation, the skill provides procedure, and GBrain provides durable state.
+        The current setup also uses skills as routing glue. A Discord channel can load a skill; that skill tells Alfred which GBrain page to treat as canonical for that lane. The channel provides conversational isolation, the skill provides procedure, and GBrain provides durable state.
       </p>
       <p>
         I still use <a href="https://skills.sh">skills.sh</a> because portability matters. The same skills can be available to Alfred, Codex, Claude Code, and IDE agents. One procedure library, many workers.
@@ -715,7 +743,7 @@ raw messages: preserved in lcm.db</code></pre>
         Two patterns come up constantly. For documents, draft in markdown or the wiki first, then export or move to Google Docs when something needs to be shared. For tracking, use a spreadsheet when the data actually wants rows, dates, owners, and formulas.
       </p>
       <p>
-        Hermes has Google Workspace access, and Alfred uses the <code>gws</code> CLI for Gmail, Calendar, Drive, Docs, and Sheets. Wedding vendor comparisons, household budgets, pricing research, calendar lookups, email scans &mdash; all the boring office plumbing becomes agent-reachable.
+        Hermes has Google Workspace access, and Alfred uses the <code>gws</code> CLI for Gmail, Calendar, Drive, Docs, and Sheets. Vendor comparisons, household budgets, pricing research, calendar lookups, email scans &mdash; all the boring office plumbing becomes agent-reachable.
       </p>
     </div>
 
@@ -728,7 +756,7 @@ raw messages: preserved in lcm.db</code></pre>
         One of the most useful patterns is giving Alfred a fast path from idea to URL. GitHub plus Vercel means a small page, prototype, guide, tracker, or interactive toy can become a shareable link in minutes.
       </p>
       <p>
-        &ldquo;Build me a page comparing these wedding venues&rdquo; becomes a URL I can send to Nina. &ldquo;Make a quick guide for this setup&rdquo; becomes a real page instead of a lost chat transcript. Everything lives as subdirectories in one repo: clean URLs, fast deploys, low ceremony.
+        &ldquo;Build me a page comparing these venues&rdquo; becomes a URL I can send to my wife. &ldquo;Make a quick guide for this setup&rdquo; becomes a real page instead of a lost chat transcript. Everything lives as subdirectories in one repo: clean URLs, fast deploys, low ceremony.
       </p>
     </div>
 
@@ -812,10 +840,10 @@ raw messages: preserved in lcm.db</code></pre>
         Alfred currently runs on <strong>Claude Opus</strong> through my Claude subscription, using a Hermes provider plugin that drives the Claude Agent SDK. No API keys, no per-token bill. The exact best model will change; the principle will not.
       </p>
       <p>
-        It is not one model for everything. The main chat, cron jobs and topic lanes run on Opus. Context compression (the LCM summaries) runs on <strong>GPT-6 Luna</strong> with <strong>GPT-6 Sol</strong> as fallback, through my OpenAI/Codex subscription. Summaries are a high-volume, background job, so they go to a strong model on a plan I am already paying for instead of eating into Opus.
+        It is not one model for everything. The main chat, cron jobs and channel lanes run on Opus. Context compression (the LCM summaries) runs on <strong>GPT-6 Luna</strong> with <strong>GPT-6 Sol</strong> as fallback, through my OpenAI/Codex subscription. Summaries are a high-volume, background job, so they go to a strong model on a plan I am already paying for instead of eating into Opus.
       </p>
       <p>
-        Switching is cheap. When a lane misbehaves on one model, I flip that topic to the other for a day and keep going. Two flat-rate subscriptions beat one metered API.
+        Switching is cheap. When a lane misbehaves on one model, I flip that lane to the other for a day and keep going. Two flat-rate subscriptions beat one metered API.
       </p>
       <p>
         Do not over-optimize away quality. The difference between the smartest available model and a cheaper &ldquo;good enough&rdquo; model compounds across thousands of small autonomous decisions: every email triage, cron judgment, code edit, memory update, route recommendation, and social draft.
@@ -850,7 +878,7 @@ raw messages: preserved in lcm.db</code></pre>
       <h2>Voice transcription: local and free</h2>
       <img src="/guide-to-alfred/images/17-voice.jpg" alt="Owl with headphones listening to audio" class="section-img" loading="lazy" />
       <p>
-        I send Alfred a lot of voice notes from Telegram. Hermes transcribes them locally on the Mac mini using <strong>faster-whisper</strong>. The current config uses the local provider with the <code>large-v3</code> model, so there is no separate transcription bill and no network round trip for normal voice input.
+        I send Alfred a lot of voice notes from my phone. Hermes transcribes them locally on the Mac mini using <strong>faster-whisper</strong>. The current config uses the local provider with the <code>large-v3</code> model, so there is no separate transcription bill and no network round trip for normal voice input.
       </p>
       <p>
         Parakeet MLX is still installed on the machine from an older experiment, but it is not the active path anymore. The boring built-in Hermes local STT path won, which is frankly rude but convenient.
@@ -875,13 +903,13 @@ raw messages: preserved in lcm.db</code></pre>
       <ul class="feature-list">
         <li><span class="bullet">&mdash;</span><span><strong>Mac mini</strong> as the always-on home base.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Hermes Agent</strong> for the runtime, gateway, tools, and scheduled work.</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Telegram topics</strong> as the personal UI and project lanes.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Private Discord server</strong> as the personal UI: channels for lanes, threads for tasks, categories for privacy.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Claude Opus via Claude subscription</strong> as the main model, with <strong>GPT-6 Luna/Sol via Codex OAuth</strong> for context summaries.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>GBrain/wiki</strong> as canonical long-term memory and project state.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>LCM-X</strong> for session continuity and lossless context.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Skills + skills.sh</strong> for reusable procedures across agents.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Heartbeat</strong> as the hourly productivity layer, plus <strong>cron jobs</strong> for narrow checks, watchers, and reminders.</span></li>
-        <li><span class="bullet">&mdash;</span><span><strong>Walkie-talkie</strong> so topics can hand work to each other.</span></li>
+        <li><span class="bullet">&mdash;</span><span><strong>Walkie-talkie</strong> so lanes can hand work to each other.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>Google Workspace + <code>gws</code></strong> for email, calendar, docs, and sheets.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>1Password <code>Claw</code> vault</strong> for credential handoff.</span></li>
         <li><span class="bullet">&mdash;</span><span><strong>GitHub + Vercel</strong> for the fast coding and deploy loop.</span></li>

@@ -105,11 +105,11 @@ body.silent .eq i{animation-play-state:paused;height:15%}
 
 /* END */
 .end-kicker{font-family:'Bungee';font-size:4vh;color:var(--cyan)}
-.end-score{font-family:'Bungee Shade';font-size:22vh;line-height:1;color:var(--gold);text-shadow:0 0 50px var(--gold)}
+.end-score{font-family:'Bungee Shade';font-size:18vh;line-height:1;color:var(--gold);text-shadow:0 0 50px var(--gold)}
 .end-grade{font-family:'Bungee';font-size:5vh;color:var(--pink);margin:1vh 0;text-align:center}
-.end-stats{font-family:'Space Mono';font-size:2.2vh;opacity:.9;margin-bottom:2vh}
-.end-wall{display:grid;grid-template-columns:repeat(20,4.6vh);gap:.5vh;margin-bottom:3vh}
-.end-wall img{width:4.6vh;height:4.6vh;border-radius:.6vh;object-fit:cover;border:.3vh solid var(--green)}
+.end-stats{font-family:'Space Mono';font-size:3vh;opacity:.9;margin-bottom:2vh}
+.end-wall{display:flex;flex-wrap:wrap;justify-content:center;max-width:150vh;gap:.6vh;margin-bottom:3vh}
+.end-wall img{width:6.6vh;height:6.6vh;border-radius:.6vh;object-fit:cover;border:.3vh solid var(--green)}
 .end-wall img.miss{border-color:var(--red);filter:grayscale(1) brightness(.6)}
 
 /* FX */

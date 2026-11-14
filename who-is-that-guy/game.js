@@ -251,7 +251,7 @@ const ALPH="ABCDEFGHJKLMNPQRSTUVWXYZ";
 let code=sessionStorage.getItem("wtfitg-code");
 if(!code){ code=Array.from({length:4},()=>ALPH[Math.floor(Math.random()*ALPH.length)]).join(""); sessionStorage.setItem("wtfitg-code",code); }
 $("#room-code").textContent=code;
-const remoteURL=new URL("remote.html?room="+code, location.href).href;
+const remoteURL=new URL("remote?room="+code, location.href).href;
 try{ const q=qrcode(0,"M"); q.addData(remoteURL); q.make(); $("#qr").innerHTML=q.createSvgTag({cellSize:6,margin:0,scalable:true}); }catch(e){}
 const conns=new Set();
 function stateMsg(){

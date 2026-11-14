@@ -242,6 +242,10 @@ document.addEventListener("keydown",e=>{
   else if(k==="r") cmd("roast");
   else if(k==="q") cmd("start","quick");
 });
+const unlockEl=$("#unlock");
+function unlockAudio(){ ac(); const a=new Audio("audio/pass.mp3"); a.volume=0; a.play().then(()=>a.pause()).catch(()=>{}); unlockEl.classList.add("gone"); SFX.airhorn(); }
+unlockEl.addEventListener("click",unlockAudio);
+document.addEventListener("keydown",()=>{ if(!unlockEl.classList.contains("gone")) unlockAudio(); },{capture:true});
 $("#btn-start").onclick=()=>cmd("start","full");
 $("#btn-quick").onclick=()=>cmd("start","quick");
 $("#btn-again").onclick=()=>cmd("again");

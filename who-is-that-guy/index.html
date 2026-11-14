@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>WHO THE F*** IS THAT GUY?!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Bungee&family=Anton&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+<div id="stage">
+  <div class="sunburst"></div>
+  <div class="bulbs top"></div><div class="bulbs bottom"></div>
+
+  <!-- HUD -->
+  <header id="hud" class="hidden">
+    <div class="hud-box"><span class="lbl">ROUND</span><span id="hud-round">1/40</span></div>
+    <div class="hud-box act" id="hud-act">ACT ONE</div>
+    <div class="hud-box"><span class="lbl">STREAK</span><span id="hud-streak">0</span></div>
+    <div class="hud-box score"><span class="lbl">NINA'S SCORE</span><span id="hud-score">0</span></div>
+  </header>
+
+  <!-- TITLE -->
+  <section id="scr-title" class="screen active">
+    <div class="logo">
+      <div class="logo-small">TONIGHT ON PRIMETIME</div>
+      <div class="logo-main">WHO THE<br><span class="f">F<span class="stars">***</span></span><br>IS THAT GUY?!</div>
+      <div class="logo-sub">THE ONLY GAME SHOW WHERE EVERY ANSWER IS A WHITE GUY NAMED CHRIS</div>
+    </div>
+    <div class="title-row">
+      <div class="join">
+        <div id="qr"></div>
+        <div class="join-txt">
+          <div class="j1">HOST REMOTE</div>
+          <div class="j2">Scan with your phone</div>
+          <div class="code" id="room-code">····</div>
+          <div class="j3" id="peer-status">connecting to the satellite…</div>
+        </div>
+      </div>
+      <div class="start-box">
+        <button class="big-btn" id="btn-start" data-mode="full">FULL SHOW · 40 GUYS</button>
+        <button class="big-btn alt" id="btn-quick" data-mode="quick">QUICKIE · 15 GUYS</button>
+        <div class="kbd-hint">Keyboard: <b>SPACE</b> next · <b>C</b> correct · <b>X</b> wrong · <b>P</b> pass · <b>A</b> airhorn · <b>R</b> roast</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOST TALKING -->
+  <section id="scr-host" class="screen">
+    <div class="host-wrap">
+      <div class="host-mic">🎤</div>
+      <div class="host-line" id="host-line"></div>
+      <div class="eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <!-- ACT CARD -->
+  <section id="scr-act" class="screen">
+    <div class="act-title" id="act-title">ACT ONE</div>
+    <div class="act-sub" id="act-sub">EVEN YOUR MOM KNOWS THESE</div>
+  </section>
+
+  <!-- ROUND -->
+  <section id="scr-round" class="screen">
+    <div class="round-grid">
+      <div class="frame-wrap">
+        <div class="frame" id="frame">
+          <canvas id="pix" width="720" height="720"></canvas>
+          <img id="full" alt="">
+          <div class="stamp" id="stamp"></div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="q">WHO THE F*** IS<br>THAT GUY?!</div>
+        <div class="pts-label">POINTS ON THE TABLE</div>
+        <div class="pts" id="pts">1000</div>
+        <div class="timer"><div id="timer-bar"></div></div>
+        <div class="reveal-name" id="reveal-name"></div>
+        <div class="reveal-tag" id="reveal-tag"></div>
+        <div class="gain" id="gain"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- END -->
+  <section id="scr-end" class="screen">
+    <div class="end-kicker">FINAL SCORE</div>
+    <div class="end-score" id="end-score">0</div>
+    <div class="end-grade" id="end-grade"></div>
+    <div class="end-stats" id="end-stats"></div>
+    <div class="end-wall" id="end-wall"></div>
+    <button class="big-btn" id="btn-again">RUN IT BACK</button>
+  </section>
+
+  <div id="flash"></div>
+  <div id="xslam">✕</div>
+  <div id="onair">● ON AIR</div>
+</div>
+
+<script src="vendor/peerjs.min.js"></script>
+<script src="vendor/qrcode.min.js"></script>
+<script src="vendor/confetti.min.js"></script>
+<script src="data.js?v=1"></script>
+<script src="game.js?v=1"></script>
+</body>
+</html>
